@@ -5,46 +5,44 @@ AnchorPane
 
 .Secondary-Button
 {
-    -fx-background-color : #FFF;
-    -fx-border-color: #355ECE;
-    -fx-text-fill:  #0C3988;
-    -fx-border-radius: 10px;
+    -fx-background-color : #F558F9;
+    -fx-text-fill:  #FFF;
+    -fx-background-radius: 7px;
 }
 .Secondary-Button:hover
 {
-    -fx-background-color : #2F8CFF ;
-    -fx-text-fill:  #FFF;
-    -fx-background-radius: 10px;
+    -fx-background-color : #fb2cff;
 
 }
 .Secondary-Button:pressed
 {
-    -fx-background-color: #0070ff ;
-    -fx-text-fill: #FFF;
-    -fx-border-radius: 10px;
-
+    -fx-background-color: #F558F9 ;
 }
 .Primary-Button
 {
-    -fx-background-radius: 10px;
-    -fx-background-color :  #2F8CFF;
+    -fx-background-radius: 7px;
+    -fx-background-color :  #39CEFF;
     -fx-border-width: 0;
     -fx-text-fill:  #FFF;
+
 }
 .Primary-Button:hover
 {
-    -fx-background-color : #0070ff;
-    -fx-text-fill:   #FFF;
-    -fx-background-radius: 10px;
+    -fx-background-color : #00c2ff;
 }
 .Primary-Button:pressed
 {
-    -fx-background-color : #0C39FF ;
-    -fx-text-fill: #FFF;
-    -fx-background-radius: 10px;
-
+    -fx-background-color : #39CEFF ;
 }
 .credentials-text-field {
     -fx-background-radius: 5px;
+    -fx-background-color:  #F6FAFE;
     -fx-border-radius: 5px;
+    -fx-prompt-text-fill: #aeaeb2;
+    -fx-font-size: 12;
+}
+.error-label
+{
+    -fx-text-fill: #FF7777;
+    -fx-font-size: 10;
 }

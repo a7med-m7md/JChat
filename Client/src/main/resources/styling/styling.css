@@ -1,0 +1,50 @@
+AnchorPane 
+{
+    -fx-background-color: white;
+}
+
+.Secondary-Button
+{
+    -fx-background-color : #FFF;
+    -fx-border-color: #355ECE;
+    -fx-text-fill:  #0C3988;
+    -fx-border-radius: 10px;
+}
+.Secondary-Button:hover
+{
+    -fx-background-color : #2F8CFF ;
+    -fx-text-fill:  #FFF;
+    -fx-background-radius: 10px;
+
+}
+.Secondary-Button:pressed
+{
+    -fx-background-color: #0070ff ;
+    -fx-text-fill: #FFF;
+    -fx-border-radius: 10px;
+
+}
+.Primary-Button
+{
+    -fx-background-radius: 10px;
+    -fx-background-color :  #2F8CFF;
+    -fx-border-width: 0;
+    -fx-text-fill:  #FFF;
+}
+.Primary-Button:hover
+{
+    -fx-background-color : #0070ff;
+    -fx-text-fill:   #FFF;
+    -fx-background-radius: 10px;
+}
+.Primary-Button:pressed
+{
+    -fx-background-color : #0C39FF ;
+    -fx-text-fill: #FFF;
+    -fx-background-radius: 10px;
+
+}
+.credentials-text-field {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}

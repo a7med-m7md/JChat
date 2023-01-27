@@ -86,29 +86,28 @@ public class LoginController implements Initializable {
     }
 
     private boolean validateFields() {
-        boolean validationFlag = false;
+        boolean validationFlag = true;
 
         //Required Field Validation
-        RequiredFieldValidator requiredNumber = new RequiredFieldValidator();
         RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
-        requiredNumber.setMessage("\t\t\t\t\t\t\t\t     can't be empty!");
         requiredPassword.setMessage("\t\t\t\t\t\t\t\t     can't be empty!");
-        phoneNumberField.getValidators().add(requiredNumber);
         passwordField.getValidators().add(requiredPassword);
-        if (!phoneNumberField.validate())
-            requiredNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-        if (!passwordField.validate())
-            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-        else validationFlag = true;
 
         //Phone Number Validation
         PhoneNumberValidator validNumber = new PhoneNumberValidator();
         validNumber.setMessage("\t\t\t\t\t\t\t       enter valid number");
         phoneNumberField.getValidators().add(validNumber);
+
+        //Checking Fields
         if (!phoneNumberField.validate()) {
             validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-        } else validationFlag = true;
-
+            validationFlag = false;
+        }
+        if (!passwordField.validate()) {
+            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
+            validationFlag = false;
+        }
         return validationFlag;
     }
+
 }

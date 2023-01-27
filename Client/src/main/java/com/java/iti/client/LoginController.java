@@ -90,17 +90,18 @@ public class LoginController implements Initializable {
 
         //Required Field Validation
         RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
-        requiredPassword.setMessage("\t\t\t\t\t\t\t\t\t can't be empty");
+        requiredPassword.setMessage("Enter a valid value");
         passwordField.getValidators().add(requiredPassword);
 
         //Phone Number Validation
         PhoneNumberValidator validNumber = new PhoneNumberValidator();
-        validNumber.setMessage("\t\t\t\t\t\t\t\t   enter valid number");
+        validNumber.setMessage("Enter a valid value");
         phoneNumberField.getValidators().add(validNumber);
 
         //Checking Fields
         if (!phoneNumberField.validate()) {
             validationFlag = false;
+//            validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
         }
         if (!passwordField.validate()) {
 //            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));

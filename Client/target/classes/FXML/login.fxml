@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -12,14 +13,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../styling/styling.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.iti.client.LoginController">
    <children>
-      <VBox layoutX="556.0" layoutY="100.0" spacing="30.0">
+      <VBox layoutX="539.0" layoutY="113.0" spacing="30.0">
          <children>
             <Label text="Sign in">
                <font>
                   <Font name="Segoe UI Semibold" size="31.0" />
                </font>
             </Label>
-            <VBox maxHeight="1.7976931348623157E308" spacing="50.0" VBox.vgrow="ALWAYS">
+            <VBox maxHeight="1.7976931348623157E308" spacing="30.0" VBox.vgrow="ALWAYS">
                <children>
                   <JFXTextField fx:id="phoneNumberField" focusColor="#39ceff" labelFloat="true" maxHeight="1.7976931348623157E308" prefHeight="35.0" prefWidth="280.0" promptText="Phone Number" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#8296b5" VBox.vgrow="ALWAYS">
                      <font>
@@ -41,6 +42,12 @@
                      <font>
                         <Font name="Segoe UI Semibold" size="12.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets top="4.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </VBox>
@@ -55,10 +62,13 @@
                      <font>
                         <Font name="Segoe UI Semibold" size="12.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets top="60.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
             </VBox>
          </children>

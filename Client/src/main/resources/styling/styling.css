@@ -45,4 +45,10 @@ AnchorPane
 {
     -fx-text-fill: #FF7777;
     -fx-font-size: 10;
+    -fx-alignment: BASELINE_RIGHT;
+    -fx-text-alignment: CENTER;
+}
+ValidationPane {
+    -fx-alignment : center;
+    -fx-background-color: red;
 }

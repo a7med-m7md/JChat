@@ -35,11 +35,19 @@ AnchorPane
     -fx-background-color : #39CEFF ;
 }
 .credentials-text-field {
-    -fx-background-radius: 5px;
+    -fx-background-radius: 5px 5px 0px 0px;
     -fx-background-color:  #F6FAFE;
-    -fx-border-radius: 5px;
+    /*-fx-border-radius: ;*/
+    -fx-border-color: #F6FAFE;
+    -fx-border-width: 1px 0px 0px 6px;
     -fx-prompt-text-fill: #aeaeb2;
     -fx-font-size: 12;
+}
+.credentials-text-field:focused
+{
+    -fx-stroke-type: centered;
+    -fx-stroke-width: 2;
+
 }
 .error-label
 {
@@ -47,8 +55,4 @@ AnchorPane
     -fx-font-size: 10;
     -fx-alignment: BASELINE_RIGHT;
     -fx-text-alignment: CENTER;
-}
-ValidationPane {
-    -fx-alignment : center;
-    -fx-background-color: red;
 }

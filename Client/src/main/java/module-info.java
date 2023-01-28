@@ -1,6 +1,7 @@
 module com.java.iti.client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
     requires com.jfoenix;
 
 

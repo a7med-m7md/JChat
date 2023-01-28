@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="signInPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="434.0" styleClass="background" stylesheets="@../styling/styling.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.iti.client.controllers.SignUp2Controller">
+   <children>
+      <VBox layoutX="58.0" layoutY="58.0" prefWidth="320.0" spacing="30.0" stylesheets="@../styling/styling.css">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <VBox spacing="2.0">
+               <children>
+                  <Label text="Create Account">
+                     <font>
+                        <Font name="Segoe UI Black" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Step 2/3" wrapText="true">
+                     <font>
+                        <Font name="Segoe UI Black" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox maxHeight="1.7976931348623157E308" prefWidth="173.0" spacing="28.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox spacing="7.0">
+                     <children>
+                        <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Email">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="12.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="signUpPhoneNumberField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="280.0" promptText="Enter you email address" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <effect>
+                              <DropShadow blurType="ONE_PASS_BOX" spread="0.02">
+                                 <color>
+                                    <Color red="0.8790594339370728" green="0.9081607460975647" blue="0.928947389125824" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </JFXTextField>
+                     </children>
+                  </VBox>
+                  <HBox spacing="21.0">
+                     <children>
+                        <VBox maxWidth="1.7976931348623157E308" spacing="7.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Country">
+                                 <font>
+                                    <Font name="Segoe UI Semibold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="countryComboBox" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="186.0" promptText="Ex. Egypt" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed" VBox.vgrow="ALWAYS">
+                                 <effect>
+                                    <DropShadow spread="0.02">
+                                       <color>
+                                          <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </JFXComboBox>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" spacing="7.0">
+                           <children>
+                              <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Gender">
+                                 <font>
+                                    <Font name="Segoe UI Semibold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="genderComboBox" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="186.0" promptText="Sex" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                                 <effect>
+                                    <DropShadow spread="0.02">
+                                       <color>
+                                          <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </JFXComboBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox layoutX="10.0" layoutY="106.0" spacing="7.0">
+                     <children>
+                        <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Date of birth">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="12.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="dateOfBirth" prefHeight="42.0" prefWidth="300.0" stylesheets="@../styling/DatepickerStyling.CSS">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </DatePicker>
+                     </children>
+                  </VBox>
+                  <Button fx:id="signUpNextBtn2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#handleNextBtn" prefHeight="43.0" styleClass="Primary-Button" stylesheets="@../styling/styling.css" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets top="4.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="" size="14" text="Next    ">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="21.0" />
+                           </font>
+                        </FontAwesomeIconView>
+                     </graphic>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

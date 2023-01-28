@@ -5,8 +5,8 @@ AnchorPane
 
 .Secondary-Button
 {
-    -fx-background-color : #F558F9;
-    -fx-text-fill:  #FFF;
+    -fx-background-color : #8b98a2;
+    -fx-text-fill: white;
     -fx-background-radius: 7px;
 }
 .Secondary-Button:hover
@@ -59,3 +59,4 @@ AnchorPane
 {
     -fx-text-fill: #696F79;
 }
+

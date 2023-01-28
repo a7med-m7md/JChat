@@ -1,4 +1,4 @@
-package com.java.iti.client;
+package com.java.iti.client.controllers;
 
 import com.java.iti.client.utils.PhoneNumberValidator;
 import com.jfoenix.controls.JFXTextField;
@@ -13,8 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -30,7 +28,7 @@ public class LoginController implements Initializable {
     private StackPane parentContainer;
 
     @FXML
-    private AnchorPane anchorRoot;
+    private AnchorPane signInPane;
 
     @FXML
     private JFXTextField phoneNumberField;
@@ -40,6 +38,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button signInBtn;
+
 
 
     @FXML
@@ -59,20 +58,19 @@ public class LoginController implements Initializable {
 
     @FXML
     void handleSignUp(MouseEvent event) {
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/FXML/sign-up.fxml"));
-            Scene scene = signInBtn.getScene();
-            root.translateXProperty().set(scene.getWidth());
+            Parent signUpPane = FXMLLoader.load(getClass().getResource("/FXML/sign-up-1.fxml"));
+            Scene currentScene = signInBtn.getScene();
+            signUpPane.translateXProperty().set(currentScene.getWidth());
 
-            parentContainer.getChildren().add(root);
+            parentContainer.getChildren().add(signUpPane);
 
             Timeline timeline = new Timeline();
-            KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_BOTH);
+            KeyValue kv = new KeyValue(signUpPane.translateXProperty(), 0, Interpolator.EASE_BOTH);
             KeyFrame kf = new KeyFrame(Duration.seconds(.7), kv);
             timeline.getKeyFrames().add(kf);
             timeline.setOnFinished(t -> {
-                parentContainer.getChildren().remove(anchorRoot);
+                parentContainer.getChildren().remove(signInPane);
             });
             timeline.play();
         } catch (IOException e) {
@@ -90,12 +88,12 @@ public class LoginController implements Initializable {
 
         //Required Field Validation
         RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
-        requiredPassword.setMessage("Enter a valid value");
+        requiredPassword.setMessage("Password can't be empty");
         passwordField.getValidators().add(requiredPassword);
 
         //Phone Number Validation
         PhoneNumberValidator validNumber = new PhoneNumberValidator();
-        validNumber.setMessage("Enter a valid value");
+        validNumber.setMessage("Enter a valid phone number");
         phoneNumberField.getValidators().add(validNumber);
 
         //Checking Fields

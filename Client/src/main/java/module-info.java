@@ -6,4 +6,6 @@ module com.java.iti.client {
 
     opens com.java.iti.client to javafx.fxml;
     exports com.java.iti.client;
+    exports com.java.iti.client.controllers;
+    opens com.java.iti.client.controllers to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package com.java.iti.client.model.User;
+package com.java.iti.client.model.user;
 
 public class User {
     private long id;

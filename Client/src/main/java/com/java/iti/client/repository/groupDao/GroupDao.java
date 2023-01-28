@@ -1,6 +1,6 @@
-package com.java.iti.client.repository.GroupDao;
+package com.java.iti.client.repository.groupDao;
 
-import com.java.iti.client.model.Group.Group;
+import com.java.iti.client.model.group.Group;
 import com.java.iti.client.repository.CRUDOperation;
 import com.java.iti.client.utils.ConnectionManager;
 

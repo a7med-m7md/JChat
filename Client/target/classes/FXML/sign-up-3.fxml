@@ -36,7 +36,7 @@
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" prefWidth="173.0" spacing="28.0" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox alignment="CENTER" spacing="27.0">
+                  <VBox alignment="CENTER" spacing="37.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Choose a picture and display name">
                            <font>

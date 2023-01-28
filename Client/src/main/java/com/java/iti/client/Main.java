@@ -19,21 +19,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
-//        Group newGroup = new Group("JETS", "Hello, JETS", 1);
-
-
-        GroupDao groupDao = new GroupDao();
-//        groupDao.save(newGroup);
-//        Optional<Group> g2 = groupDao.findById(2);
-//        g2.ifPresent((e)-> System.out.println("BY ID: " + e.getName()));
-        groupDao.findAll().forEach(g->{
-            System.out.println("Name :: " + g.getName());
-            System.out.println("DES :: " + g.getDescription());
-            System.out.println("Owner :: " + g.getOwner_id());
-        });
-
         launch();
-
     }
 }

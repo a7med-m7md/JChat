@@ -1,4 +1,4 @@
-package com.java.iti.client.model.Group;
+package com.java.iti.client.model.group;
 
 import java.time.LocalDateTime;
 

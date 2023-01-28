@@ -1,4 +1,4 @@
-package com.java.iti.client.model.Friendship;
+package com.java.iti.client.model.friendship;
 
 public class Friendship {
     private long senderId;

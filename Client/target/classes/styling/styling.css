@@ -5,18 +5,18 @@ AnchorPane
 
 .Secondary-Button
 {
-    -fx-background-color : #8b98a2;
+    -fx-background-color : #8a9fb4;
     -fx-text-fill: white;
     -fx-background-radius: 7px;
 }
 .Secondary-Button:hover
 {
-    -fx-background-color : #fb2cff;
+    -fx-background-color : #a2afcc;
 
 }
 .Secondary-Button:pressed
 {
-    -fx-background-color: #F558F9 ;
+    -fx-background-color: #a8b8c9 ;
 }
 .Primary-Button
 {

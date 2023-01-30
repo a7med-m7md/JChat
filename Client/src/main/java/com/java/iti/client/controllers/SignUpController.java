@@ -1,6 +1,6 @@
 package com.java.iti.client.controllers;
 
-import com.java.iti.client.utils.PasswordValidator;
+import com.java.iti.client.utils.PasswordAndConfirmPasswordValidator;
 import com.java.iti.client.utils.PhoneNumberValidator;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -91,12 +91,12 @@ public class SignUpController implements Initializable {
         signUpPhoneNumberField.getValidators().add(validNumber);
 
         //Password security Validation
-        PasswordValidator securePassword = new PasswordValidator();
+        PasswordAndConfirmPasswordValidator securePassword = new PasswordAndConfirmPasswordValidator(signUpPasswordField);
         securePassword.setMessage("Weak Password!");
         signUpPasswordField.getValidators().add(securePassword);
 
         //Password Confirmation Validation
-        PasswordValidator confirmPassword = new PasswordValidator(signUpPasswordField.getText());
+        PasswordAndConfirmPasswordValidator confirmPassword = new PasswordAndConfirmPasswordValidator(signUpPasswordField);
         confirmPassword.setMessage("Password Doesn't Match");
         signUpConfirmPasswordField.getValidators().add(confirmPassword);
 

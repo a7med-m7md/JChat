@@ -7,6 +7,13 @@ public class User {
     private String email;
     private String picture;
 
+    private String password;
+    private Gender gender;
+    private String country;
+    private String dateOfBirth;
+    private String bio;
+    private UserStatus status;
+
     public User(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio, UserStatus status) {
         this.mobile = mobile;
         this.name = name;
@@ -108,10 +115,5 @@ public class User {
         this.status = status;
     }
 
-    private String password;
-    private Gender gender;
-    private String country;
-    private String dateOfBirth;
-    private String bio;
-    private UserStatus status;
+
 }

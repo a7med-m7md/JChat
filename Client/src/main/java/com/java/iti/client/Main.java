@@ -1,8 +1,12 @@
 package com.java.iti.client;
 
+import com.java.iti.client.business.dtos.UserDto;
+import com.java.iti.client.business.mappers.UseMapperImpl;
+import com.java.iti.client.business.mappers.UserMapper;
 import com.java.iti.client.model.user.Gender;
 import com.java.iti.client.model.user.User;
 import com.java.iti.client.model.user.UserStatus;
+import com.java.iti.client.repository.entities.UserEntity;
 import com.java.iti.client.repository.userDao.UserDao;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +22,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FXML/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("JChat");
-        User user = new User(
+        UserDto userDto = new UserDto(
                 "011014",
                 "mohamed mahmoud",
                 "mm22@gmail",
@@ -30,8 +34,10 @@ public class Main extends Application {
                 "software engineer",
                 UserStatus.AVAILABLE
         );
+        //TODO map from domain user to user entity
         UserDao userDao = new UserDao();
-        User res = userDao.save(user);
+        UserMapper userMapper = new UseMapperImpl();
+        UserEntity res = userDao.save(userMapper.domainToEntity(userDto));
         System.out.println(res.getStatus().name());
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
         stage.setResizable(false);

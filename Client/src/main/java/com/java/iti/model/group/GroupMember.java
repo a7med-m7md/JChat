@@ -1,4 +1,4 @@
-package com.java.iti.client.model.group;
+package com.java.iti.model.group;
 
 public class GroupMember {
     private long userId;

@@ -1,4 +1,4 @@
-package com.java.iti.server.persistance.utils;
+package com.java.iti.persistance.utils;
 
 public enum Country {
     USA("United States of America"),

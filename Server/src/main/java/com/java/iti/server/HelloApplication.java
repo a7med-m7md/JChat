@@ -1,7 +1,7 @@
 package com.java.iti.server;
 
-import com.java.iti.server.model.user.User;
-import com.java.iti.server.persistance.utils.Country;
+import com.java.iti.model.user.User;
+import com.java.iti.persistance.utils.Country;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.*;
 
-import static com.java.iti.server.model.user.Gender.MALE;
-import static com.java.iti.server.model.user.UserStatus.AVAILABLE;
+import static com.java.iti.model.user.Gender.MALE;
+import static com.java.iti.model.user.UserStatus.AVAILABLE;
 
 public class HelloApplication extends Application {
     List<PieChart.Data> list = new ArrayList<>();

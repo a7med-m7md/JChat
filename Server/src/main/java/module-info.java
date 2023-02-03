@@ -1,4 +1,4 @@
-module com.java.iti.server {
+module com.java.iti {
     requires javafx.controls;
     requires javafx.fxml;
     requires mysql.connector.j;

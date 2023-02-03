@@ -1,4 +1,4 @@
-package com.java.iti.server.model.user;
+package com.java.iti.model.user;
 
 public enum UserStatus {
     AVAILABLE, BUSY, AWAY, OFFLINE

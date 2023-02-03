@@ -1,6 +1,6 @@
-package com.java.iti.server.model.user;
+package com.java.iti.model.user;
 
-import com.java.iti.server.persistance.utils.Country;
+import com.java.iti.persistance.utils.Country;
 
 public class User {
     private long id;

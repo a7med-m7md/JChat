@@ -1,10 +1,8 @@
-package com.java.iti.server.persistance;
+package com.java.iti.persistance;
 
-import com.java.iti.server.persistance.utils.Constants;
+import com.java.iti.persistance.utils.Constants;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -17,7 +15,7 @@ public class MySqlDataSourceImpl {
     public static MysqlDataSource getMysqlDataSource() {
         try {
             Properties prop = new Properties();
-            inputStream = MySqlDataSourceImpl.class.getClassLoader().getResourceAsStream("db.properties");
+            inputStream = MySqlDataSourceImpl.class.getClassLoader().getResourceAsStream("configuration/db.properties");
             prop.load(inputStream);
             mysqlDataSource = new MysqlDataSource();
             mysqlDataSource.setURL(prop.getProperty(Constants.URL_DB));

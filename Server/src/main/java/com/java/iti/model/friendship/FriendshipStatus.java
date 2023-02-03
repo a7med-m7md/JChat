@@ -1,4 +1,4 @@
-package com.java.iti.server.model.friendship;
+package com.java.iti.model.friendship;
 
 public enum FriendshipStatus {
     ACCEPTED, REJECTED, PENDING,

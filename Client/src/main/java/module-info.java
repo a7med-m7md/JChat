@@ -6,9 +6,9 @@ module com.java.iti.client {
     requires java.rmi;
 
 
-    opens com.java.iti to javafx.fxml;
-    exports com.java.iti;
-    exports com.java.iti.controllers;
+    opens com.java.iti.client to javafx.fxml;
+    exports com.java.iti.client;
+    exports com.java.iti.client.controllers;
     exports com.java.iti.utils.interfaces;
-    opens com.java.iti.controllers to javafx.fxml;
+    opens com.java.iti.client.controllers to javafx.fxml;
 }

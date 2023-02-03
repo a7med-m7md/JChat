@@ -24,23 +24,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("JChat");
 //        RMIConnection.connect();
-//        UserDto userDto = new UserDto(
-//                "011014",
-//                "mohamed mahmoud",
-//                "mm22@gmail",
-//                "picture str path",
-//                "1234password",
-//                Gender.MALE,
-//                "egypt",
-//                "10sept",
-//                "software engineer",
-//                UserStatus.AVAILABLE
-//        );
-//        //TODO map from domain user to user entity
-//        UserDao userDao = new UserDao();
-//        UserMapper userMapper = new UseMapperImpl();
-//        UserEntity res = userDao.save(userMapper.domainToEntity(userDto));
-//        System.out.println(res.getStatus().name());
+
 //        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
         stage.setResizable(false);
         stage.setScene(scene);

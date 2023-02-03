@@ -1,4 +1,4 @@
-package com.java.iti.client.utils;
+package com.java.iti.client.serverconnection;
 
 // import java.sql.Connection;
 

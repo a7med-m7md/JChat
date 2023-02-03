@@ -1,6 +1,6 @@
 package com.java.iti.client.controllers;
 
-import com.java.iti.client.utils.PhoneNumberValidator;
+import com.java.iti.client.serverconnection.PhoneNumberValidator;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.animation.Interpolator;

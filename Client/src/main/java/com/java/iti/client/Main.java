@@ -23,7 +23,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FXML/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("JChat");
-        RMIConnection.connect();
+//        RMIConnection.connect();
 //        UserDto userDto = new UserDto(
 //                "011014",
 //                "mohamed mahmoud",

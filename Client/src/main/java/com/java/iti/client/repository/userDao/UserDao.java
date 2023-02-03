@@ -1,12 +1,10 @@
 package com.java.iti.client.repository.userDao;
 
-import com.java.iti.client.model.group.Group;
 import com.java.iti.client.model.user.Gender;
-import com.java.iti.client.model.user.User;
 import com.java.iti.client.model.user.UserStatus;
 import com.java.iti.client.repository.CRUDOperation;
 import com.java.iti.client.repository.entities.UserEntity;
-import com.java.iti.client.utils.ConnectionManager;
+import com.java.iti.client.serverconnection.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;

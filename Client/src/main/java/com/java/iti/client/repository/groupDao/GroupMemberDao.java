@@ -2,7 +2,7 @@ package com.java.iti.client.repository.groupDao;
 
 import com.java.iti.client.model.group.GroupMember;
 import com.java.iti.client.repository.CRUDOperation;
-import com.java.iti.client.utils.ConnectionManager;
+import com.java.iti.client.serverconnection.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;

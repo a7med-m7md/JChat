@@ -1,6 +1,7 @@
-package com.java.iti.client.controllers;
+package com.java.iti.controllers;
 
-import com.java.iti.client.serverconnection.*;
+import com.java.iti.controllerutils.PasswordAndConfirmPasswordValidator;
+import com.java.iti.controllerutils.PhoneNumberValidator;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.animation.Interpolator;

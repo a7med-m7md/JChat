@@ -1,7 +1,7 @@
-package com.java.iti.client.business.dtos;
+package com.java.iti.business.dtos;
 
-import com.java.iti.client.model.user.Gender;
-import com.java.iti.client.model.user.UserStatus;
+import com.java.iti.model.user.Gender;
+import com.java.iti.model.user.UserStatus;
 
 public class UserDto {
     private long id;

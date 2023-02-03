@@ -1,4 +1,4 @@
-package com.java.iti.client.serverconnection;
+package com.java.iti.controllerutils;
 
 import com.jfoenix.validation.NumberValidator;
 import javafx.scene.control.TextInputControl;

@@ -1,9 +1,9 @@
-package com.java.iti.client.business.dtos;
+package com.java.iti.client.repository.entities;
 
 import com.java.iti.client.model.user.Gender;
 import com.java.iti.client.model.user.UserStatus;
 
-public class UserDto {
+public class UserEntity {
     private long id;
     private String mobile;
     private String name;
@@ -17,7 +17,7 @@ public class UserDto {
     private String bio;
     private UserStatus status;
 
-    public UserDto(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio, UserStatus status) {
+    public UserEntity(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio, UserStatus status) {
         this.mobile = mobile;
         this.name = name;
         this.email = email;

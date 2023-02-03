@@ -5,6 +5,7 @@ import com.java.iti.client.model.user.Gender;
 import com.java.iti.client.model.user.User;
 import com.java.iti.client.model.user.UserStatus;
 import com.java.iti.client.repository.CRUDOperation;
+import com.java.iti.client.repository.entities.UserEntity;
 import com.java.iti.client.utils.ConnectionManager;
 
 import java.sql.*;
@@ -12,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDao implements CRUDOperation<User> {
+public class UserDao implements CRUDOperation<UserEntity> {
     private final ConnectionManager connectionManager = ConnectionManager.getInstance();
     private final Connection connection = connectionManager.getConnection();
     @Override
-    public List<User> findAll() {
-        List<User> userList = new ArrayList<>();
+    public List<UserEntity> findAll() {
+        List<UserEntity> userList = new ArrayList<>();
         final String SQL = "SELECT * FROM jtalk.users";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             try(ResultSet resultSet = preparedStatement.executeQuery()){
@@ -32,7 +33,7 @@ public class UserDao implements CRUDOperation<User> {
                     String dateOfBirth = resultSet.getString(9);
                     String bio = resultSet.getString(10);
                     UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11));
-                    User newUser = new User(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
+                    UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
                     userList.add(newUser);
                 }
             }
@@ -45,7 +46,7 @@ public class UserDao implements CRUDOperation<User> {
     }
 
     @Override
-    public Optional<User> findById(int id) {
+    public Optional<UserEntity> findById(int id) {
         final String SQL = "SELECT * FROM jtalk.users WHERE id = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setInt(1, id);
@@ -61,7 +62,7 @@ public class UserDao implements CRUDOperation<User> {
                     String dateOfBirth = resultSet.getString(9);
                     String bio = resultSet.getString(10);
                     UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11));
-                    User newUser = new User(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
+                    UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
                     return Optional.of(newUser);
                 }
             }
@@ -74,7 +75,7 @@ public class UserDao implements CRUDOperation<User> {
     }
 
     @Override
-    public Optional<User> update(User entity, int id) {
+    public Optional<UserEntity> update(UserEntity entity, int id) {
         final String SQL = "UPDATE jtalk.users SET" +
                 "mobile = ?," +
                 "name = ?," +
@@ -113,7 +114,7 @@ public class UserDao implements CRUDOperation<User> {
     }
 
     @Override
-    public User save(User entity) {
+    public UserEntity save(UserEntity entity) {
         final String SQL = "INSERT INTO jtalk.users (mobile,name,email,picture,password,gender,country,dateOfBirth,bio,status) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){

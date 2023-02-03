@@ -4,6 +4,7 @@ package com.java.iti.client.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,11 +13,14 @@ import java.util.Properties;
 public class ConnectionManager {
     private static ConnectionManager instance;
     private  Connection connection;
+    private  InputStream inputStream;
 
     private ConnectionManager() {
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream("src/main/resources/configuration/db.properties"));
+            //inputStream = getClass().getClassLoader().getResourceAsStream("configuration/db.properties");
+            //properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }

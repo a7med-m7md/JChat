@@ -1,23 +1,15 @@
-package com.java.iti.business.dtos;
+package com.java.iti.business.model.user;
 
-import com.java.iti.business.model.user.Gender;
-import com.java.iti.business.model.user.UserStatus;
+import com.java.iti.persistance.utils.Country;
 
-public class UserDto {
+public class User {
     private long id;
     private String mobile;
     private String name;
     private String email;
     private String picture;
 
-    private String password;
-    private Gender gender;
-    private String country;
-    private String dateOfBirth;
-    private String bio;
-    private UserStatus status;
-
-    public UserDto(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio, UserStatus status) {
+    public User(String mobile, String name, String email, String picture, String password, Gender gender, Country country, String dateOfBirth, String bio, UserStatus status) {
         this.mobile = mobile;
         this.name = name;
         this.email = email;
@@ -86,11 +78,11 @@ public class UserDto {
         this.gender = gender;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
@@ -118,4 +110,10 @@ public class UserDto {
         this.status = status;
     }
 
+    private String password;
+    private Gender gender;
+    private Country country;
+    private String dateOfBirth;
+    private String bio;
+    private UserStatus status;
 }

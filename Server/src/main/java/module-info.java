@@ -8,5 +8,5 @@ module com.java.iti {
 
     opens com.java.iti to javafx.fxml;
     exports com.java.iti;
-    exports com.java.iti.utils.interfaces;
+    exports com.java.iti.network.interfaces;
 }

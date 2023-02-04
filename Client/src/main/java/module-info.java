@@ -1,15 +1,16 @@
-module com.java.iti {
+module Client {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
     requires com.jfoenix;
     requires java.rmi;
+    requires SharedUtilities;
 
 
-    opens com.java.iti to javafx.fxml;
-    exports com.java.iti;
-    exports com.java.iti.controllers;
-    exports com.java.iti.controllerutils;
-    exports com.java.iti.utils.interfaces;
-    opens com.java.iti.controllers to javafx.fxml;
+    opens Server to javafx.fxml;
+    exports Server;
+    exports Server.controllers;
+    exports Server.controllerutils;
+    exports Server.network.interfaces;
+    opens Server.controllers to javafx.fxml;
 }

@@ -3,8 +3,9 @@ package com.java.iti.business.services.register;
 import com.java.iti.business.dtos.UserDto;
 import com.java.iti.business.mappers.UseMapperImpl;
 import com.java.iti.business.mappers.UserMapper;
-import com.java.iti.repository.entities.UserEntity;
-import com.java.iti.repository.userDao.UserDao;
+import com.java.iti.persistance.entities.UserEntity;
+import com.java.iti.persistance.dao.UserDao;
+
 
 import java.util.Optional;
 

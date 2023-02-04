@@ -30,9 +30,11 @@ public class ConnectionManager {
         String pwd = properties.getProperty("password");
         try {
             this.connection = DriverManager.getConnection(url, user, pwd);
+            System.out.println("Connected to DB successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     public Connection getConnection(){

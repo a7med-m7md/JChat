@@ -1,9 +1,9 @@
 package Server;
 
 
-import Server.network.RMIConnection;
 import Server.persistance.ConnectionManager;
 import Models.UtilityClass;
+import Server.network.RMIConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +14,7 @@ import java.sql.Connection;
 
 public class HelloApplication extends Application {
     Connection connection;
-    RMIConnection rmiConnection;
+    Server.network.RMIConnection rmiConnection;
     @Override
     public void start(Stage stage) throws IOException {
         System.out.println(UtilityClass.isNull());

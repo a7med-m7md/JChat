@@ -6,8 +6,9 @@ module Server {
     requires java.naming;
     requires java.rmi;
     requires SharedUtilities;
+//    requires Client;
 
     opens Server to javafx.fxml;
     exports Server;
-    exports Server.network.interfaces;
+//    exports Server.network.interfaces;
 }

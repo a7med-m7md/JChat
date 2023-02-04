@@ -1,5 +1,8 @@
 package Server.network.interfaces;
 
+import Models.ClientInt;
+import Models.LoginEntity;
+import Models.ServerInt;
 import Server.persistance.dao.UserDao;
 
 import java.rmi.Remote;
@@ -32,6 +35,7 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
     public String connect(ClientInt client) throws RemoteException {
         return null;
     }
+
 
     @Override
     public String disconnect(ClientInt client) throws RemoteException {

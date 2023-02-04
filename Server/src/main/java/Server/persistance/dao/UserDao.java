@@ -1,8 +1,8 @@
 package Server.persistance.dao;
 
+import Models.LoginEntity;
 import Server.business.model.user.Gender;
 import Server.business.model.user.UserStatus;
-import Server.network.interfaces.LoginEntity;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
 import Server.persistance.entities.UserEntity;

@@ -1,10 +1,10 @@
 package Server.business.services.register;
 
-import Server.business.dtos.UserDto;
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
 import Server.persistance.entities.UserEntity;
 import Server.persistance.dao.UserDao;
+import Server.business.dtos.UserDto;
 
 
 import java.util.Optional;
@@ -24,7 +24,7 @@ public class RegisterServiceImpl implements RegisterService{
     }
 
     @Override
-    public UserDto register(UserDto userDto) {
+    public Server.business.dtos.UserDto register(UserDto userDto) {
             UserEntity userEntity = userMapper.domainToEntity(userDto);
             userDao.save(userEntity);
             return userDto;

@@ -7,10 +7,10 @@ module Client {
     requires SharedUtilities;
 
 
-    opens Server to javafx.fxml;
-    exports Server;
-    exports Server.controllers;
-    exports Server.controllerutils;
-    exports Server.network.interfaces;
-    opens Server.controllers to javafx.fxml;
+    opens Client to javafx.fxml;
+    exports Client;
+    exports Client.controllers;
+    exports Client.controllerutils;
+//    exports Client.network.interfaces;
+    opens Client.controllers to javafx.fxml;
 }

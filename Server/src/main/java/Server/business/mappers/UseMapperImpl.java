@@ -5,8 +5,8 @@ import Server.business.dtos.UserDto;
 
 public class UseMapperImpl implements UserMapper{
     @Override
-    public UserDto entityToDomain(UserEntity entity) {
-        UserDto userDto = new UserDto(
+    public Server.business.dtos.UserDto entityToDomain(UserEntity entity) {
+        Server.business.dtos.UserDto userDto = new Server.business.dtos.UserDto(
                 entity.getMobile(),
                 entity.getName(),
                 entity.getEmail(),

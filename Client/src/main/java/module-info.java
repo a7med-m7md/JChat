@@ -4,13 +4,12 @@ module Client {
     requires java.sql;
     requires com.jfoenix;
     requires java.rmi;
-    requires SharedUtilities;
 
 
     opens Client to javafx.fxml;
     exports Client;
-    exports Client.controllers;
-    exports Client.controllerutils;
+    exports Client.ui.controllers;
+    exports Client.ui.controllerutils;
 //    exports Client.network.interfaces;
-    opens Client.controllers to javafx.fxml;
+    opens Client.ui.controllers to javafx.fxml;
 }

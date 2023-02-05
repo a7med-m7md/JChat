@@ -1,12 +1,14 @@
-module com.java.iti {
+module Server {
     requires javafx.controls;
     requires javafx.fxml;
     requires mysql.connector.j;
     requires java.sql;
     requires java.naming;
     requires java.rmi;
+    requires SharedUtilities;
+//    requires Client;
 
-    opens com.java.iti to javafx.fxml;
-    exports com.java.iti;
-    exports com.java.iti.network.interfaces;
+    opens Server to javafx.fxml;
+    exports Server;
+//    exports Server.network.interfaces;
 }

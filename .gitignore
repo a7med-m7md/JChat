@@ -1,4 +1,6 @@
+.idea
 /**/.idea
 /**/target
 /**/*.iml
+
 Server/Server.iml

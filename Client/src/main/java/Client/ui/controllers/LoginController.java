@@ -1,7 +1,7 @@
-package Client.controllers;
+package Client.ui.controllers;
 
 
-import Client.controllerutils.PhoneNumberValidator;
+import Client.ui.controllerutils.PhoneNumberValidator;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.animation.Interpolator;

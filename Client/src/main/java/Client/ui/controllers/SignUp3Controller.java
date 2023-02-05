@@ -1,4 +1,4 @@
-package Client.controllers;
+package Client.ui.controllers;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;

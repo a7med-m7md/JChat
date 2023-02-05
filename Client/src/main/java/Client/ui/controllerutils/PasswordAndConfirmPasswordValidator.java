@@ -1,4 +1,4 @@
-package Client.controllerutils;
+package Client.ui.controllerutils;
 
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.scene.control.TextInputControl;

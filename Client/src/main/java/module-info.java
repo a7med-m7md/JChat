@@ -4,6 +4,7 @@ module Client {
     requires java.sql;
     requires com.jfoenix;
     requires java.rmi;
+    requires SharedUtilities ;
 
 
     opens Client to javafx.fxml;

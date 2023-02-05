@@ -6,6 +6,7 @@ import Server.network.interfaces.CheckLogin;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class RMIConnection {
     private static final List<ClientInt> client = new ArrayList<>();
     Registry registry;
     LoginEntity serverInt;
+    CheckLogin checkLogin;
     public RMIConnection(){
         try {
             registry = LocateRegistry.createRegistry(2233);
@@ -31,7 +33,7 @@ public class RMIConnection {
 
     public void startServices(){
         try {
-            CheckLogin checkLogin = new CheckLogin();
+            checkLogin = new CheckLogin();
             registry.bind("rmi://localhost:2233/loginService", checkLogin);
             System.out.println("Services started");
         } catch (AccessException e) {
@@ -44,13 +46,13 @@ public class RMIConnection {
     }
 
     public void disconnect(){
-//        try {
-//            registry.unbind("rmi://localhost:2233/loginService");
-//            UnicastRemoteObject.unexportObject(serverInt, true);
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        } catch (NotBoundException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            registry.unbind("rmi://localhost:2233/loginService");
+            UnicastRemoteObject.unexportObject(checkLogin, true);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
     }
 }

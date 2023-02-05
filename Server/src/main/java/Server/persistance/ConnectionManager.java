@@ -18,7 +18,7 @@ public class ConnectionManager {
     private ConnectionManager() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\Ahmed Mohamed\\Desktop\\Chat\\Server\\src\\main\\resources\\configuration\\db.properties"));
+            properties.load(new FileInputStream("Server/src/main/resources/configuration/db.properties"));
             //inputStream = getClass().getClassLoader().getResourceAsStream("configuration/db.properties");
             //properties.load(inputStream);
         } catch (IOException e) {

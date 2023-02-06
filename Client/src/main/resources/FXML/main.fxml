@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="root" stylesheets="@../styling/main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.MainController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="70.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.0" minWidth="-Infinity" prefWidth="141.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="300.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <children>
+      <StackPane alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="64.0" styleClass="left-sidebar" stylesheets="@../styling/main.css">
+         <children>
+            <VBox alignment="TOP_CENTER" spacing="10.0" StackPane.alignment="CENTER" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </StackPane>
+      <GridPane GridPane.columnIndex="1">
+         <columnConstraints>
+            <ColumnConstraints maxWidth="1.7976931348623157E308" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="60.0" minHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <StackPane fx:id="tabContentArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bottom-left" stylesheets="@../styling/main.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </StackPane>
+            <StackPane maxHeight="1.7976931348623157E308" styleClass="top-left" stylesheets="@../styling/main.css">
+               <GridPane.margin>
+                  <Insets bottom="1.0" top="1.0" />
+               </GridPane.margin>
+               <children>
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.4000244140625" minWidth="10.0" prefWidth="54.39999771118164" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.5999984741211" minWidth="10.0" prefWidth="154.40000228881837" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.79996337890623" minWidth="10.0" prefWidth="113.39999999999998" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane layoutX="10.0" layoutY="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="50.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="90.0" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Mahmoud Elsaqqa" textFill="#7a8592" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Segoe UI" size="15.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="8.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Circle fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0">
+                           <effect>
+                              <DropShadow height="4.0" radius="1.5" spread="0.7" width="4.0">
+                                 <color>
+                                    <Color red="0.5224999785423279" green="0.6477214694023132" blue="0.7815789580345154" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Circle>
+                        <ComboBox fx:id="userStatus" stylesheets="@../styling/main.css" GridPane.columnIndex="2" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+         <GridPane.margin>
+            <Insets right="4.0" />
+         </GridPane.margin>
+      </GridPane>
+      <StackPane fx:id="conversationArea" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" />
+   </children>
+</GridPane>

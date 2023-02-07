@@ -12,5 +12,5 @@ public interface CRUDOperation <T>{
 
     T save(T entity);
 
-    void delete(int id);
+    int delete(int id);
 }

@@ -10,6 +10,6 @@ module com.java.iti {
     exports com.java.iti;
     exports com.java.iti.controllers;
     exports com.java.iti.controllerutils;
-    exports com.java.iti.utils.interfaces;
+//    exports com.java.iti.utils.interfaces;
     opens com.java.iti.controllers to javafx.fxml;
 }

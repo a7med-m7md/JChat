@@ -67,13 +67,12 @@ public class UserDao implements CRUDOperation<UserEntity> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return Optional.empty();
     }
 
 
+    // Login with username and password
     public Optional<UserEntity> userLogin(LoginEntity loginEntity) {
         final String SQL = "SELECT * FROM jtalk.users WHERE mobile = ? AND password = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
@@ -143,6 +142,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
         return Optional.empty();
     }
 
+    // Save new Registered user into db
     @Override
     public UserEntity save(UserEntity entity) {
         final String SQL = "INSERT INTO jtalk.users (mobile,name,email,picture,password,gender,country,dateOfBirth,bio,status) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -167,16 +167,41 @@ public class UserDao implements CRUDOperation<UserEntity> {
         return entity;
     }
 
+    // Delete user
     @Override
-    public void delete(int id) {
+    public int delete(int id) {
         final String SQL = "DELETE FROM jtalk.users WHERE id = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setInt(1, id);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+
+    public int delete(String mobile) {
+        final String SQL = "DELETE FROM jtalk.users WHERE mobile = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+            preparedStatement.setString(1, mobile);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // When user logged in update its status
+    public void updateUserStatus(String mobile, UserStatus status){
+        final String SQL = "UPDATE FROM jtalk.user SET status = ? WHERE mobile = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+            preparedStatement.setString(1, status.name());
+            preparedStatement.setString(2, mobile);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
     }
 }

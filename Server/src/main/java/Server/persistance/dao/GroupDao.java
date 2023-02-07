@@ -31,8 +31,6 @@ public class GroupDao implements CRUDOperation<Group> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return groupList;
     }
@@ -55,8 +53,6 @@ public class GroupDao implements CRUDOperation<Group> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return Optional.empty();
     }
@@ -74,8 +70,6 @@ public class GroupDao implements CRUDOperation<Group> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return Optional.empty();
     }
@@ -90,22 +84,19 @@ public class GroupDao implements CRUDOperation<Group> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return entity;
     }
 
     @Override
-    public void delete(int id) {
+    public int delete(int id) {
         final String SQL = "DELETE FROM jtalk.groups WHERE id = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
+        return 0;
     }
 }

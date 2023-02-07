@@ -70,7 +70,7 @@ public class UserFriendDao implements UserFriendDaoInt{
             friend.setName(resultSet.getString("name"));
             friend.setBio(resultSet.getString("bio"));
             friend.setMobile(resultSet.getString("mobile"));
-            friend.setStatus(resultSet.getString("status"));
+//            friend.setStatus(resultSet.getString("friendships.status"));
             friend.setUserPhoto(resultSet.getBytes("picture"));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,12 +107,26 @@ public class UserFriendDao implements UserFriendDaoInt{
     // Need to be checked more
     @Override
     public List<FriendEntity> getFriendList(String myMobileNum) throws SQLException, RemoteException {
-        final String SQL = "SELECT * FROM users, friendships WHERE mobile = receiver_mobile AND mobile = ? AND status = 'ACCEPTED'";
+        System.out.println("FriendList:: ");
+//        final String SQL = "SELECT * FROM jtalk.users as u1, jtalk.friendships as f, jtalk.u2 " +
+//                "WHERE mobile = receiver_mobile " +
+//                "AND mobile = ? AND f.status = 'accepted'" +
+//                "AND u1.mobile = u2.mobile";
+//        final String SQL = "SELECT * FROM jtalk.users WHERE users.mobile IN (SELECT receiver_mobile FROM  jtalk.friendships" +
+//                "WHERE friendships.receiver_mobile = '011014' AND friendships.status = 'ACCEPTED'" +
+//                "    union SELECT sender_mobile FROM jtalk.friendships WHERE user.mobile = '011014' AND friendships.status = 'ACCEPTED'" +
+//                ");";
+        final String SQL = "SELECT * FROM jtalk.users WHERE users.mobile IN (SELECT receiver_mobile FROM  jtalk.friendships " +
+                "WHERE friendships.receiver_mobile = ? AND friendships.status = 'ACCEPTED' " +
+                "    union SELECT sender_mobile FROM jtalk.friendships WHERE  friendships.status = 'ACCEPTED'" +
+                ") AND users.mobile <> ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setString(1, myMobileNum);
+            preparedStatement.setString(2, myMobileNum);
             ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("AFTER");
             List<FriendEntity> friends = new ArrayList<>();
-
+            System.out.println("LENT:: " + friends.size());
             while(resultSet.next()){
                 FriendEntity friend = new FriendEntity();
                 friends.add(createUser(resultSet, friend));

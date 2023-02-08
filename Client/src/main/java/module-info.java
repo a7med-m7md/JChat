@@ -4,6 +4,7 @@ module com.java.iti {
     requires java.sql;
     requires com.jfoenix;
     requires java.rmi;
+    requires SharedUtilities;
 
 
     opens Client to javafx.fxml;

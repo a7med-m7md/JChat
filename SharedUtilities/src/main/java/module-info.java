@@ -4,4 +4,5 @@ module SharedUtilities {
 
 //    exports com.java.iti;
     exports Models;
+    exports Services;
 }

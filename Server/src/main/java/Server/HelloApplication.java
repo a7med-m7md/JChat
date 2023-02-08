@@ -4,6 +4,7 @@ package Server;
 import Server.persistance.ConnectionManager;
 import Models.UtilityClass;
 import Server.network.RMIConnection;
+import Server.persistance.dao.UserFriendDao;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -40,7 +41,16 @@ public class HelloApplication extends Application {
 //        UserMapper userMapper = new UseMapperImpl();
 //        UserEntity res = userDao.save(userMapper.domainToEntity(userDto));
 //        System.out.println(res.getStatus().name());
+        try{
+            UserFriendDao userFriendDao = new UserFriendDao();
+            userFriendDao.getFriendList("01112175312").forEach(friendEntity -> {
+                System.out.println(friendEntity.getName());
+                System.out.println(friendEntity.getMobile());
+//                System.out.println(friendEntity.getStatus());
+                System.out.println(friendEntity.getUserPhoto());
+            });
 
+        }catch (Exception ex){}
 
         stage.setScene(scene);
         stage.show();
@@ -54,6 +64,7 @@ public class HelloApplication extends Application {
     public void init() throws Exception {
         rmiConnection = new RMIConnection();
         rmiConnection.startServices();
+
         ConnectionManager.getInstance().getConnection();
     }
 

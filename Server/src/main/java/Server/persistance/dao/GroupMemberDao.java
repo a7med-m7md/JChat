@@ -90,16 +90,17 @@ public class GroupMemberDao implements CRUDOperation<GroupMember> {
     }
 
     @Override
-    public void delete(int id) {
+    public int delete(int id) {
         final String SQL = "DELETE FROM jtalk.group_members WHERE user_id = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             connectionManager.close();
         }
+        return 0;
     }
 }
 

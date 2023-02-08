@@ -1,0 +1,204 @@
+.Content-Tab {
+    -fx-background-color: #FFF;
+}
+
+.upper-card {
+    -fx-background-color: #FFFF;
+    -fx-background-radius: 10px 10px 0px 0px;
+}
+
+.root {
+    -fx-background-radius: 8px;
+    -fx-background-color: #e4e9ee;
+}
+
+ScrollPane {
+    -fx-background-color: #FFFF;
+    -fx-border-color: #FFFF;
+    -fx-border-width: 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: #FFF;
+    -fx-border-width: 0;
+}
+
+StackPane {
+    -fx-background-color: #FFFF;
+}
+
+tackPane:focused {
+    -fx-background-color: #FFFF;
+    -fx-border-width: 0;
+}
+
+.left-sidebar {
+    -fx-background-radius: 10px 0px 0px 10px;
+    -fx-background-color: #00c2ff;
+    -fx-background-color: #c9d4e3;
+    -fx-background-color: #1e90ff;
+}
+
+.top-left {
+    -fx-background-radius: 0px 0px 0px 0px;
+    -fx-background-color: #00c2ff;
+    -fx-background-color: #c9d4e3;
+    -fx-background-color: #FFFF;
+}
+
+.bottom-left {
+    -fx-background-radius: 0px 0px 0px 0px;
+}
+
+.top-center {
+    -fx-background-radius: 0px 0px 0px 0px;
+}
+
+.right-top {
+    -fx-background-color: #59d5ff;
+    -fx-background-color: #FFFF;
+    -fx-background-radius: 0px 10px 0px 0px;
+}
+
+.bottom-right {
+    -fx-background-radius: 0px 0px 10px 0px;
+    -fx-background-color: #FFFF;
+}
+
+/*.chat-card*/
+/*{*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-background-radius: 7px;*/
+/*}*/
+/*.chat-card:hover*/
+/*{*/
+/*    -fx-background-color: #eceff5;*/
+/*}*/
+
+.online-contact-card:hover {
+    -fx-background-color: #f2f5f6;
+    -fx-background-radius: 7 ◘px;
+}
+
+JFXComboBox {
+    -fx-background-color: red;
+}
+
+.combo-box-base,
+.choice-box {
+    -fx-background-radius: 10px;
+    -fx-background-color: #eceff5;
+    -fx-padding: 1px; /* 4 8 4 8 */
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+}
+
+.combo-box > .context-menu,
+.choice-box > .context-menu {
+    /*-fx-background-radius: 10px;*/
+    /*-fx-background-color: #eceff5;*/
+    /*-fx-background-color:white;*/
+    /*-fx-background-radius: 5px;*/
+}
+
+.combo-box:hover,
+.choice-box:hover {
+    -fx-background-color: #dfe4ea;
+}
+
+.choice-box > .open-button > .arrow,
+.combo-box > .open-button > .arrow {
+    -fx-background-color: #575f69;
+    -fx-background-insets: 0 0 -1 0, 0;
+    -fx-padding: 0.166667em 0.333333em 0.166667em 0.333333em; /* 2 4 2 4 */
+    -fx-shape: "M 0 0 h 7 l -3.5 4 z";
+
+}
+
+.choice-box > .open-button,
+.combo-box > .arrow-button,
+.menu-button > .arrow-button {
+    -fx-padding: 0.5em 0.667em 0.5em 0.0em; /* 6 8 6 0 */
+    -fx-background-color: none;
+}
+
+.combo-box-popup > .list-view {
+    -fx-background-radius: 5px;
+}
+
+/*.scroll-bar > .increment-button,*/
+/*.scroll-bar > .decrement-button*/
+
+.scroll-bar > .thumb {
+    -fx-background-color: #eceff5;
+    -fx-padding: 0;
+}
+
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: none;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+
+}
+
+.list-cell {
+    -fx-padding: 5; /* 3 7 3 7 */
+
+    -fx-border-insets: 2px;
+    -fx-background-insets: 2px;
+}
+
+.list-cell:odd {
+    -fx-background: #FFFF;
+}
+
+.list-cell {
+    -fx-background: none;
+    -fx-background-color: white;
+    -fx-background-radius: 7px;
+    -fx-text-fill: none;
+    -fx-border-width: 0px;
+}
+
+.list-cell:filled {
+    -fx-background-color: #f5f8fd;
+    -fx-background-radius: 7px;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #dfe4ea;
+    -fx-background-radius: 7px;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #dfe4ea;
+    -fx-background-radius: 7px;
+}
+
+.toggle-button:hover{
+    -fx-background-color: #4aa7ff;
+    -fx-background-insets: 2px;
+}
+.toggle-button:armed
+{
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+    -fx-background-color: #0f74d7;
+}
+.toggle-button:selected
+{
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+    -fx-background-color: #006bd9;
+}
+.toggle-button
+{
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+    -fx-background-color: #1e90ff;
+}

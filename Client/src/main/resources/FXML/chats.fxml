@@ -15,14 +15,14 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.ChatsController">
+<GridPane maxWidth="1.7976931348623157E308" prefWidth="259.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.ChatsController">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="110.0" vgrow="NEVER" />
       <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
-      <RowConstraints fillHeight="false" maxHeight="1.7976931348623157E308" valignment="TOP" vgrow="NEVER" />
+      <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP" vgrow="ALWAYS" />
    </rowConstraints>
    <children>
       <ScrollPane fitToHeight="true" hbarPolicy="NEVER" pannable="true" vbarPolicy="NEVER">
@@ -31,15 +31,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="75.0" spacing="10.0" styleClass="online-contact-card" stylesheets="@../styling/main.css">
                      <children>
-                        <Circle fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0">
-                           <effect>
-                              <DropShadow height="4.0" radius="1.5" spread="0.7" width="4.0">
-                                 <color>
-                                    <Color red="0.5224999785423279" green="0.6477214694023132" blue="0.7815789580345154" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Circle>
+                        <Circle fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0" />
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Mahmoud Elsaqqa" textAlignment="CENTER" wrapText="true" />
                      </children>
                      <HBox.margin>

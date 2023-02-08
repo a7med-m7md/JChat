@@ -1,4 +1,4 @@
-AnchorPane 
+AnchorPane
 {
     -fx-background-color: white;
 }
@@ -34,6 +34,34 @@ AnchorPane
 {
     -fx-background-color : #39CEFF ;
 }
+.utility-Button
+{
+    -fx-background-radius: 7px;
+    -fx-background-color :  #eceff5;
+    -fx-border-width: 0;
+    -fx-text-fill: #586169;
+
+}
+.utility-Button:hover
+{
+    -fx-background-color : #dfe4ea;
+}
+.utility-Button:pressed
+{
+    -fx-background-color : #eceff5 ;
+}
+.message-bubble
+{
+    -fx-border-width: 0;
+    -fx-background-radius: 0 10 10 10;
+    /*-fx-background-radius: [10px,0px,10px,10px];*/
+
+}
+.message-bubble
+{
+    -fx-background-radius: 0 20 20 20;
+}
+
 .credentials-text-field {
     -fx-background-radius: 5px 5px 5px 5px;
 

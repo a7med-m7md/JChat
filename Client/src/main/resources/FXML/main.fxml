@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="root" stylesheets="@../styling/main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.MainController">
@@ -26,9 +30,131 @@
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <children>
-      <StackPane alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="64.0" styleClass="left-sidebar" stylesheets="@../styling/main.css">
+      <StackPane fx:id="sideBar" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefWidth="64.0" styleClass="left-sidebar" stylesheets="@../styling/main.css">
          <children>
-            <VBox alignment="TOP_CENTER" spacing="10.0" StackPane.alignment="CENTER" />
+            <GridPane StackPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints fillHeight="false" maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
+                     <children>
+                        <ToggleButton fx:id="chatsToggle" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onMouseClicked="#switchChats" prefHeight="70.0" prefWidth="70.0" selected="true" styleClass="tab-button" stylesheets="@../styling/main.css">
+                           <graphic>
+                              <VBox alignment="CENTER" spacing="9.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="55.0" textFill="WHITE">
+                                       <graphic>
+                                          <SVGPath content="M12 2C6.47715 2 2 6.47715 2 12C2 13.8153 2.48451 15.5196 3.33127 16.9883C3.50372 17.2874 3.5333 17.6516 3.38777 17.9647L2.53406 19.8016C2.00986 20.7933 2.72736 22 3.86159 22H12C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" fill="WHITE" scaleX="1.2" scaleY="1.2" scaleZ="1.2" />
+                                       </graphic>
+                                    </Label>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Chats" textAlignment="CENTER" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </graphic>
+                           <padding>
+                              <Insets top="8.0" />
+                           </padding>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="tabs" />
+                           </toggleGroup>
+                        </ToggleButton>
+                        <ToggleButton fx:id="groupsToggle" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#switchGroups" prefHeight="70.0" prefWidth="70.0" styleClass="tab-button" stylesheets="@../styling/main.css" toggleGroup="$tabs">
+                           <graphic>
+                              <VBox alignment="CENTER" spacing="9.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="55.0" textFill="WHITE">
+                                       <graphic>
+                                          <SVGPath content="M4,16 L15,16.001 C16.0538182,16.001 16.9181157,16.8164855 16.9945109,17.8516842 L17,18.001 L17,20.5 C16.999,24.7 12.713,26 9.5,26 C6.35126,26 2.1710504,24.75148 2.00510151,20.7485328 L2,20.5 L2,18 C2,16.9461818 2.81639669,16.0818843 3.85080841,16.0054891 L4,16 Z M17.22,16.001 L24,16 C25.0538182,16 25.9181157,16.8163967 25.9945109,17.8508084 L26,18 L26,20 C25.999,23.759 22.57,25 20,25 C18.942,25 17.741,24.785 16.691,24.275 C17.4432667,23.3808667 17.9315867,22.2428222 17.9933526,20.8112714 L18,20.5 L18,18.001 C18,17.2991818 17.7512397,16.6601736 17.3461307,16.1500909 L17.22,16.001 L24,16 L17.22,16.001 Z M9.5,3 C12.537,3 15,5.463 15,8.5 C15,11.537 12.537,14 9.5,14 C6.463,14 4,11.537 4,8.5 C4,5.463 6.463,3 9.5,3 Z M20.5,5 C22.985,5 25,7.015 25,9.5 C25,11.985 22.985,14 20.5,14 C18.015,14 16,11.985 16,9.5 C16,7.015 18.015,5 20.5,5 Z" fill="WHITE" scaleX="1.2" scaleY="1.2" scaleZ="1.2" />
+                                       </graphic>
+                                    </Label>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Groups" textAlignment="CENTER" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </graphic>
+                           <padding>
+                              <Insets top="8.0" />
+                           </padding>
+                        </ToggleButton>
+                        <ToggleButton fx:id="contactsToggle" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#switchContactsList" prefHeight="70.0" prefWidth="70.0" styleClass="tab-button" stylesheets="@../styling/main.css" toggleGroup="$tabs">
+                           <graphic>
+                              <VBox alignment="CENTER" spacing="9.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="55.0" textFill="WHITE">
+                                       <graphic>
+                                          <SVGPath content="M6.25 3C4.45507 3 3 4.45507 3 6.25V14.75C3 16.5449 4.45507 18 6.25 18H14.75C16.5449 18 18 16.5449 18 14.75V6.25C18 4.45507 16.5449 3 14.75 3H6.25ZM12.75 7.5C12.75 8.74264 11.7426 9.75 10.5 9.75C9.25736 9.75 8.25 8.74264 8.25 7.5C8.25 6.25736 9.25736 5.25 10.5 5.25C11.7426 5.25 12.75 6.25736 12.75 7.5ZM13.5 10.75C14.3284 10.75 15 11.4216 15 12.25V12.75C15 13.2457 14.9136 13.61 14.7461 13.9106C14.5779 14.2127 14.3158 14.4724 13.9277 14.7393C13.1952 15.2429 12.0702 15.5 10.5 15.5C9.17974 15.5 8.05475 15.2429 7.25982 14.7393C6.84149 14.4743 6.53039 14.2158 6.32189 13.9097C6.11722 13.6092 6 13.2459 6 12.75V12.25C6 11.4216 6.67157 10.75 7.5 10.75H13.5Z" fill="WHITE" fillRule="EVEN_ODD" scaleX="1.6" scaleY="1.6" scaleZ="1.6" />
+                                       </graphic>
+                                    </Label>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Contacts" textAlignment="CENTER" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </graphic>
+                           <padding>
+                              <Insets top="8.0" />
+                           </padding>
+                        </ToggleButton>
+                        <ToggleButton fx:id="requestsToggle" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#switchRequests" prefHeight="70.0" prefWidth="70.0" styleClass="tab-button" stylesheets="@../styling/main.css" toggleGroup="$tabs">
+                           <graphic>
+                              <VBox alignment="CENTER" spacing="9.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="55.0" textFill="WHITE">
+                                       <graphic>
+                                          <SVGPath content="M10.4285652,19.9240398 L13.9910618,18.4118497 C14.1243887,19.2921035 13.6531461,20.1845714 12.7958183,20.5484854 C11.9384904,20.9123995 10.9691501,20.6314228 10.4285652,19.9240398 Z M15.8612753,2.09351958 C17.9470123,3.23306377 19.5127784,4.69618867 20.5430129,6.48060721 C21.5732475,8.26502575 22.0574677,10.3525815 22.0014735,12.7286547 C21.9917149,13.1427533 21.6481107,13.4705357 21.2340121,13.4607771 C20.8199136,13.4510185 20.4921312,13.1074143 20.5018898,12.6933157 C20.5516452,10.5819824 20.130407,8.76595272 19.2439748,7.23060721 C18.3575427,5.69526171 16.995434,4.42244386 15.142088,3.40986662 C14.7785888,3.21126852 14.64491,2.75559862 14.8435081,2.39209942 C15.0421062,2.02860022 15.4977761,1.89492147 15.8612753,2.09351958 Z M6.71143523,6.51507125 C9.57318945,5.24093618 12.9155777,6.44569503 14.3109282,9.26058763 L14.4092208,9.47000529 L15.6965645,12.3618514 L17.3948846,13.8316167 C17.487575,13.9118765 17.5678872,14.0052793 17.6610082,14.1564119 L17.7197022,14.2707162 C17.999089,14.902012 17.7138105,15.6402661 17.082516,15.9196558 L6.75587375,20.4898206 C6.59654468,20.5603335 6.42423407,20.5967586 6.24999915,20.5967586 C5.55964321,20.5967586 4.99999915,20.0371145 4.99999923,19.3471059 L4.99891404,17.0041673 L3.7565386,14.2128401 C2.44303472,11.2626621 3.76571579,7.82659005 6.71143523,6.51507125 Z M15.6237146,5.6941638 C16.5907076,6.2214405 17.3656967,6.9887979 17.9399727,7.98347319 C18.5142488,8.97814848 18.7913052,10.0329874 18.7644437,11.1340663 C18.7543418,11.5481566 18.4104659,11.8756539 17.9963756,11.8655519 C17.5822852,11.85545 17.2547879,11.5115741 17.2648899,11.0974838 C17.2849329,10.2758998 17.0791806,9.49253752 16.6409346,8.73347319 C16.2026886,7.97440887 15.6271532,7.40454099 14.905619,7.01110678 C14.5419553,6.81281017 14.4078987,6.35725128 14.6061953,5.99358752 C14.8044919,5.62992376 15.2600508,5.4958672 15.6237146,5.6941638 Z" fill="WHITE" scaleX="1.4" scaleY="1.5" scaleZ="1.4" />
+                                       </graphic>
+                                    </Label>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Requests" textAlignment="CENTER" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </graphic>
+                           <padding>
+                              <Insets top="8.0" />
+                           </padding>
+                        </ToggleButton>
+                        <ToggleButton fx:id="accountToggle" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="221.0" mnemonicParsing="false" onMouseClicked="#switchAccountSettings" prefHeight="70.0" prefWidth="70.0" styleClass="tab-button" stylesheets="@../styling/main.css" toggleGroup="$tabs">
+                           <graphic>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="55.0" textFill="WHITE">
+                                       <graphic>
+                                          <SVGPath content="M35.7502,28 C38.0276853,28 39.8876578,29.7909151 39.9950978,32.0427546 L40,32.2487 L40,33 C40,36.7555 38.0583,39.5669 35.0798,41.3802 C32.1509,43.1633 28.2139,44 24,44 C19.7861,44 15.8491,43.1633 12.9202,41.3802 C10.0319285,39.6218485 8.11862909,36.9249713 8.00532378,33.3388068 L8,33 L8,32.2489 C8,29.9703471 9.79294995,28.1122272 12.0440313,28.0048972 L12.2499,28 L35.7502,28 Z M24,4 C29.5228,4 34,8.47715 34,14 C34,19.5228 29.5228,24 24,24 C18.4772,24 14,19.5228 14,14 C14,8.47715 18.4772,4 24,4 ZM35.7502,28 C38.0276853,28 39.8876578,29.7909151 39.9950978,32.0427546 L40,32.2487 L40,33 C40,36.7555 38.0583,39.5669 35.0798,41.3802 C32.1509,43.1633 28.2139,44 24,44 C19.7861,44 15.8491,43.1633 12.9202,41.3802 C10.0319285,39.6218485 8.11862909,36.9249713 8.00532378,33.3388068 L8,33 L8,32.2489 C8,29.9703471 9.79294995,28.1122272 12.0440313,28.0048972 L12.2499,28 L35.7502,28 Z M24,4 C29.5228,4 34,8.47715 34,14 C34,19.5228 29.5228,24 24,24 C18.4772,24 14,19.5228 14,14 C14,8.47715 18.4772,4 24,4 Z" fill="WHITE" scaleX="0.7" scaleY="0.7" scaleZ="0.8" />
+                                       </graphic>
+                                    </Label>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Account" textAlignment="CENTER" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="3.0" />
+                           </padding>
+                        </ToggleButton>
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="70.0" prefWidth="70.0" styleClass="toggle-button" stylesheets="@../styling/main.css" text="Button" GridPane.rowIndex="2">
+                     <graphic>
+                        <VBox alignment="CENTER" spacing="9.0">
+                           <children>
+                              <Label alignment="CENTER" prefWidth="55.0" textFill="WHITE">
+                                 <graphic>
+                                    <SVGPath content="M12,4.35416625 L12,4.99998545 L13.7452668,5 C14.1245178,5 14.4381068,5.28151791 14.488266,5.64711331 L14.4952658,5.74875738 L14.502,10 L13.002,10 L12.9965084,6.5 L12,6.49998545 L12.0005455,11.004946 L13.002,11.0039854 L13.003,11 L14.504,11 L14.503,11.0039854 L19.442,11.0039854 L17.7195786,9.28023872 C17.4533579,9.0139263 17.4292236,8.59725845 17.6471286,8.30368449 L17.7197613,8.21957857 C17.9860737,7.95335788 18.4027416,7.9292236 18.6963155,8.14712863 L18.7804214,8.21976128 L21.7770341,11.2174065 C22.043008,11.4834721 22.0673769,11.8996744 21.850009,12.19325 L21.7775464,12.2773711 L18.7809337,15.2808167 C18.4883742,15.5740433 18.0135008,15.5745841 17.7202742,15.2820246 C17.4537046,15.0160615 17.4290241,14.5994256 17.646544,14.3055662 L17.7190663,14.2213652 L19.432,12.5039854 L12.0005455,12.504946 L12,17.0009854 L13.0139075,17.0014475 L13.007,13.5 L14.508,13.5 L14.5151512,17.7502049 C14.5157801,18.130345 14.23351,18.4448141 13.8670368,18.4945857 L13.7651512,18.5014475 L12,18.5009854 L12,19.25 C12,19.7163948 11.5788385,20.0696886 11.1195525,19.9885685 L2.61955246,18.4872805 C2.26120966,18.4239892 2,18.1126012 2,17.748712 L2,5.75 C2,5.38269391 2.26601447,5.06943276 2.62846599,5.00991252 L11.128466,3.61407877 C11.5850805,3.53909548 12,3.89143598 12,4.35416625 Z M8.50214976,11.5 C7.94867773,11.5 7.5,11.9486777 7.5,12.5021498 C7.5,13.0556218 7.94867773,13.5042995 8.50214976,13.5042995 C9.05562179,13.5042995 9.50429953,13.0556218 9.50429953,12.5021498 C9.50429953,11.9486777 9.05562179,11.5 8.50214976,11.5 Z" fill="WHITE" scaleX="1.2" scaleY="1.2" scaleZ="1.2" />
+                                 </graphic>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="sign out" textAlignment="CENTER" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+                  <ImageView fitHeight="58.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/logoIcon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
          </children>
          <padding>
             <Insets top="10.0" />
@@ -81,15 +207,7 @@
                               <Insets left="8.0" />
                            </GridPane.margin>
                         </Label>
-                        <Circle fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0">
-                           <effect>
-                              <DropShadow height="4.0" radius="1.5" spread="0.7" width="4.0">
-                                 <color>
-                                    <Color red="0.5224999785423279" green="0.6477214694023132" blue="0.7815789580345154" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Circle>
+                        <Circle fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0" />
                         <ComboBox fx:id="userStatus" stylesheets="@../styling/main.css" GridPane.columnIndex="2" />
                      </children>
                      <padding>

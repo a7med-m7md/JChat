@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="signInPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="434.0" styleClass="background" stylesheets="@../styling/styling.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.controllers.SignUp2Controller">
+<AnchorPane fx:id="signUp2Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="434.0" styleClass="background" stylesheets="@../styling/styling.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.SignUp2Controller">
    <children>
       <VBox layoutX="58.0" layoutY="58.0" prefWidth="320.0" spacing="30.0" stylesheets="@../styling/styling.css">
          <padding>
@@ -45,7 +45,7 @@
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="signUpPhoneNumberField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="280.0" promptText="Enter you email address" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                        <JFXTextField fx:id="signUpEmailField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="280.0" promptText="example@gmail.com" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>
@@ -89,7 +89,7 @@
                                     <Font name="Segoe UI Semibold" size="12.0" />
                                  </font>
                               </Label>
-                              <JFXComboBox fx:id="genderComboBox" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="186.0" promptText="Sex" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                              <JFXComboBox fx:id="genderComboBox" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="186.0" promptText="Ex" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
                                  <effect>
                                     <DropShadow spread="0.02">
                                        <color>
@@ -109,7 +109,7 @@
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dateOfBirth" prefHeight="42.0" prefWidth="300.0" stylesheets="@../styling/DatepickerStyling.CSS">
+                        <DatePicker fx:id="dateOfBirth" prefHeight="42.0" prefWidth="300.0" promptText="DD/MM/YYYY" stylesheets="@../styling/DatepickerStyling.CSS">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

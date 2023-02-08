@@ -11,12 +11,14 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -41,10 +43,9 @@ public class LoginController implements Initializable {
     private Button signInBtn;
 
 
-
     @FXML
     void handleSignIn(MouseEvent event) {
-        if (validateFields()) {
+//        if (validateFields()) {
             /*
             //Transition
             // To
@@ -52,8 +53,21 @@ public class LoginController implements Initializable {
             // Home Screen chats
             // Here
              */
+
+            try {
+                Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                Stage homeStage = new Stage();
+                homeStage.setScene(home);
+                homeStage.setResizable(true);
+                homeStage.show();
+                stage.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("Valid");
-        } else System.out.println("not valid");
+//        } else System.out.println("not valid");
     }
 
 

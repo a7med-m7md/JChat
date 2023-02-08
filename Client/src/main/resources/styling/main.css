@@ -179,3 +179,26 @@ JFXComboBox {
     -fx-background-color: #dfe4ea;
     -fx-background-radius: 7px;
 }
+
+.toggle-button:hover{
+    -fx-background-color: #4aa7ff;
+    -fx-background-insets: 2px;
+}
+.toggle-button:armed
+{
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+    -fx-background-color: #0f74d7;
+}
+.toggle-button:selected
+{
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+    -fx-background-color: #006bd9;
+}
+.toggle-button
+{
+    -fx-background-radius: 5px;
+    -fx-background-insets: 2px;
+    -fx-background-color: #1e90ff;
+}

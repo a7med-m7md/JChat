@@ -8,6 +8,8 @@ public class Contact {
     long id;
     Image avatar;
 
+    String group;
+
     public Contact(String displayName) {
         this.displayName = displayName;
         this.avatar = new Image(getClass().getResourceAsStream("/images/error.png"));

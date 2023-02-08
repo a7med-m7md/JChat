@@ -32,5 +32,6 @@ public class LoginServiceImp implements LoginService {
             throw new CredentialException("Phone Or Password May Be Invalid");
         }
         userDao.delete(id);
+        
     }
 }

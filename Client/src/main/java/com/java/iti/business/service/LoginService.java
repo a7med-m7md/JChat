@@ -1,6 +1,6 @@
 package com.java.iti.business.service;
 
-import com.java.iti.business.dtos.UserDto;
+import Client.business.dtos.UserDto;
 
 public interface LoginService {
     public boolean logInto(UserDto dto);

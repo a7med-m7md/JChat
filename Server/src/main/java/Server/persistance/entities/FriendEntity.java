@@ -3,6 +3,7 @@ package Server.persistance.entities;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+//todo Change it to be model
 public class FriendEntity {
     private String mobile;
     private String name;

@@ -5,6 +5,7 @@ import Models.LoginEntity;
 import Models.Message;
 import Models.ClientInt;
 import Models.ServerInt;
+import exceptions.UserNotFoundException;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -12,7 +13,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class RMIConnection {
-    public static void logIn(String phoneNumber, String password) {
+    public static void logIn(String phoneNumber, String password) throws UserNotFoundException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);

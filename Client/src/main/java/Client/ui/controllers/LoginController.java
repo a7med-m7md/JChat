@@ -5,6 +5,7 @@ import Client.network.RMIConnection;
 import Client.ui.controllerutils.PhoneNumberValidator;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
+import exceptions.UserNotFoundException;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -47,7 +48,24 @@ public class LoginController implements Initializable {
     @FXML
     void handleSignIn(MouseEvent event) {
         if (validateFields()) {
-            RMIConnection.logIn(phoneNumberField.getText(),passwordField.getText());
+            try {
+                RMIConnection.logIn(phoneNumberField.getText(), passwordField.getText());
+                //todo populate current user model with phone number
+                Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                Stage homeStage = new Stage();
+                homeStage.setScene(home);
+                homeStage.setResizable(true);
+                homeStage.show();
+                stage.close();
+
+            } catch (UserNotFoundException e) {
+                System.out.println("wrong credintials");
+                //todo implement usernotfound gui error
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             /*
             //Transition
             // To
@@ -56,21 +74,9 @@ public class LoginController implements Initializable {
             // Here
              */
 
-                try {
-                    Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
-                    Node node = (Node) event.getSource();
-                    Stage stage = (Stage) node.getScene().getWindow();
-                    Stage homeStage = new Stage();
-                    homeStage.setScene(home);
-                    homeStage.setResizable(true);
-                    homeStage.show();
-                    stage.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                System.out.println("Valid");
+            System.out.println("Valid");
 
-        } else System.out.println("not valid");
+        } else System.out.println("not valid fields");
     }
 
 

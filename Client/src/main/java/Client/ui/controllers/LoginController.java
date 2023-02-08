@@ -1,6 +1,7 @@
 package Client.ui.controllers;
 
 
+import Client.network.RMIConnection;
 import Client.ui.controllerutils.PhoneNumberValidator;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -45,7 +46,8 @@ public class LoginController implements Initializable {
 
     @FXML
     void handleSignIn(MouseEvent event) {
-//        if (validateFields()) {
+        if (validateFields()) {
+            RMIConnection.logIn(phoneNumberField.getText(),passwordField.getText());
             /*
             //Transition
             // To
@@ -54,20 +56,21 @@ public class LoginController implements Initializable {
             // Here
              */
 
-            try {
-                Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
-                Node node = (Node) event.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                Stage homeStage = new Stage();
-                homeStage.setScene(home);
-                homeStage.setResizable(true);
-                homeStage.show();
-                stage.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("Valid");
-//        } else System.out.println("not valid");
+                try {
+                    Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
+                    Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    Stage homeStage = new Stage();
+                    homeStage.setScene(home);
+                    homeStage.setResizable(true);
+                    homeStage.show();
+                    stage.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("Valid");
+
+        } else System.out.println("not valid");
     }
 
 

@@ -1,8 +1,8 @@
 package com.java.iti.business.service;
 
-import com.java.iti.business.dtos.UserDto;
+import Client.business.dtos.UserDto;
+import Client.model.user.User;
 import com.java.iti.exception.CredentialException;
-import com.java.iti.model.user.User;
 
 public class LoginServiceImp implements LoginService {
 

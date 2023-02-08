@@ -1,10 +1,9 @@
 package com.java.iti.business.services.loginService;
 
-import com.java.iti.business.dtos.UserDto;
+import Models.LoginEntity;
+import Server.persistance.dao.UserDao;
+import Server.persistance.entities.UserEntity;
 import com.java.iti.exception.CredentialException;
-import com.java.iti.network.interfaces.LoginEntity;
-import com.java.iti.persistance.entities.UserEntity;
-import com.java.iti.persistance.dao.UserDao;
 
 import java.util.Optional;
 

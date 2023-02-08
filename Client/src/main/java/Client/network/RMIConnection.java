@@ -19,7 +19,7 @@ public class RMIConnection {
             ServerInt user = (ServerInt)registry.lookup("rmi://localhost:2233/loginService");
             ClientInt clientInt = new Message();
             user.connect(clientInt);
-            System.out.println(user.login(new LoginEntity("011014", "1234password")));
+            user.login(new LoginEntity("011014", "1234password"));
         } catch (NotBoundException e) {
             e.printStackTrace();
         } catch (RemoteException e) {

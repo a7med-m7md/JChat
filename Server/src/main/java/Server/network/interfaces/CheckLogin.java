@@ -3,6 +3,7 @@ package Server.network.interfaces;
 import Models.ClientInt;
 import Models.LoginEntity;
 import Models.ServerInt;
+import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
 
 import java.rmi.Remote;
@@ -14,16 +15,16 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
     }
 
     @Override
-    public String login(LoginEntity userInfo) throws RemoteException {
+    public void login(LoginEntity userInfo) throws RemoteException {
         UserDao user = new UserDao();
         System.out.println(userInfo.getMobile());
         System.out.println(userInfo.getPassword());
         if(user.userLogin(userInfo).isPresent()){
             System.out.println("Logged in successfully");
-            return "Logged in successfully";
+        }else{
+            System.out.println("Can't login");
+            throw new UserNotFoundException();
         }
-        System.out.println("Can't login");
-        return "Can't login";
     }
 
     @Override

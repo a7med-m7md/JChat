@@ -14,7 +14,6 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.LoginController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="540.0" pickOnBounds="true" preserveRatio="true">
@@ -26,7 +25,7 @@
          <children>
             <AnchorPane fx:id="signInPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="426.0" styleClass="background" stylesheets="@../styling/styling.css">
                <children>
-                  <VBox layoutX="58.0" layoutY="58.0" prefWidth="320.0" spacing="30.0">
+                  <VBox layoutX="58.0" layoutY="58.0" prefWidth="320.0" spacing="10.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -45,6 +44,7 @@
                               </Label>
                            </children>
                         </VBox>
+                        <VBox fx:id="errorMessageContainer" layoutX="20.0" layoutY="20.0" spacing="11.0" />
                         <VBox maxHeight="1.7976931348623157E308" prefWidth="173.0" spacing="28.0" VBox.vgrow="ALWAYS">
                            <children>
                               <VBox spacing="7.0">

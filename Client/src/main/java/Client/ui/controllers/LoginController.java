@@ -2,6 +2,7 @@ package Client.ui.controllers;
 
 
 import Client.network.RMIConnection;
+import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PhoneNumberValidator;
 import Models.ClientInt;
 import com.jfoenix.controls.JFXTextField;
@@ -21,17 +22,23 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
     @FXML
     private StackPane parentContainer;
+
+    @FXML
+    private VBox errorMessageContainer;
 
     @FXML
     private AnchorPane signInPane;
@@ -44,7 +51,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button signInBtn;
-
 
     @FXML
     void handleSignIn(MouseEvent event) {
@@ -63,24 +69,17 @@ public class LoginController implements Initializable {
                 stage.close();
 
             } catch (UserNotFoundException e) {
-                System.out.println("wrong credintials");
-                //todo implement usernotfound gui error
-            } catch (IOException e) {
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password"));
+                System.out.println("user not found");
+            } catch (RemoteException e) {
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down"));
+                System.out.println("server down");
+            }
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            /*
-            //Transition
-            // To
-            // User
-            // Home Screen chats
-            // Here
-             */
-
-            System.out.println("Valid");
-
         } else System.out.println("not valid fields");
     }
-
 
     @FXML
     void handleSignUp(MouseEvent event) {
@@ -108,30 +107,29 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+        private boolean validateFields () {
+            boolean validationFlag = true;
 
-    private boolean validateFields() {
-        boolean validationFlag = true;
+            //Required Field Validation
+            RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
+            requiredPassword.setMessage("Password can't be empty");
+            passwordField.getValidators().add(requiredPassword);
 
-        //Required Field Validation
-        RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
-        requiredPassword.setMessage("Password can't be empty");
-        passwordField.getValidators().add(requiredPassword);
+            //Phone Number Validation
+            PhoneNumberValidator validNumber = new PhoneNumberValidator();
+            validNumber.setMessage("Enter a valid phone number");
+            phoneNumberField.getValidators().add(validNumber);
 
-        //Phone Number Validation
-        PhoneNumberValidator validNumber = new PhoneNumberValidator();
-        validNumber.setMessage("Enter a valid phone number");
-        phoneNumberField.getValidators().add(validNumber);
-
-        //Checking Fields
-        if (!phoneNumberField.validate()) {
-            validationFlag = false;
+            //Checking Fields
+            if (!phoneNumberField.validate()) {
+                validationFlag = false;
 //            validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-        }
-        if (!passwordField.validate()) {
+            }
+            if (!passwordField.validate()) {
 //            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-            validationFlag = false;
+                validationFlag = false;
+            }
+            return validationFlag;
         }
-        return validationFlag;
-    }
 
-}
+    }

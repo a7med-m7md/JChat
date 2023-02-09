@@ -13,7 +13,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class RMIConnection {
-    public static void logIn(String phoneNumber, String password) throws UserNotFoundException {
+    public static void logIn(String phoneNumber, String password) throws UserNotFoundException, RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
@@ -21,8 +21,6 @@ public class RMIConnection {
             user.login(new LoginEntity(phoneNumber, password));
 
         } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

@@ -1,4 +1,4 @@
-module Client {
+module com.java.iti {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

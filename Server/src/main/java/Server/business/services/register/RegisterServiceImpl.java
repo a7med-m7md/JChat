@@ -1,8 +1,8 @@
 package Server.business.services.register;
 
+import Models.UserEntity;
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
-import Server.persistance.entities.UserEntity;
 import Server.persistance.dao.UserDao;
 import Server.business.dtos.UserDto;
 
@@ -28,5 +28,15 @@ public class RegisterServiceImpl implements RegisterService{
             UserEntity userEntity = userMapper.domainToEntity(userDto);
             userDao.save(userEntity);
             return userDto;
+    }
+
+    @Override
+    public boolean isNewUser(String phone) {
+
+        Optional<UserEntity> optionalEntity = userDao.findByMobile(phone);
+        if (optionalEntity.isEmpty())
+            return true;
+        else
+            return false;
     }
 }

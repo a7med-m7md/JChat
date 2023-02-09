@@ -1,6 +1,6 @@
 package Server.business.mappers;
 
-import Server.persistance.entities.UserEntity;
+import Models.UserEntity;
 import Server.business.dtos.UserDto;
 
 public class UseMapperImpl implements UserMapper{

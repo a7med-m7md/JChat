@@ -6,4 +6,5 @@ public class UserNotFoundException extends RemoteException {
     public UserNotFoundException(){
         super("User not found exception");
     }
+
 }

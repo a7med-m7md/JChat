@@ -6,4 +6,6 @@ public interface RegisterService {
     boolean isNewUser(int id);
 
     Server.business.dtos.UserDto register(UserDto userDto);
+
+    boolean isNewUser(String phone);
 }

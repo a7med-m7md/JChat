@@ -6,4 +6,5 @@ module SharedUtilities {
     exports Models;
     exports Services;
     exports exceptions;
+    exports Models.user;
 }

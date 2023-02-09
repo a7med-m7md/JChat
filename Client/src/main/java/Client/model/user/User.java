@@ -1,5 +1,6 @@
 package Client.model.user;
 
+
 public class User {
     private long id;
     private String mobile;

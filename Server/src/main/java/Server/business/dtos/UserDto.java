@@ -1,7 +1,8 @@
 package Server.business.dtos;
 
-import Server.business.model.user.Gender;
-import Server.business.model.user.UserStatus;
+
+import Models.user.Gender;
+import Models.user.UserStatus;
 
 public class UserDto {
     private long id;

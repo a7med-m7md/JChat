@@ -1,8 +1,8 @@
 package com.java.iti.business.services.loginService;
 
 import Models.LoginEntity;
+import Models.UserEntity;
 import Server.persistance.dao.UserDao;
-import Server.persistance.entities.UserEntity;
 import com.java.iti.exception.CredentialException;
 
 import java.util.Optional;

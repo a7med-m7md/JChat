@@ -15,13 +15,13 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
     }
 
     @Override
-    public void login(LoginEntity userInfo) throws RemoteException {
+    public void login(LoginEntity userInfo) throws UserNotFoundException {
         UserDao user = new UserDao();
         System.out.println(userInfo.getMobile());
         System.out.println(userInfo.getPassword());
-        if(user.userLogin(userInfo).isPresent()){
+        if (user.userLogin(userInfo).isPresent()) {
             System.out.println("Logged in successfully");
-        }else{
+        } else {
             System.out.println("Can't login");
             throw new UserNotFoundException();
         }

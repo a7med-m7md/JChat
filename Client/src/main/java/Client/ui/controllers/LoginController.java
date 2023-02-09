@@ -3,6 +3,7 @@ package Client.ui.controllers;
 
 import Client.network.RMIConnection;
 import Client.ui.controllerutils.PhoneNumberValidator;
+import Models.ClientInt;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import exceptions.UserNotFoundException;
@@ -49,7 +50,8 @@ public class LoginController implements Initializable {
     void handleSignIn(MouseEvent event) {
         if (validateFields()) {
             try {
-                RMIConnection.logIn(phoneNumberField.getText(), passwordField.getText());
+                ClientInt c = (ClientInt)RMIConnection.logIn(phoneNumberField.getText(), passwordField.getText());
+                System.out.println(c.receiveMSG());
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();

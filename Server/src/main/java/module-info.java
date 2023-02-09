@@ -10,5 +10,7 @@ module Server {
 
     opens Server to javafx.fxml;
     exports Server;
+    exports Server.persistance.entities;
+    exports Server.business.model.user;
 //    exports Server.network.interfaces;
 }

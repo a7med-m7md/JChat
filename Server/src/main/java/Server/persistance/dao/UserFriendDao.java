@@ -96,8 +96,9 @@ public class UserFriendDao implements UserFriendDaoInt{
     public void acceptRequest(String myMobileNum, String friendNum) throws RemoteException {
         final String SQL = "UPDATE friendships SET status = ? WHERE receiver_mobile = ? AND sender_mobile = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
-            preparedStatement.setString(1, myMobileNum);
-            preparedStatement.setString(2, friendNum);
+            preparedStatement.setString(1, "ACCEPTED");
+            preparedStatement.setString(2, myMobileNum);
+            preparedStatement.setString(3, friendNum);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

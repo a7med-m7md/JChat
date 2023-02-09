@@ -15,7 +15,7 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
     }
 
     @Override
-    public void login(LoginEntity userInfo) throws RemoteException {
+    public void login(LoginEntity userInfo) throws RemoteException, UserNotFoundException {
         UserDao user = new UserDao();
         System.out.println(userInfo.getMobile());
         System.out.println(userInfo.getPassword());

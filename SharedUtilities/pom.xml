@@ -11,6 +11,14 @@
 
     <artifactId>SharedUtilities</artifactId>
     <version>1.0-SNAPSHOT</version  >
+    <dependencies>
+        <dependency>
+            <groupId>com.java.iti</groupId>
+            <artifactId>Server</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <groupId>com.java.iti</groupId>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

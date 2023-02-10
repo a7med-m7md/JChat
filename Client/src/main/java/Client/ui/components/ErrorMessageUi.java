@@ -34,7 +34,7 @@ public class ErrorMessageUi extends GridPane {
         columnConstraints0.setHgrow(javafx.scene.layout.Priority.ALWAYS);
         columnConstraints0.setMaxWidth(Double.MAX_VALUE);
 
-        rowConstraints.setMinHeight(10.0);
+        rowConstraints.setMinHeight(30.0);
         rowConstraints.setPrefHeight(30.0);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 

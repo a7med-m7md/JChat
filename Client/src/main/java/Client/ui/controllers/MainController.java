@@ -96,6 +96,16 @@ public class MainController implements Initializable {
 
     @FXML
     void switchContactsList(MouseEvent event) {
+        if (!tabPanes.containsKey("contacts")) {
+            try {
+                Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
+                tabPanes.put("contacts", contactsPane);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Parent contactsPane = tabPanes.get("contacts");
+        animateTabs(contactsPane);
 
     }
 

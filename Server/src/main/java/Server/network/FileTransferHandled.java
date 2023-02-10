@@ -4,11 +4,14 @@ import model.FileEntity;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileTransferHandled implements Runnable{
     Socket clientSocket;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
+    Map<Integer,Socket> clientsWithId = new HashMap<>();
     public FileTransferHandled(Socket clientSocket){
         this.clientSocket = clientSocket;
         try{
@@ -37,9 +40,9 @@ public class FileTransferHandled implements Runnable{
     public void run() {
 
             try {
-                // Wait for a client to connect and when they do create a socket to communicate with them.
-                // Stream to receive data from the client through the socket.
-                // Read the size of the file name so know when to stop reading.
+                //get the user id and then store it in the map with the socket object
+                int userId = dataInputStream.readInt();
+                clientsWithId.put(userId,clientSocket);
                 int fileNameLength = dataInputStream.readInt();
                 System.out.println("aedl ->"+fileNameLength);
                 if (fileNameLength > 0) {
@@ -58,7 +61,6 @@ public class FileTransferHandled implements Runnable{
                         // Read from the input stream into the fileContentBytes array.
                         dataInputStream.readFully(fileContentBytes, 0, fileContentBytes.length);
                         //TODO -> then we need to create logic here which is used to store file in server or db then send it to the receiver client
-                        //FileEntity newFileEntity = new FileEntity(id,fileName,fileContentBytes,getFileExtension(fileName));
                         File fileToDownload = new File(fileName);
                         fileToDownload.createNewFile();
                         FileOutputStream fileOutputStream = new FileOutputStream(fileToDownload);

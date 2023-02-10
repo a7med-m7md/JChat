@@ -20,21 +20,23 @@ public class SocketConnection {
     private void startConnection() {
             //use thread with waiting operation here to avoid freezing the current thread
             new Thread(() -> {
-                try {
-                    serverSocket
-                            = new ServerSocket(SOCKET_SERVER_PORT);
-                    System.out.println(
-                            "Server is Starting in Port 1200");
-                    clientSocket = serverSocket.accept();
-                    receiveFile(clientSocket);
-                    System.out.println("Connected");
-                    dataInputStream = new DataInputStream(
-                            clientSocket.getInputStream());
-                    dataOutputStream = new DataOutputStream(
-                            clientSocket.getOutputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    //closeResources();
+                while (true){
+                    try {
+                        serverSocket
+                                = new ServerSocket(SOCKET_SERVER_PORT);
+                        System.out.println(
+                                "Server is Starting in Port 1200");
+                        clientSocket = serverSocket.accept();
+                        receiveFile(clientSocket);
+                        System.out.println("Connected");
+                        dataInputStream = new DataInputStream(
+                                clientSocket.getInputStream());
+                        dataOutputStream = new DataOutputStream(
+                                clientSocket.getOutputStream());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        //closeResources();
+                    }
                 }
             }).start();
     }

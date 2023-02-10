@@ -28,7 +28,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
@@ -63,7 +65,6 @@ public class LoginController implements Initializable {
                 currentUserAccount.populateCurrentUserData(loggedInUser);
                 System.out.println("Connnected");
                 RMIClientServices.registerInServer();
-
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();

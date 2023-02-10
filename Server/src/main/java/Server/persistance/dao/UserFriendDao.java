@@ -1,7 +1,7 @@
 package Server.persistance.dao;
 
 import Server.persistance.ConnectionManager;
-import Server.persistance.entities.FriendEntity;
+import model.FriendEntity;
 
 import java.rmi.RemoteException;
 import java.sql.Connection;

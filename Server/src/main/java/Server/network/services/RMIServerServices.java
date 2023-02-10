@@ -89,7 +89,6 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
         GroupDao groupDao = new GroupDao();
         GroupMapper groupMapper = new GroupMapperImp();
         List<GroupEntity> groupList = groupDao.getUserGroups(userId);
-
         return groupList;
     }
 }

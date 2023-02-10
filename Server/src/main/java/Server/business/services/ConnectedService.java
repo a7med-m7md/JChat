@@ -12,7 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class ConnectedService extends UnicastRemoteObject implements ServerConnection {
     ObservableMap<String, ClientServices> clients = FXCollections.observableHashMap();
 
-    protected ConnectedService() throws RemoteException {
+    public ConnectedService() throws RemoteException {
     }
 
     public ObservableMap<String, ClientServices> getClients() {
@@ -21,6 +21,7 @@ public class ConnectedService extends UnicastRemoteObject implements ServerConne
 
     @Override
     public synchronized boolean connected(ClientServices client) throws RemoteException {
+        System.out.println(client.getMobile());
         clients.put(client.getMobile(), client);
         return false;
     }

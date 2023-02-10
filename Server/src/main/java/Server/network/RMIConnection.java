@@ -1,8 +1,10 @@
 package Server.network;
+import Server.business.services.ConnectedService;
 import model.ClientInt;
 import model.LoginEntity;
 import model.Message;
 import Server.network.services.CheckLogin;
+import services.ClientServices;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -49,6 +51,20 @@ public class RMIConnection {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void connected(){
+        try{
+            // Waiting for any user to connect
+            ConnectedService connectedService = new ConnectedService();
+            registry.bind("rmi://localhost:2233/connectedService", connectedService);
+        } catch (AccessException e) {
+            e.printStackTrace();
+        } catch (AlreadyBoundException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

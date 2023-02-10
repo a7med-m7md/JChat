@@ -5,6 +5,7 @@ import Server.business.mappers.GroupMapperImp;
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
 import Server.business.model.group.Group;
+import Server.business.services.ConnectedService;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.persistance.dao.GroupDao;
 import exceptions.DuplicationUserException;
@@ -13,6 +14,7 @@ import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
 import model.group.GroupEntity;
 import model.user.UserEntity;
+import services.ClientServices;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt {
+    ConnectedService connectedService = new ConnectedService();
     public CheckLogin() throws RemoteException {
     }
 
@@ -34,6 +37,7 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
         Optional<UserEntity> userEntity = user.userLogin(userInfo);
         if (userEntity.isPresent()) {
             System.out.println("Logged in successfully");
+//            connectedService.connected();
             return userEntity.orElse(null);
         } else {
             System.out.println("Can't login");

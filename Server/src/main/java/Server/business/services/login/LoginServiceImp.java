@@ -1,8 +1,8 @@
 package Server.business.services.login;
 
-import Models.LoginEntity;
+import model.LoginEntity;
 import Server.persistance.dao.UserDao;
-import Models.UserEntity;
+import model.user.UserEntity;
 
 import javax.security.auth.login.CredentialException;
 import java.util.Optional;

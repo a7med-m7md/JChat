@@ -1,8 +1,7 @@
-package Models;
+package model;
 
-import Models.ClientInt;
-import Models.LoginEntity;
 import exceptions.UserNotFoundException;
+import model.user.UserEntity;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

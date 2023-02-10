@@ -1,6 +1,6 @@
 package Server.business.services.login;
 
-import Models.LoginEntity;
+import model.LoginEntity;
 
 import javax.security.auth.login.CredentialException;
 

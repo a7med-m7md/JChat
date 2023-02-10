@@ -1,9 +1,9 @@
-package Server.network.interfaces;
+package Server.network.services;
 
-import Models.*;
-import Server.business.model.user.User;
+import model.*;
 import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
+import model.user.UserEntity;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

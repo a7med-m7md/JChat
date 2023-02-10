@@ -1,8 +1,8 @@
 package Server.business.services;
 
 
-import Services.ClientServices;
-import Services.ServerConnection;
+import services.ClientServices;
+import services.ServerConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 

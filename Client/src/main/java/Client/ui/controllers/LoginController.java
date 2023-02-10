@@ -4,7 +4,7 @@ package Client.ui.controllers;
 import Client.network.ClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PhoneNumberValidator;
-import Models.UserEntity;
+import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import exceptions.UserNotFoundException;

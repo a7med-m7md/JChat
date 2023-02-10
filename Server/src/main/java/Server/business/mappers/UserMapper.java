@@ -1,6 +1,6 @@
 package Server.business.mappers;
 
-import Models.UserEntity;
+import model.user.UserEntity;
 import Server.business.dtos.UserDto;
 
 public interface UserMapper {

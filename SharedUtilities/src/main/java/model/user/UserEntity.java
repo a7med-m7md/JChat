@@ -1,17 +1,23 @@
-package Server.business.model.user;
+package model.user;
 
-import Models.Gender;
-import Models.UserStatus;
-import Server.persistance.utils.Country;
 
-public class User {
+import java.io.Serializable;
+
+public class UserEntity implements Serializable {
     private long id;
     private String mobile;
     private String name;
     private String email;
     private String picture;
 
-    public User(String mobile, String name, String email, String picture, String password, Gender gender, Country country, String dateOfBirth, String bio, UserStatus status) {
+    private String password;
+    private Gender gender;
+    private String country;
+    private String dateOfBirth;
+    private String bio;
+    private UserStatus status;
+
+    public UserEntity(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio, UserStatus status) {
         this.mobile = mobile;
         this.name = name;
         this.email = email;
@@ -80,11 +86,11 @@ public class User {
         this.gender = gender;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
@@ -112,10 +118,4 @@ public class User {
         this.status = status;
     }
 
-    private String password;
-    private Gender gender;
-    private Country country;
-    private String dateOfBirth;
-    private String bio;
-    private UserStatus status;
 }

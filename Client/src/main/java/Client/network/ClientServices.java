@@ -1,8 +1,9 @@
 package Client.network;
 
 
-import Models.*;
+import model.*;
 import exceptions.UserNotFoundException;
+import model.user.UserEntity;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

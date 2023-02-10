@@ -6,7 +6,4 @@ public enum UserStatus {
     UserStatus(String status) {
         this.status = status;
     }
-    public String getStatus() {
-        return status;
-    }
 }

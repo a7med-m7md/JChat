@@ -6,9 +6,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.image.Image;
 import model.user.Gender;
 import model.user.UserEntity;
 import model.user.UserStatus;
+
+import java.io.ByteArrayInputStream;
 
 public class CurrentUserAccount {
 
@@ -18,7 +21,7 @@ public class CurrentUserAccount {
         name  = new SimpleStringProperty();
         phoneNumber  = new SimpleStringProperty();
         email  = new SimpleStringProperty();
-        picture  = new SimpleStringProperty();
+//        picture  = new Image();
         password  = new SimpleStringProperty();
         gender  = new SimpleObjectProperty();
         country = new SimpleStringProperty();
@@ -34,7 +37,7 @@ public class CurrentUserAccount {
     private StringProperty phoneNumber;
     private StringProperty name;
     private StringProperty email;
-    private StringProperty picture;
+    private Image picture;
     private StringProperty password;
     private SimpleObjectProperty<Gender> gender;
     private StringProperty country;
@@ -52,6 +55,7 @@ public class CurrentUserAccount {
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
         this.status.set(userDataFromDB.getStatus());
+//        this.picture = new Image(userDataFromDB.g)
     }
 
     public static CurrentUserAccount getMyAccount() {
@@ -96,18 +100,6 @@ public class CurrentUserAccount {
 
     public void setEmail(String email) {
         this.email.set(email);
-    }
-
-    public String getPicture() {
-        return picture.get();
-    }
-
-    public StringProperty pictureProperty() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture.set(picture);
     }
 
     public String getPassword() {

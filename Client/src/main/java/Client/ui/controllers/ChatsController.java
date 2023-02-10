@@ -25,9 +25,9 @@ public class ChatsController implements Initializable {
     CurrentSession currentSession = CurrentSession.getInstance();
     @FXML
     void newChat(MouseEvent event) {
-        currentSession.addChat(new Contact("Mou"));
-        currentSession.addChat(new Contact("so"));
-        currentSession.addChat(new Contact("ha"));
+//        currentSession.addChat(new Contact("Mou"));
+//        currentSession.addChat(new Contact("so"));
+//        currentSession.addChat(new Contact("ha"));
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

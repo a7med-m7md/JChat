@@ -42,9 +42,9 @@ public class ConversationController implements Initializable {
 
     @FXML
     void sendMessage(MouseEvent event) {
-        CurrentSession currentSession = CurrentSession.getInstance();
-        currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get())
-                .add(new Message(currentSession.getMyAccount(), messageTextField.getText()));
+//        CurrentSession currentSession = CurrentSession.getInstance();
+//        currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get())
+//                .add(new Message(currentSession.getMyAccount(), messageTextField.getText()));
     }
 
     @Override

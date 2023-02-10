@@ -159,9 +159,9 @@ JFXComboBox {
 
 .list-cell {
     -fx-background: none;
-    -fx-background-color: white;
+    -fx-background-color: transparent;
     -fx-background-radius: 7px;
-    -fx-text-fill: none;
+    -fx-text-fill: #1e2528;
     -fx-border-width: 0px;
 }
 

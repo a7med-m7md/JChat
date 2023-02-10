@@ -2,6 +2,7 @@ package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
+import Client.ui.models.CurrentUserAccount;
 import exceptions.UserNotFoundException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class NewContactController implements Initializable {
@@ -31,13 +33,17 @@ public class NewContactController implements Initializable {
         try {
             //TODO Check phoneNumber in DB Here
             //If PhoneNumber exists
+            CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             RMIClientServices.checkUserExists(newContactPhoneField.getText());
-//            if (errorContainer.getChildren() != null)
-                errorContainer.getChildren().clear();
+            errorContainer.getChildren().clear();
+            //For testing
+            RMIClientServices.sendFriendRequest(currentUserAccount.getPhoneNumber(),newContactPhoneField.getText());
         } catch (UserNotFoundException e) {
             //if phone number doesn't exist
             errorContainer.getChildren().setAll(new ErrorMessageUi("No such user!"));
 
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
 

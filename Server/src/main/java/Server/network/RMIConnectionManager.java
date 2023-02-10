@@ -1,8 +1,9 @@
 package Server.network;
+import Server.business.services.ConnectedService;
 import model.ClientInt;
 import model.LoginEntity;
 import model.Message;
-import Server.network.services.CheckLogin;
+import Server.network.services.RMIServerServices;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -11,12 +12,12 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RMIConnection {
+public class RMIConnectionManager {
     private static final List<ClientInt> client = new ArrayList<>();
     Registry registry;
     LoginEntity serverInt;
-    CheckLogin checkLogin;
-    public RMIConnection(){
+    RMIServerServices checkLogin;
+    public RMIConnectionManager(){
         try {
             registry = LocateRegistry.createRegistry(2233);
             System.out.println("RMI connection available on PORT 2333");
@@ -28,7 +29,7 @@ public class RMIConnection {
 
     public void startServices(){
         try {
-            checkLogin = new CheckLogin();
+            checkLogin = new RMIServerServices();
             registry.bind("rmi://localhost:2233/loginService", checkLogin);
             ClientInt clientInt = new Message();
             clientInt.receiveMSG("01024251210", "Hello");
@@ -49,6 +50,20 @@ public class RMIConnection {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void connected(){
+        try{
+            // Waiting for any user to connect
+            ConnectedService connectedService = new ConnectedService();
+            registry.bind("rmi://localhost:2233/connectedService", connectedService);
+        } catch (AccessException e) {
+            e.printStackTrace();
+        } catch (AlreadyBoundException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

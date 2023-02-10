@@ -1,7 +1,7 @@
 package Client.ui.controllers;
 
 
-import Client.network.ClientServices;
+import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PhoneNumberValidator;
 import Client.ui.models.CurrentUserAccount;
@@ -58,9 +58,12 @@ public class LoginController implements Initializable {
             try {
                 // Here you get a user object that contains all data
                 // of loggedin user
-                UserEntity loggedInUser = ClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+                UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
                 CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
                 currentUserAccount.populateCurrentUserData(loggedInUser);
+                System.out.println("Connnected");
+                RMIClientServices.registerInServer();
+
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();

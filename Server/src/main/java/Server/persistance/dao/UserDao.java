@@ -204,4 +204,8 @@ public class UserDao implements CRUDOperation<UserEntity> {
             e.printStackTrace();
         }
     }
+
+    public void createGroup() {
+
+    }
 }

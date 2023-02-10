@@ -1,10 +1,12 @@
-package Server.persistance.entities;
+package model;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.io.Serializable;
+
 //todo Change it to be model
-public class FriendEntity {
+public class FriendEntity implements Serializable {
     private String mobile;
     private String name;
     private String bio;

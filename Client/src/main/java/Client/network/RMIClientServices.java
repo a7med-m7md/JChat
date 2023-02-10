@@ -8,6 +8,7 @@ import model.*;
 import exceptions.UserNotFoundException;
 import model.group.GroupEntity;
 import model.user.UserEntity;
+import services.ChatService;
 import services.ClientServices;
 import services.ServerConnection;
 
@@ -44,6 +45,19 @@ public class RMIClientServices {
             throw new RuntimeException(e);
         }
     }
+
+
+    public static void sendFriendRequest(String sender, String receiver) throws UserNotFoundException, RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ChatService user = (ChatService) registry.lookup("rmi://localhost:2233/friendRequest");
+            user.friendRequest(sender, receiver);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void registerInServer(){
         System.out.println("Register");

@@ -8,7 +8,7 @@ import Server.business.model.group.Group;
 import Server.business.services.ConnectedService;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.persistance.dao.GroupDao;
-import exceptions.DuplicationUserException;
+import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
@@ -18,20 +18,18 @@ import model.user.UserEntity;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Optional;
 
 public class RMIServerServices extends UnicastRemoteObject implements Remote, ServerInt {
     ConnectedService connectedService = new ConnectedService();
+
     public RMIServerServices() throws RemoteException {
     }
 
     @Override
     public UserEntity login(LoginEntity userInfo) throws UserNotFoundException {
         UserDao user = new UserDao();
-        System.out.println(userInfo.getMobile());
-        System.out.println(userInfo.getPassword());
         Optional<UserEntity> userEntity = user.userLogin(userInfo);
         if (userEntity.isPresent()) {
             System.out.println("Logged in successfully");
@@ -43,16 +41,31 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
         }
     }
 
-    public void getDuplicated(String phoneNumber) throws RemoteException, DuplicationUserException {
+    @Override
+    public void checkUserExists(String phoneNumber) throws UserNotFoundException {
+        UserDao user = new UserDao();
+        Optional<UserEntity> userEntity = user.findByMobile(phoneNumber);
+        if (userEntity.isPresent()) {
+            System.out.println("user exists");
+        } else {
+            System.out.println("User doesn't exist");
+            throw new UserNotFoundException();
+        }
+
+    }
+
+    @Override
+
+    public void checkDuplicateUser(String phoneNumber) throws RemoteException, DuplicateUserException {
         UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();
         if (!registerService.isNewUser(phoneNumber)) {
-            throw new DuplicationUserException();
+            throw new DuplicateUserException();
         }
     }
 
     @Override
-    public void signUp(UserEntity userEntity) throws RemoteException, DuplicateFormatFlagsException {
+    public void signUp(UserEntity userEntity) throws RemoteException {
         UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();
         registerService.register(userMapper.entityToDomain(userEntity));

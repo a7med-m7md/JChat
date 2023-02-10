@@ -57,22 +57,22 @@ public class Main extends Application {
 //
 //        }catch (Exception ex){}
 
-        try {
-            //Test List Group
-            GroupDao dao = new GroupDao();
-            List<Group> groups = dao.getUserGroups(5);
-            System.out.println(groups.size());
-            for (Group group : groups) {
-                System.out.println("Name : " + group.getName() +
-                        "\nDescription : " + group.getDescription() +
-                        "\nDate : " + group.getCreatedAt() +
-                        "\nCreated By : " + group.getOwner_id());
-            }
-            // Test Create Group
-            Group group = new Group("Fridens Group" , "Welcome My Friends",1);
-            dao.save(group);
-        } catch (Exception exception) {
-        }
+//        try {
+//            //Test List Group
+//            GroupDao dao = new GroupDao();
+//            List<Group> groups = dao.getUserGroups(5);
+//            System.out.println(groups.size());
+//            for (Group group : groups) {
+//                System.out.println("Name : " + group.getName() +
+//                        "\nDescription : " + group.getDescription() +
+//                        "\nDate : " + group.getCreatedAt() +
+//                        "\nCreated By : " + group.getOwner_id());
+//            }
+//            // Test Create Group
+//            Group group = new Group("Fridens Group" , "Welcome My Friends",1);
+//            dao.save(group);
+//        } catch (Exception exception) {
+//        }
 
         stage.setScene(scene);
         stage.show();

@@ -4,6 +4,7 @@ package Server.persistance.dao;
 import Server.business.model.group.Group;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
+import model.group.GroupEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -101,8 +102,8 @@ public class GroupDao implements CRUDOperation<Group> {
         return 0;
     }
 
-    public List<Group> getUserGroups(int id) {
-        List<Group> groupList = new ArrayList<>();
+    public List<GroupEntity> getUserGroups(int id) {
+        List<GroupEntity> groupList = new ArrayList<>();
         final String SQL = "select jtalk.groups.*\n" +
                 "from jtalk.users , jtalk.group_members , jtalk.groups\n" +
                 "where jtalk.users.id = jtalk.group_members.user_id and jtalk.groups.id = jtalk.group_members.group_id\n" +
@@ -117,7 +118,7 @@ public class GroupDao implements CRUDOperation<Group> {
                     String description = resultSet.getString(3);
                     Time createdAt = resultSet.getTime(4);
                     long owner_id = resultSet.getLong(5);
-                    Group group = new Group(name, description, owner_id);
+                    GroupEntity group = new GroupEntity(name, description, owner_id);
                     groupList.add(group);
 
                 }

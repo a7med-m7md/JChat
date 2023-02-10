@@ -13,6 +13,8 @@ import model.user.UserEntity;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt {
@@ -58,5 +60,14 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
         Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_id());
         groupDao.save(group);
         return entity;
+    }
+
+    @Override
+    public List<GroupEntity> getUserGroups(int userId) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        GroupMapper groupMapper = new GroupMapperImp();
+        List<GroupEntity> groupList = groupDao.getUserGroups(userId);
+
+        return groupList;
     }
 }

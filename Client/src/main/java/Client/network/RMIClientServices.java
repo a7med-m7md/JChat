@@ -47,12 +47,12 @@ public class RMIClientServices {
     }
 
 
-    public static void sendFriendRequest(String sender, String receiver) throws UserNotFoundException, RemoteException {
+    public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
             ChatService user = (ChatService) registry.lookup("rmi://localhost:2233/friendRequest");
-            user.friendRequest(sender, receiver);
+            user.friendRequest(sender, receivers);
         } catch (NotBoundException e) {
             e.printStackTrace();
         }

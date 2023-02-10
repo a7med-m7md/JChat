@@ -30,6 +30,25 @@ public class UserFriendDao implements UserFriendDaoInt{
         return 0;
     }
 
+
+    public FriendEntity searchByMobileNum(String myMobileNum) throws SQLException, RemoteException {
+        final String SQL = "SELECT * FROM jtalk.users WHERE mobile = ?";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+            preparedStatement.setString(1, myMobileNum);
+            ResultSet rs =preparedStatement.executeQuery();
+            if(rs.next()){
+                return new FriendEntity(
+                        rs.getString("mobile"),
+                        rs.getString("name"),
+                        rs.getString("bio"),
+                        rs.getString("status"));
+            }
+        }
+        return null;
+    }
+
+
     // Save the sending request to database
     @Override
     public void addToFriendList(String myMobileNum, String friendMobileNum) {

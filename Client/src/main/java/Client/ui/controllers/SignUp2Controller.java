@@ -94,7 +94,7 @@ public class SignUp2Controller implements Initializable {
         ObservableList<String> countryList =
                 FXCollections.observableArrayList(
                         Stream.of(Country.values())
-                                .map(Enum::name)
+                                .map(Country::getCountry)
                                 .collect(Collectors.toList())
                 );
         countryComboBox.setItems(countryList);

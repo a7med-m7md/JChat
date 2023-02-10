@@ -67,7 +67,16 @@ public class MainController implements Initializable {
 
     @FXML
     void switchAccountSettings(MouseEvent event) {
-
+        if (!tabPanes.containsKey("account")) {
+            try {
+                Parent accountPane = FXMLLoader.load(getClass().getResource("/FXML/account-info.fxml"));
+                tabPanes.put("account", accountPane);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Parent accountPane = tabPanes.get("account");
+        animateTabs(accountPane);
     }
 
     @FXML

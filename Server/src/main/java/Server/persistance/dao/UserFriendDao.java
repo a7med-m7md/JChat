@@ -1,6 +1,5 @@
 package Server.persistance.dao;
 
-import Server.business.model.user.UserStatus;
 import Server.persistance.ConnectionManager;
 import Server.persistance.entities.FriendEntity;
 

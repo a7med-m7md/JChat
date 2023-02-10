@@ -2,8 +2,10 @@ package Server.business.services.login;
 
 import Models.LoginEntity;
 
-public interface LoginService {
-    public boolean logInto(LoginEntity dto);
+import javax.security.auth.login.CredentialException;
 
-    public void logOut(int id);
+public interface LoginService {
+    public boolean logInto(LoginEntity dto) throws CredentialException;
+
+    public void logOut(int id) throws CredentialException;
 }

@@ -1,11 +1,10 @@
-module com.java.iti {
+module Client {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
     requires com.jfoenix;
     requires java.rmi;
     requires SharedUtilities;
-    requires Server;
 
 
     opens Client to javafx.fxml;

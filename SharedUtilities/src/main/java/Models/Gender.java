@@ -1,4 +1,4 @@
-package Server.business.model.user;
+package Models;
 
 public enum Gender {
     MALE, FEMALE

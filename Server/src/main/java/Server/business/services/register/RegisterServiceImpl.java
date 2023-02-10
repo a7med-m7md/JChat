@@ -2,7 +2,7 @@ package Server.business.services.register;
 
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
-import Server.persistance.entities.UserEntity;
+import Models.UserEntity;
 import Server.persistance.dao.UserDao;
 import Server.business.dtos.UserDto;
 

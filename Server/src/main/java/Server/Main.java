@@ -1,6 +1,7 @@
 package Server;
 
 
+import Server.network.SocketConnection;
 import Server.persistance.ConnectionManager;
 import model.UtilityClass;
 import Server.network.RMIConnection;
@@ -66,6 +67,7 @@ public class Main extends Application {
         rmiConnection.startServices();
 
         ConnectionManager.getInstance().getConnection();
+        SocketConnection socketConnection = new SocketConnection();
     }
 
     @Override

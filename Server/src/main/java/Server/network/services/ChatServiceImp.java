@@ -25,25 +25,13 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
             receivers.stream().forEach(
                     (receiver)->{
                         System.out.println("Request send to: " + receiver);
-                        int friend = 0;
                         try {
-                            friend = friendDao.searchByMobileNum(sender, receiver);
-                            requestLST.add(friendDao.searchByMobileNum(receiver));
+                            FriendEntity friendEntity = friendDao.searchByMobileNum(receiver);
+                            requestLST.add(friendEntity);
+                            ClientServices clientServices = ConnectedService.clients.get(receiver);
+                            clientServices.friendRequestNotification(friendEntity);
                         } catch (SQLException e) {
                             e.printStackTrace();
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                        if(friend == 0) {
-                            System.out.println("User not found");
-                            return;
-                        }
-                        ClientServices clientServices = ConnectedService.clients.get(receiver);
-                        FriendEntity friendEntity = new FriendEntity();
-                        friendEntity.setName("KKK");
-                        friendEntity.setMobile(sender);
-                        try {
-                            clientServices.friendRequestNotification(friendEntity);
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }

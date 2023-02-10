@@ -37,14 +37,15 @@ public class NewContactController implements Initializable {
             RMIClientServices.checkUserExists(newContactPhoneField.getText());
             errorContainer.getChildren().clear();
             //For testing
-            RMIClientServices.sendFriendRequest(currentUserAccount.getPhoneNumber(),newContactPhoneField.getText());
+//            RMIClientServices.sendFriendRequest(currentUserAccount.getPhoneNumber(),newContactPhoneField.getText());
         } catch (UserNotFoundException e) {
             //if phone number doesn't exist
             errorContainer.getChildren().setAll(new ErrorMessageUi("No such user!"));
 
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
         }
+//        catch (RemoteException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @Override

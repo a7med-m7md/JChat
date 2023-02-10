@@ -2,7 +2,7 @@ package Server;
 
 
 import Server.persistance.ConnectionManager;
-import Models.UtilityClass;
+import model.UtilityClass;
 import Server.network.RMIConnection;
 import Server.persistance.dao.UserFriendDao;
 import javafx.application.Application;

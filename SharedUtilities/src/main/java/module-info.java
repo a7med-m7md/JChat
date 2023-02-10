@@ -3,7 +3,8 @@ module SharedUtilities {
     requires java.rmi;
 
 //    exports com.java.iti;
-    exports Models;
-    exports Services;
+    exports model;
+    exports services;
     exports exceptions;
+    exports model.user;
 }

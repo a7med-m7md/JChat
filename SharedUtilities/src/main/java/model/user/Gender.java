@@ -1,4 +1,4 @@
-package Client.model.user;
+package model.user;
 
 public enum Gender {
     MALE, FEMALE

@@ -1,4 +1,4 @@
-package Server.persistance.utils;
+package utils;
 
 public enum Country {
     USA("United States of America"),

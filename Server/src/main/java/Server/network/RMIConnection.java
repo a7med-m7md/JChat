@@ -1,8 +1,8 @@
 package Server.network;
-import Models.ClientInt;
-import Models.LoginEntity;
-import Models.Message;
-import Server.network.interfaces.CheckLogin;
+import model.ClientInt;
+import model.LoginEntity;
+import model.Message;
+import Server.network.services.CheckLogin;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;

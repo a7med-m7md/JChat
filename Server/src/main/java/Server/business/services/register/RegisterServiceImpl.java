@@ -9,11 +9,12 @@ import Server.business.dtos.UserDto;
 
 import java.util.Optional;
 
-public class RegisterServiceImpl implements RegisterService{
+public class RegisterServiceImpl implements RegisterService {
     //TODO -> should connect with server using RMI to access the register service there to connect to db
     //TODO -> BUT Now we will check with local db.
     UserDao userDao = new UserDao();
     UserMapper userMapper = new UseMapperImpl();
+
     @Override
     public boolean isNewUser(int id) {
         Optional<UserEntity> optionalEntity = userDao.findById(id);
@@ -25,8 +26,18 @@ public class RegisterServiceImpl implements RegisterService{
 
     @Override
     public Server.business.dtos.UserDto register(UserDto userDto) {
-            UserEntity userEntity = userMapper.domainToEntity(userDto);
-            userDao.save(userEntity);
-            return userDto;
+        UserEntity userEntity = userMapper.domainToEntity(userDto);
+        userDao.save(userEntity);
+        return userDto;
+    }
+
+    @Override
+    public boolean isNewUser(String phone) {
+
+        Optional<UserEntity> optionalEntity = userDao.findByMobile(phone);
+        if (optionalEntity.isEmpty())
+            return true;
+        else
+            return false;
     }
 }

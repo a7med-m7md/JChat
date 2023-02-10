@@ -1,13 +1,25 @@
 package Server.network.services;
 
+import Server.business.mappers.GroupMapper;
+import Server.business.mappers.GroupMapperImp;
+import Server.business.mappers.UseMapperImpl;
+import Server.business.mappers.UserMapper;
+import Server.business.model.group.Group;
+import Server.business.services.register.RegisterServiceImpl;
+import Server.persistance.dao.GroupDao;
+import exceptions.DuplicationUserException;
 import model.*;
 import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
+import model.group.GroupEntity;
 import model.user.UserEntity;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
+import java.util.List;
 import java.util.Optional;
 
 public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt {
@@ -29,6 +41,22 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
         }
     }
 
+    public void getDuplicated(String phoneNumber) throws RemoteException, DuplicationUserException {
+        UserMapper userMapper = new UseMapperImpl();
+        RegisterServiceImpl registerService = new RegisterServiceImpl();
+        if (!registerService.isNewUser(phoneNumber)) {
+            throw new DuplicationUserException();
+        }
+    }
+
+    @Override
+    public void signUp(UserEntity userEntity) throws RemoteException, DuplicateFormatFlagsException {
+        UserMapper userMapper = new UseMapperImpl();
+        RegisterServiceImpl registerService = new RegisterServiceImpl();
+        registerService.register(userMapper.entityToDomain(userEntity));
+    }
+
+
     @Override
     public String logout(String name) throws RemoteException {
         return null;
@@ -43,5 +71,23 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
     @Override
     public String disconnect(ClientInt client) throws RemoteException {
         return null;
+    }
+
+    @Override
+    public GroupEntity createGroup(GroupEntity entity) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        GroupMapper groupMapper = new GroupMapperImp();
+        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_id());
+        groupDao.save(group);
+        return entity;
+    }
+
+    @Override
+    public List<GroupEntity> getUserGroups(int userId) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        GroupMapper groupMapper = new GroupMapperImp();
+        List<GroupEntity> groupList = groupDao.getUserGroups(userId);
+
+        return groupList;
     }
 }

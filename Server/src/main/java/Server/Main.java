@@ -2,6 +2,7 @@ package Server;
 
 
 import Server.persistance.ConnectionManager;
+import Server.persistance.dao.GroupDao;
 import model.UtilityClass;
 import Server.network.RMIConnection;
 import Server.persistance.dao.UserFriendDao;
@@ -9,13 +10,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import Server.business.model.group.Group;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
+import java.util.Optional;
 
 public class Main extends Application {
     Connection connection;
     Server.network.RMIConnection rmiConnection;
+
     @Override
     public void start(Stage stage) throws IOException {
         System.out.println(UtilityClass.isNull());
@@ -41,16 +46,33 @@ public class Main extends Application {
 //        UserMapper userMapper = new UseMapperImpl();
 //        UserEntity res = userDao.save(userMapper.domainToEntity(userDto));
 //        System.out.println(res.getStatus().name());
-        try{
-            UserFriendDao userFriendDao = new UserFriendDao();
-            userFriendDao.getFriendList("01112175312").forEach(friendEntity -> {
-                System.out.println(friendEntity.getName());
-                System.out.println(friendEntity.getMobile());
-//                System.out.println(friendEntity.getStatus());
-                System.out.println(friendEntity.getUserPhoto());
-            });
+//        try{
+//            UserFriendDao userFriendDao = new UserFriendDao();
+//            userFriendDao.getFriendList("01112175312").forEach(friendEntity -> {
+//                System.out.println(friendEntity.getName());
+//                System.out.println(friendEntity.getMobile());
+////                System.out.println(friendEntity.getStatus());
+//                System.out.println(friendEntity.getUserPhoto());
+//            });
+//
+//        }catch (Exception ex){}
 
-        }catch (Exception ex){}
+        try {
+            //Test List Group
+            GroupDao dao = new GroupDao();
+            List<Group> groups = dao.getUserGroups(5);
+            System.out.println(groups.size());
+            for (Group group : groups) {
+                System.out.println("Name : " + group.getName() +
+                        "\nDescription : " + group.getDescription() +
+                        "\nDate : " + group.getCreatedAt() +
+                        "\nCreated By : " + group.getOwner_id());
+            }
+            // Test Create Group
+            Group group = new Group("Fridens Group" , "Welcome My Friends",1);
+            dao.save(group);
+        } catch (Exception exception) {
+        }
 
         stage.setScene(scene);
         stage.show();

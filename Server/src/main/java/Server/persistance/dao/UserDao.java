@@ -205,7 +205,29 @@ public class UserDao implements CRUDOperation<UserEntity> {
         }
     }
 
-    public void createGroup() {
-
+    public Optional<UserEntity> findByMobile(String mobile) {
+        final String SQL = "SELECT * FROM jtalk.users WHERE  mobile = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+            preparedStatement.setString(1, mobile);
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()){
+//                    String mobile = resultSet.getString(2);
+                    String name = resultSet.getString(3);
+                    String email = resultSet.getString(4);
+                    String picture = resultSet.getString(5);
+                    String password = resultSet.getString(6);
+                    Gender gender = Gender.valueOf(resultSet.getString(7));
+                    String country = resultSet.getString(8);
+                    String dateOfBirth = resultSet.getString(9);
+                    String bio = resultSet.getString(10);
+                    UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11));
+                    UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
+                    return Optional.of(newUser);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }

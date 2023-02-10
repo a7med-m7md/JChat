@@ -7,4 +7,5 @@ module SharedUtilities {
     exports services;
     exports exceptions;
     exports model.user;
+    exports model.group;
 }

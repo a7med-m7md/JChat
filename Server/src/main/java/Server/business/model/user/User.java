@@ -1,5 +1,7 @@
 package Server.business.model.user;
 
+import Models.Gender;
+import Models.UserStatus;
 import Server.persistance.utils.Country;
 
 public class User {

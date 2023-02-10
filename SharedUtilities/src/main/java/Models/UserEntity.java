@@ -1,9 +1,9 @@
-package Server.persistance.entities;
+package Models;
 
-import Server.business.model.user.Gender;
-import Server.business.model.user.UserStatus;
 
-public class UserEntity {
+import java.io.Serializable;
+
+public class UserEntity implements Serializable {
     private long id;
     private String mobile;
     private String name;

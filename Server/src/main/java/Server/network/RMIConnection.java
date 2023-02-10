@@ -1,6 +1,7 @@
 package Server.network;
 import Models.ClientInt;
 import Models.LoginEntity;
+import Models.Message;
 import Server.network.interfaces.CheckLogin;
 
 import java.rmi.*;
@@ -19,12 +20,6 @@ public class RMIConnection {
         try {
             registry = LocateRegistry.createRegistry(2233);
             System.out.println("RMI connection available on PORT 2333");
-            //client.add(c);
-//            try {
-//                Naming.rebind("rmi://localhost:2233/startconnect", serverInt);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
         } catch (RemoteException e) {
             System.out.println("Can't connect");
             e.printStackTrace();
@@ -35,6 +30,8 @@ public class RMIConnection {
         try {
             checkLogin = new CheckLogin();
             registry.bind("rmi://localhost:2233/loginService", checkLogin);
+            ClientInt clientInt = new Message();
+            clientInt.receiveMSG("01024251210", "Hello");
             System.out.println("Services started");
         } catch (AccessException e) {
             e.printStackTrace();

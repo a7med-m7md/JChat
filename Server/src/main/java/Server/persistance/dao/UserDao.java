@@ -1,11 +1,11 @@
 package Server.persistance.dao;
 
 import Models.LoginEntity;
-import Server.business.model.user.Gender;
-import Server.business.model.user.UserStatus;
+import Models.Gender;
+import Models.UserStatus;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
-import Server.persistance.entities.UserEntity;
+import Models.UserEntity;
 
 import java.sql.*;
 import java.util.ArrayList;

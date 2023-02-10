@@ -7,14 +7,6 @@
         <groupId>com.java.iti</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-<!--    <dependencies>-->
-<!--        <dependency>-->
-<!--            <groupId>com.google</groupId>-->
-<!--            <artifactId>Ab</artifactId>-->
-<!--            <version>0.0.4.3</version>-->
-<!--            <scope>compile</scope>-->
-<!--        </dependency>-->
-<!--    </dependencies>-->
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>SharedUtilities</artifactId>

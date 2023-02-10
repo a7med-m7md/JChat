@@ -2,9 +2,9 @@ package Server.business.services.login;
 
 import Models.LoginEntity;
 import Server.persistance.dao.UserDao;
-import Server.persistance.entities.UserEntity;
-import com.java.iti.exception.CredentialException;
+import Models.UserEntity;
 
+import javax.security.auth.login.CredentialException;
 import java.util.Optional;
 
 
@@ -26,7 +26,7 @@ public class LoginServiceImp implements LoginService {
     }
 
     @Override
-    public void logOut(int id) {
+    public void logOut(int id) throws CredentialException {
         Optional<UserEntity> currentUser = userDao.findById(1);
         if (currentUser == null) {
             throw new CredentialException("Phone Or Password May Be Invalid");

@@ -1,9 +1,10 @@
 package Client.ui.controllers;
 
 
-import Client.network.RMIConnection;
+import Client.network.ClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PhoneNumberValidator;
+import Models.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import exceptions.UserNotFoundException;
@@ -27,7 +28,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
@@ -55,7 +55,12 @@ public class LoginController implements Initializable {
     void handleSignIn(MouseEvent event) {
         if (validateFields()) {
             try {
-                RMIConnection.logIn(phoneNumberField.getText(), passwordField.getText());
+                // Here you get a user object that contains all data
+                // of signed in user
+                UserEntity user = ClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+                System.out.println(user.getMobile());
+                System.out.println(user.getName());
+                System.out.println(user.getEmail());
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();

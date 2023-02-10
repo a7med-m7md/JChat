@@ -24,6 +24,8 @@ public class SocketConnection {
             System.out.println(
                     "Server is Starting in Port 1200");
             clientSocket = serverSocket.accept();
+            readFile(clientSocket);
+
             System.out.println("Connected");
             dataInputStream = new DataInputStream(
                     clientSocket.getInputStream());
@@ -35,6 +37,10 @@ public class SocketConnection {
             e.printStackTrace();
             closeResources();
         }
+    }
+    public void readFile(Socket clientSocket){
+        Thread th = new Thread(new FileTransferHandled(clientSocket));
+        th.start();
     }
 
     private void closeResources(){

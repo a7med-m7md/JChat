@@ -26,8 +26,7 @@ public class FileService {
                     "Sending the File to the Server");
             //closeResources();
             //TODO -> set up file chooser to select the specific file, file chooser returns file object that can be used to retreive the absolute path of that file.
-
-            sendFile("F:\\Adel\\ITI 9 Months\\Projects\\JChat\\Client\\src\\main\\resources\\files\\clienttest.txt");
+            sendFile(new File("F:\\Adel\\ITI 9 Months\\Projects\\JChat\\Client\\src\\main\\resources\\files\\clienttest.txt"));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -35,8 +34,34 @@ public class FileService {
         }
     }
 
-    private void sendFile(String filePath) {
-        int bytes = 0;
+    private void sendFile(File fileToSend) {
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            Socket socket = new Socket("localhost", Constants.SOCKET_SERVER_PORT);
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            // Get the name of the file you want to send and store it in filename.
+            String fileName = fileToSend.getName();
+            // Convert the name of the file into an array of bytes to be sent to the server.
+            byte[] fileNameBytes = fileName.getBytes();
+            // Create a byte array the size of the file so don't send too little or too much data to the server.
+            byte[] fileBytes = new byte[(int)fileToSend.length()];
+            // Put the contents of the file into the array of bytes to be sent so these bytes can be sent to the server.
+            fileInputStream.read(fileBytes);
+            // Send the length of the name of the file so server knows when to stop reading.
+            dataOutputStream.writeInt(fileNameBytes.length);
+            // Send the file name.
+            dataOutputStream.write(fileNameBytes);
+            // Send the length of the byte array so the server knows when to stop reading.
+            dataOutputStream.writeInt(fileBytes.length);
+            // Send the actual file.
+            dataOutputStream.write(fileBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        /*int bytes = 0;
         //TODO-> test that method to take the file object as a parameter from controller
         try {
             File file = new File(filePath);
@@ -56,7 +81,7 @@ public class FileService {
         } catch (IOException e) {
             e.printStackTrace();
             closeResources();
-        }
+        }*/
 
     }
 

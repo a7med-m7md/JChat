@@ -34,13 +34,15 @@ public class RMIConnectionManager {
     public void startServices(){
         try {
             rmiServerServices = new RMIServerServices();
-            registry.rebind("rmi://localhost:2233/loginService", rmiServerServices);
-//            ClientInt clientInt = new Message();
-//            clientInt.receiveMSG("01024251210", "Hello");
             System.out.println("Services started");
+            System.out.println("Login Service started");
+            registry.rebind("rmi://localhost:2233/loginService", rmiServerServices);
+
 
             chatService = new ChatServiceImp();
+            System.out.println("Friend Request Started");
             registry.rebind("rmi://localhost:2233/friendRequest", chatService);
+
 
 
         } catch (AccessException e) {

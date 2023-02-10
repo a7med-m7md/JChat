@@ -15,12 +15,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
+    UserFriendDao friendDao = new UserFriendDao();
     public ChatServiceImp() throws RemoteException {
     }
 
     @Override
     public List<FriendEntity> friendRequest(String sender, List<String> receivers) throws RemoteException {
-        UserFriendDao friendDao = new UserFriendDao();
         List<FriendEntity> requestLST = new ArrayList<>();
             receivers.stream().forEach(
                     (receiver)->{
@@ -39,4 +39,14 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
             );
             return requestLST;
         }
+
+    @Override
+    public void acceptFriendRequest(String myNumber, String requestNumber) throws RemoteException {
+        friendDao.acceptRequest(myNumber, requestNumber);
+    }
+
+    @Override
+    public void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException {
+        friendDao.deleteRequest(myNumber, requestNumber);
+    }
 }

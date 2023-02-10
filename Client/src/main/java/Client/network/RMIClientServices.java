@@ -48,6 +48,19 @@ public class RMIClientServices {
     }
 
 
+    public static FriendEntity searchFriend(String number) throws RemoteException {
+        try {
+            if(chatRegistry == null){
+                chatRegistry = LocateRegistry.getRegistry(2233);
+            }
+            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            return user.searchFriend(number);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException {
 
         try {

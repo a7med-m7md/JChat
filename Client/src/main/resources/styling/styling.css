@@ -72,6 +72,7 @@ AnchorPane
     -fx-border-width: 1px 6px 0px 6px;
     -fx-prompt-text-fill: #aeaeb2;
     -fx-font-size: 12;
+    -fx-text-fill: #3b3b3b;
 }
 .error-label
 {
@@ -87,4 +88,14 @@ AnchorPane
 {
     -fx-text-fill: #696F79;
 }
+.text-field
+{
+    -fx-background-radius: 5px 5px 5px 5px;
 
+    -fx-background-color:  #FFFF;
+    /*-fx-background-color:  #F6FAFE;*/
+    -fx-border-radius: 5px;
+    -fx-border-color: #FFFF;
+    -fx-border-width: 1px 6px 0px 6px;
+    -fx-prompt-text-fill: #aeaeb2;
+    -fx-font-size: 12;}

@@ -55,4 +55,14 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
     public void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException {
         friendDao.deleteRequest(myNumber, requestNumber);
     }
+
+    @Override
+    public FriendEntity searchFriend(String mobile) throws RemoteException {
+        try {
+            return friendDao.searchByMobileNum(mobile);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

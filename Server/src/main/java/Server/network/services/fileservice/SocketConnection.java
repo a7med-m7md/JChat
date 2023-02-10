@@ -1,4 +1,4 @@
-package Server.network;
+package Server.network.services.fileservice;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,13 +13,37 @@ public class SocketConnection {
     private  DataInputStream dataInputStream = null;
     Socket clientSocket;
     ServerSocket serverSocket;
+    FileTransferHandled fileTransferHandled;
     public SocketConnection(){
         startConnection();
     }
 
     private void startConnection() {
             //use thread with waiting operation here to avoid freezing the current thread
-            new Thread(() -> {
+        try {
+            serverSocket
+                    = new ServerSocket(SOCKET_SERVER_PORT);
+            System.out.println(
+                    "Server is Starting in Port 1200");
+            while (!serverSocket.isClosed()){
+                new Thread(
+                        () -> {
+                            try {
+                                clientSocket = serverSocket.accept();
+                                fileTransferHandled = new FileTransferHandled(clientSocket);
+                                Thread th = new Thread(fileTransferHandled);
+                                th.start();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                ).start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            //closeResources();
+        }
+        /* new Thread(() -> {
                 while (true){
                     try {
                         serverSocket
@@ -38,7 +62,7 @@ public class SocketConnection {
                         //closeResources();
                     }
                 }
-            }).start();
+            }).start();*/
     }
     public void receiveFile(Socket clientSocket){
         Thread th = new Thread(new FileTransferHandled(clientSocket));

@@ -21,6 +21,8 @@ public class FileService {
             //TODO -> get user id from the controller to send it to the server.
             int currentUserId = 10;
             fileThreadHandled = new FileThreadHandled(clientSocket,currentUserId);
+            Thread th = new Thread(fileThreadHandled);
+            th.start();
             System.out.println(
                     "Sending the File to the Server");
             //TODO -> set up file chooser to select the specific file, file chooser returns file object that can be used to retreive the absolute path of that file.

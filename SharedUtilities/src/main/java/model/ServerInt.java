@@ -1,6 +1,7 @@
 package model;
 
 import exceptions.UserNotFoundException;
+import model.group.GroupEntity;
 import model.user.UserEntity;
 
 import java.rmi.Remote;
@@ -11,4 +12,5 @@ public interface ServerInt extends Remote {
     String logout(String name) throws RemoteException;
     String connect(ClientInt client) throws RemoteException;
     String disconnect(ClientInt client) throws RemoteException;
+    GroupEntity createGroup(GroupEntity entity) throws RemoteException;
 }

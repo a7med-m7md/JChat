@@ -1,7 +1,8 @@
 package Client.ui.models;
 
-import Client.model.user.Gender;
-import Client.model.user.UserStatus;
+
+import model.user.Gender;
+import model.user.UserStatus;
 
 public class MyAccount extends Contact{
     private long id;

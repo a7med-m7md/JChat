@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 
-public class HelloApplication extends Application {
+public class Main extends Application {
     Connection connection;
     Server.network.RMIConnection rmiConnection;
     @Override

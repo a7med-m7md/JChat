@@ -4,6 +4,7 @@ package Client.ui.controllers;
 import Client.network.ClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PhoneNumberValidator;
+import Client.ui.models.CurrentUserAccount;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -56,11 +57,10 @@ public class LoginController implements Initializable {
         if (validateFields()) {
             try {
                 // Here you get a user object that contains all data
-                // of signed in user
-                UserEntity user = ClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
-                System.out.println(user.getMobile());
-                System.out.println(user.getName());
-                System.out.println(user.getEmail());
+                // of loggedin user
+                UserEntity loggedInUser = ClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+                CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+                currentUserAccount.populateCurrentUserData(loggedInUser);
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();
@@ -120,7 +120,7 @@ public class LoginController implements Initializable {
 
             //Phone Number Validation
             PhoneNumberValidator validNumber = new PhoneNumberValidator();
-            validNumber.setMessage("Enter a valid phone number");
+            validNumber.setMessage(("Enter a valid phone number"));
             phoneNumberField.getValidators().add(validNumber);
 
             //Checking Fields

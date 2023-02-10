@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<GridPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.CurrentUserCardController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="NEVER" maxWidth="50.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="90.0" />
+      <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <VBox GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets left="8.0" />
+         </GridPane.margin>
+         <children>
+            <Label fx:id="currentUserDisplayName" text="Mahmoud Elsaqqa" textFill="#7a8592">
+               <font>
+                  <Font name="Segoe UI" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentUserBio" layoutX="10.0" layoutY="10.0" text=" " textFill="#7a8592">
+               <font>
+                  <Font name="Segoe UI" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Circle fx:id="currentUserAvatar" fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0" />
+      <ComboBox fx:id="userStatus" stylesheets="@../styling/main.css" GridPane.columnIndex="2" />
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>

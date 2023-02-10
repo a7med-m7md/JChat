@@ -18,19 +18,18 @@ public class SocketConnection {
     }
 
     private void startConnection() {
-        // Here we define Server Socket running on port 900
         try {
             serverSocket
                     = new ServerSocket(SOCKET_SERVER_PORT);
             System.out.println(
-                    "Server is Starting in Port 900");
+                    "Server is Starting in Port 1200");
             clientSocket = serverSocket.accept();
             System.out.println("Connected");
             dataInputStream = new DataInputStream(
                     clientSocket.getInputStream());
             dataOutputStream = new DataOutputStream(
                     clientSocket.getOutputStream());
-            closeResources();
+            //closeResources();
         }
         catch (IOException e) {
             e.printStackTrace();

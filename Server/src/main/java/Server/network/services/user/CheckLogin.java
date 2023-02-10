@@ -1,4 +1,4 @@
-package Server.network.services;
+package Server.network.services.user;
 
 import Server.business.mappers.GroupMapper;
 import Server.business.mappers.GroupMapperImp;
@@ -13,16 +13,16 @@ import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
 import model.group.GroupEntity;
 import model.user.UserEntity;
+import server.ServerUserServices;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Optional;
 
-public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt {
+public class CheckLogin extends UnicastRemoteObject implements Remote, ServerUserServices {
     public CheckLogin() throws RemoteException {
     }
 
@@ -40,7 +40,7 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
             throw new UserNotFoundException();
         }
     }
-
+    @Override
     public void getDuplicated(String phoneNumber) throws RemoteException, DuplicationUserException {
         UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();
@@ -62,32 +62,4 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
         return null;
     }
 
-    @Override
-    public String connect(ClientInt client) throws RemoteException {
-        return null;
-    }
-
-
-    @Override
-    public String disconnect(ClientInt client) throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public GroupEntity createGroup(GroupEntity entity) throws RemoteException {
-        GroupDao groupDao = new GroupDao();
-        GroupMapper groupMapper = new GroupMapperImp();
-        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_id());
-        groupDao.save(group);
-        return entity;
-    }
-
-    @Override
-    public List<GroupEntity> getUserGroups(int userId) throws RemoteException {
-        GroupDao groupDao = new GroupDao();
-        GroupMapper groupMapper = new GroupMapperImp();
-        List<GroupEntity> groupList = groupDao.getUserGroups(userId);
-
-        return groupList;
-    }
 }

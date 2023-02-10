@@ -37,6 +37,12 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
                         }
                     }
             );
+
+        System.out.println("Users of friend List:  ");
+            requestLST.forEach(u->{
+                System.out.println(u);
+            });
+
             return requestLST;
         }
 

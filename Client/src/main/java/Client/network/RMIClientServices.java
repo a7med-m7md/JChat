@@ -20,6 +20,7 @@ import java.rmi.registry.Registry;
 import java.util.List;
 
 public class RMIClientServices {
+    static Registry chatRegistry;
     public static UserEntity logIn(String phoneNumber, String password) throws UserNotFoundException, RemoteException {
         Registry registry;
         try {
@@ -48,11 +49,37 @@ public class RMIClientServices {
 
 
     public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException {
-        Registry registry;
+
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ChatService user = (ChatService) registry.lookup("rmi://localhost:2233/friendRequest");
+            if(chatRegistry == null){
+                chatRegistry = LocateRegistry.getRegistry(2233);
+            }
+            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
             user.friendRequest(sender, receivers);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void acceptFriendRequest(String myNumber, String requestNumber) throws RemoteException {
+        try {
+            if(chatRegistry == null){
+                chatRegistry = LocateRegistry.getRegistry(2233);
+            }
+            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            user.acceptFriendRequest(myNumber, requestNumber);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException {
+        try {
+            if(chatRegistry == null){
+                chatRegistry = LocateRegistry.getRegistry(2233);
+            }
+            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            user.rejectFriendRequest(myNumber, requestNumber);
         } catch (NotBoundException e) {
             e.printStackTrace();
         }

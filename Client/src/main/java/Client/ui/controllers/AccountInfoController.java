@@ -8,7 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import model.user.Gender;
 
@@ -19,21 +21,23 @@ import java.util.stream.Stream;
 
 public class AccountInfoController implements Initializable {
 
+    @FXML
+    private TextField accountDisplayName;
 
     @FXML
-    private JFXTextField displayNameField;
+    private TextField accountEmailField;
 
     @FXML
-    private JFXTextField accountEmailField;
+    private ComboBox<String> countryComboBox;
 
     @FXML
-    private JFXComboBox<String> countryComboBox;
-
-    @FXML
-    private JFXComboBox<Gender> genderComboBox;
+    private ComboBox<Gender> genderComboBox;
 
     @FXML
     private DatePicker dateOfBirth;
+
+    @FXML
+    private JFXTextField email2;
 
 
 
@@ -58,10 +62,12 @@ public class AccountInfoController implements Initializable {
         CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
 
         //TODO Bind Avatar
-        displayNameField.textProperty().bindBidirectional(currentUserAccount.nameProperty());
+        accountDisplayName.textProperty().bindBidirectional(currentUserAccount.nameProperty());
         accountEmailField.textProperty().bindBidirectional(currentUserAccount.emailProperty());
         countryComboBox.valueProperty().bindBidirectional(currentUserAccount.countryProperty());
         genderComboBox.valueProperty().bindBidirectional(currentUserAccount.genderProperty());
+
+        email2.textProperty().bindBidirectional(currentUserAccount.emailProperty());
         //TODO Make dateofbirth localdate
 //        dateOfBirth.valueProperty().bindBidirectional(currentUserAccount.dateOfBirthProperty());
 

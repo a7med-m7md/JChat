@@ -53,6 +53,7 @@ public class ClientServices {
         }
         return null;
     }
+    
 
     public static void signUp(UserEntity userObject) throws DuplicationUserException {
         Registry registry;

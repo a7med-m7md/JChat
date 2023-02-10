@@ -80,9 +80,6 @@ tackPane:focused {
     -fx-background-radius: 7 ◘px;
 }
 
-JFXComboBox {
-    -fx-background-color: red;
-}
 
 .combo-box-base,
 .choice-box {

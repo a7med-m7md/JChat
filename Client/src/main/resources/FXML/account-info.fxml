@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -18,63 +19,66 @@
 <?import javafx.scene.text.Font?>
 
 <GridPane maxWidth="1.7976931348623157E308" prefWidth="259.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.AccountInfoController">
-   <columnConstraints>
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
-      <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP" vgrow="ALWAYS" />
-   </rowConstraints>
-   <children>
-      <GridPane>
-         <GridPane.margin>
-            <Insets bottom="4.0" left="4.0" top="7.0" />
-         </GridPane.margin>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Label text="Account Info" textFill="#5a6571">
-               <font>
-                  <Font name="Segoe UI Semibold" size="14.0" />
-               </font>
-               <padding>
-                  <Insets left="2.0" />
-               </padding>
-            </Label>
-         </children>
-      </GridPane>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
-         <content>
-            <VBox maxHeight="1.7976931348623157E308" spacing="26.0">
-               <children>
-                  <VBox alignment="CENTER" spacing="37.0">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
+        <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP" vgrow="ALWAYS" />
+    </rowConstraints>
+    <children>
+        <GridPane>
+            <GridPane.margin>
+                <Insets bottom="4.0" left="4.0" top="7.0" />
+            </GridPane.margin>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="Account Info" textFill="#5a6571">
+                    <font>
+                        <Font name="Segoe UI Semibold" size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets left="2.0" />
+                    </padding>
+                </Label>
+            </children>
+        </GridPane>
+        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
+            <content>
+                <VBox maxHeight="1.7976931348623157E308" spacing="26.0">
+                    <children>
+                        <VBox alignment="CENTER" spacing="37.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Choose a picture and display name">
+                                    <font>
+                                        <Font name="Segoe UI Semibold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Circle fill="DODGERBLUE" radius="67.0" stroke="BLACK" strokeType="INSIDE" />
+                            </children>
+                        </VBox>
+                  <VBox spacing="7.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Choose a picture and display name">
+                        <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Display Name">
                            <font>
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <Circle fill="DODGERBLUE" radius="67.0" stroke="BLACK" strokeType="INSIDE" />
-                        <JFXTextField fx:id="displayNameField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="280.0" promptText="Enter a display name (JChat user name)" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
-                           <font>
-                              <Font name="Segoe UI" size="12.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+                        <TextField fx:id="accountDisplayName" editable="false" minHeight="-Infinity" prefHeight="42.0" prefWidth="226.0" stylesheets="@../styling/styling.css">
                            <effect>
-                              <DropShadow blurType="ONE_PASS_BOX" spread="0.02">
+                              <DropShadow>
                                  <color>
-                                    <Color red="0.8790594339370728" green="0.9081607460975647" blue="0.928947389125824" />
+                                    <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
                                  </color>
                               </DropShadow>
                            </effect>
-                        </JFXTextField>
+                        </TextField>
                      </children>
                   </VBox>
                   <VBox spacing="7.0">
@@ -84,7 +88,70 @@
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="accountEmailField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="280.0" promptText="example@gmail.com" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                        <TextField fx:id="accountEmailField" editable="false" minHeight="-Infinity" prefHeight="42.0" prefWidth="226.0" stylesheets="@../styling/styling.css">
+                           <effect>
+                              <DropShadow>
+                                 <color>
+                                    <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </TextField>
+                     </children>
+                  </VBox>
+                        <HBox spacing="21.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <VBox maxWidth="1.7976931348623157E308" spacing="7.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Country">
+                                            <font>
+                                                <Font name="Segoe UI Semibold" size="12.0" />
+                                            </font>
+                                        </Label>
+                              <ComboBox fx:id="countryComboBox" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="42.0" prefWidth="150.0" stylesheets="@../styling/main.css" />
+                                    </children>
+                                </VBox>
+                                <VBox layoutX="10.0" layoutY="10.0" spacing="7.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Gender">
+                                            <font>
+                                                <Font name="Segoe UI Semibold" size="12.0" />
+                                            </font>
+                                        </Label>
+                              <ComboBox fx:id="genderComboBox" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="42.0" prefWidth="150.0" stylesheets="@../styling/main.css" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                        <VBox spacing="7.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Date of birth">
+                                    <font>
+                                        <Font name="Segoe UI Semibold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <DatePicker fx:id="dateOfBirth" minHeight="-Infinity" prefHeight="42.0" prefWidth="300.0" promptText="DD/MM/YYYY" stylesheets="@../styling/DatepickerStyling.CSS">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <effect>
+                                        <DropShadow>
+                                            <color>
+                                                <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
+                                            </color>
+                                        </DropShadow>
+                                    </effect>
+                                </DatePicker>
+                            </children>
+                        </VBox>
+                  <VBox spacing="7.0" stylesheets="@../styling/styling.css">
+                     <children>
+                        <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Email">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="12.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="email2" focusColor="#39ceff" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="42.0" prefWidth="280.0" promptText="example@gmail.com" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>
@@ -101,76 +168,18 @@
                         </JFXTextField>
                      </children>
                   </VBox>
-                  <HBox spacing="21.0">
-                     <children>
-                        <VBox maxWidth="1.7976931348623157E308" spacing="7.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Country">
-                                 <font>
-                                    <Font name="Segoe UI Semibold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <JFXComboBox fx:id="countryComboBox" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="186.0" promptText="Ex. Egypt" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed" VBox.vgrow="ALWAYS">
-                                 <effect>
-                                    <DropShadow spread="0.02">
-                                       <color>
-                                          <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </JFXComboBox>
-                           </children>
-                        </VBox>
-                        <VBox layoutX="10.0" layoutY="10.0" spacing="7.0">
-                           <children>
-                              <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Gender">
-                                 <font>
-                                    <Font name="Segoe UI Semibold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <JFXComboBox fx:id="genderComboBox" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="186.0" promptText="select gender" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
-                                 <effect>
-                                    <DropShadow spread="0.02">
-                                       <color>
-                                          <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
-                                       </color>
-                                    </DropShadow>
-                                 </effect>
-                              </JFXComboBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <VBox spacing="7.0">
-                     <children>
-                        <Label styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Date of birth">
-                           <font>
-                              <Font name="Segoe UI Semibold" size="12.0" />
-                           </font>
-                        </Label>
-                        <DatePicker fx:id="dateOfBirth" prefHeight="42.0" prefWidth="300.0" promptText="DD/MM/YYYY" stylesheets="@../styling/DatepickerStyling.CSS">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="0.8784313797950745" green="0.9098039269447327" blue="0.929411768913269" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </DatePicker>
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </children>
-   <padding>
-      <Insets left="5.0" right="5.0" />
-   </padding>
+                    </children>
+                    <padding>
+                        <Insets bottom="60.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </content>
+            <padding>
+                <Insets left="12.0" right="12.0" top="10.0" />
+            </padding>
+        </ScrollPane>
+    </children>
+    <padding>
+        <Insets left="5.0" right="5.0" />
+    </padding>
 </GridPane>

@@ -1,13 +1,20 @@
 package Server.network.services;
 
+import Server.business.mappers.GroupMapper;
+import Server.business.mappers.GroupMapperImp;
+import Server.business.model.group.Group;
+import Server.persistance.dao.GroupDao;
 import model.*;
 import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
+import model.group.GroupEntity;
 import model.user.UserEntity;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt {
@@ -29,6 +36,7 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
         }
     }
 
+
     @Override
     public String logout(String name) throws RemoteException {
         return null;
@@ -43,5 +51,23 @@ public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt
     @Override
     public String disconnect(ClientInt client) throws RemoteException {
         return null;
+    }
+
+    @Override
+    public GroupEntity createGroup(GroupEntity entity) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        GroupMapper groupMapper = new GroupMapperImp();
+        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_id());
+        groupDao.save(group);
+        return entity;
+    }
+
+    @Override
+    public List<GroupEntity> getUserGroups(int userId) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        GroupMapper groupMapper = new GroupMapperImp();
+        List<GroupEntity> groupList = groupDao.getUserGroups(userId);
+
+        return groupList;
     }
 }

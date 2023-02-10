@@ -16,12 +16,14 @@
       <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
    </columnConstraints>
    <rowConstraints>
+      <RowConstraints vgrow="NEVER" />
       <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
+      <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="1.7976931348623157E308" minHeight="323.2000259399414" prefHeight="357.6000122070312" valignment="TOP" vgrow="ALWAYS" />
    </rowConstraints>
    <children>
-      <GridPane>
+      <GridPane GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="4.0" left="4.0" top="7.0" />
          </GridPane.margin>
@@ -44,12 +46,12 @@
             <Button mnemonicParsing="false" onMouseClicked="#addContact" styleClass="utility-Button" stylesheets="@../styling/styling.css" text="Add Contact" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" GridPane.vgrow="SOMETIMES">
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="4" GridPane.vgrow="SOMETIMES">
          <content>
             <ListView fx:id="contactList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../styling/main.css" />
          </content>
       </ScrollPane>
-      <VBox fx:id="addContactContainer" GridPane.rowIndex="1" />
+      <VBox fx:id="addContactContainer" prefWidth="250.0" />
    </children>
    <padding>
       <Insets left="5.0" right="5.0" />

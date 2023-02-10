@@ -1,7 +1,7 @@
 package model.user;
 
 public enum Gender {
-    MALE("Male"), FEMALE("Female");
+    MALE("MALE"), FEMALE("FEMALE");
     private String gender;
     Gender (String gender) {
         this.gender = gender;

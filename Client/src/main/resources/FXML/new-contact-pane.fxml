@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -12,6 +13,7 @@
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.NewContactController">
    <children>
+      <Label text="New Contact" />
       <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="6.0">
          <children>
             <TextField fx:id="newContactPhoneField" maxWidth="1.7976931348623157E308" prefHeight="42.0" promptText="Enter a new Contact Number" stylesheets="@../styling/styling.css" HBox.hgrow="ALWAYS">

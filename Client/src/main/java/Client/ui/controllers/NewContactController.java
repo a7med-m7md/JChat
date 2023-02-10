@@ -1,6 +1,8 @@
 package Client.ui.controllers;
 
+import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
+import exceptions.UserNotFoundException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -28,13 +30,14 @@ public class NewContactController implements Initializable {
     void addNumber(MouseEvent event) {
         try {
             //TODO Check phoneNumber in DB Here
-            //If PhoneNumber doesn't exist (Reverse Logic) :
+            //If PhoneNumber exists
+            RMIClientServices.checkUserExists(newContactPhoneField.getText());
+//            if (errorContainer.getChildren() != null)
+                errorContainer.getChildren().clear();
+        } catch (UserNotFoundException e) {
+            //if phone number doesn't exist
             errorContainer.getChildren().setAll(new ErrorMessageUi("No such user!"));
-        } catch (Exception e) {
-            //if phone number exists
 
-            if (errorContainer.getChildren() != null)
-                errorContainer.getChildren().removeAll();
         }
     }
 

@@ -81,6 +81,8 @@ public class FileTransferHandled implements Runnable{
                 receiverOutputStream.write(fileNameBytes);
                 receiverOutputStream.writeInt(fileContentLength);
                 receiverOutputStream.write(fileContentBytes);
+                receiverOutputStream.flush();
+                //closeResources();
             }else{
                 System.out.println("the receiver user is not connected");
             }

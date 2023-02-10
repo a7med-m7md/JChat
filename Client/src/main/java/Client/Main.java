@@ -1,8 +1,6 @@
 package Client;
 
 
-//import Client.network.RMIConnection;
-import model.UtilityClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

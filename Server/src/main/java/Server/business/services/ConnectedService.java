@@ -21,8 +21,9 @@ public class ConnectedService extends UnicastRemoteObject implements ServerConne
 
     @Override
     public synchronized boolean connected(ClientServices client) throws RemoteException {
-        System.out.println(client.getMobile());
+        System.out.println("Register to Server:: " + client.getMobile());
         clients.put(client.getMobile(), client);
+        System.out.println("There are " + clients.size() + " users connected");
         return false;
     }
 

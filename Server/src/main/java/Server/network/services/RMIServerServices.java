@@ -14,19 +14,17 @@ import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
 import model.group.GroupEntity;
 import model.user.UserEntity;
-import services.ClientServices;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.Optional;
 
-public class CheckLogin extends UnicastRemoteObject implements Remote, ServerInt {
+public class RMIServerServices extends UnicastRemoteObject implements Remote, ServerInt {
     ConnectedService connectedService = new ConnectedService();
-    public CheckLogin() throws RemoteException {
+    public RMIServerServices() throws RemoteException {
     }
 
     @Override

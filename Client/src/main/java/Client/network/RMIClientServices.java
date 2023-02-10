@@ -32,6 +32,7 @@ public class RMIClientServices {
     }
 
     public static void registerInServer(){
+        System.out.println("Register");
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);

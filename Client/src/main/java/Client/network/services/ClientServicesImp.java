@@ -12,7 +12,8 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public String getMobile() throws RemoteException {
-        System.out.println(CurrentUserAccount.getInstance().getPhoneNumber());
+        System.out.println("FROM User side");
+        System.out.println(CurrentUserAccount.getMyAccount().getPhoneNumber());
         return CurrentUserAccount.getInstance().getPhoneNumber();
     }
 }

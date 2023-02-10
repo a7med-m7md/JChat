@@ -61,6 +61,8 @@ public class LoginController implements Initializable {
                 UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
                 CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
                 currentUserAccount.populateCurrentUserData(loggedInUser);
+                System.out.println("Connnected");
+                RMIClientServices.registerInServer();
 
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));

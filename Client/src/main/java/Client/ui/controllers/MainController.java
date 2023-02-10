@@ -1,5 +1,6 @@
 package Client.ui.controllers;
 
+import Client.ui.models.CurrentUserAccount;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -47,7 +48,7 @@ public class MainController implements Initializable {
     private StackPane tabContentArea;
 
     @FXML
-    private ComboBox<?> userStatus;
+    private StackPane currentUserPane;
 
     @FXML
     private StackPane conversationArea;
@@ -127,13 +128,18 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sideBar.toFront();
+        // opening chats tab on startup
         try {
             Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
             Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
+            Parent currentUser = FXMLLoader.load(getClass().getResource("/FXML/current-user-card.fxml"));
             tabContentArea.getChildren().add(chatsPane);
             conversationArea.getChildren().add(conversations);
+            currentUserPane.getChildren().add(currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 }

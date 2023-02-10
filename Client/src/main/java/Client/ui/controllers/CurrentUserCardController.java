@@ -46,6 +46,7 @@ public class CurrentUserCardController implements Initializable {
         currentUserDisplayName.textProperty().bind(currentUserAccount.nameProperty());
         currentUserBio.textProperty().bind(currentUserAccount.bioProperty());
 
-//        currentUserAccount.pictureProperty().bind(currentUserAvatar);
+        //TODO Bind Current User Avatar
+
     }
 }

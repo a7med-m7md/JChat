@@ -52,15 +52,6 @@ public class CurrentUserAccount {
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
         this.status.set(userDataFromDB.getStatus());
-//        this.name.set(userDataFromDB.getName());
-//        this.phoneNumber.set(userDataFromDB.getMobile());
-//        this.email.set(userDataFromDB.getEmail());
-//        this.gender.set(userDataFromDB.getGender());
-//        this.password.set(userDataFromDB.getPassword());
-//        this.country.set(userDataFromDB.getCountry());
-//        this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
-//        this.bio.set(userDataFromDB.getBio());
-//        this.status.set(userDataFromDB.getStatus());
     }
 
     public static CurrentUserAccount getMyAccount() {

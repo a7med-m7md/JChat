@@ -1,9 +1,7 @@
 package model;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import model.user.UserStatus;
 
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 //todo Change it to be model

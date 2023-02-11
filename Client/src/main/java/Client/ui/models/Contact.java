@@ -1,37 +1,45 @@
 package Client.ui.models;
 
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import model.FriendEntity;
+import model.user.UserEntity;
+import model.user.UserStatus;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class Contact {
     private StringProperty mobile;
     private StringProperty name;
     private StringProperty bio;
-    private StringProperty status;
+    private SimpleObjectProperty<UserStatus> status;
 
-    private Image avatar;
+    private ObjectProperty<Image> picture = new SimpleObjectProperty<>();
 
     public Contact(FriendEntity friendEntity) {
-        name = new SimpleStringProperty();
-        mobile = new SimpleStringProperty();
-        bio = new SimpleStringProperty();
-        status = new SimpleStringProperty();
-
-        name.set(friendEntity.getName());
-        mobile.set(friendEntity.getMobile());
-        bio.set(friendEntity.getBio());
-        status.set(friendEntity.getStatus());
-//        if (friendEntity.getUserPhoto() != null)
-//            avatar = new Image(new ByteArrayInputStream(friendEntity.getUserPhoto()));
-//        else
-//            avatar = new Image(getClass().getResourceAsStream("/FXML/image-placeholder.png"));
+        name = new SimpleStringProperty(friendEntity.getName());
+        mobile = new SimpleStringProperty(friendEntity.getMobile());
+        bio = new SimpleStringProperty(friendEntity.getBio());
+        status = new SimpleObjectProperty<UserStatus>();
     }
+
+//    public void populateFromFriendEntity(FriendEntity friendEntity) {
+//        this.name.set(friendEntity.getName());
+//        this.mobile.set(friendEntity.getMobile());
+//        this.bio.set(friendEntity.getBio());
+//        this.status.set(friendEntity.getStatus());
+//        this.picture.set(new Image(new ByteArrayInputStream(friendEntity.getPicture())));
+//    }
 
     public String getMobile() {
         return mobile.get();
@@ -69,23 +77,48 @@ public class Contact {
         this.bio.set(bio);
     }
 
-    public String getStatus() {
+    public UserStatus getStatus() {
         return status.get();
     }
 
-    public StringProperty statusProperty() {
+    public SimpleObjectProperty<UserStatus> statusProperty() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(UserStatus status) {
         this.status.set(status);
     }
-
-    public Image getAvatar() {
-        return avatar;
+    public ObjectProperty<Image> pictureProperty() {
+        return picture;
     }
 
-    public void setAvatar(Image avatar) {
-        this.avatar = avatar;
+    public Image getPicture() {
+        return picture.get();
     }
+
+    public void setPicture(Image picture) {
+        this.picture.set(picture);
+    }
+
+    public void setPictureAsBytes(byte[] pictureByteArray) {
+        this.picture.set(new Image(new ByteArrayInputStream(pictureByteArray)));
+    }
+
+    public byte[] getPictureAsBytes() throws IOException {
+        int width = (int) picture.get().getWidth();
+        int height = (int) picture.get().getHeight();
+
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g = bufferedImage.createGraphics();
+        g.drawImage(SwingFXUtils.fromFXImage(picture.get(), null), 0, 0, null);
+        g.dispose();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", baos);
+
+        byte[] imageData = baos.toByteArray();
+        return imageData;
+    }
+
 }

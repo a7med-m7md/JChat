@@ -43,7 +43,7 @@
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <Circle fx:id="userAvatar" fill="DODGERBLUE" onMouseClicked="#openFileChooser" radius="67.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="userAvatar" fill="DODGERBLUE" onMouseClicked="#openFileChooser" radius="67.0" stroke="#b3ccdd" strokeType="INSIDE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Circle>

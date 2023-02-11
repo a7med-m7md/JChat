@@ -13,6 +13,7 @@ import services.ClientServices;
 import services.MessagingService;
 import services.ServerConnection;
 
+import javax.security.auth.login.CredentialException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class RMIClientServices {
     static Registry chatRegistry;
+
     public static UserEntity logIn(String phoneNumber, String password) throws UserNotFoundException, RemoteException {
         Registry registry;
         try {
@@ -33,6 +35,7 @@ public class RMIClientServices {
         }
         return null;
     }
+
     public static void checkUserExists(String phoneNumber) throws UserNotFoundException {
         Registry registry;
         try {
@@ -41,7 +44,7 @@ public class RMIClientServices {
             user.checkUserExists(phoneNumber);
         } catch (NotBoundException e) {
             e.printStackTrace();
-        }  catch (AccessException e) {
+        } catch (AccessException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -51,7 +54,7 @@ public class RMIClientServices {
 
     public static FriendEntity searchFriend(String number) throws RemoteException {
         try {
-            if(chatRegistry == null){
+            if (chatRegistry == null) {
                 chatRegistry = LocateRegistry.getRegistry(2233);
             }
             ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
@@ -65,7 +68,7 @@ public class RMIClientServices {
     public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException {
 
         try {
-            if(chatRegistry == null){
+            if (chatRegistry == null) {
                 chatRegistry = LocateRegistry.getRegistry(2233);
             }
             ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
@@ -77,7 +80,7 @@ public class RMIClientServices {
 
     public static void acceptFriendRequest(String myNumber, String requestNumber) throws RemoteException {
         try {
-            if(chatRegistry == null){
+            if (chatRegistry == null) {
                 chatRegistry = LocateRegistry.getRegistry(2233);
             }
             ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
@@ -89,7 +92,7 @@ public class RMIClientServices {
 
     public static void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException {
         try {
-            if(chatRegistry == null){
+            if (chatRegistry == null) {
                 chatRegistry = LocateRegistry.getRegistry(2233);
             }
             ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
@@ -100,7 +103,7 @@ public class RMIClientServices {
     }
 
 
-    public static void registerInServer(){
+    public static void registerInServer() {
         System.out.println("Register");
         Registry registry;
         try {
@@ -142,7 +145,7 @@ public class RMIClientServices {
         }
         return null;
     }
-    
+
 
     public static void signUp(UserEntity userObject) throws DuplicateUserException {
         Registry registry;
@@ -157,10 +160,23 @@ public class RMIClientServices {
         }
     }
 
+    public static void logOut(String mobile) throws CredentialException, RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/logOut");
+            user.logout(mobile);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void chatMessaging(MessageEntity msg) throws RemoteException {
         Registry messagingRegistry;
         try {
-                chatRegistry = LocateRegistry.getRegistry(2233);
+            chatRegistry = LocateRegistry.getRegistry(2233);
             MessagingService user = (MessagingService) chatRegistry.lookup("rmi://localhost:2233/chatMessaging");
             user.sendMessage(msg);
         } catch (NotBoundException e) {

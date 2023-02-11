@@ -5,6 +5,7 @@ import exceptions.UserNotFoundException;
 import model.group.GroupEntity;
 import model.user.UserEntity;
 
+import javax.security.auth.login.CredentialException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -14,7 +15,7 @@ public interface ServerInt extends Remote {
     UserEntity login(LoginEntity name) throws RemoteException, UserNotFoundException;
     public void checkDuplicateUser(String phoneNumber) throws RemoteException, DuplicateUserException;
     void signUp(UserEntity userEntity) throws RemoteException , DuplicateUserException;
-    String logout(String name) throws RemoteException;
+    String logout(String name) throws RemoteException, CredentialException;
     String connect(ClientInt client) throws RemoteException;
     String disconnect(ClientInt client) throws RemoteException;
     GroupEntity createGroup(GroupEntity entity) throws RemoteException;

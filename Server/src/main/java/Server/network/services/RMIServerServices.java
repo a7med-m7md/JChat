@@ -10,11 +10,13 @@ import Server.business.services.login.LoginService;
 import Server.business.services.login.LoginServiceImp;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.persistance.dao.GroupDao;
+import Server.persistance.dao.UserFriendDao;
 import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
 import model.group.GroupEntity;
+import model.user.UserDto;
 import model.user.UserEntity;
 
 import javax.security.auth.login.CredentialException;
@@ -67,10 +69,10 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     }
 
     @Override
-    public void signUp(UserEntity userEntity) throws RemoteException {
-        UserMapper userMapper = new UseMapperImpl();
+    public UserEntity signUp(UserDto userDto) throws RemoteException {
+//        UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();
-        registerService.register(userMapper.entityToDomain(userEntity));
+        return registerService.register(userDto);
     }
 
 
@@ -90,6 +92,18 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     @Override
     public String disconnect(ClientInt client) throws RemoteException {
         return null;
+    }
+
+    @Override
+    public List<FriendEntity> getAllFriends(String mobile) throws RemoteException {
+        UserFriendDao userFriendDao = new UserFriendDao();
+        return userFriendDao.getFriendList(mobile);
+    }
+
+    @Override
+    public List<FriendEntity> getAllFriendsRequest(String mobile) throws RemoteException {
+        UserFriendDao userFriendDao = new UserFriendDao();
+        return userFriendDao.getFriendRequests(mobile);
     }
 
     @Override

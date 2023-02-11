@@ -1,5 +1,7 @@
 package Client.ui.controllers;
 
+import Client.ui.components.ErrorMessageUi;
+import Client.ui.components.NotificationUI;
 import Client.ui.models.CurrentUserAccount;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -17,6 +19,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -55,6 +58,10 @@ public class MainController implements Initializable {
 
     @FXML
     private StackPane sideBar;
+
+
+    @FXML
+    private VBox requestsNotification;
 
 
     Map<String, Parent> tabPanes = FXCollections.observableHashMap();
@@ -149,6 +156,11 @@ public class MainController implements Initializable {
         sideBar.toFront();
         // opening chats tab on startup
         try {
+            //TODO Add Notification for friend reuests
+
+            requestsNotification.getChildren().add(new NotificationUI("2",false));
+
+            //TODO
             Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
             Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
             Parent currentUser = FXMLLoader.load(getClass().getResource("/FXML/current-user-card.fxml"));

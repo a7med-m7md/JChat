@@ -5,7 +5,6 @@ import exceptions.UserNotFoundException;
 import model.group.GroupEntity;
 import model.user.UserEntity;
 
-import javax.security.auth.login.CredentialException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;

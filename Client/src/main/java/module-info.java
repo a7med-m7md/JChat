@@ -10,6 +10,8 @@ module Client {
     requires com.jfoenix;
     requires java.rmi;
     requires SharedUtilities;
+    requires java.desktop;
+    requires javafx.swing;
 
     exports Client;
     exports Client.ui.controllers;

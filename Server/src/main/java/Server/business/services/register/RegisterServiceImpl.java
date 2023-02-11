@@ -4,16 +4,22 @@ import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
 import model.user.UserEntity;
 import Server.persistance.dao.UserDao;
-import Server.business.dtos.UserDto;
+import model.user.UserDto;
+import services.RegisterService;
 
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Optional;
 
-public class RegisterServiceImpl implements RegisterService {
+public class RegisterServiceImpl extends UnicastRemoteObject implements RegisterService {
     //TODO -> should connect with server using RMI to access the register service there to connect to db
     //TODO -> BUT Now we will check with local db.
     UserDao userDao = new UserDao();
     UserMapper userMapper = new UseMapperImpl();
+
+    public RegisterServiceImpl() throws RemoteException {
+    }
 
     @Override
     public boolean isNewUser(int id) {
@@ -25,10 +31,10 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public Server.business.dtos.UserDto register(UserDto userDto) {
+    public UserEntity register(UserDto userDto) {
         UserEntity userEntity = userMapper.domainToEntity(userDto);
         userDao.save(userEntity);
-        return userDto;
+        return userEntity;
     }
 
     @Override

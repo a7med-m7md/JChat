@@ -9,7 +9,6 @@ public class UserEntity implements Serializable {
     private String name;
     private String email;
     private String picture;
-
     private String password;
     private Gender gender;
     private String country;

@@ -7,11 +7,9 @@ import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
 import model.group.GroupEntity;
+import model.user.UserDto;
 import model.user.UserEntity;
-import services.ChatService;
-import services.ClientServices;
-import services.MessagingService;
-import services.ServerConnection;
+import services.*;
 
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
@@ -175,17 +173,18 @@ public class RMIClientServices {
     }
     
 
-    public static void signUp(UserEntity userObject) throws DuplicateUserException {
+    public static UserEntity signUp(UserDto userObject) throws DuplicateUserException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/register");
-            user.signUp(userObject);
+            RegisterService user = (RegisterService) registry.lookup("rmi://localhost:2233/register");
+            return user.register(userObject);
         } catch (NotBoundException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static void chatMessaging(MessageEntity msg) throws RemoteException {

@@ -43,6 +43,9 @@ public class NewContactController implements Initializable {
         try {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             RMIClientServices.sendFriendRequest(currentUserAccount.getPhoneNumber(), contactsToAdd);
+            errorContainer.getChildren().setAll(new ErrorMessageUi("Requestes sent succesfully" ,false));
+            contactsToAddListView.getChildren().clear();
+
         } catch (UserNotFoundException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
@@ -62,11 +65,11 @@ public class NewContactController implements Initializable {
             FriendEntity newFriend = RMIClientServices.searchFriend(newContactPhoneField.getText());
             Contact newContact = new Contact(newFriend);
             contactsToAddListView.getChildren().add(new ContactCard(newContact));
-
+            newContactPhoneField.clear();
 
         } catch (UserNotFoundException e) {
             //if phone number doesn't exist
-            errorContainer.getChildren().setAll(new ErrorMessageUi("No such user!"));
+            errorContainer.getChildren().setAll(new ErrorMessageUi("No such user!",true));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

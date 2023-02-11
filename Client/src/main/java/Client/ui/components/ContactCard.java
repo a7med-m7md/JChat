@@ -63,7 +63,7 @@ public class ContactCard extends GridPane {
         rowConstraints.setVgrow(javafx.scene.layout.Priority.NEVER);
 
         contactAvatar.setFill(javafx.scene.paint.Color.DODGERBLUE);
-        contactAvatar.setRadius(23.0);
+        contactAvatar.setRadius(17.0);
         contactAvatar.setStroke(javafx.scene.paint.Color.valueOf("#62ff32"));
         contactAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         contactAvatar.setStrokeWidth(2.0);
@@ -75,7 +75,7 @@ public class ContactCard extends GridPane {
         GridPane.setVgrow(vBox, javafx.scene.layout.Priority.NEVER);
         vBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         vBox.setMaxWidth(Double.MAX_VALUE);
-        vBox.setSpacing(3.0);
+        vBox.setSpacing(0.0);
 
         VBox.setVgrow(contactName, javafx.scene.layout.Priority.NEVER);
         contactName.setAlignment(javafx.geometry.Pos.CENTER);
@@ -83,7 +83,7 @@ public class ContactCard extends GridPane {
         contactName.setText(contact.getName());
         contactName.setTextFill(javafx.scene.paint.Color.valueOf("#5a6777"));
         contactName.setWrapText(true);
-        contactName.setFont(new Font("Segoe UI", 15.0));
+        contactName.setFont(new Font("Segoe UI", 13.0));
 
         VBox.setVgrow(bio, javafx.scene.layout.Priority.NEVER);
         bio.setAlignment(javafx.geometry.Pos.CENTER);
@@ -91,7 +91,8 @@ public class ContactCard extends GridPane {
         bio.setText(contact.getBio());
         bio.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         bio.setTextFill(javafx.scene.paint.Color.valueOf("#9aa1aa"));
-        vBox.setPadding(new Insets(4.0, 10.0, 4.0, 10.0));
+        vBox.setPadding(new Insets(4.0, 10.0, 4.0, 5.0));
+        bio.setFont(new Font("Segoe UI", 10.0));
         setPadding(new Insets(5.0));
         setCursor(Cursor.HAND);
 

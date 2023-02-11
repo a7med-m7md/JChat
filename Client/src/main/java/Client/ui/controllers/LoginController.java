@@ -79,10 +79,10 @@ public class LoginController implements Initializable {
                 stage.close();
 
             } catch (UserNotFoundException e) {
-                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password"));
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password",true));
                 System.out.println("user not found");
             } catch (RemoteException e) {
-                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down"));
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down",true));
                 System.out.println("server down");
             }
             catch (IOException e) {

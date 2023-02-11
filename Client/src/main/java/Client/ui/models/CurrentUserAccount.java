@@ -1,17 +1,22 @@
 package Client.ui.models;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import model.user.Gender;
 import model.user.UserEntity;
 import model.user.UserStatus;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.awt.image.*;
+import java.io.IOException;
+
+import javafx.embed.swing.SwingFXUtils;
+
+import javax.imageio.ImageIO;
 
 public class CurrentUserAccount {
 
@@ -21,7 +26,7 @@ public class CurrentUserAccount {
         name  = new SimpleStringProperty();
         phoneNumber  = new SimpleStringProperty();
         email  = new SimpleStringProperty();
-//        picture  = new Image();
+//        picture  = new Image(50,50,false,false);
         password  = new SimpleStringProperty();
         gender  = new SimpleObjectProperty();
         country = new SimpleStringProperty();
@@ -55,7 +60,36 @@ public class CurrentUserAccount {
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
         this.status.set(userDataFromDB.getStatus().getStatus());
-//        this.picture = new Image(userDataFromDB.g)
+        this.picture = new Image(new ByteArrayInputStream(userDataFromDB.getPicture()));
+    }
+
+    public Image getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Image picture) {
+        this.picture = picture;
+    }
+
+    public void setPictureAsBytes(byte[] pictureByteArray) {
+        this.picture = new Image(new ByteArrayInputStream(pictureByteArray));
+    }
+
+    public byte[] getPictureAsBytes() throws IOException {
+        int width = (int) picture.getWidth();
+        int height = (int) picture.getHeight();
+
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g = bufferedImage.createGraphics();
+        g.drawImage(SwingFXUtils.fromFXImage(picture, null), 0, 0, null);
+        g.dispose();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", baos);
+
+        byte[] imageData = baos.toByteArray();
+        return imageData;
     }
 
     public static CurrentUserAccount getMyAccount() {

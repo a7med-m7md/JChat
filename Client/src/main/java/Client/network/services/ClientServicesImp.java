@@ -32,5 +32,10 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
         System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
     }
 
+    @Override
+    public void receiveAnnouncement(String msg) throws RemoteException {
+        System.out.println("Announcement from server: " + msg);
+    }
+
 
 }

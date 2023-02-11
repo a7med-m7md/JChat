@@ -11,4 +11,5 @@ public interface ClientServices extends Remote {
     String getMobile() throws RemoteException;
     void friendRequestNotification(FriendEntity friend) throws RemoteException;
     void receiveMessage(MessageEntity msg) throws RemoteException;
+    void receiveAnnouncement(String msg) throws RemoteException;
 }

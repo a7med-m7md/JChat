@@ -15,16 +15,24 @@ public enum UserStatus {
     public String getStatusName(){return status;}
 
     public static UserStatus getStatus(String status) {
+        if (status == null) {
+            return null;
+        }
 
-        if (status.equals("Available"))
+        if (status.equals("Available")) {
             return AVAILABLE;
-        if (status.equals("Busy"))
+        }
+        if (status.equals("Busy")) {
             return BUSY;
-        if(status.equals("Away"))
+        }
+        if (status.equals("Away")) {
             return AWAY;
-        if(status.equals("Offline"))
+        }
+        if (status.equals("Offline")) {
             return OFFLINE;
+        }
         return null;
     }
+
     public Color getColor() {return color;}
 }

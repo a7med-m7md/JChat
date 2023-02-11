@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import model.user.UserStatus;
@@ -32,6 +33,7 @@ public class CurrentUserCardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
         ObservableList<String> statuses =
                 FXCollections.observableArrayList(
                         Stream.of(UserStatus.values())
@@ -39,11 +41,15 @@ public class CurrentUserCardController implements Initializable {
                                 .collect(Collectors.toList())
                 );
         userStatus.setItems(statuses);
+        userStatus.setValue(currentUserAccount.getStatus().getStatusName());
 
         //Binding current user data from db to the Current User Card in GUI
-        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
 
-        userStatus.valueProperty().bindBidirectional(currentUserAccount.statusProperty());
+        currentUserAccount.statusProperty().bind(Bindings.createObjectBinding(() -> {
+            String selectedStatus = userStatus.getValue();
+            return UserStatus.getStatus(selectedStatus);
+        }, userStatus.valueProperty()));
+
         currentUserDisplayName.textProperty().bind(currentUserAccount.nameProperty());
         currentUserBio.textProperty().bind(currentUserAccount.bioProperty());
 
@@ -52,8 +58,13 @@ public class CurrentUserCardController implements Initializable {
         }));
 
         currentUserAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
-            return currentUserAccount.getStatus().getColor();
-        }));
+            String selectedStatus = userStatus.getValue();
+            UserStatus userStatus = UserStatus.getStatus(selectedStatus);
+            if (userStatus == null) {
+                return Color.BLACK;
+            }
+            return userStatus.getColor();
+        }, userStatus.valueProperty()));
 
 
     }

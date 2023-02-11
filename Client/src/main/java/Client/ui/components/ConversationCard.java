@@ -93,7 +93,7 @@ public class ConversationCard extends GridPane {
 
         VBox.setVgrow(contactName, javafx.scene.layout.Priority.NEVER);
         contactName.setAlignment(javafx.geometry.Pos.CENTER);
-        contactName.setText(contact.getDisplayName());
+        contactName.setText(contact.getName());
         contactName.setTextAlignment(javafx.scene.text.TextAlignment.LEFT);
         contactName.setTextFill(javafx.scene.paint.Color.valueOf("#5a6777"));
         contactName.setWrapText(true);

@@ -13,12 +13,12 @@ public class Message {
     long id;
 
     public Message(Contact contact, String messageBody) {
-        this.contact = contact;
-        this.senderName = contact.getDisplayName();
-        this.messageBody = messageBody;
-        this.timeStamp = getMessageTime();
-        this.id = contact.getId();
-        this.timeStamp = getMessageTime();
+//        this.contact = contact;
+//        this.senderName = contact.getDisplayName();
+//        this.messageBody = messageBody;
+//        this.timeStamp = getMessageTime();
+//        this.id = contact.getId();
+//        this.timeStamp = getMessageTime();
 
     }
 

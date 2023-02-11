@@ -68,23 +68,6 @@ public class LoginController implements Initializable {
                 currentUserAccount.populateCurrentUserData(loggedInUser);
                 System.out.println("Connnected");
                 RMIClientServices.registerInServer();
-                FriendEntity friend = RMIClientServices.searchFriend("01024251210");
-                System.out.println(friend.getMobile());
-                new java.util.Timer().schedule(
-                        new java.util.TimerTask() {
-                            @Override
-                            public void run() {
-                                // your code here
-                                try {
-                                    RMIClientServices.chatMessaging(new MessageEntity("01024251210", "01112175312", "Hello I love it", LocalDateTime.now()));
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        },
-                        5000
-                );
-
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();
@@ -96,10 +79,10 @@ public class LoginController implements Initializable {
                 stage.close();
 
             } catch (UserNotFoundException e) {
-                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password"));
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password",true));
                 System.out.println("user not found");
             } catch (RemoteException e) {
-                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down"));
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down",true));
                 System.out.println("server down");
             }
             catch (IOException e) {

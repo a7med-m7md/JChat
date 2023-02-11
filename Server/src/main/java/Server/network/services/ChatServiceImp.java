@@ -35,6 +35,7 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
+
                     }
             );
 

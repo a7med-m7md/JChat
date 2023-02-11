@@ -9,15 +9,17 @@ public class UserDto implements Serializable {
     private String mobile;
     private String name;
     private String email;
-    private byte[] picture;
+    private String picture;
     private String password;
     private Gender gender;
     private String country;
     private String dateOfBirth;
     private String bio;
     private UserStatus status;
-
-    public UserDto(String mobile, String name, String email, byte[] picture, String password, Gender gender, String country, String dateOfBirth, String bio) {
+public UserDto() {
+    this.status=UserStatus.AVAILABLE;
+}
+    public UserDto(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio) {
         this.mobile = mobile;
         this.name = name;
         this.email = email;
@@ -55,11 +57,11 @@ public class UserDto implements Serializable {
         this.email = email;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 

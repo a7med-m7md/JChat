@@ -2,6 +2,7 @@ package services;
 
 import exceptions.UserNotFoundException;
 import model.FriendEntity;
+import model.user.UserStatus;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -15,4 +16,5 @@ public interface ChatService extends Remote {
     void acceptFriendRequest(String myNumber, String requestNumber) throws RemoteException;
     void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException;
     FriendEntity searchFriend(String mobile) throws RemoteException;
+    void tellMyStatusToFriends(String myNumber, UserStatus status) throws RemoteException;
 }

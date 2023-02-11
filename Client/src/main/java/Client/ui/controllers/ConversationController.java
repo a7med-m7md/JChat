@@ -42,9 +42,9 @@ public class ConversationController implements Initializable {
 
     @FXML
     void sendMessage(MouseEvent event) {
-        CurrentSession currentSession = CurrentSession.getInstance();
-        currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get())
-                .add(new Message(currentSession.getMyAccount(), messageTextField.getText()));
+//        CurrentSession currentSession = CurrentSession.getInstance();
+//        currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get())
+//                .add(new Message(currentSession.getMyAccount(), messageTextField.getText()));
     }
 
     @Override
@@ -56,19 +56,19 @@ public class ConversationController implements Initializable {
         //binding the header contents
         //chat contact's name
         //chat contact's avatar
-        currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
+//        currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
             Contact currentContact = currentSession.currentContactChatProperty().get();
-            return currentContact == null ? "" : currentContact.getDisplayName();
-        }, currentSession.currentContactChatProperty()));
+//            return currentContact == null ? "" : currentContact.getDisplayName();
+//        }, currentSession.currentContactChatProperty()));
 
         currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
-            Contact currentContact = currentSession.currentContactChatProperty().get();
+//            Contact currentContact = currentSession.currentContactChatProperty().get();
             return currentContact == null ? null : new ImagePattern(currentContact.getAvatar());
         }, currentSession.currentContactChatProperty()));
 
         //binding the contents of contact's messages list to the messagesContainer VBox
         currentSession.chatsMapProperty().addListener((observable, oldValue, newValue) -> {
-            Contact currentContact = currentSession.currentContactChatProperty().get();
+//            Contact currentContact = currentSession.currentContactChatProperty().get();
             if (currentContact != null) {
                 ObservableList<Message> messages = newValue.get(currentContact);
                 if (messages != null) {

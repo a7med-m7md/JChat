@@ -1,5 +1,8 @@
 package Client.ui.controllers;
 
+import Client.ui.components.ErrorMessageUi;
+import Client.ui.components.NotificationUI;
+import Client.ui.models.CurrentUserAccount;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -16,6 +19,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -47,13 +51,17 @@ public class MainController implements Initializable {
     private StackPane tabContentArea;
 
     @FXML
-    private ComboBox<?> userStatus;
+    private StackPane currentUserPane;
 
     @FXML
     private StackPane conversationArea;
 
     @FXML
     private StackPane sideBar;
+
+
+    @FXML
+    private VBox requestsNotification;
 
 
     Map<String, Parent> tabPanes = FXCollections.observableHashMap();
@@ -66,7 +74,16 @@ public class MainController implements Initializable {
 
     @FXML
     void switchAccountSettings(MouseEvent event) {
-
+        if (!tabPanes.containsKey("account")) {
+            try {
+                Parent accountPane = FXMLLoader.load(getClass().getResource("/FXML/account-info.fxml"));
+                tabPanes.put("account", accountPane);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Parent accountPane = tabPanes.get("account");
+        animateTabs(accountPane);
     }
 
     @FXML
@@ -86,6 +103,16 @@ public class MainController implements Initializable {
 
     @FXML
     void switchContactsList(MouseEvent event) {
+//        if (!tabPanes.containsKey("contacts")) {
+            try {
+                Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
+//                tabPanes.put("contacts", contactsPane);
+        animateTabs(contactsPane);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+//        }
+//        Parent contactsPane = tabPanes.get("contacts");
 
     }
 
@@ -127,13 +154,23 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sideBar.toFront();
+        // opening chats tab on startup
         try {
+            //TODO Add Notification for friend reuests
+
+            requestsNotification.getChildren().add(new NotificationUI("2",false));
+
+            //TODO
             Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
             Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
+            Parent currentUser = FXMLLoader.load(getClass().getResource("/FXML/current-user-card.fxml"));
             tabContentArea.getChildren().add(chatsPane);
             conversationArea.getChildren().add(conversations);
+            currentUserPane.getChildren().add(currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 }

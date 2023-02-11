@@ -11,6 +11,13 @@
 
     <artifactId>SharedUtilities</artifactId>
     <version>1.0-SNAPSHOT</version  >
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>17.0.1</version>
+        </dependency>
+    </dependencies>
     <groupId>com.java.iti</groupId>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

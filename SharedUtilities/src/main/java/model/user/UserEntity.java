@@ -8,8 +8,7 @@ public class UserEntity implements Serializable {
     private String mobile;
     private String name;
     private String email;
-    private String picture;
-
+    private byte[] picture;
     private String password;
     private Gender gender;
     private String country;
@@ -17,7 +16,7 @@ public class UserEntity implements Serializable {
     private String bio;
     private UserStatus status;
 
-    public UserEntity(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio, UserStatus status) {
+    public UserEntity(String mobile, String name, String email, byte[] picture, String password, Gender gender, String country, String dateOfBirth, String bio, UserStatus status) {
         this.mobile = mobile;
         this.name = name;
         this.email = email;
@@ -62,11 +61,11 @@ public class UserEntity implements Serializable {
         this.email = email;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 

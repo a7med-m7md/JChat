@@ -64,7 +64,7 @@ public class SignUp3Controller implements Initializable {
             newCreatedUser.setName(populatedUserData.getName());
             //TODO
             //set Avatar Image
-            newCreatedUser.setPicture("Null");
+            //newCreatedUser.setPicture("Null");
             //TODO
 
             RMIClientServices.signUp(newCreatedUser);

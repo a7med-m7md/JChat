@@ -14,6 +14,7 @@ import model.*;
 import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
 import model.group.GroupEntity;
+import model.user.UserDto;
 import model.user.UserEntity;
 
 import java.rmi.Remote;
@@ -65,10 +66,10 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     }
 
     @Override
-    public void signUp(UserEntity userEntity) throws RemoteException {
-        UserMapper userMapper = new UseMapperImpl();
+    public UserEntity signUp(UserDto userDto) throws RemoteException {
+//        UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();
-        registerService.register(userMapper.entityToDomain(userEntity));
+        return registerService.register(userDto);
     }
 
 

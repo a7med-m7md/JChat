@@ -1,10 +1,10 @@
 package Server.business.mappers;
 
 import model.user.UserEntity;
-import Server.business.dtos.UserDto;
+import model.user.UserDto;
 
 public interface UserMapper {
-    Server.business.dtos.UserDto entityToDomain(UserEntity entity);
+    UserDto entityToDomain(UserEntity entity);
     UserEntity domainToEntity(UserDto userDto);
 
 }

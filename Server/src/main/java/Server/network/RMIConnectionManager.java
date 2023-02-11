@@ -1,5 +1,6 @@
 package Server.network;
 import Server.business.services.ConnectedService;
+import Server.business.services.register.RegisterServiceImpl;
 import Server.network.services.ChatServiceImp;
 import Server.network.services.MessagingServiceImp;
 import model.ClientInt;
@@ -8,6 +9,7 @@ import model.Message;
 import Server.network.services.RMIServerServices;
 import services.ChatService;
 import services.MessagingService;
+import services.RegisterService;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -51,6 +53,9 @@ public class RMIConnectionManager {
             messagingService = new MessagingServiceImp();
             registry.rebind("rmi://localhost:2233/chatMessaging", messagingService);
 
+            System.out.println("Register Service Started");
+            RegisterService registerService = new RegisterServiceImpl();
+            registry.rebind("rmi://localhost:2233/register", registerService);
         } catch (AccessException e) {
             e.printStackTrace();
         } catch (RemoteException e) {

@@ -27,9 +27,9 @@ public class LoginServiceImp implements LoginService {
 
     @Override
     public void logOut(String mobile) throws CredentialException {
-        Optional<UserEntity> currentUser = userDao.findById(1);
+        Optional<UserEntity> currentUser = userDao.findByMobile(mobile);
         if (currentUser == null) {
-            throw new CredentialException("Phone Or Password May Be Invalid");
+            throw new CredentialException("Not Founded User");
         }
         userDao.delete(mobile);
 

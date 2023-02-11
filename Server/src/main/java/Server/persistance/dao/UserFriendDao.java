@@ -38,11 +38,13 @@ public class UserFriendDao implements UserFriendDaoInt{
             preparedStatement.setString(1, myMobileNum);
             ResultSet rs =preparedStatement.executeQuery();
             if(rs.next()){
-                return new FriendEntity(
+                FriendEntity friend = new FriendEntity(
                         rs.getString("mobile"),
                         rs.getString("name"),
                         rs.getString("bio"),
                         rs.getString("status"));
+                System.out.println(friend.getMobile());
+                return friend;
             }
         }
         return null;

@@ -38,8 +38,6 @@ public class UserDao implements CRUDOperation<UserEntity> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return userList;
     }
@@ -96,8 +94,6 @@ public class UserDao implements CRUDOperation<UserEntity> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return Optional.empty();
     }
@@ -136,8 +132,6 @@ public class UserDao implements CRUDOperation<UserEntity> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return Optional.empty();
     }
@@ -161,8 +155,6 @@ public class UserDao implements CRUDOperation<UserEntity> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return entity;
     }

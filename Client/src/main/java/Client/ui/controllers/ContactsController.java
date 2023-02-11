@@ -1,6 +1,7 @@
 package Client.ui.controllers;
 
 import Client.ui.components.ContactCard;
+import Client.ui.components.FriendRequestCard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import model.FriendEntity;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,7 +20,7 @@ public class ContactsController implements Initializable {
     @FXML
     private VBox addContactContainer;
     @FXML
-    private ListView<ContactCard> contactList;
+    private VBox contactList;
 
     @FXML
     void addContact(MouseEvent event) {
@@ -34,6 +36,12 @@ public class ContactsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        FriendEntity testFriend = new FriendEntity();
+        testFriend.setName("Test");
+        testFriend.setBio("Test");
+        contactList.getChildren().add(new FriendRequestCard(testFriend));
+        contactList.getChildren().add(new FriendRequestCard(testFriend));
+        contactList.getChildren().add(new FriendRequestCard(testFriend));
+        contactList.getChildren().add(new FriendRequestCard(testFriend));
     }
 }

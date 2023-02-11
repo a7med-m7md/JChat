@@ -59,7 +59,7 @@ public class SignUp3Controller implements Initializable {
             newCreatedUser.setEmail(populatedUserData.getEmail());
             newCreatedUser.setGender(populatedUserData.getGender());
             newCreatedUser.setCountry(populatedUserData.getCountry());
-            newCreatedUser.setCountry(populatedUserData.getDateOfBirth());
+            newCreatedUser.setDateOfBirth(populatedUserData.getDateOfBirth());
             newCreatedUser.setBio(populatedUserData.getBio());
             newCreatedUser.setName(populatedUserData.getName());
             //TODO

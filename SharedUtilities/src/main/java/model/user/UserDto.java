@@ -16,7 +16,9 @@ public class UserDto implements Serializable {
     private String dateOfBirth;
     private String bio;
     private UserStatus status;
-
+public UserDto() {
+    this.status=UserStatus.AVAILABLE;
+}
     public UserDto(String mobile, String name, String email, String picture, String password, Gender gender, String country, String dateOfBirth, String bio) {
         this.mobile = mobile;
         this.name = name;

@@ -1,12 +1,11 @@
 package Client.ui.controllers;
 
+import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.Country;
 import Client.ui.controllerutils.EmailValidator;
-import Client.ui.controllerutils.PasswordAndConfirmPasswordValidator;
-import Client.ui.controllerutils.PhoneNumberValidator;
+import Client.ui.models.CurrentUserAccount;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -22,10 +21,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import model.user.Gender;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,12 +53,28 @@ public class SignUp2Controller implements Initializable {
     @FXML
     private Button signUpNextBtn2;
 
+    @FXML
+    private VBox errorContainer;
 
     @FXML
     void handleNextBtn(MouseEvent event) throws IOException {
-        if (validateFields()) {
+        if (!validateFields()) {
+            errorContainer.getChildren().setAll(new ErrorMessageUi("Please fill all fields", true));
+        } else {
+            CurrentUserAccount newUserAccount = CurrentUserAccount.getInstance();
+            newUserAccount.setEmail(signUpEmailField.getText());
+            newUserAccount.setCountry(countryComboBox.getValue());
+            newUserAccount.setGender(Gender.getGender(genderComboBox.getValue()));
+
+            //converting LocalDate from datepicker to String
+            LocalDate localDate = dateOfBirth.getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String dateString = localDate.format(formatter);
+            newUserAccount.setDateOfBirth(dateString);
+
+            //Switching to next step screen
             Parent signUpPane3 = FXMLLoader.load(getClass().getResource("/FXML/sign-up-3.fxml"));
-            Scene currentScene = signUpNextBtn2.getScene();
+            Scene currentScene = signUpEmailField.getScene();
             signUpPane3.translateXProperty().set(currentScene.getWidth());
 
             signUp2Pane.getChildren().add(signUpPane3);
@@ -71,20 +90,20 @@ public class SignUp2Controller implements Initializable {
         }
     }
 
+
     private boolean validateFields() {
         boolean validationFlag = true;
-
         //Email Field Validation
         EmailValidator emailFieldValidaton = new EmailValidator();
         emailFieldValidaton.setMessage("Enter a valid email address");
         signUpEmailField.getValidators().add(emailFieldValidaton);
-
-        //Required Field Validators
-        RequiredFieldValidator genderValidation = new RequiredFieldValidator();
-        genderValidation.setMessage("choose a gender");
-
-        //Checking Fields
         if (!signUpEmailField.validate())
+            validationFlag = false;
+        if (genderComboBox.getValue() == null)
+            validationFlag = false;
+        if (countryComboBox.getValue() == null)
+            validationFlag = false;
+        if (dateOfBirth.getValue() == null)
             validationFlag = false;
         return validationFlag;
     }
@@ -98,6 +117,14 @@ public class SignUp2Controller implements Initializable {
                                 .collect(Collectors.toList())
                 );
         countryComboBox.setItems(countryList);
-        countryComboBox.setValue(Country.EGYPT.toString());
+        countryComboBox.setValue(Country.EGYPT.getCountry());
+
+        ObservableList<String> genderList =
+                FXCollections.observableArrayList(
+                        Stream.of(Gender.values())
+                                .map(Gender::getGenderName)
+                                .collect(Collectors.toList())
+                );
+        genderComboBox.setItems(genderList);
     }
 }

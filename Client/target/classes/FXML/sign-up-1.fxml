@@ -31,6 +31,7 @@
                         <Font name="Segoe UI Black" size="16.0" />
                      </font>
                   </Label>
+                  <VBox fx:id="errorContainer" />
                </children>
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" prefWidth="173.0" spacing="28.0" VBox.vgrow="ALWAYS">
@@ -129,5 +130,6 @@
             </VBox>
          </children>
       </VBox>
+      <VBox fx:id="errorMessageContainer" />
    </children>
 </AnchorPane>

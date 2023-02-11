@@ -27,14 +27,14 @@ public class CurrentUserCardController implements Initializable {
     private Circle currentUserAvatar;
 
     @FXML
-    private ComboBox<UserStatus> userStatus;
+    private ComboBox<String> userStatus;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<UserStatus> statuses =
+        ObservableList<String> statuses =
                 FXCollections.observableArrayList(
                         Stream.of(UserStatus.values())
-
+                                .map(UserStatus::getStatus)
                                 .collect(Collectors.toList())
                 );
         userStatus.setItems(statuses);

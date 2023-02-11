@@ -2,6 +2,7 @@ package Client.ui.models;
 
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 import model.FriendEntity;
@@ -17,11 +18,19 @@ public class Contact {
     private Image avatar;
 
     public Contact(FriendEntity friendEntity) {
+        name = new SimpleStringProperty();
+        mobile = new SimpleStringProperty();
+        bio = new SimpleStringProperty();
+        status = new SimpleStringProperty();
+
         name.set(friendEntity.getName());
         mobile.set(friendEntity.getMobile());
         bio.set(friendEntity.getBio());
         status.set(friendEntity.getStatus());
-        avatar = new Image(new ByteArrayInputStream(friendEntity.getUserPhoto()));
+//        if (friendEntity.getUserPhoto() != null)
+//            avatar = new Image(new ByteArrayInputStream(friendEntity.getUserPhoto()));
+//        else
+//            avatar = new Image(getClass().getResourceAsStream("/FXML/image-placeholder.png"));
     }
 
     public String getMobile() {

@@ -8,6 +8,7 @@ import Server.business.model.group.Group;
 import Server.business.services.ConnectedService;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.persistance.dao.GroupDao;
+import Server.persistance.dao.UserFriendDao;
 import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
@@ -85,6 +86,18 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     @Override
     public String disconnect(ClientInt client) throws RemoteException {
         return null;
+    }
+
+    @Override
+    public List<FriendEntity> getAllFriends(String mobile) throws RemoteException {
+        UserFriendDao userFriendDao = new UserFriendDao();
+        return userFriendDao.getFriendList(mobile);
+    }
+
+    @Override
+    public List<FriendEntity> getAllFriendsRequest(String mobile) throws RemoteException {
+        UserFriendDao userFriendDao = new UserFriendDao();
+        return userFriendDao.getFriendRequests(mobile);
     }
 
     @Override

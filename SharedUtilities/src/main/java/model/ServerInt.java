@@ -17,6 +17,8 @@ public interface ServerInt extends Remote {
     String logout(String name) throws RemoteException;
     String connect(ClientInt client) throws RemoteException;
     String disconnect(ClientInt client) throws RemoteException;
+    List<FriendEntity> getAllFriends(String mobile) throws RemoteException;
+    List<FriendEntity> getAllFriendsRequest(String mobile) throws RemoteException;
     GroupEntity createGroup(GroupEntity entity) throws RemoteException;
     List<GroupEntity> getUserGroups(int userId) throws RemoteException;
 }

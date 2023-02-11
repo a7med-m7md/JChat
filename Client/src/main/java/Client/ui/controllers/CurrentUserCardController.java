@@ -1,7 +1,7 @@
 package Client.ui.controllers;
 
-import Client.ui.controllerutils.Country;
 import Client.ui.models.CurrentUserAccount;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import model.user.UserStatus;
 
@@ -20,7 +21,7 @@ import java.util.stream.Stream;
 public class CurrentUserCardController implements Initializable {
     @FXML
     private Label currentUserDisplayName;
-   @FXML
+    @FXML
     private Label currentUserBio;
 
     @FXML
@@ -34,7 +35,7 @@ public class CurrentUserCardController implements Initializable {
         ObservableList<String> statuses =
                 FXCollections.observableArrayList(
                         Stream.of(UserStatus.values())
-                                .map(UserStatus::getStatus)
+                                .map(UserStatus::getStatusName)
                                 .collect(Collectors.toList())
                 );
         userStatus.setItems(statuses);
@@ -46,7 +47,14 @@ public class CurrentUserCardController implements Initializable {
         currentUserDisplayName.textProperty().bind(currentUserAccount.nameProperty());
         currentUserBio.textProperty().bind(currentUserAccount.bioProperty());
 
-        //TODO Bind Current User Avatar
+        currentUserAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
+            return currentUserAccount == null ? null : new ImagePattern(currentUserAccount.getPicture());
+        }));
+
+        currentUserAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
+            return currentUserAccount.getStatus().getColor();
+        }));
+
 
     }
 }

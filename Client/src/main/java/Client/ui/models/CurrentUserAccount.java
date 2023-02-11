@@ -43,7 +43,7 @@ public class CurrentUserAccount {
     private StringProperty country;
     private StringProperty dateOfBirth;
     private StringProperty bio;
-    private SimpleObjectProperty<UserStatus> status;
+    private SimpleObjectProperty<String> status;
 
     public void populateCurrentUserData(UserEntity userDataFromDB) {
         this.name.set(userDataFromDB.getName());
@@ -54,7 +54,7 @@ public class CurrentUserAccount {
         this.country.set(userDataFromDB.getCountry());
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
-        this.status.set(userDataFromDB.getStatus());
+        this.status.set(userDataFromDB.getStatus().getStatus());
 //        this.picture = new Image(userDataFromDB.g)
     }
 
@@ -163,15 +163,15 @@ public class CurrentUserAccount {
     }
 
     public UserStatus getStatus() {
-        return status.get();
+        return UserStatus.valueOf(status.get());
     }
 
-    public SimpleObjectProperty<UserStatus> statusProperty() {
+    public SimpleObjectProperty<String> statusProperty() {
         return status;
     }
 
     public void setStatus(UserStatus status) {
-        this.status.set(status);
+        this.status.set(status.getStatus());
     }
 }
 

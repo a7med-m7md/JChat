@@ -72,6 +72,20 @@ public class RMIClientServices {
             throw new RuntimeException(e);
         }
     }
+    public static void checkDuplicateUser(String phoneNumber) throws DuplicateUserException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            user.checkDuplicateUser(phoneNumber);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }  catch (AccessException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

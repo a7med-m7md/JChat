@@ -34,17 +34,35 @@
                   </Label>
                </children>
             </VBox>
-            <VBox maxHeight="1.7976931348623157E308" prefWidth="173.0" spacing="28.0" VBox.vgrow="ALWAYS">
+            <VBox maxHeight="1.7976931348623157E308" prefWidth="173.0" spacing="18.0" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox alignment="CENTER" spacing="37.0">
+                  <VBox alignment="CENTER" spacing="17.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" styleClass="Field-Label" stylesheets="@../styling/styling.css" text="Choose a picture and display name">
                            <font>
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <Circle fill="DODGERBLUE" radius="67.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="userAvatar" fill="DODGERBLUE" onMouseClicked="#openFileChooser" radius="67.0" stroke="BLACK" strokeType="INSIDE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Circle>
                         <JFXTextField fx:id="displayNameField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="280.0" promptText="Enter a display name (JChat user name)" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                           <font>
+                              <Font name="Segoe UI" size="12.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <effect>
+                              <DropShadow blurType="ONE_PASS_BOX" spread="0.02">
+                                 <color>
+                                    <Color red="0.8790594339370728" green="0.9081607460975647" blue="0.928947389125824" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userBio" focusColor="#39ceff" layoutX="10.0" layoutY="236.0" maxHeight="1.7976931348623157E308" prefHeight="42.0" prefWidth="280.0" promptText="Enter a bio or a description of yourself" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>

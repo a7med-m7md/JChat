@@ -19,6 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.user.UserDto;
+import model.user.UserStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class SignUp3Controller implements Initializable {
             populatedUserData.setName(displayNameField.getText());
             populatedUserData.setBio(userBio.getText());
             populatedUserData.setPicture(userImage);
+            populatedUserData.setStatus(UserStatus.AVAILABLE);
 
             //Create A DTO and Send to Server
             UserDto newCreatedUser = new UserDto();

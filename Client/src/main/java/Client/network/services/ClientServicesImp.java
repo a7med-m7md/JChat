@@ -1,5 +1,7 @@
 package Client.network.services;
 
+import Client.ui.models.Contact;
+import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import model.FriendEntity;
 import model.MessageEntity;
@@ -20,9 +22,9 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     }
 
     @Override
-    public String friendRequestNotification(FriendEntity friend) throws RemoteException {
-        System.out.println("Notification from : " + friend.getName() + " of Mobile : " + friend.getMobile());
-        return null;
+    public void friendRequestNotification(FriendEntity friend) throws RemoteException {
+        CurrentSession currentSession= CurrentSession.getInstance();
+        currentSession.requestsListProperty().add(new Contact(friend));
     }
 
     @Override

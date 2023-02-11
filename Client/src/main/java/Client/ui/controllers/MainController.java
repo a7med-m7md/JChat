@@ -2,11 +2,14 @@ package Client.ui.controllers;
 
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.components.NotificationUI;
+import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import model.FriendEntity;
 
 import java.io.IOException;
 import java.net.URL;
@@ -119,6 +123,16 @@ public class MainController implements Initializable {
 
     @FXML
     void switchRequests(MouseEvent event) {
+        if (!tabPanes.containsKey("requests")) {
+            try {
+                Parent requestsPane = FXMLLoader.load(getClass().getResource("/FXML/requests.fxml"));
+                tabPanes.put("requests", requestsPane);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Parent requestsPane = tabPanes.get("requests");
+        animateTabs(requestsPane);
 
     }
 
@@ -157,8 +171,11 @@ public class MainController implements Initializable {
         // opening chats tab on startup
         try {
             //TODO Add Notification for friend reuests
+            CurrentSession currentSession = CurrentSession.getInstance();
+            IntegerProperty requestCount = new SimpleIntegerProperty();
+            requestCount.bind(currentSession.requestsListProperty().sizeProperty());
 
-            requestsNotification.getChildren().add(new NotificationUI("2",false));
+            requestsNotification.getChildren().add(new NotificationUI(requestCount.toString(),false));
 
             //TODO
             Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));

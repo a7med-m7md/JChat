@@ -12,9 +12,11 @@ public class FriendEntity implements Serializable {
     private String name;
     private String bio;
     private String status;
-    // I didn't want to transfer the image
-    private transient SimpleObjectProperty<byte[]> userPhoto =new SimpleObjectProperty<>();
 
+
+    // I didn't want to transfer the image
+//    private transient SimpleObjectProperty<byte[]> userPhoto =new SimpleObjectProperty<>();
+    private byte[] picture;
 
     public FriendEntity(String mobile, String name, String bio, String status){
         this.mobile = mobile;
@@ -63,19 +65,26 @@ public class FriendEntity implements Serializable {
         this.status = status;
     }
 
-    public byte[] getUserPhoto() {
-        return userPhoto.get();
+//    public byte[] getUserPhoto() {
+//        return userPhoto.get();
+//
+//    }
+//
+//    public SimpleObjectProperty<byte[]> userPhotoProperty() {
+//        return userPhoto;
+//    }
+//
+//    public void setUserPhoto(byte[] userPhoto) {
+//        this.userPhoto.set(userPhoto);
+//    }
 
+
+    public byte[] getPicture() {
+        return picture;
     }
 
-    public SimpleObjectProperty<byte[]> userPhotoProperty() {
-        return userPhoto;
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
-
-    public void setUserPhoto(byte[] userPhoto) {
-        this.userPhoto.set(userPhoto);
-    }
-
-
 
 }

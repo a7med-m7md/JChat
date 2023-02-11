@@ -50,6 +50,7 @@ public class SignUp3Controller implements Initializable {
             CurrentUserAccount populatedUserData = CurrentUserAccount.getInstance();
             populatedUserData.setName(displayNameField.getText());
             populatedUserData.setBio(userBio.getText());
+            populatedUserData.setPicture(userImage);
 
             //Create A DTO and Send to Server
             UserDto newCreatedUser = new UserDto();
@@ -110,7 +111,8 @@ public class SignUp3Controller implements Initializable {
 
         //initializing default bio and image
         userBio.setText("Hello, I'm using JChat!");
-        userAvatar.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/images/image-placeholder.png"))));
+        userImage = new Image(getClass().getResourceAsStream("/images/image-placeholder.png"));
+        userAvatar.setFill(new ImagePattern(userImage));
 
 
     }

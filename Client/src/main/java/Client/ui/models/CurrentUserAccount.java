@@ -19,26 +19,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javax.imageio.ImageIO;
 
 public class CurrentUserAccount {
-
-    private static CurrentUserAccount myAccount;
-
-    private CurrentUserAccount() {
-        name  = new SimpleStringProperty();
-        phoneNumber  = new SimpleStringProperty();
-        email  = new SimpleStringProperty();
-//        picture  = new Image(50,50,false,false);
-        password  = new SimpleStringProperty();
-        gender  = new SimpleObjectProperty();
-        country = new SimpleStringProperty();
-        dateOfBirth = new SimpleStringProperty();
-        bio = new SimpleStringProperty();
-        status = new SimpleObjectProperty<>();
-    }
-    public static CurrentUserAccount getInstance() {
-        if (myAccount == null)
-            myAccount = new CurrentUserAccount();
-        return myAccount;
-    }
     private StringProperty phoneNumber;
     private StringProperty name;
     private StringProperty email;
@@ -49,6 +29,27 @@ public class CurrentUserAccount {
     private StringProperty dateOfBirth;
     private StringProperty bio;
     private SimpleObjectProperty<String> status;
+    private static CurrentUserAccount myAccount;
+
+    private CurrentUserAccount() {
+        name  = new SimpleStringProperty();
+        phoneNumber  = new SimpleStringProperty();
+        email  = new SimpleStringProperty();
+        password  = new SimpleStringProperty();
+        gender  = new SimpleObjectProperty();
+        country = new SimpleStringProperty();
+        dateOfBirth = new SimpleStringProperty();
+        bio = new SimpleStringProperty();
+        status = new SimpleObjectProperty<>();
+        picture = new Image(getClass().getResourceAsStream("/images/image-placeholder.png"));
+
+    }
+    public static CurrentUserAccount getInstance() {
+        if (myAccount == null)
+            myAccount = new CurrentUserAccount();
+        return myAccount;
+    }
+
 
     public void populateCurrentUserData(UserEntity userDataFromDB) {
         this.name.set(userDataFromDB.getName());

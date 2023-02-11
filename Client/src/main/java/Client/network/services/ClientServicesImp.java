@@ -3,6 +3,7 @@ package Client.network.services;
 import Client.ui.models.CurrentUserAccount;
 import model.FriendEntity;
 import model.MessageEntity;
+import model.user.UserStatus;
 import services.ClientServices;
 
 import java.rmi.RemoteException;
@@ -33,6 +34,11 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveAnnouncement(String msg) throws RemoteException {
         System.out.println("Announcement from server: " + msg);
+    }
+
+    @Override
+    public void receiveFriendStatus(String mobile, UserStatus status) throws RemoteException {
+        System.out.println("Your friend : " + mobile + " change his status to " + status);
     }
 
 

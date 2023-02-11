@@ -74,6 +74,22 @@ public class LoginController implements Initializable {
                 System.out.println("Connnected");
                 RMIClientServices.registerInServer();
                 //todo populate current user model with phone number
+
+
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                // your code here
+                                try {
+                                    RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getPhoneNumber(), UserStatus.BUSY);
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        5000
+                );
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();

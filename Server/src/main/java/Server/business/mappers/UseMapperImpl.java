@@ -15,8 +15,7 @@ public class UseMapperImpl implements UserMapper{
                 entity.getGender(),
                 entity.getCountry(),
                 entity.getDateOfBirth(),
-                entity.getBio(),
-                entity.getStatus()
+                entity.getBio()
         );
         return userDto;
     }

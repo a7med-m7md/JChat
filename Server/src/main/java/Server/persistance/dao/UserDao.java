@@ -25,7 +25,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String mobile = resultSet.getString(2);
                     String name = resultSet.getString(3);
                     String email = resultSet.getString(4);
-                    String picture = resultSet.getString(5);
+                    byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
                     Gender gender = Gender.valueOf(resultSet.getString(7));
                     String country = resultSet.getString(8);
@@ -52,7 +52,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String mobile = resultSet.getString(2);
                     String name = resultSet.getString(3);
                     String email = resultSet.getString(4);
-                    String picture = resultSet.getString(5);
+                    byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
                     Gender gender = Gender.valueOf(resultSet.getString(7));
                     String country = resultSet.getString(8);
@@ -81,7 +81,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String mobile = resultSet.getString(2);
                     String name = resultSet.getString(3);
                     String email = resultSet.getString(4);
-                    String picture = resultSet.getString(5);
+                    byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
                     Gender gender = Gender.valueOf(resultSet.getString(7).toUpperCase());
                     String country = resultSet.getString(8);
@@ -118,7 +118,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
             preparedStatement.setString(1,entity.getMobile());
             preparedStatement.setString(2,entity.getName());
             preparedStatement.setString(3,entity.getEmail());
-            preparedStatement.setString(4,entity.getPicture());
+            preparedStatement.setBytes(4,entity.getPicture());
             preparedStatement.setString(5,entity.getPassword());
             preparedStatement.setString(6,entity.getGender().name());
             preparedStatement.setString(7,entity.getCountry());
@@ -145,7 +145,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
             preparedStatement.setString(1,entity.getMobile());
             preparedStatement.setString(2,entity.getName());
             preparedStatement.setString(3,entity.getEmail());
-            preparedStatement.setString(4,entity.getPicture());
+            preparedStatement.setBytes(4,entity.getPicture());
             preparedStatement.setString(5,entity.getPassword());
             preparedStatement.setString(6,entity.getGender().name());
             preparedStatement.setString(7,entity.getCountry());
@@ -206,7 +206,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
 //                    String mobile = resultSet.getString(2);
                     String name = resultSet.getString(3);
                     String email = resultSet.getString(4);
-                    String picture = resultSet.getString(5);
+                    byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
                     Gender gender = Gender.valueOf(resultSet.getString(7).toUpperCase());
                     String country = resultSet.getString(8);

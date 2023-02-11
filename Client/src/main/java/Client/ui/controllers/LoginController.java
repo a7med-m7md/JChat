@@ -64,7 +64,7 @@ public class LoginController implements Initializable {
 
     @FXML
     void handleSignIn(MouseEvent event) {
-        if (validateFields()) {
+//        if (validateFields()) {
             try {
                 // Here you get a user object that contains all data
                 // of loggedin user
@@ -109,7 +109,7 @@ public class LoginController implements Initializable {
             catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else System.out.println("not valid fields");
+//        } else System.out.println("not valid fields");
     }
 
     @FXML
@@ -138,29 +138,29 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-        private boolean validateFields () {
-            boolean validationFlag = true;
-
-            //Required Field Validation
-            RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
-            requiredPassword.setMessage("Password can't be empty");
-            passwordField.getValidators().add(requiredPassword);
-
-            //Phone Number Validation
-            PhoneNumberValidator validNumber = new PhoneNumberValidator();
-            validNumber.setMessage(("Enter a valid phone number"));
-            phoneNumberField.getValidators().add(validNumber);
-
-            //Checking Fields
-            if (!phoneNumberField.validate()) {
-                validationFlag = false;
-//            validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-            }
-            if (!passwordField.validate()) {
-//            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-                validationFlag = false;
-            }
-            return validationFlag;
-        }
+//        private boolean validateFields () {
+//            boolean validationFlag = true;
+//
+//            //Required Field Validation
+//            RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
+//            requiredPassword.setMessage("Password can't be empty");
+//            passwordField.getValidators().add(requiredPassword);
+//
+//            //Phone Number Validation
+//            PhoneNumberValidator validNumber = new PhoneNumberValidator();
+//            validNumber.setMessage(("Enter a valid phone number"));
+//            phoneNumberField.getValidators().add(validNumber);
+//
+//            //Checking Fields
+//            if (!phoneNumberField.validate()) {
+//                validationFlag = false;
+////            validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
+//            }
+//            if (!passwordField.validate()) {
+////            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
+//                validationFlag = false;
+//            }
+//            return validationFlag;
+//        }
 
     }

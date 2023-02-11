@@ -98,7 +98,7 @@ public class UserFriendDao implements UserFriendDaoInt{
             friend.setBio(resultSet.getString("bio"));
             friend.setMobile(resultSet.getString("mobile"));
 //            friend.setStatus(resultSet.getString("friendships.status"));
-            friend.setUserPhoto(resultSet.getBytes("picture"));
+            friend.setPicture(resultSet.getBytes("picture"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

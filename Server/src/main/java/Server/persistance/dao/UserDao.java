@@ -32,7 +32,7 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String dateOfBirth = resultSet.getString(9);
                     String bio = resultSet.getString(10);
                     UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11));
-                    UserEntity newUser = new UserEntity(mobile,name,email, picture,password,Gender.MALE,country,dateOfBirth,bio,UserStatus.AVAILABLE);
+                    UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
                     userList.add(newUser);
                 }
             }

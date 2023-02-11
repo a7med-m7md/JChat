@@ -1,11 +1,13 @@
 package Server.network;
 import Server.business.services.ConnectedService;
 import Server.network.services.ChatServiceImp;
+import Server.network.services.MessagingServiceImp;
 import model.ClientInt;
 import model.LoginEntity;
 import model.Message;
 import Server.network.services.RMIServerServices;
 import services.ChatService;
+import services.MessagingService;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -21,6 +23,8 @@ public class RMIConnectionManager {
     LoginEntity serverInt;
     RMIServerServices rmiServerServices;
     ChatService chatService;
+    MessagingService messagingService;
+
     public RMIConnectionManager(){
         try {
             registry = LocateRegistry.createRegistry(2233);
@@ -43,7 +47,9 @@ public class RMIConnectionManager {
             System.out.println("Friend Request Started");
             registry.rebind("rmi://localhost:2233/friendRequest", chatService);
 
-
+            System.out.println("Chatting Service Started");
+            messagingService = new MessagingServiceImp();
+            registry.rebind("rmi://localhost:2233/chatMessaging", messagingService);
 
         } catch (AccessException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package services;
 
 import model.FriendEntity;
+import model.MessageEntity;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -9,4 +10,5 @@ import java.rmi.RemoteException;
 public interface ClientServices extends Remote {
     String getMobile() throws RemoteException;
     String friendRequestNotification(FriendEntity friend) throws RemoteException;
+    void receiveMessage(MessageEntity msg) throws RemoteException;
 }

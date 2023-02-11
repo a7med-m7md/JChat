@@ -10,6 +10,7 @@ import model.group.GroupEntity;
 import model.user.UserEntity;
 import services.ChatService;
 import services.ClientServices;
+import services.MessagingService;
 import services.ServerConnection;
 
 import java.rmi.AccessException;
@@ -152,6 +153,17 @@ public class RMIClientServices {
         } catch (NotBoundException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void chatMessaging(MessageEntity msg) throws RemoteException {
+        Registry messagingRegistry;
+        try {
+                chatRegistry = LocateRegistry.getRegistry(2233);
+            MessagingService user = (MessagingService) chatRegistry.lookup("rmi://localhost:2233/chatMessaging");
+            user.sendMessage(msg);
+        } catch (NotBoundException e) {
             e.printStackTrace();
         }
     }

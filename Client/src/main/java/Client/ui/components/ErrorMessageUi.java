@@ -27,7 +27,7 @@ public class ErrorMessageUi extends GridPane {
         if (error)
             setStyle("-fx-background-color: #ffacac; -fx-background-radius: 5px;");
         else
-            setStyle("-fx-background-color: #86e7ba; -fx-background-radius: 5px;");
+            setStyle("-fx-background-color: #10ff70; -fx-background-radius: 5px;");
 
         columnConstraints.setFillWidth(false);
         columnConstraints.setHgrow(javafx.scene.layout.Priority.NEVER);

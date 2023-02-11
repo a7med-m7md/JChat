@@ -7,12 +7,11 @@ import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
 import model.group.GroupEntity;
+import model.user.UserDto;
 import model.user.UserEntity;
-import services.ChatService;
-import services.ClientServices;
-import services.MessagingService;
-import services.ServerConnection;
+import services.*;
 
+import javax.security.auth.login.CredentialException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -144,7 +143,7 @@ public class RMIClientServices {
     }
 
 
-    public static UserEntity signUp(UserEntity userObject) throws DuplicateUserException {
+    public static UserEntity signUp(UserDto userObject) throws DuplicateUserException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
@@ -158,7 +157,7 @@ public class RMIClientServices {
         return null;
     }
 
-    public static void logOut(String mobile) throws CredentialException, RemoteException {
+    public static void logOut(String mobile) throws  RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);

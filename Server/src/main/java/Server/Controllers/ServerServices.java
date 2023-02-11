@@ -5,6 +5,7 @@ import Server.persistance.dao.UserDao;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,10 +17,12 @@ import javafx.scene.text.Font;
 import model.user.Gender;
 import model.user.UserEntity;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ServerServices extends AnchorPane {
+public class ServerServices extends AnchorPane implements Initializable {
 
     protected final VBox vBox;
     protected final ImageView imageView;
@@ -40,20 +43,6 @@ public class ServerServices extends AnchorPane {
         button1 = new Button();
         vBox0 = new VBox();
         pieChart = new PieChart();
-        List<UserEntity> list = new ArrayList<>();
-        UserDao userDao = new UserDao();
-        list = userDao.findAll();
-        Services services = new Services();
-        List<PieChart.Data> pieChartDataList = services.getCountriesStatistic(list);
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(pieChartDataList);
-        pieChart.setData(pieChartData);
-        pieChartData.forEach(data ->
-                data.nameProperty().bind(
-                        Bindings.concat(
-                                data.getName(), " ", data.pieValueProperty(), String.format("%.2f", data.getPieValue())
-                        )
-                )
-        );
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -100,7 +89,11 @@ public class ServerServices extends AnchorPane {
         vBox0.setLayoutY(231.0);
         vBox0.setPrefHeight(359.0);
         vBox0.setPrefWidth(429.0);
-
+        System.out.println("HIIIIIIIIIIIIIIIII");
+        button0.setOnAction((ev) -> {
+            loadCountries();
+            System.out.println("Welcome");
+        });
         vBox.getChildren().add(imageView);
         getChildren().add(vBox);
         getChildren().add(label);
@@ -111,5 +104,31 @@ public class ServerServices extends AnchorPane {
         getChildren().add(vBox0);
 
 
+    }
+
+    public void loadCountries() {
+        List<UserEntity> list = new ArrayList<>();
+        UserDao userDao = new UserDao();
+        list = userDao.findAll();
+        Services services = new Services();
+        List<PieChart.Data> pieChartDataList = services.getGenderStatistic(list);
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(pieChartDataList);
+        pieChart.setData(pieChartData);
+        pieChartData.forEach(data ->
+                data.nameProperty().bind(
+                        Bindings.concat(
+                                data.getName(), " ", data.pieValueProperty(), String.format("%.2f", data.getPieValue())
+                        )
+                )
+        );
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("HIIIIIIIIIIIIIIIII");
+        button0.setOnAction((ev) -> {
+            loadCountries();
+            System.out.println("Welcome");
+        });
     }
 }

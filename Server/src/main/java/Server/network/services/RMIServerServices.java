@@ -6,8 +6,6 @@ import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
 import Server.business.model.group.Group;
 import Server.business.services.ConnectedService;
-import Server.business.services.login.LoginService;
-import Server.business.services.login.LoginServiceImp;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.persistance.dao.GroupDao;
 import Server.persistance.dao.UserFriendDao;
@@ -19,7 +17,6 @@ import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
 
-import javax.security.auth.login.CredentialException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -77,10 +74,8 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
 
 
     @Override
-    public String logout(String mobile) throws RemoteException, CredentialException {
-        LoginService loginService = new LoginServiceImp();
-        loginService.logOut(mobile);
-        return "Log Out Successfully";
+    public String logout(String name) throws RemoteException {
+        return null;
     }
 
     @Override

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.HBox?>
@@ -46,10 +45,11 @@
          </padding>
       </HBox>
       <VBox fx:id="errorContainer" VBox.vgrow="ALWAYS" />
-      <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../styling/main.css" VBox.vgrow="SOMETIMES">
+      <VBox fx:id="contactsToAddListView" VBox.vgrow="SOMETIMES">
          <VBox.margin>
             <Insets />
-         </VBox.margin></ListView>
+         </VBox.margin>
+      </VBox>
       <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#addContact" prefHeight="42.0" styleClass="Primary-Button" stylesheets="@../styling/styling.css" text="Add" />
    </children>
    <padding>

@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 
-public abstract class ContactCard extends GridPane {
+public class ContactCard extends GridPane {
 
     protected final ColumnConstraints columnConstraints;
     protected final ColumnConstraints columnConstraints0;

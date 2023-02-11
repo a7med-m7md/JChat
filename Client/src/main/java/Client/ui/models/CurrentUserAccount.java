@@ -1,5 +1,6 @@
 package Client.ui.models;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -22,13 +23,13 @@ public class CurrentUserAccount {
     private StringProperty phoneNumber;
     private StringProperty name;
     private StringProperty email;
-    private Image picture;
+    private ObjectProperty<Image> picture = new SimpleObjectProperty<>();
     private StringProperty password;
     private SimpleObjectProperty<Gender> gender;
     private StringProperty country;
     private StringProperty dateOfBirth;
     private StringProperty bio;
-    private SimpleObjectProperty<String> status;
+    private SimpleObjectProperty<UserStatus> status;
     private static CurrentUserAccount myAccount;
 
     private CurrentUserAccount() {
@@ -40,9 +41,7 @@ public class CurrentUserAccount {
         country = new SimpleStringProperty();
         dateOfBirth = new SimpleStringProperty();
         bio = new SimpleStringProperty();
-        status = new SimpleObjectProperty<>();
-        picture = new Image(getClass().getResourceAsStream("/images/image-placeholder.png"));
-
+        status = new SimpleObjectProperty<UserStatus>();
     }
     public static CurrentUserAccount getInstance() {
         if (myAccount == null)
@@ -60,30 +59,34 @@ public class CurrentUserAccount {
         this.country.set(userDataFromDB.getCountry());
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
-        this.status.set(userDataFromDB.getStatus().getStatus());
-        this.picture = new Image(new ByteArrayInputStream(userDataFromDB.getPicture()));
+        this.status.set(userDataFromDB.getStatus());
+        this.picture.set(new Image(new ByteArrayInputStream(userDataFromDB.getPicture())));
     }
 
-    public Image getPicture() {
+    public ObjectProperty<Image> pictureProperty() {
         return picture;
     }
 
+    public Image getPicture() {
+        return picture.get();
+    }
+
     public void setPicture(Image picture) {
-        this.picture = picture;
+        this.picture.set(picture);
     }
 
     public void setPictureAsBytes(byte[] pictureByteArray) {
-        this.picture = new Image(new ByteArrayInputStream(pictureByteArray));
+        this.picture.set(new Image(new ByteArrayInputStream(pictureByteArray)));
     }
 
     public byte[] getPictureAsBytes() throws IOException {
-        int width = (int) picture.getWidth();
-        int height = (int) picture.getHeight();
+        int width = (int) picture.get().getWidth();
+        int height = (int) picture.get().getHeight();
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g = bufferedImage.createGraphics();
-        g.drawImage(SwingFXUtils.fromFXImage(picture, null), 0, 0, null);
+        g.drawImage(SwingFXUtils.fromFXImage(picture.get(), null), 0, 0, null);
         g.dispose();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -198,15 +201,15 @@ public class CurrentUserAccount {
     }
 
     public UserStatus getStatus() {
-        return UserStatus.valueOf(status.get());
+        return status.get();
     }
 
-    public SimpleObjectProperty<String> statusProperty() {
+    public SimpleObjectProperty<UserStatus> statusProperty() {
         return status;
     }
 
     public void setStatus(UserStatus status) {
-        this.status.set(status.getStatus());
+        this.status.set(status);
     }
 }
 

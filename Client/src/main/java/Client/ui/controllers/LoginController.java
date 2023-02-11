@@ -5,8 +5,11 @@ import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PhoneNumberValidator;
 import Client.ui.models.CurrentUserAccount;
+import exceptions.DuplicateUserException;
 import model.FriendEntity;
 import model.MessageEntity;
+import model.user.Gender;
+import model.user.UserDto;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -28,6 +31,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.user.UserStatus;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -35,6 +39,7 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {

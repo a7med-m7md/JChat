@@ -1,10 +1,7 @@
 package Server.business.mappers;
 
 import Server.business.dtos.GroupDto;
-import Server.business.dtos.UserDto;
-import Server.persistance.dao.GroupDao;
 import model.group.GroupEntity;
-import model.user.UserEntity;
 
 public class GroupMapperImp implements GroupMapper {
 

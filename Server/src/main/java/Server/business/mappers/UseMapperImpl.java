@@ -1,12 +1,12 @@
 package Server.business.mappers;
 
 import model.user.UserEntity;
-import Server.business.dtos.UserDto;
+import model.user.UserDto;
 
 public class UseMapperImpl implements UserMapper{
     @Override
-    public Server.business.dtos.UserDto entityToDomain(UserEntity entity) {
-        Server.business.dtos.UserDto userDto = new Server.business.dtos.UserDto(
+    public UserDto entityToDomain(UserEntity entity) {
+        UserDto userDto = new UserDto(
                 entity.getMobile(),
                 entity.getName(),
                 entity.getEmail(),

@@ -1,15 +1,15 @@
-package Server.business.dtos;
+package model.user;
 
 import model.user.Gender;
 import model.user.UserStatus;
 
-public class UserDto {
-    private long id;
+import java.io.Serializable;
+
+public class UserDto implements Serializable {
     private String mobile;
     private String name;
     private String email;
     private String picture;
-
     private String password;
     private Gender gender;
     private String country;
@@ -30,13 +30,6 @@ public class UserDto {
         this.status = status;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getMobile() {
         return mobile;

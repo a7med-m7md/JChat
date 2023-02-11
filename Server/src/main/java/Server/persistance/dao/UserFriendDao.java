@@ -67,10 +67,14 @@ public class UserFriendDao implements UserFriendDaoInt{
 
     // Get the user list of incoming requests
     @Override
-    public List<FriendEntity> getFriendRequests(String myMobileNum) throws RemoteException, SQLException {
-        final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships " +
-                "WHERE receiver_mobile = sender_mobile AND " +
-                "receiver_mobile = ? AND status = 'PENDING'";
+    public List<FriendEntity> getFriendRequests(String myMobileNum) throws RemoteException {
+//        final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships " +
+//                "WHERE receiver_mobile = sender_mobile AND " +
+//                "receiver_mobile = ? AND friendships.status = 'PENDING'";
+
+        final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships" +
+                "                WHERE receiver_mobile = mobile AND" +
+                "                receiver_mobile = ? AND friendships.status = 'PENDING'";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setString(1, myMobileNum);
             List<FriendEntity> requests = new ArrayList<>();
@@ -81,7 +85,10 @@ public class UserFriendDao implements UserFriendDaoInt{
                 requests.add(createUser(resultSet, friend));
             }
             return requests;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     // Helper function to create FriendEntity
@@ -127,7 +134,7 @@ public class UserFriendDao implements UserFriendDaoInt{
 
     // Need to be checked more
     @Override
-    public List<FriendEntity> getFriendList(String myMobileNum) throws SQLException, RemoteException {
+    public List<FriendEntity> getFriendList(String myMobileNum) throws  RemoteException {
         System.out.println("FriendList:: ");
 //        final String SQL = "SELECT * FROM jtalk.users as u1, jtalk.friendships as f, jtalk.u2 " +
 //                "WHERE mobile = receiver_mobile " +
@@ -137,10 +144,13 @@ public class UserFriendDao implements UserFriendDaoInt{
 //                "WHERE friendships.receiver_mobile = '011014' AND friendships.status = 'ACCEPTED'" +
 //                "    union SELECT sender_mobile FROM jtalk.friendships WHERE user.mobile = '011014' AND friendships.status = 'ACCEPTED'" +
 //                ");";
-        final String SQL = "SELECT * FROM jtalk.users WHERE users.mobile IN (SELECT receiver_mobile FROM  jtalk.friendships " +
-                "WHERE friendships.receiver_mobile = ? AND friendships.status = 'ACCEPTED' " +
-                "    union SELECT sender_mobile FROM jtalk.friendships WHERE  friendships.status = 'ACCEPTED'" +
-                ") AND users.mobile <> ?";
+//        final String SQL = "SELECT * FROM jtalk.users WHERE users.mobile IN (SELECT receiver_mobile FROM  jtalk.friendships " +
+//                "WHERE friendships.receiver_mobile = ? AND friendships.status = 'ACCEPTED' " +
+//                "    union SELECT sender_mobile FROM jtalk.friendships WHERE  friendships.status = 'ACCEPTED'" +
+//                ") AND users.mobile <> ?";
+        final String SQL = "SELECT * FROM jtalk.users WHERE mobile IN (SELECT sender_mobile from jtalk.friendships\n" +
+                "             where receiver_mobile=? and status=\"ACCEPTED\" union select receiver_mobile from jtalk.friendships\n" +
+                "             where sender_mobile=? and  status=\"ACCEPTED\")";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setString(1, myMobileNum);
             preparedStatement.setString(2, myMobileNum);
@@ -153,6 +163,9 @@ public class UserFriendDao implements UserFriendDaoInt{
                 friends.add(createUser(resultSet, friend));
             }
             return friends;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }

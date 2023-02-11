@@ -33,6 +33,33 @@ public class RMIClientServices {
         }
         return null;
     }
+
+
+    public static List<FriendEntity> loadFriends(String phoneNumber) throws RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            return user.getAllFriends(phoneNumber);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static List<FriendEntity> loadFriendsRequest(String phoneNumber) throws RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            return user.getAllFriendsRequest(phoneNumber);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void checkUserExists(String phoneNumber) throws UserNotFoundException {
         Registry registry;
         try {
@@ -49,6 +76,8 @@ public class RMIClientServices {
     }
 
 
+
+
     public static FriendEntity searchFriend(String number) throws RemoteException {
         try {
             if(chatRegistry == null){
@@ -61,6 +90,8 @@ public class RMIClientServices {
         }
         return null;
     }
+
+
 
     public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException {
 

@@ -55,7 +55,6 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     }
 
     @Override
-
     public void checkDuplicateUser(String phoneNumber) throws RemoteException, DuplicateUserException {
         UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();

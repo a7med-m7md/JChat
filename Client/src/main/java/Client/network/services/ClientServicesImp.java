@@ -2,6 +2,7 @@ package Client.network.services;
 
 import Client.ui.models.CurrentUserAccount;
 import model.FriendEntity;
+import model.MessageEntity;
 import services.ClientServices;
 
 import java.rmi.RemoteException;
@@ -22,6 +23,11 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     public String friendRequestNotification(FriendEntity friend) throws RemoteException {
         System.out.println("Notification from : " + friend.getName() + " of Mobile : " + friend.getMobile());
         return null;
+    }
+
+    @Override
+    public void receiveMessage(MessageEntity msg) throws RemoteException {
+        System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
     }
 
 

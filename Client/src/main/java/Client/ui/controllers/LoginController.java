@@ -5,6 +5,8 @@ import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PhoneNumberValidator;
 import Client.ui.models.CurrentUserAccount;
+import model.FriendEntity;
+import model.MessageEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -32,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -65,6 +68,23 @@ public class LoginController implements Initializable {
                 currentUserAccount.populateCurrentUserData(loggedInUser);
                 System.out.println("Connnected");
                 RMIClientServices.registerInServer();
+                FriendEntity friend = RMIClientServices.searchFriend("01024251210");
+                System.out.println(friend.getMobile());
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                // your code here
+                                try {
+                                    RMIClientServices.chatMessaging(new MessageEntity("01024251210", "01112175312", "Hello I love it", LocalDateTime.now()));
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        5000
+                );
+
                 //todo populate current user model with phone number
                 Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
                 Node node = (Node) event.getSource();

@@ -5,6 +5,8 @@ module Client {
     requires com.jfoenix;
     requires java.rmi;
     requires SharedUtilities;
+    requires java.desktop;
+    requires javafx.swing;
 
 
     opens Client to javafx.fxml;

@@ -19,7 +19,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.user.UserDto;
-import model.user.UserStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,11 +45,12 @@ public class SignUp3Controller implements Initializable {
     private Image userImage;
 
     @FXML
-    void handleConfirmCreateAccount(MouseEvent event) throws DuplicateUserException {
+    void handleConfirmCreateAccount(MouseEvent event) throws DuplicateUserException, IOException {
         if (displayNameField.validate()) {
             CurrentUserAccount populatedUserData = CurrentUserAccount.getInstance();
             populatedUserData.setName(displayNameField.getText());
             populatedUserData.setBio(userBio.getText());
+            populatedUserData.setPicture(userImage);
 
             //Create A DTO and Send to Server
             UserDto newCreatedUser = new UserDto();
@@ -59,13 +59,10 @@ public class SignUp3Controller implements Initializable {
             newCreatedUser.setEmail(populatedUserData.getEmail());
             newCreatedUser.setGender(populatedUserData.getGender());
             newCreatedUser.setCountry(populatedUserData.getCountry());
-            newCreatedUser.setCountry(populatedUserData.getDateOfBirth());
+            newCreatedUser.setDateOfBirth(populatedUserData.getDateOfBirth());
             newCreatedUser.setBio(populatedUserData.getBio());
             newCreatedUser.setName(populatedUserData.getName());
-            //TODO
-            //set Avatar Image
-            newCreatedUser.setPicture("Null");
-            //TODO
+            newCreatedUser.setPicture((populatedUserData.getPictureAsBytes()));
 
             RMIClientServices.signUp(newCreatedUser);
 
@@ -114,7 +111,8 @@ public class SignUp3Controller implements Initializable {
 
         //initializing default bio and image
         userBio.setText("Hello, I'm using JChat!");
-        userAvatar.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/images/image-placeholder.png"))));
+        userImage = new Image(getClass().getResourceAsStream("/images/image-placeholder.png"));
+        userAvatar.setFill(new ImagePattern(userImage));
 
 
     }

@@ -12,6 +12,10 @@ module Client {
     requires SharedUtilities;
     requires java.desktop;
     requires javafx.swing;
+    //requires Ab;
+    //requires Ab;
+
+
 
     exports Client;
     exports Client.ui.controllers;

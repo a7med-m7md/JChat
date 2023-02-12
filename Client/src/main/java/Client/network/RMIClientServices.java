@@ -17,6 +17,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 import java.util.List;
 
 public class RMIClientServices {
@@ -120,7 +121,7 @@ public class RMIClientServices {
 
 
 
-    public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException {
+    public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException, SQLException {
 
         try {
             if(chatRegistry == null){

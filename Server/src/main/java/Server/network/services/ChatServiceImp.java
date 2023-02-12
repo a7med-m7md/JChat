@@ -21,17 +21,20 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
     }
 
     @Override
-    public List<FriendEntity> friendRequest(String sender, List<String> receivers) throws RemoteException {
+    public List<FriendEntity> friendRequest(String sender, List<String> receivers) throws RemoteException, SQLException {
         List<FriendEntity> requestLST = new ArrayList<>();
-            receivers.stream().forEach(
+        FriendEntity senderFriend = friendDao.searchByMobileNum(sender);
+        receivers.stream().forEach(
                     (receiver)->{
+                        System.out.println("Sender FRom : " + sender);
                         System.out.println("Request send to: " + receiver);
                         try {
-                            FriendEntity friendEntity = friendDao.searchByMobileNum(sender);
+                            // Search to
+                            FriendEntity friendEntity = friendDao.searchByMobileNum(receiver);
                             requestLST.add(friendEntity);
                             friendDao.addToFriendList(receiver, sender);
                             ClientServices clientServices = ConnectedService.clients.get(receiver);
-                            clientServices.friendRequestNotification(friendEntity);
+                            clientServices.friendRequestNotification(senderFriend);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         } catch (RemoteException e) {

@@ -10,5 +10,7 @@ module Server {
 
     opens Server.Controllers to javafx.fxml;
     exports Server;
+    opens Server to
+            javafx.fxml;
 //    exports Server.network.interfaces;
 }

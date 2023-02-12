@@ -14,9 +14,9 @@ public enum Gender {
 
     public static Gender getGender(String gender) {
 
-        if (gender.equals("Male"))
+        if (gender.equalsIgnoreCase("Male"))
             return MALE;
-        if (gender.equals("Female"))
+        if (gender.equalsIgnoreCase("Female"))
             return FEMALE;
         return null;
     }

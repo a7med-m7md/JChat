@@ -27,11 +27,11 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String email = resultSet.getString(4);
                     byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
-                    Gender gender = Gender.valueOf(resultSet.getString(7));
+                    Gender gender = Gender.getGender(resultSet.getString(7));
                     String country = resultSet.getString(8);
                     String dateOfBirth = resultSet.getString(9);
                     String bio = resultSet.getString(10);
-                    UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11));
+                    UserStatus userStatus = UserStatus.getStatus(resultSet.getString(11));
                     UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
                     userList.add(newUser);
                 }
@@ -54,11 +54,11 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String email = resultSet.getString(4);
                     byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
-                    Gender gender = Gender.valueOf(resultSet.getString(7));
+                    Gender gender = Gender.getGender(resultSet.getString(7));
                     String country = resultSet.getString(8);
                     String dateOfBirth = resultSet.getString(9);
                     String bio = resultSet.getString(10);
-                    UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11));
+                    UserStatus userStatus = UserStatus.getStatus(resultSet.getString(11));
                     UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
                     return Optional.of(newUser);
                 }
@@ -83,11 +83,11 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String email = resultSet.getString(4);
                     byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
-                    Gender gender = Gender.valueOf(resultSet.getString(7).toUpperCase());
+                    Gender gender = Gender.getGender(resultSet.getString(7).toUpperCase());
                     String country = resultSet.getString(8);
                     String dateOfBirth = resultSet.getString(9);
                     String bio = resultSet.getString(10);
-                    UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11).toUpperCase());
+                    UserStatus userStatus = UserStatus.getStatus(resultSet.getString(11).toUpperCase());
                     UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
                     return Optional.of(newUser);
                 }
@@ -208,11 +208,11 @@ public class UserDao implements CRUDOperation<UserEntity> {
                     String email = resultSet.getString(4);
                     byte[] picture = resultSet.getBytes(5);
                     String password = resultSet.getString(6);
-                    Gender gender = Gender.valueOf(resultSet.getString(7).toUpperCase());
+                    Gender gender = Gender.getGender(resultSet.getString(7).toUpperCase());
                     String country = resultSet.getString(8);
                     String dateOfBirth = resultSet.getString(9);
                     String bio = resultSet.getString(10);
-                    UserStatus userStatus = UserStatus.valueOf(resultSet.getString(11).toUpperCase());
+                    UserStatus userStatus = UserStatus.getStatus(resultSet.getString(11).toUpperCase());
                     UserEntity newUser = new UserEntity(mobile,name,email, picture,password,gender,country,dateOfBirth,bio,userStatus);
                     return Optional.of(newUser);
                 }

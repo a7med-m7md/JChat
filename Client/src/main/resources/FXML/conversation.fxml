@@ -6,14 +6,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
@@ -42,23 +40,20 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="currConvContact" text=" " textFill="#5a6674" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="15.0" />
-                     </font>
+                  <VBox GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="8.0" />
                      </GridPane.margin>
-                  </Label>
-                  <Circle fx:id="currConvAvatar" fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0">
-                     <effect>
-                        <DropShadow height="4.0" radius="1.5" spread="0.7" width="4.0">
-                           <color>
-                              <Color red="0.5224999785423279" green="0.6477214694023132" blue="0.7815789580345154" />
-                           </color>
-                        </DropShadow>
-                     </effect>
-                  </Circle>
+                     <children>
+                        <Label fx:id="currConvContact" text=" " textFill="#5a6674">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="currConvStatus" text=" " />
+                     </children>
+                  </VBox>
+                  <Circle fx:id="currConvAvatar" fill="WHITE" radius="23.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

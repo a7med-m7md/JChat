@@ -19,8 +19,21 @@ import java.util.ResourceBundle;
 
 public class ChatsController implements Initializable {
 
+    private static ChatsController instance = null;
+
+    public static ChatsController getInstance() {
+        if (instance == null) {
+            instance = new ChatsController();
+        }
+        return instance;
+    }
+
+    private ChatsController() {
+    }
+
+
     @FXML
-    private ListView<Contact> conversationsList;
+    public ListView<Contact> conversationsList;
 
     CurrentSession currentSession = CurrentSession.getInstance();
     @FXML

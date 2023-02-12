@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ChatService extends Remote {
-    List<FriendEntity> friendRequest(String sender, List<String> receivers) throws RemoteException;
+    List<FriendEntity> friendRequest(String sender, List<String> receivers) throws RemoteException, SQLException;
     void acceptFriendRequest(String myNumber, String requestNumber) throws RemoteException;
     void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException;
     FriendEntity searchFriend(String mobile) throws RemoteException;

@@ -4,7 +4,7 @@ import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
-import Client.ui.models.Message;
+import Client.ui.models.CurrentUserAccount;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,8 +16,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import model.MessageEntity;
+import model.user.UserStatus;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,6 +30,8 @@ public class ConversationController implements Initializable {
 
     @FXML
     private Label currConvContact;
+    @FXML
+    private Label currConvStatus;
 
     @FXML
     private Circle currConvAvatar;
@@ -42,9 +47,16 @@ public class ConversationController implements Initializable {
 
     @FXML
     void sendMessage(MouseEvent event) {
-//        CurrentSession currentSession = CurrentSession.getInstance();
-//        currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get())
-//                .add(new Message(currentSession.getMyAccount(), messageTextField.getText()));
+
+        //TODO RMI Invocation Here
+        CurrentSession currentSession = CurrentSession.getInstance();
+        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+
+        MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+        currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get())
+                .add(newMessage);
+        StyledChatMessage newStyledMessage = new StyledChatMessage(currentUserAccount,newMessage,ChatType.SINGLE);
+        conversationContainer.getChildren().add(newStyledMessage);
     }
 
     @Override
@@ -56,21 +68,39 @@ public class ConversationController implements Initializable {
         //binding the header contents
         //chat contact's name
         //chat contact's avatar
-//        currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
+        currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
             Contact currentContact = currentSession.currentContactChatProperty().get();
-//            return currentContact == null ? "" : currentContact.getDisplayName();
-//        }, currentSession.currentContactChatProperty()));
+            return currentContact == null ? "" : currentContact.getName();
+        }, currentSession.currentContactChatProperty()));
+
+        currConvStatus.textProperty().bind(Bindings.createStringBinding(() -> {
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            return currentContact == null ? "" : currentContact.getStatus().getStatusName();
+        }, currentSession.currentContactChatProperty()));
 
         currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
-//            Contact currentContact = currentSession.currentContactChatProperty().get();
-            return currentContact == null ? null : new ImagePattern(currentContact.getPicture());
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            return currentContact == null ? null : new ImagePattern(currentContact.getImage());
         }, currentSession.currentContactChatProperty()));
+
+        currConvAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
+            String selectedStatus = null;
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            if (currentContact != null)
+                selectedStatus = currentContact.getStatus().getStatusName();
+            UserStatus userStatus = UserStatus.getStatus(selectedStatus);
+            if (userStatus == null) {
+                return Color.WHITE;
+            }
+            return userStatus.getColor();
+        }, currConvStatus.textProperty()));
+
 
         //binding the contents of contact's messages list to the messagesContainer VBox
         currentSession.chatsMapProperty().addListener((observable, oldValue, newValue) -> {
-//            Contact currentContact = currentSession.currentContactChatProperty().get();
+            Contact currentContact = currentSession.currentContactChatProperty().get();
             if (currentContact != null) {
-                ObservableList<Message> messages = newValue.get(currentContact);
+                ObservableList<MessageEntity> messages = newValue.get(currentContact);
                 if (messages != null) {
                     displayMessages(messages);
                 }
@@ -82,7 +112,7 @@ public class ConversationController implements Initializable {
         //binds the messagesContainerVBox to the current contact messageslist
         currentSession.currentContactChatProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                ObservableList<Message> messages = currentSession.chatsMapProperty().get().get(newValue);
+                ObservableList<MessageEntity> messages = currentSession.chatsMapProperty().get().get(newValue);
                 if (messages != null) {
                     displayMessages(messages);
                 }
@@ -99,9 +129,10 @@ public class ConversationController implements Initializable {
 
     }
 
-    private void displayMessages(ObservableList<Message> messages) {
+    private void displayMessages(ObservableList<MessageEntity> messages) {
+        CurrentSession currentSession = CurrentSession.getInstance();
         conversationContainer.getChildren().setAll(messages.stream().map(message -> {
-            StyledChatMessage styledMessage = new StyledChatMessage(message.getContact(), message, ChatType.GROUP);
+            StyledChatMessage styledMessage = new StyledChatMessage(currentSession.getContactByPhone(message.getSender()), message, ChatType.GROUP);
             return styledMessage;
         }).collect(Collectors.toList()));
     }

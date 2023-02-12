@@ -8,7 +8,6 @@ import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import model.FriendEntity;
-import model.user.UserEntity;
 import model.user.UserStatus;
 
 import javax.imageio.ImageIO;
@@ -18,7 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class Contact {
+public class Contact implements UserModel {
     private StringProperty mobile;
     private StringProperty name;
     private StringProperty bio;
@@ -30,18 +29,11 @@ public class Contact {
         name = new SimpleStringProperty(friendEntity.getName());
         mobile = new SimpleStringProperty(friendEntity.getMobile());
         bio = new SimpleStringProperty(friendEntity.getBio());
-        status = new SimpleObjectProperty<UserStatus>();
+        status = new SimpleObjectProperty<UserStatus>(friendEntity.getStatus());
         this.picture.set(new Image(new ByteArrayInputStream(friendEntity.getPicture())));
 
     }
 
-//    public void populateFromFriendEntity(FriendEntity friendEntity) {
-//        this.name.set(friendEntity.getName());
-//        this.mobile.set(friendEntity.getMobile());
-//        this.bio.set(friendEntity.getBio());
-//        this.status.set(friendEntity.getStatus());
-//        this.picture.set(new Image(new ByteArrayInputStream(friendEntity.getPicture())));
-//    }
 
     public String getMobile() {
         return mobile.get();
@@ -94,7 +86,7 @@ public class Contact {
         return picture;
     }
 
-    public Image getPicture() {
+    public Image getImage() {
         return picture.get();
     }
 

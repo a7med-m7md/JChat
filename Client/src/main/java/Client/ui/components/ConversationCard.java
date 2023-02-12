@@ -1,7 +1,7 @@
 package Client.ui.components;
 
 import Client.ui.models.Contact;
-import Client.ui.models.Message;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -10,9 +10,15 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import model.MessageEntity;
+import model.user.UserStatus;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class ConversationCard extends GridPane {
 
@@ -27,7 +33,7 @@ public class ConversationCard extends GridPane {
     protected final Label latestMessage;
     private final String stylesheet_1 = "/styling/main.css";
 
-    public ConversationCard(Contact contact, ObservableList<Message> messages) {
+    public ConversationCard(Contact contact, ObservableList<MessageEntity> messages) {
 
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
@@ -66,7 +72,7 @@ public class ConversationCard extends GridPane {
         rowConstraints.setVgrow(javafx.scene.layout.Priority.NEVER);
 
 
-        contactAvatar.setFill(new ImagePattern(contact.getPicture()));
+        contactAvatar.setFill(new ImagePattern(contact.getImage()));
         contactAvatar.setRadius(23.0);
         contactAvatar.setStroke(javafx.scene.paint.Color.valueOf("#62ff32"));
         contactAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -77,8 +83,10 @@ public class ConversationCard extends GridPane {
         messageTimeStamp.setAlignment(javafx.geometry.Pos.CENTER);
         messageTimeStamp.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         //-------------------------------
+        DateFormat timeFormat = new SimpleDateFormat("hh.mm aa");
         if (messages.size() > 0)
-            messageTimeStamp.setText(messages.get(messages.size() - 1).getTimeStamp());
+            messageTimeStamp.setText(timeFormat.format(messages.get(messages.size() - 1).getTime().toString()));
+//            messageTimeStamp.setText(messages.get(messages.size() - 1).getTime().format());
         messageTimeStamp.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         messageTimeStamp.setTextFill(javafx.scene.paint.Color.valueOf("#697579"));
         messageTimeStamp.setWrapText(true);
@@ -104,7 +112,10 @@ public class ConversationCard extends GridPane {
         latestMessage.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         //-------------------------------
         if (messages.size() > 0)
-            latestMessage.setText(messages.get(messages.size() - 1).getMessageBody());
+            latestMessage.setText(messages.get(messages.size() - 1).getMSGBody());
+        else {
+            latestMessage.setText("no messages yet!");
+        }
         latestMessage.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         latestMessage.setTextFill(javafx.scene.paint.Color.valueOf("#9aa1aa"));
         vBox.setPadding(new Insets(4.0, 10.0, 4.0, 10.0));
@@ -120,6 +131,15 @@ public class ConversationCard extends GridPane {
         vBox.getChildren().add(contactName);
         vBox.getChildren().add(latestMessage);
         getChildren().add(vBox);
+
+        contactAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
+            String selectedStatus = contact.getStatus().getStatusName();
+            UserStatus userStatus = UserStatus.getStatus(selectedStatus);
+            if (userStatus == null) {
+                return Color.BLACK;
+            }
+            return userStatus.getColor();
+        }, contact.statusProperty()));
 
     }
 }

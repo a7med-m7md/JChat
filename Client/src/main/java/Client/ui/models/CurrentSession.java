@@ -1,12 +1,16 @@
 package Client.ui.models;
 
+import Client.ui.controllers.ChatsController;
 import Client.ui.controllers.MainController;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.image.Image;
+import model.MessageEntity;
 import model.user.UserEntity;
+
+import java.util.Optional;
 
 public class CurrentSession {
     private static final CurrentSession currentSession = new CurrentSession();
@@ -14,7 +18,7 @@ public class CurrentSession {
     //    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
     private ListProperty<Contact> contactsList = new SimpleListProperty<>(FXCollections.observableArrayList());
     private ListProperty<Contact> requestsList = new SimpleListProperty<>(FXCollections.observableArrayList());
-    private MapProperty<Contact, ObservableList<Message>> chatsMapProperty =
+    private MapProperty<Contact, ObservableList<MessageEntity>> chatsMapProperty =
             new SimpleMapProperty<>(FXCollections.observableHashMap());
 
     private ObservableList<Contact> onlineContactsList;
@@ -62,10 +66,12 @@ public class CurrentSession {
     }
 
     public void addChat(Contact contact) {
-        ObservableList messages = FXCollections.observableArrayList();
-        if (!chatsMapProperty.containsKey(contact))
+        if (chatsMapProperty.keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(contact.getMobile())))
+            ChatsController.getInstance().conversationsList.getSelectionModel().select(contact);
+            else {
+            ObservableList messages = FXCollections.observableArrayList();
             chatsMapProperty.put(contact, messages);
-        else currentContactChat.set(contact);
+        }
         MainController mainController = MainController.getInstance();
         mainController.switchTab("chats", "/FXML/chats.fxml");
     }
@@ -74,8 +80,14 @@ public class CurrentSession {
         return currentContactChat;
     }
 
-    public MapProperty<Contact, ObservableList<Message>> chatsMapProperty() {
+    public MapProperty<Contact, ObservableList<MessageEntity>> chatsMapProperty() {
         return chatsMapProperty;
+    }
+
+    public Contact getContactByPhone(String phoneNumber) {
+
+        Optional<Contact> foundContact = contactsList.stream().filter((contact)->contact.getMobile().equals(phoneNumber)).findFirst();
+        return foundContact.get();
     }
 
 }

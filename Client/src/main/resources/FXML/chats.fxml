@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxWidth="1.7976931348623157E308" prefWidth="259.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.ChatsController">
+<GridPane maxWidth="1.7976931348623157E308" prefWidth="259.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
    </columnConstraints>
@@ -72,7 +71,6 @@
                   <Insets left="2.0" />
                </padding>
             </Label>
-            <Button mnemonicParsing="false" onMouseClicked="#newChat" styleClass="utility-Button" stylesheets="@../styling/styling.css" text="new chat" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" GridPane.vgrow="SOMETIMES">

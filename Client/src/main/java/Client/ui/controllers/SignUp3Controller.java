@@ -56,7 +56,7 @@ public class SignUp3Controller implements Initializable {
 
             //Create A DTO and Send to Server
             UserDto newCreatedUser = new UserDto();
-            newCreatedUser.setMobile(populatedUserData.getPhoneNumber());
+            newCreatedUser.setMobile(populatedUserData.getMobile());
             newCreatedUser.setPassword(populatedUserData.getPassword());
             newCreatedUser.setEmail(populatedUserData.getEmail());
             newCreatedUser.setGender(populatedUserData.getGender());

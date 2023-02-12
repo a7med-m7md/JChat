@@ -2,6 +2,7 @@ package Client.ui.components;
 
 
 import Client.ui.models.Contact;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -9,9 +10,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import model.user.UserStatus;
 
 public class ContactCard extends GridPane {
 
@@ -63,7 +66,7 @@ public class ContactCard extends GridPane {
         rowConstraints.setValignment(javafx.geometry.VPos.CENTER);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.NEVER);
 
-        contactAvatar.setFill(new ImagePattern(contact.getPicture()));
+        contactAvatar.setFill(new ImagePattern(contact.getImage()));
         contactAvatar.setRadius(17.0);
         contactAvatar.setStroke(javafx.scene.paint.Color.valueOf("#62ff32"));
         contactAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -107,6 +110,15 @@ public class ContactCard extends GridPane {
         getChildren().add(vBox);
 
 
+
+        contactAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
+            String selectedStatus = contact.getStatus().getStatusName();
+            UserStatus userStatus = UserStatus.getStatus(selectedStatus);
+            if (userStatus == null) {
+                return Color.BLACK;
+            }
+            return userStatus.getColor();
+        }, contact.statusProperty()));
     }
     @Override
     public String toString() {

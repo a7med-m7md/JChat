@@ -54,7 +54,7 @@ public class CurrentUserCardController implements Initializable {
         currentUserBio.textProperty().bind(currentUserAccount.bioProperty());
 
         currentUserAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
-            return currentUserAccount == null ? null : new ImagePattern(currentUserAccount.getPicture());
+            return currentUserAccount == null ? null : new ImagePattern(currentUserAccount.getImage());
         }));
 
         currentUserAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {

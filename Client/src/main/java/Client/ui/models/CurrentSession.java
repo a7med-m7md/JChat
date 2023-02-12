@@ -69,7 +69,7 @@ public class CurrentSession {
         if (chatsMapProperty.keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(contact.getMobile())))
             ChatsController.getInstance().conversationsList.getSelectionModel().select(contact);
             else {
-            ObservableList messages = FXCollections.observableArrayList();
+            ObservableList messages = FXCollections.emptyObservableList();
             chatsMapProperty.put(contact, messages);
         }
         MainController mainController = MainController.getInstance();

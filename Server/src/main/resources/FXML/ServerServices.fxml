@@ -9,42 +9,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Server.Controllers.ServicesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #e4e9ee;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server.Controllers.ServicesController">
     <children>
         <VBox layoutX="4.0" layoutY="-3.0" prefHeight="600.0" prefWidth="450.0">
             <children>
                 <ImageView fitHeight="600.0" fitWidth="450.0">
                     <image>
-                        <Image url="@../images/hero.jpg"/>
+                        <Image url="@../images/hero.jpg" />
                     </image>
                 </ImageView>
             </children>
         </VBox>
         <Label layoutX="577.0" layoutY="84.0" text="Server Servicess">
             <font>
-                <Font name="Segoe UI Black" size="25.0"/>
+                <Font name="Segoe UI Black" size="25.0" />
             </font>
         </Label>
-        <Button fx:id="online_ofline" layoutX="469.0" layoutY="176.0" style="-fx-background-color: #39CEFF;"
-                text="OnLine and OfLine User" textFill="#fafafa"/>
-        <Button fx:id="gender" layoutX="757.0" layoutY="176.0" style="-fx-background-color: #39CEFF;"
-                text="User's Gender" textFill="#fafafa"/>
-        <Button fx:id="country" layoutX="639.0" layoutY="177.0" style="-fx-background-color: #39CEFF;"
-                text="user's Country" textFill="#fafafa"/>
+        <Button fx:id="online_ofline" layoutX="469.0" layoutY="176.0" style="-fx-background-color: #39CEFF;" text="OnLine and OfLine User" textFill="#fafafa" />
+        <Button fx:id="gender" layoutX="757.0" layoutY="176.0" style="-fx-background-color: #39CEFF;" text="User's Gender" textFill="#fafafa" />
+        <Button fx:id="country" layoutX="639.0" layoutY="177.0" style="-fx-background-color: #39CEFF;" text="user's Country" textFill="#fafafa" />
         <VBox layoutX="464.0" layoutY="231.0" prefHeight="359.0" prefWidth="429.0">
             <children>
-                <PieChart fx:id="pieChart"/>
+                <PieChart fx:id="pieChart" />
             </children>
         </VBox>
-        <Button fx:id="announcement" layoutX="788.0" layoutY="23.0" mnemonicParsing="false"
-                style="-fx-background-color: #ff4d4d;" text="Announcement" textFill="#fafafa"/>
-        <Button fx:id="onButton" layoutX="834.0" layoutY="59.0" mnemonicParsing="false"
-                style="-fx-background-color: #33cc33;" text="ON" textFill="#fafafa"/>
-        <Button fx:id="offButton" disable="true" layoutX="799.0" layoutY="59.0" maxWidth="-Infinity"
-                minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: #ff4d4d;" text="OFF"
-                textFill="#fafafa"/>
+        <Button fx:id="announcement" layoutX="788.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: #ff4d4d;" text="Announcement" textFill="#fafafa" />
+        <Button fx:id="onButton" layoutX="834.0" layoutY="59.0" mnemonicParsing="false" style="-fx-background-color: #33cc33;" text="ON" textFill="#fafafa" />
+        <Button fx:id="offButton" disable="true" layoutX="799.0" layoutY="59.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: #ff4d4d;" text="OFF" textFill="#fafafa" />
 
 
     </children>

@@ -29,6 +29,7 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
                         try {
                             FriendEntity friendEntity = friendDao.searchByMobileNum(sender);
                             requestLST.add(friendEntity);
+                            friendDao.addToFriendList(receiver, sender);
                             ClientServices clientServices = ConnectedService.clients.get(receiver);
                             clientServices.friendRequestNotification(friendEntity);
                         } catch (SQLException e) {

@@ -10,24 +10,26 @@ import static utils.Constants.SOCKET_SERVER_PORT;
 
 public class SocketConnection {
     private DataOutputStream dataOutputStream = null;
-    private  DataInputStream dataInputStream = null;
+    private DataInputStream dataInputStream = null;
     Socket clientSocket;
     ServerSocket serverSocket;
     FileTransferHandled fileTransferHandled;
-    public SocketConnection(){
+
+    public SocketConnection() {
         startConnection();
     }
 
     private void startConnection() {
-            //use thread with waiting operation here to avoid freezing the current thread
+        //use thread with waiting operation here to avoid freezing the current thread
         try {
             serverSocket
                     = new ServerSocket(SOCKET_SERVER_PORT);
             System.out.println(
                     "Server is Starting in Port 1200");
-            while (!serverSocket.isClosed()){
-                new Thread(
-                        () -> {
+
+            new Thread(
+                    () -> {
+                        while (!serverSocket.isClosed()) {
                             try {
                                 clientSocket = serverSocket.accept();
                                 fileTransferHandled = new FileTransferHandled(clientSocket);
@@ -37,8 +39,9 @@ public class SocketConnection {
                                 e.printStackTrace();
                             }
                         }
-                ).start();
-            }
+                    }
+            ).start();
+
         } catch (IOException e) {
             e.printStackTrace();
             //closeResources();
@@ -64,12 +67,13 @@ public class SocketConnection {
                 }
             }).start();*/
     }
-    public void receiveFile(Socket clientSocket){
+
+    public void receiveFile(Socket clientSocket) {
         Thread th = new Thread(new FileTransferHandled(clientSocket));
         th.start();
     }
 
-    private void closeResources(){
+    private void closeResources() {
         try {
             this.clientSocket.close();
             this.serverSocket.close();

@@ -38,6 +38,7 @@ public class FriendRequestCard extends GridPane {
     Contact currentFriendRequest;
 
     public FriendRequestCard(Contact friend) {
+        currentFriendRequest = friend;
 
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();

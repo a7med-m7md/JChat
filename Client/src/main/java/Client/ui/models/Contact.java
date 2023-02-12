@@ -31,6 +31,8 @@ public class Contact {
         mobile = new SimpleStringProperty(friendEntity.getMobile());
         bio = new SimpleStringProperty(friendEntity.getBio());
         status = new SimpleObjectProperty<UserStatus>();
+        this.picture.set(new Image(new ByteArrayInputStream(friendEntity.getPicture())));
+
     }
 
 //    public void populateFromFriendEntity(FriendEntity friendEntity) {

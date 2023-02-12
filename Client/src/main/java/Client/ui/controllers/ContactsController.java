@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.FriendEntity;
@@ -66,6 +67,14 @@ public class ContactsController implements Initializable {
 
 //          construction of contact card to display in the list
             contactsListView.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(currentSession.contactsListProperty())));
+            currentSession.currentContactChatProperty().bind(contactsListView.getSelectionModel().selectedItemProperty());
+
+            contactsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            contactsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                System.out.println("Selected item: " + newValue.getName());
+                currentSession.addChat(newValue);
+            });
+
             contactsListView.setCellFactory(listView -> new ListCell<Contact>() {
                 @Override
                 protected void updateItem(Contact contact, boolean empty) {

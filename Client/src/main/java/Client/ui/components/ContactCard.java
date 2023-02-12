@@ -9,6 +9,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 
@@ -62,7 +63,7 @@ public class ContactCard extends GridPane {
         rowConstraints.setValignment(javafx.geometry.VPos.CENTER);
         rowConstraints.setVgrow(javafx.scene.layout.Priority.NEVER);
 
-        contactAvatar.setFill(javafx.scene.paint.Color.DODGERBLUE);
+        contactAvatar.setFill(new ImagePattern(contact.getPicture()));
         contactAvatar.setRadius(17.0);
         contactAvatar.setStroke(javafx.scene.paint.Color.valueOf("#62ff32"));
         contactAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);

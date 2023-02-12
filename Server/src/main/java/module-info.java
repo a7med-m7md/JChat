@@ -9,6 +9,9 @@ module Server {
 //    requires Client;
 
     opens Server to javafx.fxml;
+    opens Server.Controllers to javafx.fxml;
     exports Server;
+    exports Server.Controllers;
+
 //    exports Server.network.interfaces;
 }

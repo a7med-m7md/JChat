@@ -24,6 +24,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void friendRequestNotification(FriendEntity friend) throws RemoteException {
+        System.out.println("Friend Request From : " + friend.getMobile());
         CurrentSession currentSession= CurrentSession.getInstance();
         currentSession.requestsListProperty().add(new Contact(friend));
     }

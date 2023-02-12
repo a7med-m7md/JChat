@@ -3,7 +3,6 @@ package Client.ui.components;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.controllerutils.MessageSource;
 import Client.ui.models.Contact;
-import Client.ui.models.CurrentSession;
 import Client.ui.models.Message;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
@@ -101,7 +100,7 @@ public class StyledChatMessage extends GridPane {
 
         GridPane.setRowIndex(senderAvatar, 1);
         GridPane.setValignment(senderAvatar, javafx.geometry.VPos.TOP);
-        senderAvatar.setFill(new ImagePattern(contact.getAvatar()));
+        senderAvatar.setFill(new ImagePattern(contact.getPicture()));
         senderAvatar.setRadius(14.0);
         senderAvatar.setStroke(javafx.scene.paint.Color.BLACK);
         senderAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);

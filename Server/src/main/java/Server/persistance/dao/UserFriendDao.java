@@ -2,6 +2,7 @@ package Server.persistance.dao;
 
 import Server.persistance.ConnectionManager;
 import model.FriendEntity;
+import model.user.UserStatus;
 
 import java.rmi.RemoteException;
 import java.sql.Connection;
@@ -42,7 +43,7 @@ public class UserFriendDao implements UserFriendDaoInt{
                         rs.getString("mobile"),
                         rs.getString("name"),
                         rs.getString("bio"),
-                        rs.getString("status"));
+                        UserStatus.getStatus(rs.getString("status")));
                 System.out.println(friend.getMobile());
                 return friend;
             }
@@ -73,7 +74,7 @@ public class UserFriendDao implements UserFriendDaoInt{
 //                "receiver_mobile = ? AND friendships.status = 'PENDING'";
 
         final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships" +
-                "                WHERE receiver_mobile = mobile AND" +
+                "                WHERE sender_mobile = mobile AND" +
                 "                receiver_mobile = ? AND friendships.status = 'PENDING'";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setString(1, myMobileNum);
@@ -97,8 +98,8 @@ public class UserFriendDao implements UserFriendDaoInt{
             friend.setName(resultSet.getString("name"));
             friend.setBio(resultSet.getString("bio"));
             friend.setMobile(resultSet.getString("mobile"));
-//            friend.setStatus(resultSet.getString("friendships.status"));
-            friend.setUserPhoto(resultSet.getBytes("picture"));
+            friend.setStatus(UserStatus.getStatus(resultSet.getString("friendships.status")));
+            friend.setPicture(resultSet.getBytes("picture"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

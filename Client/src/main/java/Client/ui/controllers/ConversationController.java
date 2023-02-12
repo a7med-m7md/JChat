@@ -63,7 +63,7 @@ public class ConversationController implements Initializable {
 
         currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
 //            Contact currentContact = currentSession.currentContactChatProperty().get();
-            return currentContact == null ? null : new ImagePattern(currentContact.getAvatar());
+            return currentContact == null ? null : new ImagePattern(currentContact.getPicture());
         }, currentSession.currentContactChatProperty()));
 
         //binding the contents of contact's messages list to the messagesContainer VBox

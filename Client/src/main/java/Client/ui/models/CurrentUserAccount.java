@@ -1,49 +1,54 @@
 package Client.ui.models;
 
-import javafx.beans.InvalidationListener;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import model.user.Gender;
 import model.user.UserEntity;
 import model.user.UserStatus;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.awt.image.*;
+import java.io.IOException;
+
+import javafx.embed.swing.SwingFXUtils;
+
+import javax.imageio.ImageIO;
 
 public class CurrentUserAccount {
-
-    private static CurrentUserAccount myAccount;
-
-    private CurrentUserAccount() {
-        name  = new SimpleStringProperty();
-        phoneNumber  = new SimpleStringProperty();
-        email  = new SimpleStringProperty();
-//        picture  = new Image();
-        password  = new SimpleStringProperty();
-        gender  = new SimpleObjectProperty();
-        country = new SimpleStringProperty();
-        dateOfBirth = new SimpleStringProperty();
-        bio = new SimpleStringProperty();
-        status = new SimpleObjectProperty<>();
-    }
-    public static CurrentUserAccount getInstance() {
-        if (myAccount == null)
-            myAccount = new CurrentUserAccount();
-        return myAccount;
-    }
     private StringProperty phoneNumber;
     private StringProperty name;
     private StringProperty email;
-    private Image picture;
+    private ObjectProperty<Image> picture = new SimpleObjectProperty<>();
     private StringProperty password;
     private SimpleObjectProperty<Gender> gender;
     private StringProperty country;
     private StringProperty dateOfBirth;
     private StringProperty bio;
     private SimpleObjectProperty<UserStatus> status;
+    private static CurrentUserAccount myAccount;
+
+    private CurrentUserAccount() {
+        name  = new SimpleStringProperty();
+        phoneNumber  = new SimpleStringProperty();
+        email  = new SimpleStringProperty();
+        password  = new SimpleStringProperty();
+        gender  = new SimpleObjectProperty();
+        country = new SimpleStringProperty();
+        dateOfBirth = new SimpleStringProperty();
+        bio = new SimpleStringProperty();
+        status = new SimpleObjectProperty<UserStatus>();
+    }
+    public static CurrentUserAccount getInstance() {
+        if (myAccount == null)
+            myAccount = new CurrentUserAccount();
+        return myAccount;
+    }
+
 
     public void populateCurrentUserData(UserEntity userDataFromDB) {
         this.name.set(userDataFromDB.getName());
@@ -55,7 +60,40 @@ public class CurrentUserAccount {
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
         this.status.set(userDataFromDB.getStatus());
-//        this.picture = new Image(userDataFromDB.g)
+        this.picture.set(new Image(new ByteArrayInputStream(userDataFromDB.getPicture())));
+    }
+
+    public ObjectProperty<Image> pictureProperty() {
+        return picture;
+    }
+
+    public Image getPicture() {
+        return picture.get();
+    }
+
+    public void setPicture(Image picture) {
+        this.picture.set(picture);
+    }
+
+    public void setPictureAsBytes(byte[] pictureByteArray) {
+        this.picture.set(new Image(new ByteArrayInputStream(pictureByteArray)));
+    }
+
+    public byte[] getPictureAsBytes() throws IOException {
+        int width = (int) picture.get().getWidth();
+        int height = (int) picture.get().getHeight();
+
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g = bufferedImage.createGraphics();
+        g.drawImage(SwingFXUtils.fromFXImage(picture.get(), null), 0, 0, null);
+        g.dispose();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", baos);
+
+        byte[] imageData = baos.toByteArray();
+        return imageData;
     }
 
     public static CurrentUserAccount getMyAccount() {

@@ -66,7 +66,7 @@ public class ConversationCard extends GridPane {
         rowConstraints.setVgrow(javafx.scene.layout.Priority.NEVER);
 
 
-        contactAvatar.setFill(new ImagePattern(contact.getAvatar()));
+        contactAvatar.setFill(new ImagePattern(contact.getPicture()));
         contactAvatar.setRadius(23.0);
         contactAvatar.setStroke(javafx.scene.paint.Color.valueOf("#62ff32"));
         contactAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);

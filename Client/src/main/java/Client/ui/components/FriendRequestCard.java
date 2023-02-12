@@ -1,6 +1,7 @@
 package Client.ui.components;
 
 import Client.network.RMIClientServices;
+import Client.ui.models.Contact;
 import Client.ui.models.CurrentUserAccount;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -34,11 +35,9 @@ public class FriendRequestCard extends GridPane {
     protected final Button button0;
     protected final SVGPath sVGPath0;
 
-    FriendEntity currentFriendRequest;
+    Contact currentFriendRequest;
 
-    public FriendRequestCard(FriendEntity friend) {
-
-        currentFriendRequest = new FriendEntity();
+    public FriendRequestCard(Contact friend) {
         currentFriendRequest = friend;
 
         columnConstraints = new ColumnConstraints();

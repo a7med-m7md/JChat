@@ -81,7 +81,6 @@ public class RMIConnectionManager {
             // Waiting for any user to connect
             ConnectedService connectedService = new ConnectedService();
             registry.bind("rmi://localhost:2233/connectedService", connectedService);
-
         } catch (AccessException e) {
             e.printStackTrace();
         } catch (AlreadyBoundException e) {

@@ -9,11 +9,11 @@ public class MessageEntity implements Serializable {
     private String MSGBody;
     private LocalDateTime time;
 
-    public MessageEntity(String receiver, String sender, String MSGBody, LocalDateTime time) {
+    public MessageEntity(String receiver, String sender, String MSGBody) {
         this.receiver = receiver;
         this.sender = sender;
         this.MSGBody = MSGBody;
-        this.time = time;
+        this.time = LocalDateTime.now();
     }
 
     public String getReceiver() {

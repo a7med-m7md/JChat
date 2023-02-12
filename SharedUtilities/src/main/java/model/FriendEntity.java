@@ -1,9 +1,7 @@
 package model;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import model.user.UserStatus;
 
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 //todo Change it to be model
@@ -11,12 +9,14 @@ public class FriendEntity implements Serializable {
     private String mobile;
     private String name;
     private String bio;
-    private String status;
+    private UserStatus status;
+
+
     // I didn't want to transfer the image
-    private transient SimpleObjectProperty<byte[]> userPhoto =new SimpleObjectProperty<>();
+//    private transient SimpleObjectProperty<byte[]> userPhoto =new SimpleObjectProperty<>();
+    private byte[] picture;
 
-
-    public FriendEntity(String mobile, String name, String bio, String status){
+    public FriendEntity(String mobile, String name, String bio, UserStatus status){
         this.mobile = mobile;
         this.name = name;
         this.bio = bio;
@@ -55,27 +55,34 @@ public class FriendEntity implements Serializable {
         this.bio = bio;
     }
 
-    public String getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 
-    public byte[] getUserPhoto() {
-        return userPhoto.get();
+//    public byte[] getUserPhoto() {
+//        return userPhoto.get();
+//
+//    }
+//
+//    public SimpleObjectProperty<byte[]> userPhotoProperty() {
+//        return userPhoto;
+//    }
+//
+//    public void setUserPhoto(byte[] userPhoto) {
+//        this.userPhoto.set(userPhoto);
+//    }
 
+
+    public byte[] getPicture() {
+        return picture;
     }
 
-    public SimpleObjectProperty<byte[]> userPhotoProperty() {
-        return userPhoto;
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
-
-    public void setUserPhoto(byte[] userPhoto) {
-        this.userPhoto.set(userPhoto);
-    }
-
-
 
 }

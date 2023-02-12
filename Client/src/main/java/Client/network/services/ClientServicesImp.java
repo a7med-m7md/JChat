@@ -3,6 +3,8 @@ package Client.network.services;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.FriendEntity;
 import model.MessageEntity;
 import model.user.UserStatus;
@@ -25,7 +27,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void friendRequestNotification(FriendEntity friend) throws RemoteException {
         System.out.println("Friend Request From : " + friend.getMobile());
-        CurrentSession currentSession= CurrentSession.getInstance();
+        CurrentSession currentSession = CurrentSession.getInstance();
         currentSession.requestsListProperty().add(new Contact(friend));
         System.out.println("request from " + friend.getMobile());
 
@@ -33,6 +35,16 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveMessage(MessageEntity msg) throws RemoteException {
+        CurrentSession currentSession = CurrentSession.getInstance();
+        Contact senderContact = currentSession.getContactByPhone(msg.getSender());
+        ObservableList<MessageEntity> firstTimeChat = FXCollections.observableArrayList();
+
+        if (currentSession.chatsMapProperty().keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(senderContact.getMobile())))
+            currentSession.chatsMapProperty().get(senderContact).add(msg);
+        else {
+
+            currentSession.chatsMapProperty().put(senderContact, firstTimeChat);
+        }
         System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
     }
 

@@ -19,6 +19,7 @@ import model.user.UserStatus;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 public class ConversationCard extends GridPane {
 
@@ -83,9 +84,9 @@ public class ConversationCard extends GridPane {
         messageTimeStamp.setAlignment(javafx.geometry.Pos.CENTER);
         messageTimeStamp.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         //-------------------------------
-        DateFormat timeFormat = new SimpleDateFormat("hh.mm aa");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
         if (messages.size() > 0)
-            messageTimeStamp.setText(timeFormat.format(messages.get(messages.size() - 1).getTime().toString()));
+            messageTimeStamp.setText(messages.get(messages.size() - 1).getTime().format(formatter));
 //            messageTimeStamp.setText(messages.get(messages.size() - 1).getTime().format());
         messageTimeStamp.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         messageTimeStamp.setTextFill(javafx.scene.paint.Color.valueOf("#697579"));

@@ -108,13 +108,13 @@ public class MainController implements Initializable {
     @FXML
     void switchContactsList(MouseEvent event) {
 //        if (!tabPanes.containsKey("contacts")) {
-            try {
-                Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
+        try {
+            Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
 //                tabPanes.put("contacts", contactsPane);
-        animateTabs(contactsPane);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            animateTabs(contactsPane);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 //        }
 //        Parent contactsPane = tabPanes.get("contacts");
 
@@ -123,16 +123,13 @@ public class MainController implements Initializable {
 
     @FXML
     void switchRequests(MouseEvent event) {
-        if (!tabPanes.containsKey("requests")) {
-            try {
-                Parent requestsPane = FXMLLoader.load(getClass().getResource("/FXML/requests.fxml"));
-                tabPanes.put("requests", requestsPane);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        Parent requestsPane = null;
+        try {
+            requestsPane = FXMLLoader.load(getClass().getResource("/FXML/requests.fxml"));
+            animateTabs(requestsPane);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        Parent requestsPane = tabPanes.get("requests");
-        animateTabs(requestsPane);
 
     }
 
@@ -175,7 +172,7 @@ public class MainController implements Initializable {
             IntegerProperty requestCount = new SimpleIntegerProperty();
             requestCount.bind(currentSession.requestsListProperty().sizeProperty());
 
-            requestsNotification.getChildren().add(new NotificationUI(requestCount.toString(),false));
+            requestsNotification.getChildren().add(new NotificationUI(requestCount.toString(), false));
 
             //TODO
             Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));

@@ -18,17 +18,16 @@ public enum UserStatus {
         if (status == null) {
             return null;
         }
-
-        if (status.equals("Available")) {
+        if (status.equalsIgnoreCase("Available")) {
             return AVAILABLE;
         }
-        if (status.equals("Busy")) {
+        if (status.equalsIgnoreCase("Busy")) {
             return BUSY;
         }
-        if (status.equals("Away")) {
+        if (status.equalsIgnoreCase("Away")) {
             return AWAY;
         }
-        if (status.equals("Offline")) {
+        if (status.equalsIgnoreCase("Offline")) {
             return OFFLINE;
         }
         return null;

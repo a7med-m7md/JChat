@@ -61,6 +61,14 @@
             <artifactId>javafx-swing</artifactId>
             <version>11-ea+24</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.alicebot</groupId>
+            <artifactId>ab</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

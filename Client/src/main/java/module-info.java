@@ -16,7 +16,6 @@ module Client {
     exports Client;
     exports Client.ui.controllers;
     exports Client.ui.controllerutils;
-
     opens Client to
             javafx.fxml;
     opens Client.ui.controllers to

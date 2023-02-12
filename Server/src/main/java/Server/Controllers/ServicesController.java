@@ -35,6 +35,10 @@ public class ServicesController implements Initializable {
     @FXML
     private Button gender;
     @FXML
+    private Button onButton;
+    @FXML
+    private Button offButton;
+    @FXML
     protected PieChart pieChart;
     @FXML
     private Button announcement;
@@ -116,6 +120,15 @@ public class ServicesController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        onButton.setOnAction((ev)-> {
+            offButton.setDisable(false);
+            onButton.setDisable(true);
+        });
+        offButton.setOnAction((ev)-> {
+            offButton.setDisable(true);
+            onButton.setDisable(false);
+        });
+
 
     }
 

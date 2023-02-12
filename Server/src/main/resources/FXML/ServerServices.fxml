@@ -38,7 +38,14 @@
                 <PieChart fx:id="pieChart"/>
             </children>
         </VBox>
-        <Button fx:id="announcement" layoutX="788.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: #ff4d4d;"
-                text="Announcement" textFill="#fafafa"/>
+        <Button fx:id="announcement" layoutX="788.0" layoutY="23.0" mnemonicParsing="false"
+                style="-fx-background-color: #ff4d4d;" text="Announcement" textFill="#fafafa"/>
+        <Button fx:id="onButton" layoutX="834.0" layoutY="59.0" mnemonicParsing="false"
+                style="-fx-background-color: #33cc33;" text="ON" textFill="#fafafa"/>
+        <Button fx:id="offButton" disable="true" layoutX="799.0" layoutY="59.0" maxWidth="-Infinity"
+                minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: #ff4d4d;" text="OFF"
+                textFill="#fafafa"/>
+
+
     </children>
 </AnchorPane>

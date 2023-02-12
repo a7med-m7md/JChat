@@ -43,7 +43,8 @@ public class UserFriendDao implements UserFriendDaoInt{
                         rs.getString("mobile"),
                         rs.getString("name"),
                         rs.getString("bio"),
-                        UserStatus.getStatus(rs.getString("status")));
+                        UserStatus.getStatus(rs.getString("status")),
+                        rs.getBytes("picture"));
                 System.out.println(friend.getMobile());
                 return friend;
             }

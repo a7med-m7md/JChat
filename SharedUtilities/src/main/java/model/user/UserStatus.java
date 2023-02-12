@@ -18,7 +18,6 @@ public enum UserStatus {
         if (status == null) {
             return null;
         }
-
         if (status.equalsIgnoreCase("Available")) {
             return AVAILABLE;
         }

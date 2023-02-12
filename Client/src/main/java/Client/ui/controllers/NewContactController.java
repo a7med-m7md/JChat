@@ -43,6 +43,7 @@ public class NewContactController implements Initializable {
         try {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             RMIClientServices.sendFriendRequest(currentUserAccount.getPhoneNumber(), contactsToAdd);
+            System.out.println("sending to" + contactsToAdd);
             errorContainer.getChildren().setAll(new ErrorMessageUi("Requestes sent succesfully" ,false));
             contactsToAddListView.getChildren().clear();
 

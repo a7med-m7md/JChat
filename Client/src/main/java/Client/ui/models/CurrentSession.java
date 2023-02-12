@@ -1,5 +1,6 @@
 package Client.ui.models;
 
+import Client.ui.controllers.MainController;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,9 +11,9 @@ import model.user.UserEntity;
 public class CurrentSession {
     private static final CurrentSession currentSession = new CurrentSession();
     SimpleObjectProperty<CurrentUserAccount> myAccount;
-//    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
-    private ListProperty<Contact> contactsList =new SimpleListProperty<>(FXCollections.observableArrayList());
-    private ListProperty<Contact> requestsList =new SimpleListProperty<>(FXCollections.observableArrayList());
+    //    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
+    private ListProperty<Contact> contactsList = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ListProperty<Contact> requestsList = new SimpleListProperty<>(FXCollections.observableArrayList());
     private MapProperty<Contact, ObservableList<Message>> chatsMapProperty =
             new SimpleMapProperty<>(FXCollections.observableHashMap());
 
@@ -56,22 +57,17 @@ public class CurrentSession {
     }
 
 
-
-
     public void setOnlineContactsList(ObservableList<Contact> onlineContactsList) {
         this.onlineContactsList = onlineContactsList;
     }
 
     public void addChat(Contact contact) {
         ObservableList messages = FXCollections.observableArrayList();
-        messages.add(new Message(contact, "ass"));
-        messages.add(new Message(contact, "ass"));
-        messages.add(new Message(contact, "ass"));
-        messages.add(new Message(contact, "ass"));
-        messages.add(new Message(contact, "mou"));
-        contactsList.add(contact);
-        chatsMapProperty.put(contact, messages);
-
+        if (!chatsMapProperty.containsKey(contact))
+            chatsMapProperty.put(contact, messages);
+        else currentContactChat.set(contact);
+        MainController mainController = MainController.getInstance();
+        mainController.switchTab("chats", "/FXML/chats.fxml");
     }
 
     public ObjectProperty<Contact> currentContactChatProperty() {

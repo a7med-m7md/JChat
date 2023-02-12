@@ -26,6 +26,8 @@ public class RMIConnectionManager {
     RMIServerServices rmiServerServices;
     ChatService chatService;
     MessagingService messagingService;
+    RegisterService registerService;
+    ConnectedService connectedService;
 
     public RMIConnectionManager(){
         try {
@@ -54,7 +56,7 @@ public class RMIConnectionManager {
             registry.rebind("rmi://localhost:2233/chatMessaging", messagingService);
 
             System.out.println("Register Service Started");
-            RegisterService registerService = new RegisterServiceImpl();
+            registerService = new RegisterServiceImpl();
             registry.rebind("rmi://localhost:2233/register", registerService);
         } catch (AccessException e) {
             e.printStackTrace();
@@ -65,9 +67,25 @@ public class RMIConnectionManager {
 
     public void disconnect(){
         try {
+            System.out.println("Close login service");
             registry.unbind("rmi://localhost:2233/loginService");
             UnicastRemoteObject.unexportObject(rmiServerServices, true);
 
+            System.out.println("Close Friend Request");
+            registry.unbind("rmi://localhost:2233/friendRequest");
+            UnicastRemoteObject.unexportObject(chatService, true);
+
+            System.out.println("Close Chat Messaging");
+            registry.unbind("rmi://localhost:2233/chatMessaging");
+            UnicastRemoteObject.unexportObject(messagingService, true);
+
+            System.out.println("Close register");
+            registry.unbind("rmi://localhost:2233/register");
+            UnicastRemoteObject.unexportObject(registerService, true);
+
+            System.out.println("Close connected Services");
+            registry.unbind("rmi://localhost:2233/connectedService");
+            UnicastRemoteObject.unexportObject(connectedService, true);
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -79,7 +97,7 @@ public class RMIConnectionManager {
     public void connected(){
         try{
             // Waiting for any user to connect
-            ConnectedService connectedService = new ConnectedService();
+            connectedService = new ConnectedService();
             registry.bind("rmi://localhost:2233/connectedService", connectedService);
         } catch (AccessException e) {
             e.printStackTrace();
@@ -89,4 +107,5 @@ public class RMIConnectionManager {
             e.printStackTrace();
         }
     }
+
 }

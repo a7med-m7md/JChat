@@ -43,7 +43,8 @@ public class UserFriendDao implements UserFriendDaoInt{
                         rs.getString("mobile"),
                         rs.getString("name"),
                         rs.getString("bio"),
-                        UserStatus.getStatus(rs.getString("status")));
+                        UserStatus.getStatus(rs.getString("status")),
+                        rs.getBytes("picture"));
                 System.out.println(friend.getMobile());
                 return friend;
             }
@@ -98,7 +99,7 @@ public class UserFriendDao implements UserFriendDaoInt{
             friend.setName(resultSet.getString("name"));
             friend.setBio(resultSet.getString("bio"));
             friend.setMobile(resultSet.getString("mobile"));
-            friend.setStatus(UserStatus.getStatus(resultSet.getString("friendships.status")));
+            friend.setStatus(UserStatus.getStatus(resultSet.getString("users.status")));
             friend.setPicture(resultSet.getBytes("picture"));
         } catch (SQLException e) {
             e.printStackTrace();

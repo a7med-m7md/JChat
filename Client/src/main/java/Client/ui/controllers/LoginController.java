@@ -90,11 +90,26 @@ public class LoginController implements Initializable {
                         },
                         5000
                 );
-                Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
+
+                MainController mainController = MainController.getInstance();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));
+                loader.setController(mainController);
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 Stage homeStage = new Stage();
-                homeStage.setScene(home);
+                homeStage.setScene(scene);
+
+
+
+//                Scene home = new Scene(FXMLLoader.load(getClass().getResource()));
+//                Node node = (Node) event.getSource();
+//                Stage stage = (Stage) node.getScene().getWindow();
+//                Stage homeStage = new Stage();
+//                homeStage.setScene(home);
+
                 homeStage.setResizable(true);
                 homeStage.show();
                 stage.close();

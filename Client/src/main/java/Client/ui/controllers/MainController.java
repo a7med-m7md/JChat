@@ -8,8 +8,11 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,12 +21,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import javafx.util.converter.NumberStringConverter;
 import model.FriendEntity;
 
 import java.io.IOException;
@@ -65,11 +70,13 @@ public class MainController implements Initializable {
 
 
     @FXML
-    private VBox requestsNotification;
+    private Label requestsNotification;
 
 
     Map<String, Parent> tabPanes = FXCollections.observableHashMap();
 
+    IntegerProperty requestCount = new SimpleIntegerProperty();
+    StringProperty notifcationLabel= new SimpleStringProperty();
 
     @FXML
     void logOut(MouseEvent event) {
@@ -127,6 +134,8 @@ public class MainController implements Initializable {
         try {
             requestsPane = FXMLLoader.load(getClass().getResource("/FXML/requests.fxml"));
             animateTabs(requestsPane);
+            CurrentSession currentSession = CurrentSession.getInstance();
+            System.out.println(requestCount.get() + "new requests");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -169,10 +178,16 @@ public class MainController implements Initializable {
         try {
             //TODO Add Notification for friend reuests
             CurrentSession currentSession = CurrentSession.getInstance();
-            IntegerProperty requestCount = new SimpleIntegerProperty();
-            requestCount.bind(currentSession.requestsListProperty().sizeProperty());
+            requestCount.bind(Bindings.size(currentSession.requestsListProperty()));
+            System.out.println(requestCount.get());
 
-            requestsNotification.getChildren().add(new NotificationUI(requestCount.toString(), false));
+            BooleanBinding newNotification = requestCount.greaterThan(0);
+            requestsNotification.visibleProperty().bind(newNotification);
+            requestsNotification.textProperty().bind(requestCount.asString());
+
+//            requestsNotification.textProperty().bind(Bindings.convert(currentSession.requestsListProperty().sizeProperty()));
+//            notifcationLabel.bind(Bindings.convert(requestCount));
+
 
             //TODO
             Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));

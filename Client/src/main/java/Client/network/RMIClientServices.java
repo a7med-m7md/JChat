@@ -9,6 +9,7 @@ import exceptions.UserNotFoundException;
 import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
+import model.user.UserStatus;
 import services.*;
 
 import java.rmi.AccessException;
@@ -16,6 +17,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 import java.util.List;
 
 public class RMIClientServices {
@@ -104,8 +106,22 @@ public class RMIClientServices {
     }
 
 
+    public static void tellMyStatus(String number, UserStatus status) throws RemoteException {
+        System.out.println("Telling ......");
+        try {
+            if(chatRegistry == null){
+                chatRegistry = LocateRegistry.getRegistry(2233);
+            }
+            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            user.tellMyStatusToFriends(number, status);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException {
+
+
+    public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException, SQLException {
 
         try {
             if(chatRegistry == null){

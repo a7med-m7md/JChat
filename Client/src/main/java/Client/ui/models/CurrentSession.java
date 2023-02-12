@@ -1,9 +1,6 @@
 package Client.ui.models;
 
-import javafx.beans.property.MapProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleMapProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -13,7 +10,9 @@ import model.user.UserEntity;
 public class CurrentSession {
     private static final CurrentSession currentSession = new CurrentSession();
     SimpleObjectProperty<CurrentUserAccount> myAccount;
-    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
+//    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
+    private ListProperty<Contact> contactsList =new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ListProperty<Contact> requestsList =new SimpleListProperty<>(FXCollections.observableArrayList());
     private MapProperty<Contact, ObservableList<Message>> chatsMapProperty =
             new SimpleMapProperty<>(FXCollections.observableHashMap());
 
@@ -27,15 +26,30 @@ public class CurrentSession {
         return currentSession;
     }
 
-    public static CurrentSession getCurrentSession() {
-        return currentSession;
+
+    public ObservableList<Contact> getRequestsList() {
+        return requestsList.get();
     }
 
+    public ListProperty<Contact> requestsListProperty() {
+        return requestsList;
+    }
+
+    public void setRequestsList(ObservableList<Contact> requestsList) {
+        this.requestsList.set(requestsList);
+    }
 
     public ObservableList<Contact> getContactsList() {
+        return contactsList.get();
+    }
+
+    public ListProperty<Contact> contactsListProperty() {
         return contactsList;
     }
 
+    public void setContactsList(ObservableList<Contact> contactsList) {
+        this.contactsList.set(contactsList);
+    }
 
     public ObservableList<Contact> getOnlineContactsList() {
         return onlineContactsList;
@@ -43,9 +57,6 @@ public class CurrentSession {
 
 
 
-    public void setContactsList(ObservableList<Contact> contactsList) {
-        this.contactsList = contactsList;
-    }
 
     public void setOnlineContactsList(ObservableList<Contact> onlineContactsList) {
         this.onlineContactsList = onlineContactsList;

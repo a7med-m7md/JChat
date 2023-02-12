@@ -18,6 +18,7 @@ import model.FriendEntity;
 
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -43,6 +44,7 @@ public class NewContactController implements Initializable {
         try {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             RMIClientServices.sendFriendRequest(currentUserAccount.getPhoneNumber(), contactsToAdd);
+            System.out.println("sending to" + contactsToAdd);
             errorContainer.getChildren().setAll(new ErrorMessageUi("Requestes sent succesfully" ,false));
             contactsToAddListView.getChildren().clear();
 
@@ -50,6 +52,8 @@ public class NewContactController implements Initializable {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

@@ -74,7 +74,7 @@ public class UserFriendDao implements UserFriendDaoInt{
 //                "receiver_mobile = ? AND friendships.status = 'PENDING'";
 
         final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships" +
-                "                WHERE receiver_mobile = mobile AND" +
+                "                WHERE sender_mobile = mobile AND" +
                 "                receiver_mobile = ? AND friendships.status = 'PENDING'";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setString(1, myMobileNum);

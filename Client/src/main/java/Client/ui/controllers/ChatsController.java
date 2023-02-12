@@ -25,15 +25,17 @@ public class ChatsController implements Initializable {
     CurrentSession currentSession = CurrentSession.getInstance();
     @FXML
     void newChat(MouseEvent event) {
-//        currentSession.addChat(new Contact("Mou"));
-//        currentSession.addChat(new Contact("so"));
-//        currentSession.addChat(new Contact("ha"));
+        MainController mainController = MainController.getInstance();
+        mainController.switchTab("/FXML/contacts.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         conversationsList.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(CurrentSession.getInstance().chatsMapProperty().keySet()), CurrentSession.getInstance().chatsMapProperty()));
         currentSession.currentContactChatProperty().bind(conversationsList.getSelectionModel().selectedItemProperty());
+        currentSession.currentContactChatProperty().addListener((observable, oldValue, newValue) -> {
+            conversationsList.getSelectionModel().select(newValue);
+        });
 
         conversationsList.setCellFactory(listView -> new ListCell<Contact>() {
             @Override

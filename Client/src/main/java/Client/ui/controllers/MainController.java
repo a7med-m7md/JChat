@@ -38,6 +38,19 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    private static MainController instance = null;
+
+    public static MainController getInstance() {
+        if (instance == null) {
+            instance = new MainController();
+        }
+        return instance;
+    }
+
+    private MainController() {
+    }
+
+
     @FXML
     private ToggleButton chatsToggle;
 
@@ -76,7 +89,7 @@ public class MainController implements Initializable {
     Map<String, Parent> tabPanes = FXCollections.observableHashMap();
 
     IntegerProperty requestCount = new SimpleIntegerProperty();
-    StringProperty notifcationLabel= new SimpleStringProperty();
+    StringProperty notifcationLabel = new SimpleStringProperty();
 
     @FXML
     void logOut(MouseEvent event) {
@@ -85,75 +98,52 @@ public class MainController implements Initializable {
 
     @FXML
     void switchAccountSettings(MouseEvent event) {
-        if (!tabPanes.containsKey("account")) {
-            try {
-                Parent accountPane = FXMLLoader.load(getClass().getResource("/FXML/account-info.fxml"));
-                tabPanes.put("account", accountPane);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        Parent accountPane = tabPanes.get("account");
-        animateTabs(accountPane);
+        switchTab("account", "/FXML/account-info.fxml");
     }
 
     @FXML
     void switchChats(MouseEvent event) {
-        if (!tabPanes.containsKey("chats")) {
-            try {
-                Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
-                tabPanes.put("chats", chatsPane);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        Parent chatsPane = tabPanes.get("chats");
-        animateTabs(chatsPane);
+        switchTab("chats", "/FXML/chats.fxml");
 
     }
 
     @FXML
     void switchContactsList(MouseEvent event) {
-//        if (!tabPanes.containsKey("contacts")) {
-        try {
-            Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
-//                tabPanes.put("contacts", contactsPane);
-            animateTabs(contactsPane);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        }
-//        Parent contactsPane = tabPanes.get("contacts");
-
+        switchTab("/FXML/contacts.fxml");
     }
 
 
     @FXML
     void switchRequests(MouseEvent event) {
-        Parent requestsPane = null;
-        try {
-            requestsPane = FXMLLoader.load(getClass().getResource("/FXML/requests.fxml"));
-            animateTabs(requestsPane);
-            CurrentSession currentSession = CurrentSession.getInstance();
-            System.out.println(requestCount.get() + "new requests");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        switchTab("/FXML/requests.fxml");
     }
 
     @FXML
     void switchGroups(MouseEvent event) {
-        if (!tabPanes.containsKey("groups")) {
+        switchTab("groups", "/FXML/groups.fxml");
+    }
+
+    public void switchTab(String groups, String name) {
+        if (!tabPanes.containsKey(groups)) {
             try {
-                Parent groupsPane = FXMLLoader.load(getClass().getResource("/FXML/groups.fxml"));
-                tabPanes.put("groups", groupsPane);
+                Parent groupsPane = FXMLLoader.load(getClass().getResource(name));
+                tabPanes.put(groups, groupsPane);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        Parent groupsPane = tabPanes.get("groups");
-        animateTabs(groupsPane);
+        Parent tabPane = tabPanes.get(groups);
+        animateTabs(tabPane);
+    }
+
+    public void switchTab(String name) {
+        try {
+            Parent groupsPane = FXMLLoader.load(getClass().getResource(name));
+            animateTabs(groupsPane);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void animateTabs(Parent tabPane) {

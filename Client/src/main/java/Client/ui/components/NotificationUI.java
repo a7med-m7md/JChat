@@ -16,7 +16,7 @@ public class NotificationUI extends HBox {
 
     protected final Label label;
 
-    public NotificationUI(String count, boolean error) {
+    public NotificationUI(int count, boolean error) {
 
         hbox = new HBox();
         label = new Label();
@@ -26,7 +26,7 @@ public class NotificationUI extends HBox {
         else
             setStyle("-fx-background-color: #10ff70; -fx-background-radius: 10px;");
 
-//        hbox.setHgrow(FA);
+
         setAlignment(Pos.CENTER);
         hbox.setMaxWidth(USE_COMPUTED_SIZE);
         hbox.setMinWidth(USE_COMPUTED_SIZE);

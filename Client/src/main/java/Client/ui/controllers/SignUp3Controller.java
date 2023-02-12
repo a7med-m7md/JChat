@@ -46,7 +46,7 @@ public class SignUp3Controller implements Initializable {
     private Image userImage;
 
     @FXML
-    void handleConfirmCreateAccount(MouseEvent event) throws DuplicateUserException {
+    void handleConfirmCreateAccount(MouseEvent event) throws DuplicateUserException, IOException {
         if (displayNameField.validate()) {
             CurrentUserAccount populatedUserData = CurrentUserAccount.getInstance();
             populatedUserData.setName(displayNameField.getText());
@@ -64,10 +64,7 @@ public class SignUp3Controller implements Initializable {
             newCreatedUser.setDateOfBirth(populatedUserData.getDateOfBirth());
             newCreatedUser.setBio(populatedUserData.getBio());
             newCreatedUser.setName(populatedUserData.getName());
-            //TODO
-            //set Avatar Image
-            //newCreatedUser.setPicture("Null");
-            //TODO
+            newCreatedUser.setPicture((populatedUserData.getPictureAsBytes()));
 
             RMIClientServices.signUp(newCreatedUser);
 

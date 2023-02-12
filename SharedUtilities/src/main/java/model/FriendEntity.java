@@ -16,11 +16,12 @@ public class FriendEntity implements Serializable {
 //    private transient SimpleObjectProperty<byte[]> userPhoto =new SimpleObjectProperty<>();
     private byte[] picture;
 
-    public FriendEntity(String mobile, String name, String bio, UserStatus status){
+    public FriendEntity(String mobile, String name, String bio, UserStatus status, byte[] picture){
         this.mobile = mobile;
         this.name = name;
         this.bio = bio;
         this.status = status;
+        this.picture = picture;
     }
 
     public FriendEntity(String name) {
@@ -62,20 +63,6 @@ public class FriendEntity implements Serializable {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
-
-//    public byte[] getUserPhoto() {
-//        return userPhoto.get();
-//
-//    }
-//
-//    public SimpleObjectProperty<byte[]> userPhotoProperty() {
-//        return userPhoto;
-//    }
-//
-//    public void setUserPhoto(byte[] userPhoto) {
-//        this.userPhoto.set(userPhoto);
-//    }
-
 
     public byte[] getPicture() {
         return picture;

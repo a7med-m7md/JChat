@@ -20,8 +20,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         System.out.println(UtilityClass.isNull());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/ServerServices.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("JChat Server!");
         stage.setScene(scene);
         stage.show();
@@ -37,7 +37,7 @@ public class Main extends Application {
         rmiConnection.startServices();
         rmiConnection.connected();
         ConnectionManager.getInstance().getConnection();
-        SocketConnection socketConnection = new SocketConnection();
+//        SocketConnection socketConnection = new SocketConnection();
     }
 
     @Override

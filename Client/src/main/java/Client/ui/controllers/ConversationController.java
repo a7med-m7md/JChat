@@ -97,7 +97,10 @@ public class ConversationController implements Initializable {
         }, currentSession.currentContactChatProperty()));
 
         currConvAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
-            String selectedStatus = currentSession.currentContactChatProperty().get().getStatus().getStatusName();
+            String selectedStatus = null;
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            if (currentContact != null)
+                selectedStatus = currentContact.getStatus().getStatusName();
             UserStatus userStatus = UserStatus.getStatus(selectedStatus);
             if (userStatus == null) {
                 return Color.WHITE;

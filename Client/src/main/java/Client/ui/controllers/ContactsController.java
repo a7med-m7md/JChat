@@ -5,6 +5,7 @@ import Client.ui.components.ContactCard;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -81,8 +82,14 @@ public class ContactsController implements Initializable {
                     if (empty || contact == null) {
                         setGraphic(null);
                     } else {
-                        ContactCard contactCard = new ContactCard(contact);
-                        setGraphic(contactCard);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                ContactCard contactCard = new ContactCard(contact);
+                                setGraphic(contactCard);
+                                //Scrolls Down Automatically when new messages added
+                            }
+                        });
                     }
                 }
             });

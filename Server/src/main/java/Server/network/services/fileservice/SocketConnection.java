@@ -2,6 +2,7 @@ package Server.network.services.fileservice;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,9 +15,9 @@ public class SocketConnection {
     Socket clientSocket;
     ServerSocket serverSocket;
     FileTransferHandled fileTransferHandled;
-
     public SocketConnection() {
         startConnection();
+
     }
 
     private void startConnection() {

@@ -4,6 +4,11 @@ import model.FileEntity;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 public class FileThreadHandled implements Runnable{
     Socket clientSocket;
@@ -48,8 +53,20 @@ public class FileThreadHandled implements Runnable{
                         byte[] fileContentBytes = new byte[fileContentLength];
                         // Read from the input stream into the fileContentBytes array.
                         dataInputStream.readFully(fileContentBytes, 0, fileContentBytes.length);
-                        //TODO -> the received file here in client
                         int fileId = 10;
+                        //TODO -> create path for the received file in client
+                        String path = "F:\\test"+"\\"+fileName+"."+getFileExtension(fileName);
+
+                        File receivedLocalFile = new File(path);
+                        receivedLocalFile.createNewFile();
+                        FileOutputStream fileOutputStream = new FileOutputStream(receivedLocalFile);
+//                        ByteBuffer byteBuffer = ByteBuffer.allocate(800000);
+                        fileOutputStream.write(fileContentBytes);
+                        fileOutputStream.flush();
+                        fileOutputStream.close();
+//                        Files.write(Path.of(path),fileContentBytes, StandardOpenOption.APPEND);
+                        System.out.println("success save local file");
+
                         FileEntity fileEntity = new FileEntity(fileId,fileName,fileContentBytes,getFileExtension(fileName));
                         System.out.println("the received file name -> "+fileEntity.getName());
                     }

@@ -11,7 +11,7 @@ public class GroupMapperImp implements GroupMapper {
         GroupDto groupDao = new GroupDto(
                 entity.getName(),
                 entity.getDescription(),
-                entity.getOwner_id());
+                entity.getOwner_mobile());
         return groupDao;
     }
 
@@ -20,7 +20,7 @@ public class GroupMapperImp implements GroupMapper {
         GroupEntity groupEntity = new GroupEntity(
                 entity.getName(),
                 entity.getDescription(),
-                entity.getOwner_id()
+                entity.getOwner_mobile()
         );
         return groupEntity;
     }

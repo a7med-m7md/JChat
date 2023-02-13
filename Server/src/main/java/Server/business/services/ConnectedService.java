@@ -9,7 +9,7 @@ import javafx.collections.ObservableMap;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class    ConnectedService extends UnicastRemoteObject implements ServerConnection {
+public class ConnectedService extends UnicastRemoteObject implements ServerConnection {
     public static ObservableMap<String, ClientServices> clients = FXCollections.observableHashMap();
 
     public ConnectedService() throws RemoteException {

@@ -15,7 +15,7 @@ import java.util.List;
 public interface ServerInt extends Remote {
     void checkUserExists(String phoneNumber) throws RemoteException, UserNotFoundException;
     UserEntity login(LoginEntity name) throws RemoteException, UserNotFoundException;
-    public void checkDuplicateUser(String phoneNumber) throws RemoteException, DuplicateUserException;
+    void checkDuplicateUser(String phoneNumber) throws RemoteException, DuplicateUserException;
     UserEntity signUp(UserDto userEntity) throws RemoteException , DuplicateUserException;
     String logout(String mobile, UserStatus status) throws RemoteException, CredentialException;
     String connect(ClientInt client) throws RemoteException;
@@ -23,5 +23,6 @@ public interface ServerInt extends Remote {
     List<FriendEntity> getAllFriends(String mobile) throws RemoteException;
     List<FriendEntity> getAllFriendsRequest(String mobile) throws RemoteException;
     GroupEntity createGroup(GroupEntity entity) throws RemoteException;
-    List<GroupEntity> getUserGroups(int userId) throws RemoteException;
+    List<GroupEntity> getUsersGroup(int userId) throws RemoteException;
+    void addGroupMembers(List<GroupMember> members) throws RemoteException;
 }

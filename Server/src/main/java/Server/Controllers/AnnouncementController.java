@@ -1,6 +1,7 @@
 package Server.Controllers;
 
 import Server.business.services.serversservices.Services;
+import Server.network.services.ChatServiceImp;
 import Server.persistance.dao.UserDao;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -12,12 +13,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.user.UserEntity;
+import services.ChatService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,6 +30,10 @@ public class AnnouncementController implements Initializable {
 
     @FXML
     private ImageView back;
+    @FXML
+    private Button sendBtn;
+    @FXML
+    private TextField msg;
     public AnnouncementController() {
 
     }
@@ -49,6 +57,16 @@ public class AnnouncementController implements Initializable {
             }
         });
 
+      sendBtn.setOnAction((event -> {
+          try {
+              ChatService chatService = new ChatServiceImp();
+              chatService.sendAnnouncementToUser(msg.getText());
+              msg.setText("");
+          } catch (RemoteException e) {
+              e.printStackTrace();
+          }
+
+      }));
 
     }
 

@@ -10,6 +10,7 @@ import Server.business.services.login.LoginService;
 import Server.business.services.login.LoginServiceImp;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.persistance.dao.GroupDao;
+import Server.persistance.dao.GroupMemberDao;
 import Server.persistance.dao.UserFriendDao;
 import exceptions.DuplicateUserException;
 import model.*;
@@ -27,7 +28,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Optional;
 
-public class RMIServerServices extends UnicastRemoteObject implements Remote, ServerInt {
+public class RMIServerServices extends UnicastRemoteObject implements ServerInt {
     ConnectedService connectedService = new ConnectedService();
 
     public RMIServerServices() throws RemoteException {
@@ -80,7 +81,7 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     @Override
     public String logout(String mobile, UserStatus status) throws RemoteException, CredentialException {
         LoginService loginService = new LoginServiceImp();
-        loginService.logOut(mobile, status);
+        loginService.logOut(mobile, UserStatus.AWAY);
         return "LogOut Successfully";
     }
 
@@ -110,17 +111,23 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     @Override
     public GroupEntity createGroup(GroupEntity entity) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        GroupMapper groupMapper = new GroupMapperImp();
-        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_id());
+        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_mobile());
         groupDao.save(group);
         return entity;
     }
 
     @Override
-    public List<GroupEntity> getUserGroups(int userId) throws RemoteException {
+    public List<GroupEntity> getUsersGroup(int userId) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        GroupMapper groupMapper = new GroupMapperImp();
-        List<GroupEntity> groupList = groupDao.getUserGroups(userId);
+        List<GroupEntity> groupList = groupDao.getUsersGroup(userId);
         return groupList;
+    }
+
+    @Override
+    public void addGroupMembers(List<GroupMember> members) throws RemoteException {
+        GroupMemberDao groupMemberDao = new GroupMemberDao();
+        members.forEach(member->{
+            groupMemberDao.save(member);
+        });
     }
 }

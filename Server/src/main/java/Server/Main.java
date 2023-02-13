@@ -35,10 +35,10 @@ public class Main extends Application {
 
     @Override
     public void init() throws Exception {
-        rmiConnection = new RMIConnectionManager();
-        rmiConnection.startServices();
-        rmiConnection.connected();
-        ConnectionManager.getInstance().getConnection();
+//        rmiConnection = new RMIConnectionManager();
+//        rmiConnection.startServices();
+//        rmiConnection.connected();
+//        ConnectionManager.getInstance().getConnection();
 
         //SocketConnection socketConnection = new SocketConnection();
     }

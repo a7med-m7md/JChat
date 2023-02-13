@@ -1,12 +1,12 @@
 package Server.business.mappers;
 
-import Server.persistance.entities.UserEntity;
-import Server.business.dtos.UserDto;
+import model.user.UserEntity;
+import model.user.UserDto;
 
 public class UseMapperImpl implements UserMapper{
     @Override
-    public Server.business.dtos.UserDto entityToDomain(UserEntity entity) {
-        Server.business.dtos.UserDto userDto = new Server.business.dtos.UserDto(
+    public UserDto entityToDomain(UserEntity entity) {
+        UserDto userDto = new UserDto(
                 entity.getMobile(),
                 entity.getName(),
                 entity.getEmail(),
@@ -15,8 +15,7 @@ public class UseMapperImpl implements UserMapper{
                 entity.getGender(),
                 entity.getCountry(),
                 entity.getDateOfBirth(),
-                entity.getBio(),
-                entity.getStatus()
+                entity.getBio()
         );
         return userDto;
     }

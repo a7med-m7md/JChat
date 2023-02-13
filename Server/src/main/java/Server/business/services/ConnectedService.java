@@ -1,18 +1,18 @@
 package Server.business.services;
 
 
-import Services.ClientServices;
-import Services.ServerConnection;
+import services.ClientServices;
+import services.ServerConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ConnectedService extends UnicastRemoteObject implements ServerConnection {
-    ObservableMap<String, ClientServices> clients = FXCollections.observableHashMap();
+public class    ConnectedService extends UnicastRemoteObject implements ServerConnection {
+    public static ObservableMap<String, ClientServices> clients = FXCollections.observableHashMap();
 
-    protected ConnectedService() throws RemoteException {
+    public ConnectedService() throws RemoteException {
     }
 
     public ObservableMap<String, ClientServices> getClients() {
@@ -21,7 +21,9 @@ public class ConnectedService extends UnicastRemoteObject implements ServerConne
 
     @Override
     public synchronized boolean connected(ClientServices client) throws RemoteException {
+        System.out.println("Register to Server:: " + client.getMobile());
         clients.put(client.getMobile(), client);
+        System.out.println("There are " + clients.size() + " users connected");
         return false;
     }
 

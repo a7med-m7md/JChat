@@ -1,8 +1,8 @@
 package Server.persistance.dao;
 
-import Server.business.model.user.UserStatus;
 import Server.persistance.ConnectionManager;
-import Server.persistance.entities.FriendEntity;
+import model.FriendEntity;
+import model.user.UserStatus;
 
 import java.rmi.RemoteException;
 import java.sql.Connection;
@@ -31,6 +31,28 @@ public class UserFriendDao implements UserFriendDaoInt{
         return 0;
     }
 
+
+    public FriendEntity searchByMobileNum(String myMobileNum) throws SQLException, RemoteException {
+        final String SQL = "SELECT * FROM jtalk.users WHERE mobile = ?";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+            preparedStatement.setString(1, myMobileNum);
+            ResultSet rs =preparedStatement.executeQuery();
+            if(rs.next()){
+                FriendEntity friend = new FriendEntity(
+                        rs.getString("mobile"),
+                        rs.getString("name"),
+                        rs.getString("bio"),
+                        UserStatus.getStatus(rs.getString("status")),
+                        rs.getBytes("picture"));
+                System.out.println(friend.getMobile());
+                return friend;
+            }
+        }
+        return null;
+    }
+
+
     // Save the sending request to database
     @Override
     public void addToFriendList(String myMobileNum, String friendMobileNum) {
@@ -47,10 +69,14 @@ public class UserFriendDao implements UserFriendDaoInt{
 
     // Get the user list of incoming requests
     @Override
-    public List<FriendEntity> getFriendRequests(String myMobileNum) throws RemoteException, SQLException {
-        final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships " +
-                "WHERE receiver_mobile = sender_mobile AND " +
-                "receiver_mobile = ? AND status = 'PENDING'";
+    public List<FriendEntity> getFriendRequests(String myMobileNum) throws RemoteException {
+//        final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships " +
+//                "WHERE receiver_mobile = sender_mobile AND " +
+//                "receiver_mobile = ? AND friendships.status = 'PENDING'";
+
+        final String SQL = "SELECT * FROM jtalk.users, jtalk.friendships" +
+                "                WHERE sender_mobile = mobile AND" +
+                "                receiver_mobile = ? AND friendships.status = 'PENDING'";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setString(1, myMobileNum);
             List<FriendEntity> requests = new ArrayList<>();
@@ -61,7 +87,10 @@ public class UserFriendDao implements UserFriendDaoInt{
                 requests.add(createUser(resultSet, friend));
             }
             return requests;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     // Helper function to create FriendEntity
@@ -70,8 +99,8 @@ public class UserFriendDao implements UserFriendDaoInt{
             friend.setName(resultSet.getString("name"));
             friend.setBio(resultSet.getString("bio"));
             friend.setMobile(resultSet.getString("mobile"));
-//            friend.setStatus(resultSet.getString("friendships.status"));
-            friend.setUserPhoto(resultSet.getBytes("picture"));
+            friend.setStatus(UserStatus.getStatus(resultSet.getString("users.status")));
+            friend.setPicture(resultSet.getBytes("picture"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,8 +125,9 @@ public class UserFriendDao implements UserFriendDaoInt{
     public void acceptRequest(String myMobileNum, String friendNum) throws RemoteException {
         final String SQL = "UPDATE friendships SET status = ? WHERE receiver_mobile = ? AND sender_mobile = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
-            preparedStatement.setString(1, myMobileNum);
-            preparedStatement.setString(2, friendNum);
+            preparedStatement.setString(1, "ACCEPTED");
+            preparedStatement.setString(2, myMobileNum);
+            preparedStatement.setString(3, friendNum);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,7 +136,7 @@ public class UserFriendDao implements UserFriendDaoInt{
 
     // Need to be checked more
     @Override
-    public List<FriendEntity> getFriendList(String myMobileNum) throws SQLException, RemoteException {
+    public List<FriendEntity> getFriendList(String myMobileNum) throws  RemoteException {
         System.out.println("FriendList:: ");
 //        final String SQL = "SELECT * FROM jtalk.users as u1, jtalk.friendships as f, jtalk.u2 " +
 //                "WHERE mobile = receiver_mobile " +
@@ -116,10 +146,13 @@ public class UserFriendDao implements UserFriendDaoInt{
 //                "WHERE friendships.receiver_mobile = '011014' AND friendships.status = 'ACCEPTED'" +
 //                "    union SELECT sender_mobile FROM jtalk.friendships WHERE user.mobile = '011014' AND friendships.status = 'ACCEPTED'" +
 //                ");";
-        final String SQL = "SELECT * FROM jtalk.users WHERE users.mobile IN (SELECT receiver_mobile FROM  jtalk.friendships " +
-                "WHERE friendships.receiver_mobile = ? AND friendships.status = 'ACCEPTED' " +
-                "    union SELECT sender_mobile FROM jtalk.friendships WHERE  friendships.status = 'ACCEPTED'" +
-                ") AND users.mobile <> ?";
+//        final String SQL = "SELECT * FROM jtalk.users WHERE users.mobile IN (SELECT receiver_mobile FROM  jtalk.friendships " +
+//                "WHERE friendships.receiver_mobile = ? AND friendships.status = 'ACCEPTED' " +
+//                "    union SELECT sender_mobile FROM jtalk.friendships WHERE  friendships.status = 'ACCEPTED'" +
+//                ") AND users.mobile <> ?";
+        final String SQL = "SELECT * FROM jtalk.users WHERE mobile IN (SELECT sender_mobile from jtalk.friendships\n" +
+                "             where receiver_mobile=? and status=\"ACCEPTED\" union select receiver_mobile from jtalk.friendships\n" +
+                "             where sender_mobile=? and  status=\"ACCEPTED\")";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             preparedStatement.setString(1, myMobileNum);
             preparedStatement.setString(2, myMobileNum);
@@ -132,6 +165,9 @@ public class UserFriendDao implements UserFriendDaoInt{
                 friends.add(createUser(resultSet, friend));
             }
             return friends;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }

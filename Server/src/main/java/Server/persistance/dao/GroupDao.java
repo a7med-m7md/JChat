@@ -1,8 +1,10 @@
 package Server.persistance.dao;
 
+
 import Server.business.model.group.Group;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
+import model.group.GroupEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,8 +19,8 @@ public class GroupDao implements CRUDOperation<Group> {
     public List<Group> findAll() {
         List<Group> groupList = new ArrayList<>();
         final String SQL = "SELECT * FROM jtalk.groups";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     int id = resultSet.getInt(1);
                     String name = resultSet.getString(2);
@@ -38,10 +40,10 @@ public class GroupDao implements CRUDOperation<Group> {
     @Override
     public Optional<Group> findById(int id) {
         final String SQL = "SELECT * FROM jtalk.groups WHERE id = ?";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setInt(1, id);
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                if (resultSet.next()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
                     int gid = resultSet.getInt(1);
                     String name = resultSet.getString(2);
                     String description = resultSet.getString(3);
@@ -60,12 +62,12 @@ public class GroupDao implements CRUDOperation<Group> {
     @Override
     public Optional<Group> update(Group entity, int id) {
         final String SQL = "UPDATE jtalk.groups SET name = ? , descrition = ? WHERE id = ?";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getDescription());
             preparedStatement.setInt(3, id);
             int n = preparedStatement.executeUpdate();
-            if(n > 0){
+            if (n > 0) {
                 return Optional.of(entity);
             }
         } catch (SQLException e) {
@@ -77,7 +79,7 @@ public class GroupDao implements CRUDOperation<Group> {
     @Override
     public Group save(Group entity) {
         final String SQL = "INSERT INTO jtalk.groups (name, description, owner_id) VALUES (?, ?, ?)";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getDescription());
             preparedStatement.setLong(3, entity.getOwner_id());
@@ -91,12 +93,39 @@ public class GroupDao implements CRUDOperation<Group> {
     @Override
     public int delete(int id) {
         final String SQL = "DELETE FROM jtalk.groups WHERE id = ?";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setInt(1, id);
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public List<GroupEntity> getUserGroups(int id) {
+        List<GroupEntity> groupList = new ArrayList<>();
+        final String SQL = "select jtalk.groups.*\n" +
+                "from jtalk.users , jtalk.group_members , jtalk.groups\n" +
+                "where jtalk.users.id = jtalk.group_members.user_id and jtalk.groups.id = jtalk.group_members.group_id\n" +
+                "and jtalk.users.id = ? \n" +
+                "group by jtalk.group_members.group_id , jtalk.groups.id;";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int gid = resultSet.getInt(1);
+                    String name = resultSet.getString(2);
+                    String description = resultSet.getString(3);
+                    Time createdAt = resultSet.getTime(4);
+                    long owner_id = resultSet.getLong(5);
+                    GroupEntity group = new GroupEntity(name, description, owner_id);
+                    groupList.add(group);
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return groupList;
     }
 }

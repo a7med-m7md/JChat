@@ -4,36 +4,73 @@ import Client.ui.components.ConversationCard;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChatsController implements Initializable {
 
+    private static ChatsController instance = null;
+
+    public static ChatsController getInstance() {
+        if (instance == null) {
+            instance = new ChatsController();
+        }
+        return instance;
+    }
+
+    private ChatsController() {
+    }
+
+
     @FXML
-    private ListView<Contact> conversationsList;
+    public ListView<Contact> conversationsList;
 
     CurrentSession currentSession = CurrentSession.getInstance();
     @FXML
     void newChat(MouseEvent event) {
-        currentSession.addChat(new Contact("Mou"));
-        currentSession.addChat(new Contact("so"));
-        currentSession.addChat(new Contact("ha"));
+        MainController mainController = MainController.getInstance();
+        mainController.switchTab("/FXML/contacts.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         conversationsList.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(CurrentSession.getInstance().chatsMapProperty().keySet()), CurrentSession.getInstance().chatsMapProperty()));
         currentSession.currentContactChatProperty().bind(conversationsList.getSelectionModel().selectedItemProperty());
+        //load conversation Pane when an item is selected
+        conversationsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() {
+            @Override
+            public void changed(ObservableValue<? extends Contact> observable, Contact oldValue, Contact newValue) {
+                // Your action here
+                Parent conversationPane = null;
+                try {
+                    conversationPane = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
+                    MainController mainController = MainController.getInstance();
+                    mainController.conversationArea.getChildren().add(conversationPane);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+
+        currentSession.currentContactChatProperty().addListener((observable, oldValue, newValue) -> {
+            conversationsList.getSelectionModel().select(newValue);
+        });
 
         conversationsList.setCellFactory(listView -> new ListCell<Contact>() {
             @Override

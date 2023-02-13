@@ -1,10 +1,11 @@
 package Client.ui.controllers;
 
 
-import Client.network.RMIConnection;
-import Client.ui.controllerutils.PhoneNumberValidator;
+import Client.network.RMIClientServices;
+import Client.ui.components.ErrorMessageUi;
+import Client.ui.models.CurrentUserAccount;
+import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.RequiredFieldValidator;
 import exceptions.UserNotFoundException;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -20,17 +21,23 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.user.UserStatus;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
     @FXML
     private StackPane parentContainer;
+
+    @FXML
+    private VBox errorMessageContainer;
 
     @FXML
     private AnchorPane signInPane;
@@ -44,41 +51,70 @@ public class LoginController implements Initializable {
     @FXML
     private Button signInBtn;
 
-
     @FXML
     void handleSignIn(MouseEvent event) {
-        if (validateFields()) {
+//        if (validateFields()) {
             try {
-                RMIConnection.logIn(phoneNumberField.getText(), passwordField.getText());
+                // Here you get a user object that contains all data
+                // of loggedin user
+                UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+                CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+                currentUserAccount.populateCurrentUserData(loggedInUser);
+                System.out.println("Connnected");
+                RMIClientServices.registerInServer();
                 //todo populate current user model with phone number
-                Scene home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
+
+
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                // your code here
+                                try {
+                                    RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        5000
+                );
+
+                MainController mainController = MainController.getInstance();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));
+                loader.setController(mainController);
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 Stage homeStage = new Stage();
-                homeStage.setScene(home);
+                homeStage.setScene(scene);
+
+
+
+//                Scene home = new Scene(FXMLLoader.load(getClass().getResource()));
+//                Node node = (Node) event.getSource();
+//                Stage stage = (Stage) node.getScene().getWindow();
+//                Stage homeStage = new Stage();
+//                homeStage.setScene(home);
+
                 homeStage.setResizable(true);
                 homeStage.show();
                 stage.close();
 
             } catch (UserNotFoundException e) {
-                System.out.println("wrong credintials");
-                //todo implement usernotfound gui error
-            } catch (IOException e) {
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password",true));
+                System.out.println("user not found");
+            } catch (RemoteException e) {
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down",true));
+                System.out.println("server down");
+            }
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            /*
-            //Transition
-            // To
-            // User
-            // Home Screen chats
-            // Here
-             */
-
-            System.out.println("Valid");
-
-        } else System.out.println("not valid fields");
+//        } else System.out.println("not valid fields");
     }
-
 
     @FXML
     void handleSignUp(MouseEvent event) {
@@ -106,30 +142,29 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+//        private boolean validateFields () {
+//            boolean validationFlag = true;
+//
+//            //Required Field Validation
+//            RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
+//            requiredPassword.setMessage("Password can't be empty");
+//            passwordField.getValidators().add(requiredPassword);
+//
+//            //Phone Number Validation
+//            PhoneNumberValidator validNumber = new PhoneNumberValidator();
+//            validNumber.setMessage(("Enter a valid phone number"));
+//            phoneNumberField.getValidators().add(validNumber);
+//
+//            //Checking Fields
+//            if (!phoneNumberField.validate()) {
+//                validationFlag = false;
+////            validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
+//            }
+//            if (!passwordField.validate()) {
+////            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
+//                validationFlag = false;
+//            }
+//            return validationFlag;
+//        }
 
-    private boolean validateFields() {
-        boolean validationFlag = true;
-
-        //Required Field Validation
-        RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
-        requiredPassword.setMessage("Password can't be empty");
-        passwordField.getValidators().add(requiredPassword);
-
-        //Phone Number Validation
-        PhoneNumberValidator validNumber = new PhoneNumberValidator();
-        validNumber.setMessage("Enter a valid phone number");
-        phoneNumberField.getValidators().add(validNumber);
-
-        //Checking Fields
-        if (!phoneNumberField.validate()) {
-            validationFlag = false;
-//            validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-        }
-        if (!passwordField.validate()) {
-//            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-            validationFlag = false;
-        }
-        return validationFlag;
     }
-
-}

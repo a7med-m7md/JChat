@@ -1,84 +1,120 @@
 package Client.ui.models;
 
-import javafx.beans.property.MapProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleMapProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import Client.ui.components.StyledChatMessage;
+import Client.ui.controllers.ChatsController;
+import Client.ui.controllers.MainController;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.image.Image;
+import model.MessageEntity;
+import model.user.UserEntity;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class CurrentSession {
     private static final CurrentSession currentSession = new CurrentSession();
-    MyAccount myAccount;
-    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
-//    private ObservableList<Group> groupsList;
-//    private ObservableMap<Contact, ObservableList<Message>> chatsMap = FXCollections.observableHashMap();
-    private MapProperty<Contact, ObservableList<Message>> chatsMapProperty =
+    //    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
+    private ListProperty<Contact> contactsList = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ListProperty<Contact> requestsList = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private MapProperty<Contact, ObservableList<MessageEntity>> chatsMapProperty =
             new SimpleMapProperty<>(FXCollections.observableHashMap());
 
-//    private ObservableMap<Group, ObservableList<Message>> groupChatsMap = FXCollections.observableHashMap();
+    private MapProperty<Contact, ObservableList<StyledChatMessage>> styledChatMapProperty =
+            new SimpleMapProperty<>(FXCollections.observableHashMap());
+
     private ObservableList<Contact> onlineContactsList;
     private final ObjectProperty<Contact> currentContactChat = new SimpleObjectProperty<>();
 
-    private CurrentSession() {}
+    private CurrentSession() {
+    }
 
-    public static CurrentSession getInstance() {return currentSession;}
-
-    public static CurrentSession getCurrentSession() {
+    public static CurrentSession getInstance() {
         return currentSession;
     }
 
-    public MyAccount getMyAccount() {
+    public ObservableMap<Contact, ObservableList<StyledChatMessage>> getStyledChatMapProperty() {
+        return styledChatMapProperty.get();
+    }
+
+    public MapProperty<Contact, ObservableList<StyledChatMessage>> styledChatMapPropertyProperty() {
+        return styledChatMapProperty;
+    }
+
+    public void setStyledChatMapProperty(ObservableMap<Contact, ObservableList<StyledChatMessage>> styledChatMapProperty) {
+        this.styledChatMapProperty.set(styledChatMapProperty);
+    }
+
+    public ObservableList<Contact> getRequestsList() {
+        return requestsList.get();
+    }
+
+    public ListProperty<Contact> requestsListProperty() {
+        return requestsList;
+    }
+    public Contact getMyAccount(CurrentUserAccount currentUserAccount) {
+        Contact myAccount = new Contact();
+        myAccount.setName(currentUserAccount.getName());
+        myAccount.setBio(currentUserAccount.getBio());
+        myAccount.setStatus(currentUserAccount.getStatus());
+        myAccount.setPicture(currentUserAccount.getImage());
         return myAccount;
     }
 
+    public void setRequestsList(ObservableList<Contact> requestsList) {
+        this.requestsList.set(requestsList);
+    }
+
     public ObservableList<Contact> getContactsList() {
+        return contactsList.get();
+    }
+
+    public ListProperty<Contact> contactsListProperty() {
         return contactsList;
     }
 
-//    public ObservableMap<Contact, ObservableList<Message>> getChatsMap() {
-//        return chatsMap;
-//    }
+    public void setContactsList(ObservableList<Contact> contactsList) {
+        this.contactsList.set(contactsList);
+    }
 
     public ObservableList<Contact> getOnlineContactsList() {
         return onlineContactsList;
     }
 
 
-    public void setMyAccount(MyAccount myAccount) {
-        this.myAccount = myAccount;
-    }
-
-    public void setContactsList(ObservableList<Contact> contactsList) {
-        this.contactsList = contactsList;
-    }
-
-//    public void setChatsMap(ObservableMap<Contact, ObservableList<Message>> chatsMap) {
-//        this.chatsMap = chatsMap;
-//    }
-
     public void setOnlineContactsList(ObservableList<Contact> onlineContactsList) {
         this.onlineContactsList = onlineContactsList;
     }
-    public void addChat(Contact contact)
-    {
-        ObservableList messages = FXCollections.observableArrayList();
-        messages.add(new Message(contact,"ass"));
-        messages.add(new Message(contact,"ass"));
-        messages.add(new Message(contact,"ass"));
-        messages.add(new Message(contact,"ass"));
-        messages.add(new Message(contact,"mou"));
-        contactsList.add(contact);
-        chatsMapProperty.put(contact, messages);
 
+    public void addChat(Contact contact) {
+        if (chatsMapProperty.keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(contact.getMobile())))
+            ChatsController.getInstance().conversationsList.getSelectionModel().select(contact);
+            else {
+            ObservableList messages = FXCollections.observableArrayList();
+            chatsMapProperty.put(contact, messages);
+        }
+        MainController mainController = MainController.getInstance();
+        mainController.switchTab("chats", "/FXML/chats.fxml");
     }
+
     public ObjectProperty<Contact> currentContactChatProperty() {
         return currentContactChat;
     }
-    public MapProperty<Contact, ObservableList<Message>> chatsMapProperty() {
+
+    public MapProperty<Contact, ObservableList<MessageEntity>> chatsMapProperty() {
         return chatsMapProperty;
+    }
+
+    public Contact getContactByPhone(String phoneNumber) {
+
+        Optional<Contact> foundContact = contactsList.stream().filter((contact)->contact.getMobile().equals(phoneNumber)).findFirst();
+        try {
+        return foundContact.get();
+        } catch (NoSuchElementException e) {
+            return getMyAccount(CurrentUserAccount.getInstance());
+        }
     }
 
 }

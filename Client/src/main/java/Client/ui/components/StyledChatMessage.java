@@ -2,9 +2,7 @@ package Client.ui.components;
 
 import Client.ui.controllerutils.ChatType;
 import Client.ui.controllerutils.MessageSource;
-import Client.ui.models.Contact;
-import Client.ui.models.CurrentSession;
-import Client.ui.models.Message;
+import Client.ui.models.*;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
@@ -15,6 +13,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import model.MessageEntity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,7 +36,7 @@ public class StyledChatMessage extends GridPane {
     protected final Label messageTimeStamp;
     private final String messageStyleSheet = "/styling/styling.css";
 
-    public StyledChatMessage(Contact contact, Message message, ChatType type) {
+    public StyledChatMessage(UserModel contact, MessageEntity message, ChatType type) {
 
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
@@ -54,9 +53,9 @@ public class StyledChatMessage extends GridPane {
         messageTimeStamp = new Label();
         MessageSource source = MessageSource.SENT;
 
-//        if (contact.getId() == CurrentSession.getInstance().getMyAccount().getId())
-//            source = MessageSource.SENT;
-//        else source = MessageSource.RECIEVED;
+        if (contact.getMobile() == CurrentSession.getInstance().getMyAccount(CurrentUserAccount.getInstance()).getMobile())
+            source = MessageSource.SENT;
+        else source = MessageSource.RECIEVED;
 
         if (source == MessageSource.SENT) {
             setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
@@ -94,14 +93,14 @@ public class StyledChatMessage extends GridPane {
         setPadding(new Insets(10.0, 10.0, 2.0, 10.0));
 
         GridPane.setColumnIndex(messageSenderName, 1);
-        messageSenderName.setText(message.getSenderName());
+        messageSenderName.setText(message.getSender());
         messageSenderName.setTextFill(javafx.scene.paint.Color.valueOf("#34434c"));
         messageSenderName.setFont(new Font("Segoe UI Light", 12.0));
         GridPane.setMargin(messageSenderName, new Insets(0.0, 10.0, 0.0, 10.0));
 
         GridPane.setRowIndex(senderAvatar, 1);
         GridPane.setValignment(senderAvatar, javafx.geometry.VPos.TOP);
-        senderAvatar.setFill(new ImagePattern(contact.getAvatar()));
+        senderAvatar.setFill(new ImagePattern(contact.getImage()));
         senderAvatar.setRadius(14.0);
         senderAvatar.setStroke(javafx.scene.paint.Color.BLACK);
         senderAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
@@ -127,7 +126,7 @@ public class StyledChatMessage extends GridPane {
         messageBody.setMaxHeight(Double.MAX_VALUE);
         messageBody.setMaxWidth(Double.MAX_VALUE);
         messageBody.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        messageBody.setText(message.getMessageBody());
+        messageBody.setText(message.getMSGBody());
         messageBody.setTextFill(javafx.scene.paint.Color.valueOf("#333333"));
         messageBody.setWrapText(true);
         messageBody.setFont(new Font("Segoe UI", 14.0));

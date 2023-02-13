@@ -37,6 +37,7 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
     public UserEntity login(LoginEntity userInfo) throws UserNotFoundException {
         UserDao user = new UserDao();
         Optional<UserEntity> userEntity = user.userLogin(userInfo);
+        user.updateUserStatus(userInfo.getMobile(), UserStatus.AVAILABLE);
         if (userEntity.isPresent()) {
             System.out.println("Logged in successfully");
 //            connectedService.connected();

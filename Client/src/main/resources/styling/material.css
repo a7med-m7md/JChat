@@ -1,0 +1,57 @@
+.material-field {
+    -material-design-color: #3f51b5;
+    -material-design-color-transparent: #3f51b51f;
+    -prompt-text-color: #757575;
+}
+.material-field:readonly {
+    -fx-prompt-text-fill: transparent;
+}
+.material-field:disabled {
+    -fx-prompt-text-fill: transparent;
+}
+
+.text-input {
+    -fx-font-family: "Arial";
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
+    -fx-highlight-text-fill: -fx-text-inner-color;
+    -fx-prompt-text-fill: #a8b9ce;
+    -fx-background-color: #eef3fa;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5px;
+    -fx-border-color: transparent transparent #44a2ff transparent;
+    -fx-border-width: 1;
+    -fx-border-insets: 0 0 1 0;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-cursor: text;
+    -fx-padding: 0.166667em 0.4em 0.333333em 0.4em;
+}
+.text-input:focused {
+    -fx-highlight-fill: -material-design-color-transparent;
+    -fx-highlight-text-fill: -material-design-color;
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-background-color: #eef3fa;
+    -fx-border-color: transparent transparent #1e90ff transparent;
+    -fx-border-width: 2;
+    -fx-border-insets: 0 0 2 -1;
+    -fx-prompt-text-fill: transparent;
+    -fx-padding: 2 0 4 0;
+    -fx-padding: 0.166667em 0.4em 0.333333em 0.4em;
+}
+.text-input:readonly {
+    -fx-background-color: transparent;
+    -fx-text-fill: derive(-fx-text-base-color, 35%);
+    -fx-border-style: segments(2, 3)  line-cap butt;
+    -fx-border-color: transparent transparent #616161 transparent;
+}
+.text-input:focused:readonly {
+    -fx-text-fill: derive(-fx-text-base-color, 35%);
+    -fx-border-style: segments(2, 3)  line-cap butt;
+    -fx-border-color: transparent transparent -material-design-color transparent;
+}
+.text-input:disabled {
+    -fx-opacity: 0.46;
+    -fx-border-style: segments(2, 3)  line-cap butt;
+    -fx-border-color: transparent transparent black transparent;
+}

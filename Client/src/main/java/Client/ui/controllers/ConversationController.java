@@ -21,6 +21,7 @@ import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -54,17 +55,30 @@ public class ConversationController implements Initializable {
     Contact currentContactChat;
 
     @FXML
+    void attachFile(MouseEvent event) {
+
+    }
+
+
+    @FXML
     void sendMessage(MouseEvent event) throws RemoteException {
 
+        sendNewMessage();
+    }
+
+    private void sendNewMessage() {
         try {
             //TODO RMI Invocation Here
             CurrentSession currentSession = CurrentSession.getInstance();
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
-            if (currentSession.currentContactChatProperty().get() != null) {
-                MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
-                currentSession.chatsMapProperty().get(currentContactChat).add(newMessage);
-                RMIClientServices.chatMessaging(newMessage);
+            if (!messageTextField.getText().equals("")) {
+                if (currentSession.currentContactChatProperty().get() != null) {
+                    MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+                    currentSession.chatsMapProperty().get(currentContactChat).add(newMessage);
+                    RMIClientServices.chatMessaging(newMessage);
+                }
             }
+            messageTextField.clear();
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -136,8 +150,14 @@ public class ConversationController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                messagesListView.scrollTo(currentContactMessageList.size()-1);
+                messagesListView.scrollTo(currentContactMessageList.size() - 1);
                 //Scrolls Down Automatically when new messages added
+            }
+        });
+
+        messageTextField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                sendNewMessage();
             }
         });
 

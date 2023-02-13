@@ -157,8 +157,14 @@ public class ConversationController implements Initializable {
 
         messageTextField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                sendNewMessage();
-            }
+                sendNewMessage();}
+//             else if (event.isShiftDown() && event.getCode() == KeyCode.ENTER)
+//                int caretPosition = textArea.getCaretPosition();
+//            textArea.setText(textArea.getText().substring(0, caretPosition) +
+//                    "\n" +
+//                    textArea.getText().substring(caretPosition));
+//            textArea.positionCaret(caretPosition + 1);
+
         });
 
     }

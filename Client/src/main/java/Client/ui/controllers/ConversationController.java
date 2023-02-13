@@ -9,6 +9,7 @@ import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import Client.ui.models.Message;
+import javafx.application.Platform;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -84,59 +85,65 @@ public class ConversationController implements Initializable {
 
         messagesListView.setItems(currentContactMessageList);
         messagesListView.setCellFactory(listView -> new ListCell<MessageEntity>() {
-            @Override
-            protected void updateItem(MessageEntity message, boolean empty) {
-                super.updateItem(message, empty);
-                if (empty || message == null) {
-                    setGraphic(null);
-                } else {
-                    StyledChatMessage styledChatMessage = new StyledChatMessage(currentSession.getContactByPhone(message.getSender()), message, ChatType.SINGLE);
-                    setGraphic(styledChatMessage);
-                }
-            }
-        });
+                    @Override
+                    protected void updateItem(MessageEntity message, boolean empty) {
+                        super.updateItem(message, empty);
+                        if (empty || message == null) {
+                            setGraphic(null);
+                        } else {
+                            StyledChatMessage styledChatMessage = new StyledChatMessage(currentSession.getContactByPhone(message.getSender()), message, ChatType.SINGLE);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setGraphic(styledChatMessage);
+
+                                }
+                            });
+                        }
+                                }
+                            });
 
 
-        //binding the header contents
-        //chat contact's name
-        //chat contact's avatar
-        currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
-            Contact currentContact = currentSession.currentContactChatProperty().get();
-            return currentContact == null ? "" : currentContact.getName();
-        }, currentSession.currentContactChatProperty()));
+                            //binding the header contents
+                            //chat contact's name
+                            //chat contact's avatar
+                            currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
+                                Contact currentContact = currentSession.currentContactChatProperty().get();
+                                return currentContact == null ? "" : currentContact.getName();
+                            }, currentSession.currentContactChatProperty()));
 
-        currConvStatus.textProperty().bind(Bindings.createStringBinding(() -> {
-            Contact currentContact = currentSession.currentContactChatProperty().get();
-            return currentContact == null ? "" : currentContact.getStatus().getStatusName();
-        }, currentSession.currentContactChatProperty()));
+                            currConvStatus.textProperty().bind(Bindings.createStringBinding(() -> {
+                                Contact currentContact = currentSession.currentContactChatProperty().get();
+                                return currentContact == null ? "" : currentContact.getStatus().getStatusName();
+                            }, currentSession.currentContactChatProperty()));
 
-        currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
-            Contact currentContact = currentSession.currentContactChatProperty().get();
-            return currentContact == null ? null : new ImagePattern(currentContact.getImage());
-        }, currentSession.currentContactChatProperty()));
+                            currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
+                                Contact currentContact = currentSession.currentContactChatProperty().get();
+                                return currentContact == null ? null : new ImagePattern(currentContact.getImage());
+                            }, currentSession.currentContactChatProperty()));
 
-        currConvAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
-            String selectedStatus = null;
-            Contact currentContact = currentSession.currentContactChatProperty().get();
-            if (currentContact != null)
-                selectedStatus = currentContact.getStatus().getStatusName();
-            UserStatus userStatus = UserStatus.getStatus(selectedStatus);
-            if (userStatus == null) {
-                return Color.WHITE;
-            }
-            return userStatus.getColor();
-        }, currConvStatus.textProperty()));
+                            currConvAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
+                                String selectedStatus = null;
+                                Contact currentContact = currentSession.currentContactChatProperty().get();
+                                if (currentContact != null)
+                                    selectedStatus = currentContact.getStatus().getStatusName();
+                                UserStatus userStatus = UserStatus.getStatus(selectedStatus);
+                                if (userStatus == null) {
+                                    return Color.WHITE;
+                                }
+                                return userStatus.getColor();
+                            }, currConvStatus.textProperty()));
 
-        //Scrolls Down Automatically when new messages added
-        messagesListView.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                conversationPane.setVvalue((double) newValue);
-            }
-        });
-    }
+                            //Scrolls Down Automatically when new messages added
+                            messagesListView.heightProperty().addListener(new ChangeListener<Number>() {
+                                @Override
+                                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                                    conversationPane.setVvalue((double) newValue);
+                                }
+                            });
+                        }
 
-}
+                    }
 
 
 //        //listner for selected contact

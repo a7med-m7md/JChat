@@ -2,9 +2,7 @@ package Client.ui.components;
 
 import Client.ui.controllerutils.ChatType;
 import Client.ui.controllerutils.MessageSource;
-import Client.ui.models.Contact;
-import Client.ui.models.Message;
-import Client.ui.models.UserModel;
+import Client.ui.models.*;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
@@ -55,9 +53,9 @@ public class StyledChatMessage extends GridPane {
         messageTimeStamp = new Label();
         MessageSource source = MessageSource.SENT;
 
-//        if (contact.getId() == CurrentSession.getInstance().getMyAccount().getId())
-//            source = MessageSource.SENT;
-//        else source = MessageSource.RECIEVED;
+        if (contact.getMobile() == CurrentSession.getInstance().getMyAccount(CurrentUserAccount.getInstance()).getMobile())
+            source = MessageSource.SENT;
+        else source = MessageSource.RECIEVED;
 
         if (source == MessageSource.SENT) {
             setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);

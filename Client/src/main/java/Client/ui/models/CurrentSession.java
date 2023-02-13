@@ -1,5 +1,6 @@
 package Client.ui.models;
 
+import Client.ui.components.StyledChatMessage;
 import Client.ui.controllers.ChatsController;
 import Client.ui.controllers.MainController;
 import javafx.beans.property.*;
@@ -21,6 +22,9 @@ public class CurrentSession {
     private MapProperty<Contact, ObservableList<MessageEntity>> chatsMapProperty =
             new SimpleMapProperty<>(FXCollections.observableHashMap());
 
+    private MapProperty<Contact, ObservableList<StyledChatMessage>> styledChatMapProperty =
+            new SimpleMapProperty<>(FXCollections.observableHashMap());
+
     private ObservableList<Contact> onlineContactsList;
     private final ObjectProperty<Contact> currentContactChat = new SimpleObjectProperty<>();
 
@@ -31,6 +35,17 @@ public class CurrentSession {
         return currentSession;
     }
 
+    public ObservableMap<Contact, ObservableList<StyledChatMessage>> getStyledChatMapProperty() {
+        return styledChatMapProperty.get();
+    }
+
+    public MapProperty<Contact, ObservableList<StyledChatMessage>> styledChatMapPropertyProperty() {
+        return styledChatMapProperty;
+    }
+
+    public void setStyledChatMapProperty(ObservableMap<Contact, ObservableList<StyledChatMessage>> styledChatMapProperty) {
+        this.styledChatMapProperty.set(styledChatMapProperty);
+    }
 
     public ObservableList<Contact> getRequestsList() {
         return requestsList.get();

@@ -13,4 +13,6 @@ module com.java.iti {
     exports Client.ui.controllerutils;
 //    exports Client.network.interfaces;
     opens Client.ui.controllers to javafx.fxml;
+    exports Client.Hashing;
+    opens Client.Hashing to javafx.fxml;
 }

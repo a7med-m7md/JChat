@@ -1,8 +1,6 @@
 package Client;
 
 
-//import Client.network.RMIConnection;
-import Models.UtilityClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,9 +16,6 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FXML/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 //        RMIConnection.connect();
-        UtilityClass.isNull();
-        UtilityClass u = new UtilityClass();
-        System.out.println(u.isNull());
         System.out.println();
         stage.setTitle("JChat");
         stage.setResizable(false);

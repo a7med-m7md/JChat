@@ -14,6 +14,20 @@
         <module>SharedUtilities</module>
     </modules>
 
+    <dependencies>
+
+    <dependency>
+        <groupId>com.google</groupId>
+        <artifactId>Ab</artifactId>
+        <version>0.0.4.3</version>
+        <scope>system</scope>
+        <systemPath>
+            Server/src/main/java/program-ab-0.0.4.3/lib/Ab.jar
+        </systemPath>
+    </dependency>
+
+    </dependencies>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

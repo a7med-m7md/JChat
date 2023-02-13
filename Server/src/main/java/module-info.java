@@ -6,7 +6,6 @@ module Server {
     requires java.naming;
     requires java.rmi;
     requires SharedUtilities;
-    requires Ab;
 //    requires Client;
 
     opens Server to javafx.fxml;

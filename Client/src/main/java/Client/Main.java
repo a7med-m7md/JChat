@@ -1,21 +1,12 @@
 package Client;
 
 
-//import Client.network.RMIConnection;
-import Client.network.FileService;
-import javafx.application.Platform;
-import javafx.stage.FileChooser;
-import model.UtilityClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.rmi.Naming;
-import java.util.Scanner;
-
 
 public class Main extends Application {
     @Override

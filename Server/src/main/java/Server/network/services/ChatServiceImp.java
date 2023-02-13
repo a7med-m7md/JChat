@@ -89,4 +89,15 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
             }
         });
     }
+
+    @Override
+    public void sendAnnouncementToUser(String msg) throws RemoteException {
+        ConnectedService.clients.values().forEach(client->{
+            try {
+                client.receiveAnnouncement(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

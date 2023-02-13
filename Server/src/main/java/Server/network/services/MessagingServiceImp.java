@@ -17,4 +17,5 @@ public class MessagingServiceImp extends UnicastRemoteObject implements Messagin
         ClientServices clientServices = ConnectedService.clients.get(msg.getReceiver());
         clientServices.receiveMessage(msg);
     }
+
 }

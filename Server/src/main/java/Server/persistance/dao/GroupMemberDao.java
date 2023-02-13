@@ -1,6 +1,6 @@
 package Server.persistance.dao;
 
-import Server.business.model.group.GroupMember;
+import model.GroupMember;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
 
@@ -20,16 +20,14 @@ public class GroupMemberDao implements CRUDOperation<GroupMember> {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
             try(ResultSet resultSet = preparedStatement.executeQuery()){
                 while (resultSet.next()) {
-                    long user_id = resultSet.getLong(1);
+                    String user_mobile = resultSet.getString(1);
                     long group_id = resultSet.getLong(2);
-                    GroupMember groupMember = new GroupMember(user_id, group_id);
+                    GroupMember groupMember = new GroupMember(user_mobile, group_id);
                     groupMembersList.add(groupMember);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return groupMembersList;
     }
@@ -41,16 +39,14 @@ public class GroupMemberDao implements CRUDOperation<GroupMember> {
             preparedStatement.setInt(1, id);
             try(ResultSet resultSet = preparedStatement.executeQuery()){
                 if (resultSet.next()){
-                    long user_id = resultSet.getLong(1);
+                    String user_mobile = resultSet.getString(1);
                     long group_id = resultSet.getLong(2);
-                    GroupMember groupMember = new GroupMember(user_id, group_id);
+                    GroupMember groupMember = new GroupMember(user_mobile, group_id);
                     return Optional.of(groupMember);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return Optional.empty();
     }
@@ -76,15 +72,13 @@ public class GroupMemberDao implements CRUDOperation<GroupMember> {
 
     @Override
     public GroupMember save(GroupMember entity) {
-        final String SQL = "INSERT INTO jtalk.group_members (user_id, group_id) VALUES (?, ?)";
+        final String SQL = "INSERT INTO jtalk.group_members (user_mobile, group_id) VALUES (?, ?)";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
-            preparedStatement.setLong(1, entity.getUserId());
+            preparedStatement.setString(1, entity.getUserMobile());
             preparedStatement.setLong(2, entity.getGroupId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return entity;
     }
@@ -97,8 +91,6 @@ public class GroupMemberDao implements CRUDOperation<GroupMember> {
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            connectionManager.close();
         }
         return 0;
     }

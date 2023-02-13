@@ -61,7 +61,7 @@ public class CurrentUserCardController implements Initializable {
             String selectedStatus = userStatus.getValue();
             UserStatus userStatus = UserStatus.getStatus(selectedStatus);
             if (userStatus == null) {
-                return Color.BLACK;
+                return Color.WHITE;
             }
             return userStatus.getColor();
         }, userStatus.valueProperty()));

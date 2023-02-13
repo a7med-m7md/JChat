@@ -1,10 +1,12 @@
 package Client.network.services;
 
+import Client.ui.controllers.ConversationController;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import model.FriendEntity;
 import model.MessageEntity;
 import model.user.UserStatus;
@@ -35,6 +37,9 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveMessage(MessageEntity msg) throws RemoteException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/conversation.fxml"));
+        ConversationController controller = loader.getController();
+
         CurrentSession currentSession = CurrentSession.getInstance();
         Contact senderContact = currentSession.getContactByPhone(msg.getSender());
         ObservableList<MessageEntity> firstTimeChat = FXCollections.observableArrayList();
@@ -45,6 +50,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
             currentSession.chatsMapProperty().put(senderContact, firstTimeChat);
         }
+
         System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
     }
 

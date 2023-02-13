@@ -4,7 +4,6 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -69,9 +68,8 @@
          <children>
             <ScrollPane fx:id="conversationPane" fitToWidth="true" styleClass="Content-Tab" stylesheets="@../styling/main.css">
                <content>
-                  <ListView fx:id="conversationContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-               </content>
-            </ScrollPane>
+                  <VBox fx:id="conversationContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+               </content></ScrollPane>
          </children>
       </StackPane>
       <HBox maxHeight="1.7976931348623157E308" prefWidth="200.0" spacing="7.0" styleClass="bottom-right" stylesheets="@../styling/main.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">

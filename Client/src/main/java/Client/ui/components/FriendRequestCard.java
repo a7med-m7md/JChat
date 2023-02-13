@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
-import model.FriendEntity;
 
 import java.rmi.RemoteException;
 
@@ -167,7 +166,7 @@ public class FriendRequestCard extends GridPane {
     CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
     protected void acceptRequest(javafx.scene.input.MouseEvent mouseEvent) {
         try {
-            RMIClientServices.acceptFriendRequest(currentUserAccount.getPhoneNumber(),currentFriendRequest.getMobile());
+            RMIClientServices.acceptFriendRequest(currentUserAccount.getMobile(),currentFriendRequest.getMobile());
             button.setText("Request Accepted");
             getChildren().remove(button0);
         } catch (RemoteException e) {
@@ -177,7 +176,7 @@ public class FriendRequestCard extends GridPane {
 
     protected void rejectRequest(javafx.scene.input.MouseEvent mouseEvent) {
         try {
-            RMIClientServices.rejectFriendRequest(currentUserAccount.getPhoneNumber(),currentFriendRequest.getMobile());
+            RMIClientServices.rejectFriendRequest(currentUserAccount.getMobile(),currentFriendRequest.getMobile());
             button0.setText("Request deleted");
             getChildren().remove(button);
         } catch (RemoteException e) {

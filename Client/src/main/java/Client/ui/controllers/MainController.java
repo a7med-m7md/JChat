@@ -27,6 +27,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.converter.NumberStringConverter;
 import model.FriendEntity;
@@ -180,9 +181,17 @@ public class MainController implements Initializable {
 
 
             //TODO
-            Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
+
+            ChatsController chatsController  = ChatsController.getInstance();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/chats.fxml"));
+            loader.setController(chatsController);
+            Parent chatsPane = loader.load();
+
+//            Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
             Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
             Parent currentUser = FXMLLoader.load(getClass().getResource("/FXML/current-user-card.fxml"));
+            tabPanes.put("chats", chatsPane);
+
             tabContentArea.getChildren().add(chatsPane);
             conversationArea.getChildren().add(conversations);
             currentUserPane.getChildren().add(currentUser);

@@ -8,6 +8,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
@@ -167,14 +168,20 @@ public class MainController implements Initializable {
         sideBar.toFront();
         // opening chats tab on startup
         try {
-            //TODO Add Notification for friend reuests
-            CurrentSession currentSession = CurrentSession.getInstance();
-            requestCount.bind(Bindings.size(currentSession.requestsListProperty()));
-            System.out.println(requestCount.get());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    //Scrolls Down Automatically when new messages added/
+                    // /TODO Add Notification for friend reuests
+                    CurrentSession currentSession = CurrentSession.getInstance();
+                    requestCount.bind(Bindings.size(currentSession.requestsListProperty()));
+                    System.out.println(requestCount.get());
 
-            BooleanBinding newNotification = requestCount.greaterThan(0);
-            requestsNotification.visibleProperty().bind(newNotification);
-            requestsNotification.textProperty().bind(requestCount.asString());
+                    BooleanBinding newNotification = requestCount.greaterThan(0);
+                    requestsNotification.visibleProperty().bind(newNotification);
+                    requestsNotification.textProperty().bind(requestCount.asString());
+                }
+            });
 
 //            requestsNotification.textProperty().bind(Bindings.convert(currentSession.requestsListProperty().sizeProperty()));
 //            notifcationLabel.bind(Bindings.convert(requestCount));

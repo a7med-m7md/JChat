@@ -45,9 +45,6 @@ public class ConversationController implements Initializable {
     private Circle currConvAvatar;
 
     @FXML
-    private ScrollPane conversationPane;
-
-    @FXML
     private ListView<MessageEntity> messagesListView;
 
     @FXML
@@ -85,88 +82,65 @@ public class ConversationController implements Initializable {
 
         messagesListView.setItems(currentContactMessageList);
         messagesListView.setCellFactory(listView -> new ListCell<MessageEntity>() {
-                    @Override
-                    protected void updateItem(MessageEntity message, boolean empty) {
-                        super.updateItem(message, empty);
-                        if (empty || message == null) {
-                            setGraphic(null);
-                        } else {
-                            StyledChatMessage styledChatMessage = new StyledChatMessage(currentSession.getContactByPhone(message.getSender()), message, ChatType.SINGLE);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setGraphic(styledChatMessage);
-
-                                }
-                            });
+            @Override
+            protected void updateItem(MessageEntity message, boolean empty) {
+                super.updateItem(message, empty);
+                if (empty || message == null) {
+                    setGraphic(null);
+                } else {
+                    StyledChatMessage styledChatMessage = new StyledChatMessage(currentSession.getContactByPhone(message.getSender()), message, ChatType.SINGLE);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setGraphic(styledChatMessage);
                         }
-                                }
-                            });
+                    });
+                }
+            }
+        });
 
 
-                            //binding the header contents
-                            //chat contact's name
-                            //chat contact's avatar
-                            currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
-                                Contact currentContact = currentSession.currentContactChatProperty().get();
-                                return currentContact == null ? "" : currentContact.getName();
-                            }, currentSession.currentContactChatProperty()));
+        //binding the header contents
+        //chat contact's name
+        //chat contact's avatar
+        currConvContact.textProperty().bind(Bindings.createStringBinding(() -> {
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            return currentContact == null ? "" : currentContact.getName();
+        }, currentSession.currentContactChatProperty()));
 
-                            currConvStatus.textProperty().bind(Bindings.createStringBinding(() -> {
-                                Contact currentContact = currentSession.currentContactChatProperty().get();
-                                return currentContact == null ? "" : currentContact.getStatus().getStatusName();
-                            }, currentSession.currentContactChatProperty()));
+        currConvStatus.textProperty().bind(Bindings.createStringBinding(() -> {
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            return currentContact == null ? "" : currentContact.getStatus().getStatusName();
+        }, currentSession.currentContactChatProperty()));
 
-                            currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
-                                Contact currentContact = currentSession.currentContactChatProperty().get();
-                                return currentContact == null ? null : new ImagePattern(currentContact.getImage());
-                            }, currentSession.currentContactChatProperty()));
+        currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            return currentContact == null ? null : new ImagePattern(currentContact.getImage());
+        }, currentSession.currentContactChatProperty()));
 
-                            currConvAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
-                                String selectedStatus = null;
-                                Contact currentContact = currentSession.currentContactChatProperty().get();
-                                if (currentContact != null)
-                                    selectedStatus = currentContact.getStatus().getStatusName();
-                                UserStatus userStatus = UserStatus.getStatus(selectedStatus);
-                                if (userStatus == null) {
-                                    return Color.WHITE;
-                                }
-                                return userStatus.getColor();
-                            }, currConvStatus.textProperty()));
-
-                            //Scrolls Down Automatically when new messages added
-                            messagesListView.heightProperty().addListener(new ChangeListener<Number>() {
-                                @Override
-                                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                                    conversationPane.setVvalue((double) newValue);
-                                }
-                            });
-                        }
-
-                    }
+        currConvAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
+            String selectedStatus = null;
+            Contact currentContact = currentSession.currentContactChatProperty().get();
+            if (currentContact != null)
+                selectedStatus = currentContact.getStatus().getStatusName();
+            UserStatus userStatus = UserStatus.getStatus(selectedStatus);
+            if (userStatus == null) {
+                return Color.WHITE;
+            }
+            return userStatus.getColor();
+        }, currConvStatus.textProperty()));
 
 
-//        //listner for selected contact
-//        //retrieves list of messages of the selected contact
-//        //binds the messagesContainerVBox to the current contact messageslist
-//        currentSession.currentContactChatProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                ObservableList<MessageEntity> messages = currentSession.chatsMapProperty().get().get(newValue);
-//                if (messages != null) {
-////                    displayMessages(messages);
-//
-//                }
-//            }
-//        });
+        //TODO SCROLL BUG
+        messagesListView.scrollTo(messagesListView.getItems().size() - 1);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                messagesListView.scrollTo(currentContactMessageList.size()-1);
+                //Scrolls Down Automatically when new messages added
+            }
+        });
 
+    }
 
-//        //binding the contents of contact's messages list to the messagesContainer VBox
-//        currentSession.chatsMapProperty().addListener((observable, oldValue, newValue) -> {
-//            Contact currentContact = currentSession.currentContactChatProperty().get();
-//            if (currentContact != null) {
-//                ObservableList<MessageEntity> messages = newValue.get(currentContact);
-//                if (messages != null) {
-//                    messagesListView.setItems(messages);
-//                }
-//            }
-//        });
+}

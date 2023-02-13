@@ -1,15 +1,13 @@
 package Client.ui.components;
 
 import Client.ui.models.Contact;
+import Client.ui.models.CurrentSession;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -58,7 +56,7 @@ public class ConversationCard extends GridPane {
         columnConstraints.setMinWidth(USE_PREF_SIZE);
 
         columnConstraints0.setHalignment(javafx.geometry.HPos.LEFT);
-        columnConstraints0.setHgrow(javafx.scene.layout.Priority.ALWAYS);
+        columnConstraints0.setHgrow(Priority.SOMETIMES);
         columnConstraints0.setMaxWidth(Double.MAX_VALUE);
 
         columnConstraints1.setFillWidth(false);
@@ -90,7 +88,7 @@ public class ConversationCard extends GridPane {
 //            messageTimeStamp.setText(messages.get(messages.size() - 1).getTime().format());
         messageTimeStamp.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         messageTimeStamp.setTextFill(javafx.scene.paint.Color.valueOf("#697579"));
-        messageTimeStamp.setWrapText(true);
+        messageTimeStamp.setWrapText(false);
 
         GridPane.setColumnIndex(vBox, 1);
         GridPane.setHalignment(vBox, javafx.geometry.HPos.CENTER);
@@ -105,7 +103,7 @@ public class ConversationCard extends GridPane {
         contactName.setText(contact.getName());
         contactName.setTextAlignment(javafx.scene.text.TextAlignment.LEFT);
         contactName.setTextFill(javafx.scene.paint.Color.valueOf("#5a6777"));
-        contactName.setWrapText(true);
+        contactName.setWrapText(false);
         contactName.setFont(new Font("Segoe UI", 15.0));
 
         VBox.setVgrow(latestMessage, javafx.scene.layout.Priority.NEVER);
@@ -141,6 +139,17 @@ public class ConversationCard extends GridPane {
             }
             return userStatus.getColor();
         }, contact.statusProperty()));
+
+        ObservableList<MessageEntity> chatlist = CurrentSession.getInstance().chatsMapProperty().get(contact);
+        latestMessage.textProperty().bind(Bindings.createObjectBinding(() -> {
+            try {
+                String lastMessage = chatlist.get(chatlist.size() - 1).getMSGBody();
+                return lastMessage;
+            } catch (IndexOutOfBoundsException e) {
+                return "no messages yet";
+            }
+        }, CurrentSession.getInstance().chatsMapProperty().get(contact)));
+
 
     }
 }

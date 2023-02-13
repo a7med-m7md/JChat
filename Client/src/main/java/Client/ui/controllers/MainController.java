@@ -8,6 +8,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
@@ -77,7 +78,7 @@ public class MainController implements Initializable {
     private StackPane currentUserPane;
 
     @FXML
-    private StackPane conversationArea;
+    public StackPane conversationArea;
 
     @FXML
     private StackPane sideBar;
@@ -167,14 +168,20 @@ public class MainController implements Initializable {
         sideBar.toFront();
         // opening chats tab on startup
         try {
-            //TODO Add Notification for friend reuests
-            CurrentSession currentSession = CurrentSession.getInstance();
-            requestCount.bind(Bindings.size(currentSession.requestsListProperty()));
-            System.out.println(requestCount.get());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    //Scrolls Down Automatically when new messages added/
+                    // /TODO Add Notification for friend reuests
+                    CurrentSession currentSession = CurrentSession.getInstance();
+                    requestCount.bind(Bindings.size(currentSession.requestsListProperty()));
+                    System.out.println(requestCount.get());
 
-            BooleanBinding newNotification = requestCount.greaterThan(0);
-            requestsNotification.visibleProperty().bind(newNotification);
-            requestsNotification.textProperty().bind(requestCount.asString());
+                    BooleanBinding newNotification = requestCount.greaterThan(0);
+                    requestsNotification.visibleProperty().bind(newNotification);
+                    requestsNotification.textProperty().bind(requestCount.asString());
+                }
+            });
 
 //            requestsNotification.textProperty().bind(Bindings.convert(currentSession.requestsListProperty().sizeProperty()));
 //            notifcationLabel.bind(Bindings.convert(requestCount));
@@ -188,12 +195,13 @@ public class MainController implements Initializable {
             Parent chatsPane = loader.load();
 
 //            Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
-            Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
+//            Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
             Parent currentUser = FXMLLoader.load(getClass().getResource("/FXML/current-user-card.fxml"));
             tabPanes.put("chats", chatsPane);
 
-            tabContentArea.getChildren().add(chatsPane);
-            conversationArea.getChildren().add(conversations);
+            Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
+            tabContentArea.getChildren().add(contactsPane);
+//            conversationArea.getChildren().add(conversations);
             currentUserPane.getChildren().add(currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);

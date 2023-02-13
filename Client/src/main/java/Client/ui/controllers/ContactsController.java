@@ -69,8 +69,8 @@ public class ContactsController implements Initializable {
                 System.out.println("Selected item: " + contactsListView.getSelectionModel().getSelectedItem());
                 Contact currentContact = contactsList.stream()
                         .filter((contact -> contact.getMobile().equals(contactsListView.getSelectionModel().getSelectedItem().getMobile()))).findFirst().get();
-                chatsController.conversationsList.getSelectionModel().select(currentContact);
                 currentSession.addChat(currentContact);
+                chatsController.conversationsList.getSelectionModel().select(currentContact);
             });
 
             contactsListView.setCellFactory(listView -> new ListCell<Contact>() {

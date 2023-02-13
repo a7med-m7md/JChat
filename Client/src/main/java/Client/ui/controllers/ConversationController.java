@@ -65,7 +65,7 @@ public class ConversationController implements Initializable {
                 RMIClientServices.chatMessaging(newMessage);
             currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()).add(newMessage);
             StyledChatMessage newStyledMessage = new StyledChatMessage(currentUserAccount, newMessage, ChatType.SINGLE);
-//            conversationContainer.getChildren().add(newStyledMessage);
+            conversationContainer.getChildren().add(newStyledMessage);
             currentSession.styledChatMapPropertyProperty().get(currentSession.currentContactChatProperty().get()).add(newStyledMessage);
             System.out.println(currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()));
             System.out.println(conversationContainer.getChildren());

@@ -61,13 +61,15 @@ public class ContactsController implements Initializable {
 
 //          construction of contact card to display in the list
             contactsListView.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(currentSession.contactsListProperty())));
-            currentSession.currentContactChatProperty().bind(contactsListView.getSelectionModel().selectedItemProperty());
-
+            ChatsController chatsController = ChatsController.getInstance();
             contactsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+            //binding the selected item in the contactlist to a new chat on the chats list and open conversation
             contactsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 System.out.println("Selected item: " + contactsListView.getSelectionModel().getSelectedItem());
                 Contact currentContact = contactsList.stream()
                         .filter((contact -> contact.getMobile().equals(contactsListView.getSelectionModel().getSelectedItem().getMobile()))).findFirst().get();
+                chatsController.conversationsList.getSelectionModel().select(currentContact);
                 currentSession.addChat(currentContact);
             });
 

@@ -3,11 +3,8 @@ import Server.business.services.ConnectedService;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.network.services.ChatServiceImp;
 import Server.network.services.MessagingServiceImp;
-import model.ClientInt;
-import model.LoginEntity;
-import model.Message;
 import Server.network.services.RMIServerServices;
-import model.ServerInt;
+import services.ServerInt;
 import services.ChatService;
 import services.MessagingService;
 import services.RegisterService;
@@ -16,9 +13,6 @@ import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class RMIConnectionManager {
     private static RMIConnectionManager instance = new RMIConnectionManager();

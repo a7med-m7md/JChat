@@ -1,7 +1,5 @@
 package Server.network.services;
 
-import Server.business.mappers.GroupMapper;
-import Server.business.mappers.GroupMapperImp;
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
 import Server.business.model.group.Group;
@@ -20,9 +18,10 @@ import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
 import model.user.UserStatus;
+import services.ClientInt;
+import services.ServerInt;
 
 import javax.security.auth.login.CredentialException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -79,9 +78,9 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
 
 
     @Override
-    public String logout(String mobile, UserStatus status) throws RemoteException, CredentialException {
+    public String logout(String mobile) throws RemoteException, CredentialException {
         LoginService loginService = new LoginServiceImp();
-        loginService.logOut(mobile, UserStatus.AWAY);
+        loginService.logOut(mobile);
         return "LogOut Successfully";
     }
 

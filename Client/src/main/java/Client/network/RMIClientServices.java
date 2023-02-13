@@ -12,6 +12,7 @@ import model.user.UserEntity;
 import model.user.UserStatus;
 import services.*;
 
+import javax.security.auth.login.CredentialException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -241,8 +242,15 @@ public class RMIClientServices {
         }
     }
 
-    public static void logOut(){
-
+    public static void logOut(String mobile) throws RemoteException{
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            user.logout(mobile);
+        } catch (NotBoundException | CredentialException e) {
+            e.printStackTrace();
+        }
     }
 
 }

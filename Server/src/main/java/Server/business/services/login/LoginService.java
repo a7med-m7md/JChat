@@ -8,5 +8,5 @@ import javax.security.auth.login.CredentialException;
 public interface LoginService {
     public boolean logInto(LoginEntity dto) throws CredentialException;
 
-    public void logOut(String mobile, UserStatus status) throws CredentialException;
+    public void logOut(String mobile) throws CredentialException;
 }

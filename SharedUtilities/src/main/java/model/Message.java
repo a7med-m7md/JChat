@@ -1,9 +1,11 @@
 package model;
 
+import services.ClientInt;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class Message extends UnicastRemoteObject implements ClientInt{
+public class Message extends UnicastRemoteObject implements ClientInt {
     public Message() throws RemoteException {
     }
 

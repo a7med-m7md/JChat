@@ -9,18 +9,24 @@ public class FileService {
     String filePath;
 
     Socket clientSocket;
+    int userId;
+    File file;
     FileThreadHandled fileThreadHandled;
-    public FileService(String filePath) {
-        this.filePath = filePath;
+    public FileService(File file, int userId) {
         //startConnection();
+        this.userId = userId;
+        this.file = file;
     }
 
-    private void startConnection() {
+    public FileService(int userId){
+        this.userId = userId;
+    }
+    public void startConnection() {
         try {
             clientSocket = new Socket("localhost", Constants.SOCKET_SERVER_PORT);
             //TODO -> get user id from the controller to send it to the server.
-            int currentUserId = 10;
-            fileThreadHandled = new FileThreadHandled(clientSocket,currentUserId);
+            //int currentUserId = 10;
+            fileThreadHandled = new FileThreadHandled(clientSocket,userId);
             Thread th = new Thread(fileThreadHandled);
             th.start();
             System.out.println(
@@ -33,7 +39,7 @@ public class FileService {
         }
     }
 
-    private void sendFile(File fileToSend){
+    public void sendFile(File fileToSend){
         fileThreadHandled.sendFile(fileToSend);
     }
 }

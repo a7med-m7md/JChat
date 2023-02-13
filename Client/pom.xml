@@ -13,6 +13,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.1</junit.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter-bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -63,11 +70,17 @@
         </dependency>
 
         <dependency>
-            <groupId>org.alicebot</groupId>
+            <groupId>org.goldrenard</groupId>
             <artifactId>ab</artifactId>
-            <version>1.0</version>
+            <version>1.0.7</version>
         </dependency>
-
+        <!--<dependency>
+			<artifactId>com.google</artifactId>
+			<groupId>Ab</groupId>
+			<version>0.0.4.3</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/Ab.jar</systemPath>
+		</dependency>-->
 
     </dependencies>
 

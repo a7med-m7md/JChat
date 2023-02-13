@@ -44,31 +44,24 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
         Contact senderContact = currentSession.getContactByPhone(msg.getSender());
         ObservableList<MessageEntity> firstTimeChat = FXCollections.observableArrayList();
 
-        StyledChatMessage newStyledMessage = new StyledChatMessage(currentSession.getContactByPhone(msg.getSender()), msg, ChatType.SINGLE);
         if (currentSession.chatsMapProperty().keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(senderContact.getMobile()))) {
             currentSession.chatsMapProperty().get(senderContact).add(msg);
-            currentSession.styledChatMapPropertyProperty().get(currentSession.currentContactChatProperty().get()).add(newStyledMessage);
+        } else {
+            currentSession.chatsMapProperty().put(senderContact, firstTimeChat);
         }
+        System.out.println(currentSession.chatsMapProperty().get(senderContact));
+        System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
+    }
 
-        else{
+    @Override
+    public void receiveAnnouncement(String msg) throws RemoteException {
+        System.out.println("Announcement from server: " + msg);
+    }
 
-                currentSession.chatsMapProperty().put(senderContact, firstTimeChat);
-            }
-
-                System.out.println(currentSession.chatsMapProperty().get(senderContact));
-
-                System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
-            }
-
-            @Override
-            public void receiveAnnouncement (String msg) throws RemoteException {
-                System.out.println("Announcement from server: " + msg);
-            }
-
-            @Override
-            public void receiveFriendStatus (String mobile, UserStatus status) throws RemoteException {
-                System.out.println("Your friend : " + mobile + " change his status to " + status);
-            }
+    @Override
+    public void receiveFriendStatus(String mobile, UserStatus status) throws RemoteException {
+        System.out.println("Your friend : " + mobile + " change his status to " + status);
+    }
 
 
-        }
+}

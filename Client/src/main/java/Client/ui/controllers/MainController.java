@@ -77,7 +77,7 @@ public class MainController implements Initializable {
     private StackPane currentUserPane;
 
     @FXML
-    private StackPane conversationArea;
+    public StackPane conversationArea;
 
     @FXML
     private StackPane sideBar;
@@ -188,12 +188,13 @@ public class MainController implements Initializable {
             Parent chatsPane = loader.load();
 
 //            Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
-            Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
+//            Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
             Parent currentUser = FXMLLoader.load(getClass().getResource("/FXML/current-user-card.fxml"));
             tabPanes.put("chats", chatsPane);
 
-            tabContentArea.getChildren().add(chatsPane);
-            conversationArea.getChildren().add(conversations);
+            Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
+            tabContentArea.getChildren().add(contactsPane);
+//            conversationArea.getChildren().add(conversations);
             currentUserPane.getChildren().add(currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);

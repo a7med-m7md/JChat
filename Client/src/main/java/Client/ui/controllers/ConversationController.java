@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -46,43 +47,56 @@ public class ConversationController implements Initializable {
     private ScrollPane conversationPane;
 
     @FXML
-    private VBox conversationContainer;
+    private ListView<MessageEntity> messagesListView;
 
     @FXML
     private TextField messageTextField;
 
-    ObservableList<StyledChatMessage> currentChat = FXCollections.observableArrayList();
+    CurrentSession currentSession;
+    Contact currentContactChat;
 
     @FXML
     void sendMessage(MouseEvent event) throws RemoteException {
 
-//        try {
-        //TODO RMI Invocation Here
-        CurrentSession currentSession = CurrentSession.getInstance();
-        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
-        if (currentSession.currentContactChatProperty().get() != null) {
-            MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+        try {
+            //TODO RMI Invocation Here
+            CurrentSession currentSession = CurrentSession.getInstance();
+            CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+            if (currentSession.currentContactChatProperty().get() != null) {
+                MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+                currentSession.chatsMapProperty().get(currentContactChat).add(newMessage);
                 RMIClientServices.chatMessaging(newMessage);
-            currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()).add(newMessage);
-            StyledChatMessage newStyledMessage = new StyledChatMessage(currentUserAccount, newMessage, ChatType.SINGLE);
-            conversationContainer.getChildren().add(newStyledMessage);
-            currentSession.styledChatMapPropertyProperty().get(currentSession.currentContactChatProperty().get()).add(newStyledMessage);
-            System.out.println(currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()));
-            System.out.println(conversationContainer.getChildren());
+            }
+
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
-//
-//        } catch (RemoteException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        CurrentSession currentSession = CurrentSession.getInstance();
-        currentChat = currentSession.getStyledChatMapProperty().get(currentSession.currentContactChatProperty().get());
+        System.out.println("Loaded");
+        currentSession = CurrentSession.getInstance();
 
-//        Bindings.bindContentBidirectional(currentChat, conversationContainer.getChildren());
+        currentContactChat = currentSession.currentContactChatProperty().get();
+        ObservableList<MessageEntity> currentContactMessageList = currentSession.chatsMapProperty().get(currentContactChat);
+
+        messagesListView.setItems(currentContactMessageList);
+        messagesListView.setCellFactory(listView -> new ListCell<MessageEntity>() {
+            @Override
+            protected void updateItem(MessageEntity message, boolean empty) {
+                super.updateItem(message, empty);
+                if (empty || message == null) {
+                    setGraphic(null);
+                } else {
+                    StyledChatMessage styledChatMessage = new StyledChatMessage(currentSession.getContactByPhone(message.getSender()), message, ChatType.SINGLE);
+                    setGraphic(styledChatMessage);
+                }
+            }
+        });
+
+
         //binding the header contents
         //chat contact's name
         //chat contact's avatar
@@ -113,49 +127,39 @@ public class ConversationController implements Initializable {
             return userStatus.getColor();
         }, currConvStatus.textProperty()));
 
-
-        //binding the contents of contact's messages list to the messagesContainer VBox
-        currentSession.chatsMapProperty().addListener((observable, oldValue, newValue) -> {
-            Contact currentContact = currentSession.currentContactChatProperty().get();
-            if (currentContact != null) {
-                ObservableList<MessageEntity> messages = newValue.get(currentContact);
-                if (messages != null) {
-                    displayMessages(messages);
-                }
-            }
-        });
-
-        //listner for selected contact
-        //retrieves list of messages of the selected contact
-        //binds the messagesContainerVBox to the current contact messageslist
-        currentSession.currentContactChatProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                ObservableList<MessageEntity> messages = currentSession.chatsMapProperty().get().get(newValue);
-                if (messages != null) {
-                    displayMessages(messages);
-                }
-            }
-        });
-
         //Scrolls Down Automatically when new messages added
-        conversationContainer.heightProperty().addListener(new ChangeListener<Number>() {
+        messagesListView.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 conversationPane.setVvalue((double) newValue);
             }
         });
-
     }
-
-    private void displayMessages(ObservableList<MessageEntity> messages) {
-        conversationContainer.getChildren().setAll(messages.stream().map(message -> {
-            StyledChatMessage styledMessage = new StyledChatMessage(CurrentSession.getInstance().getContactByPhone(message.getSender()), message, ChatType.SINGLE);
-            return styledMessage;
-        }).collect(Collectors.toList()));
-    }
-
 
 }
 
 
+//        //listner for selected contact
+//        //retrieves list of messages of the selected contact
+//        //binds the messagesContainerVBox to the current contact messageslist
+//        currentSession.currentContactChatProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                ObservableList<MessageEntity> messages = currentSession.chatsMapProperty().get().get(newValue);
+//                if (messages != null) {
+////                    displayMessages(messages);
+//
+//                }
+//            }
+//        });
 
+
+//        //binding the contents of contact's messages list to the messagesContainer VBox
+//        currentSession.chatsMapProperty().addListener((observable, oldValue, newValue) -> {
+//            Contact currentContact = currentSession.currentContactChatProperty().get();
+//            if (currentContact != null) {
+//                ObservableList<MessageEntity> messages = newValue.get(currentContact);
+//                if (messages != null) {
+//                    messagesListView.setItems(messages);
+//                }
+//            }
+//        });

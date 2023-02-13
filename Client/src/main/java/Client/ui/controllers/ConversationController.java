@@ -8,6 +8,7 @@ import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
+import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -117,6 +118,11 @@ public class ConversationController implements Initializable {
 
         conversationContainer.setItems(currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()));
 
+        Binding<ObservableList<MessageEntity>> binding = Bindings.createObjectBinding(() -> currentSession.chatsMapProperty().get().get(currentSession.contactsListProperty().get()), currentSession.chatsMapProperty());
+        conversationContainer.itemsProperty().bind(binding);
+
+//        conversationContainer.itemsProperty().bind(Bindings.valueAt(currentSession.chatsMapProperty(), currentSession.currentContactChatProperty().get()));
+        ;
         //binding the contents of contact's messages list to the messagesContainer listview
 //        if (currentSession.currentContactChatProperty().get() != null) {
 //            currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()).addListener((ListChangeListener<MessageEntity>) change -> {

@@ -46,6 +46,7 @@ public class ChatsController implements Initializable {
 
         conversationsList.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(CurrentSession.getInstance().chatsMapProperty().keySet()), CurrentSession.getInstance().chatsMapProperty()));
         currentSession.currentContactChatProperty().bind(conversationsList.getSelectionModel().selectedItemProperty());
+
         currentSession.currentContactChatProperty().addListener((observable, oldValue, newValue) -> {
             conversationsList.getSelectionModel().select(newValue);
         });

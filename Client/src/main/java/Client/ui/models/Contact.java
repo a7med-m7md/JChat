@@ -25,6 +25,9 @@ public class Contact implements UserModel {
 
     private ObjectProperty<Image> picture = new SimpleObjectProperty<>();
 
+    public Contact() {
+    }
+
     public Contact(FriendEntity friendEntity) {
         name = new SimpleStringProperty(friendEntity.getName());
         mobile = new SimpleStringProperty(friendEntity.getMobile());
@@ -82,6 +85,7 @@ public class Contact implements UserModel {
     public void setStatus(UserStatus status) {
         this.status.set(status);
     }
+
     public ObjectProperty<Image> pictureProperty() {
         return picture;
     }

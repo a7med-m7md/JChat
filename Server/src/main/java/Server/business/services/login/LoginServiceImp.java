@@ -27,12 +27,13 @@ public class LoginServiceImp implements LoginService {
     }
 
     @Override
-    public void logOut(String mobile, UserStatus status) throws CredentialException {
-        Optional<UserEntity> currentUser = userDao.findByMobile(mobile);
-        if (currentUser == null) {
-            throw new CredentialException("Phone Or Password May Be Invalid");
-        }
-        userDao.updateUserStatus(mobile,status);
+    public void logOut(String mobile) throws CredentialException {
+//        Optional<UserEntity> currentUser = userDao.findByMobile(mobile);
+        UserDao userDao = new UserDao();
+//        if (currentUser == null) {
+//            throw new CredentialException("Phone Or Password May Be Invalid");
+//        }
+        userDao.updateUserStatus(mobile, UserStatus.OFFLINE);
 
     }
 }

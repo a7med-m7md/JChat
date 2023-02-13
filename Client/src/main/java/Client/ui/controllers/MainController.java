@@ -1,5 +1,6 @@
 package Client.ui.controllers;
 
+import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.components.NotificationUI;
 import Client.ui.models.CurrentSession;
@@ -35,6 +36,7 @@ import model.FriendEntity;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -94,8 +96,10 @@ public class MainController implements Initializable {
     StringProperty notifcationLabel = new SimpleStringProperty();
 
     @FXML
-    void logOut(MouseEvent event) {
-
+    void logOut(MouseEvent event) throws RemoteException {
+        RMIClientServices.logOut(CurrentUserAccount.getInstance().getMobile());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+        // todo switch to login contoller
     }
 
     @FXML

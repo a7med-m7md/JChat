@@ -26,6 +26,11 @@ public class Contact implements UserModel {
     private ObjectProperty<Image> picture = new SimpleObjectProperty<>();
 
     public Contact() {
+        name = new SimpleStringProperty();
+        mobile = new SimpleStringProperty();
+        bio = new SimpleStringProperty();
+        status = new SimpleObjectProperty<UserStatus>();
+
     }
 
     public Contact(FriendEntity friendEntity) {
@@ -34,7 +39,6 @@ public class Contact implements UserModel {
         bio = new SimpleStringProperty(friendEntity.getBio());
         status = new SimpleObjectProperty<UserStatus>(friendEntity.getStatus());
         this.picture.set(new Image(new ByteArrayInputStream(friendEntity.getPicture())));
-
     }
 
 

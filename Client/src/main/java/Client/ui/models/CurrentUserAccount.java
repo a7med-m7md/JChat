@@ -60,7 +60,7 @@ public class CurrentUserAccount implements UserModel {
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
         this.status.set(userDataFromDB.getStatus());
-        this.picture.set(new Image(new ByteArrayInputStream(userDataFromDB.getPicture())));
+      //  this.picture.set(new Image(new ByteArrayInputStream(userDataFromDB.getPicture())));
     }
 
     public ObjectProperty<Image> pictureProperty() {

@@ -51,10 +51,10 @@ public class ConversationController implements Initializable {
     @FXML
     private TextField messageTextField;
 
-    ObservableList<MessageEntity> currentChat = FXCollections.observableArrayList();
+    ObservableList<StyledChatMessage> currentChat = FXCollections.observableArrayList();
 
     @FXML
-    void sendMessage(MouseEvent event) {
+    void sendMessage(MouseEvent event) throws RemoteException {
 
 //        try {
         //TODO RMI Invocation Here
@@ -62,10 +62,13 @@ public class ConversationController implements Initializable {
         CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
         if (currentSession.currentContactChatProperty().get() != null) {
             MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
-//                RMIClientServices.chatMessaging(newMessage);
+                RMIClientServices.chatMessaging(newMessage);
             currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()).add(newMessage);
             StyledChatMessage newStyledMessage = new StyledChatMessage(currentUserAccount, newMessage, ChatType.SINGLE);
-            conversationContainer.getChildren().add(newStyledMessage);
+//            conversationContainer.getChildren().add(newStyledMessage);
+            currentSession.styledChatMapPropertyProperty().get(currentSession.currentContactChatProperty().get()).add(newStyledMessage);
+            System.out.println(currentSession.chatsMapProperty().get(currentSession.currentContactChatProperty().get()));
+            System.out.println(conversationContainer.getChildren());
         }
 //
 //        } catch (RemoteException e) {
@@ -77,7 +80,9 @@ public class ConversationController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         CurrentSession currentSession = CurrentSession.getInstance();
+        currentChat = currentSession.getStyledChatMapProperty().get(currentSession.currentContactChatProperty().get());
 
+//        Bindings.bindContentBidirectional(currentChat, conversationContainer.getChildren());
         //binding the header contents
         //chat contact's name
         //chat contact's avatar

@@ -6,6 +6,7 @@ import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -43,14 +44,20 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
         CurrentSession currentSession = CurrentSession.getInstance();
         Contact senderContact = currentSession.getContactByPhone(msg.getSender());
         ObservableList<MessageEntity> firstTimeChat = FXCollections.observableArrayList();
-
-        if (currentSession.chatsMapProperty().keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(senderContact.getMobile()))) {
-            currentSession.chatsMapProperty().get(senderContact).add(msg);
-        } else {
-            currentSession.chatsMapProperty().put(senderContact, firstTimeChat);
-        }
-        System.out.println(currentSession.chatsMapProperty().get(senderContact));
-        System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (currentSession.chatsMapProperty().keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(senderContact.getMobile()))) {
+                    currentSession.chatsMapProperty().get(senderContact).add(msg);
+                } else {
+                    currentSession.chatsMapProperty().put(senderContact, firstTimeChat);
+                    currentSession.chatsMapProperty().get(senderContact).add(msg);
+                }
+                System.out.println(currentSession.chatsMapProperty().get(senderContact));
+                System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
+                //Scrolls Down Automatically when new messages added
+            }
+        });
     }
 
     @Override

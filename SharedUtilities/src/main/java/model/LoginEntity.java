@@ -2,7 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-public class LoginEntity implements Serializable {
+public class
+LoginEntity implements Serializable {
 
 
     private String mobile;

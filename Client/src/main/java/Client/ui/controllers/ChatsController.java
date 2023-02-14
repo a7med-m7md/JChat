@@ -3,6 +3,7 @@ package Client.ui.controllers;
 import Client.ui.components.ConversationCard;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -41,11 +42,13 @@ public class ChatsController implements Initializable {
     public ListView<Contact> conversationsList;
 
     CurrentSession currentSession = CurrentSession.getInstance();
+
     @FXML
     void newChat(MouseEvent event) {
         MainController mainController = MainController.getInstance();
         mainController.switchTab("/FXML/contacts.fxml");
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -81,7 +84,13 @@ public class ChatsController implements Initializable {
                     setGraphic(null);
                 } else {
                     ConversationCard conversationCard = new ConversationCard(contact, currentSession.chatsMapProperty().get(contact));
-                    setGraphic(conversationCard);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setGraphic(conversationCard);
+                            //Scrolls Down Automatically when new messages added
+                        }
+                    });
                 }
             }
         });

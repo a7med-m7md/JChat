@@ -21,18 +21,18 @@ AnchorPane
 .Primary-Button
 {
     -fx-background-radius: 7px;
-    -fx-background-color :  #39CEFF;
+    -fx-background-color :  #1e90ff;
     -fx-border-width: 0;
     -fx-text-fill:  #FFF;
 
 }
 .Primary-Button:hover
 {
-    -fx-background-color : #00c2ff;
+    -fx-background-color : #42a5ff;
 }
 .Primary-Button:pressed
 {
-    -fx-background-color : #39CEFF ;
+    -fx-background-color : #1e90ff ;
 }
 .utility-Button
 {

@@ -5,6 +5,7 @@ import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
 import model.LoginEntity;
+
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.UserNotFoundException;
@@ -28,6 +29,7 @@ import javafx.util.Duration;
 import model.user.UserStatus;
 
 import java.io.*;
+
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -57,7 +59,8 @@ public class LoginController implements Initializable {
     @FXML
     void handleSignIn(MouseEvent event) {
 
-//        if (validateFields()) {
+
+        //        if (validateFields()) {
         try {
             // Here you get a user object that contains all data
             // of loggedin user
@@ -93,6 +96,8 @@ public class LoginController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             Stage homeStage = new Stage();
             homeStage.setScene(scene);
+
+
 
 //                Scene home = new Scene(FXMLLoader.load(getClass().getResource()));
 //                Node node = (Node) event.getSource();

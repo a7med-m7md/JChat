@@ -187,9 +187,9 @@ public class UserDao implements CRUDOperation<UserEntity> {
 
     // When user logged in update its status
     public void updateUserStatus(String mobile, UserStatus status){
-        final String SQL = "UPDATE FROM jtalk.user SET status = ? WHERE mobile = ?";
+        final String SQL = "UPDATE jtalk.users SET status = ? WHERE mobile = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
-            preparedStatement.setString(1, status.name());
+            preparedStatement.setString(1, status.getStatusName());
             preparedStatement.setString(2, mobile);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

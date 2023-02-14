@@ -1,17 +1,12 @@
 package Client;
 
 
-//import Client.network.RMIConnection;
-import Client.network.FileService;
-import model.UtilityClass;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.Naming;
-
 
 public class Main extends Application {
     @Override
@@ -32,5 +27,25 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         super.init();
+        //TODO -> logic for transferring file here in client side
+        /*Scanner scanner = new Scanner(System.in);
+        int userId = scanner.nextInt();
+        //senderUserId -> 10, receiverUserId -> 11
+        if (userId == 10){
+            Platform.runLater(() -> {
+                FileChooser fileChooser = new FileChooser();
+                File file = fileChooser.showOpenDialog(null);
+                if (file != null){
+                    System.out.println("choosed path file ->"+file.getAbsolutePath());
+                    FileService fileService = new FileService(file,userId);
+                    fileService.startConnection();
+                    fileService.sendFile(file);
+                }
+            });
+        }else{
+            FileService fileService = new FileService(userId);
+            fileService.startConnection();
+        }*/
+
     }
 }

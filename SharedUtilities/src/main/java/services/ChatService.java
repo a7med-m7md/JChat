@@ -17,4 +17,5 @@ public interface ChatService extends Remote {
     void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException;
     FriendEntity searchFriend(String mobile) throws RemoteException;
     void tellMyStatusToFriends(String myNumber, UserStatus status) throws RemoteException;
+    void sendAnnouncementToUser(String msg) throws RemoteException;
 }

@@ -3,9 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,6 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
 <GridPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.ConversationController">
@@ -21,8 +25,8 @@
    </columnConstraints>
    <rowConstraints>
       <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="390.000030517578" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="75.0" minHeight="10.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" styleClass="right-top" stylesheets="@../styling/main.css">
@@ -69,27 +73,76 @@
             <ListView fx:id="messagesListView" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" />
          </children>
       </StackPane>
-      <HBox maxHeight="1.7976931348623157E308" prefWidth="200.0" spacing="7.0" styleClass="bottom-right" stylesheets="@../styling/main.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
-         <children>
-            <TextField fx:id="messageTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#sendMessage" prefHeight="43.0" styleClass="Primary-Button" stylesheets="@../styling/styling.css">
-               <font>
-                  <Font name="Segoe UI Semibold" size="13.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
-            </Button>
-         </children>
+      <VBox GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="SOMETIMES">
          <GridPane.margin>
-            <Insets bottom="1.0" top="1.0" />
+            <Insets bottom="1.0" top="3.0" />
          </GridPane.margin>
-         <padding>
-            <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
-         </padding>
-      </HBox>
+         <children>
+            <HBox layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" prefWidth="294.0" spacing="7.0" styleClass="bottom-right" stylesheets="@../styling/main.css" VBox.vgrow="NEVER">
+               <children>
+                  <ToggleButton mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 40px;" styleClass="Secondary-Button" stylesheets="@../styling/styling.css">
+                     <graphic>
+                        <SVGPath content="M16,2.49975623 L13.0215,2.49975623 C13.0058,2.49975623 12.9902,2.49975623 12.9746,2.49975623 L10,2.49975623 C9.17157,2.49975623 8.5,3.17151 8.5,3.99994 C8.5,4.82837 9.17157,5.49994 10,5.49994 L11.3007,5.49994 L9.67574,18.4999 L8,18.4999 C7.17157,18.4999 6.5,19.1715 6.5,19.9999 C6.5,20.8284 7.17157,21.50005 8,21.50005 L10.9818,21.50005 C10.9952,21.50005 11.0085,21.50005 11.0218,21.50005 L14,21.50005 C14.8284,21.50005 15.5,20.8284 15.5,19.9999 C15.5,19.1715 14.8284,18.4999 14,18.4999 L12.6991,18.4999 L14.3241,5.49994 L16,5.49994 C16.8284,5.49994 17.5,4.82837 17.5,3.99994 C17.5,3.17151 16.8284,2.49975623 16,2.49975623 Z" fill="WHITE" scaleX="0.8" scaleY="0.8" />
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton layoutX="66.0" layoutY="28.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 40px;" styleClass="Secondary-Button" stylesheets="@../styling/styling.css">
+                     <graphic>
+                        <SVGPath content="M22.43,17.54a4.67,4.67,0,0,0,2.8-4.37v-.06a4.43,4.43,0,0,0-1.31-3.25,7.09,7.09,0,0,0-5.13-1.73h-7A1.71,1.71,0,0,0,10,9.86V26a1.72,1.72,0,0,0,1.74,1.74h7.33c4.37,0,7.25-1.88,7.25-5.38V22.3C26.32,19.64,24.73,18.32,22.43,17.54ZM13.68,11.4h4.54c2,0,3.15.89,3.15,2.33v.06c0,1.68-1.36,2.49-3.38,2.49H13.68ZM22.37,22c0,1.59-1.31,2.43-3.46,2.43H13.68V19.62h5c2.49,0,3.69.88,3.69,2.37ZM22.43,17.54a4.67,4.67,0,0,0,2.8-4.37v-.06a4.43,4.43,0,0,0-1.31-3.25,7.09,7.09,0,0,0-5.13-1.73h-7A1.71,1.71,0,0,0,10,9.86V26a1.72,1.72,0,0,0,1.74,1.74h7.33c4.37,0,7.25-1.88,7.25-5.38V22.3C26.32,19.64,24.73,18.32,22.43,17.54ZM13.68,11.4h4.54c2,0,3.15.89,3.15,2.33v.06c0,1.68-1.36,2.49-3.38,2.49H13.68ZM22.37,22c0,1.59-1.31,2.43-3.46,2.43H13.68V19.62h5c2.49,0,3.69.88,3.69,2.37Z" fill="WHITE" scaleX="0.7" scaleY="0.7" scaleZ="0.4" />
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton layoutX="108.0" layoutY="28.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 40px;" styleClass="Secondary-Button" stylesheets="@../styling/styling.css">
+                     <graphic>
+                        <SVGPath content="M18,18.5 C18.8284,18.5 19.5,19.1716 19.5,20 C19.5,20.7796706 18.9050879,21.4204457 18.1444558,21.4931332 L18,21.5 L6,21.5 C5.17157,21.5 4.5,20.8284 4.5,20 C4.5,19.2203294 5.09488554,18.5795543 5.85553954,18.5068668 L6,18.5 L18,18.5 Z M17,2.5 C17.7796706,2.5 18.4204457,3.09488554 18.4931332,3.85553954 L18.5,4 L18.5,11 C18.5,14.5899 15.5899,17.5 12,17.5 C8.48819022,17.5 5.62684948,14.7150508 5.50410301,11.2331372 L5.5,11 L5.5,4 C5.5,3.17157 6.17157,2.5 7,2.5 C7.77969882,2.5 8.420449,3.09488554 8.49313345,3.85553954 L8.5,4 L8.5,11 C8.5,12.933 10.067,14.5 12,14.5 C13.8685667,14.5 15.3951267,13.0357256 15.4948211,11.1920355 L15.5,11 L15.5,4 C15.5,3.17157 16.1716,2.5 17,2.5 Z" fill="WHITE" scaleX="0.8" scaleY="0.8" scaleZ="0.4" />
+                     </graphic>
+                  </ToggleButton>
+                  <ColorPicker maxWidth="90.0" prefHeight="30.0" />
+                  <ComboBox prefWidth="220.0" />
+               </children>
+               <padding>
+                  <Insets left="18.0" right="18.0" top="11.0" />
+               </padding>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308" spacing="7.0" styleClass="bottom-right" stylesheets="@../styling/main.css">
+               <children>
+                  <TextField fx:id="messageTextField" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="Message" stylesheets="@../styling/material.css" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+                  <Button layoutX="152.0" layoutY="28.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#sendMessage" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 40px;" styleClass="Primary-Button" stylesheets="@../styling/styling.css">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets bottom="10.0" left="9.0" right="10.0" top="11.0" />
+                     </padding>
+                     <graphic>
+                        <SVGPath content="M16.1391 2.95907L7.10914 5.95907C1.03914 7.98907 1.03914 11.2991 7.10914 13.3191L9.78914 14.2091L10.6791 16.8891C12.6991 22.9591 16.0191 22.9591 18.0391 16.8891L21.0491 7.86907C22.3891 3.81907 20.1891 1.60907 16.1391 2.95907ZM16.4591 8.33907L12.6591 12.1591C12.5091 12.3091 12.3191 12.3791 12.1291 12.3791C11.9391 12.3791 11.7491 12.3091 11.5991 12.1591C11.3091 11.8691 11.3091 11.3891 11.5991 11.0991L15.3991 7.27907C15.6891 6.98907 16.1691 6.98907 16.4591 7.27907C16.7491 7.56907 16.7491 8.04907 16.4591 8.33907Z" fill="WHITE" />
+                     </graphic>
+                  </Button>
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#attachFile" prefHeight="40.0" prefWidth="40.0" style="-fx-background-radius: 40px;" styleClass="Primary-Button" stylesheets="@../styling/styling.css">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets bottom="10.0" left="9.0" right="10.0" top="11.0" />
+                     </padding>
+                     <graphic>
+                        <SVGPath content="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.37 14.35L14.15 16.57C13.61 17.11 12.91 17.37 12.21 17.37C11.51 17.37 10.8 17.1 10.27 16.57C9.75 16.05 9.46 15.36 9.46 14.63C9.46 13.9 9.75 13.2 10.27 12.69L11.68 11.28C11.97 10.99 12.45 10.99 12.74 11.28C13.03 11.57 13.03 12.05 12.74 12.34L11.33 13.75C11.09 13.99 10.96 14.3 10.96 14.63C10.96 14.96 11.09 15.28 11.33 15.51C11.82 16 12.61 16 13.1 15.51L15.32 13.29C16.59 12.02 16.59 9.96 15.32 8.69C14.05 7.42 11.99 7.42 10.72 8.69L8.3 11.11C7.79 11.62 7.51 12.29 7.51 13C7.51 13.71 7.79 14.39 8.3 14.89C8.59 15.18 8.59 15.66 8.3 15.95C8.01 16.24 7.53 16.24 7.24 15.95C6.44 15.18 6 14.13 6 13.01C6 11.89 6.43 10.84 7.22 10.05L9.64 7.63C11.49 5.78 14.51 5.78 16.36 7.63C18.22 9.48 18.22 12.5 16.37 14.35Z" fill="WHITE" />
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="18.0" left="18.0" right="18.0" top="8.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </GridPane>

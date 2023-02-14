@@ -208,6 +208,6 @@
             <Insets right="4.0" />
          </GridPane.margin>
       </GridPane>
-      <StackPane fx:id="conversationArea" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" />
+      <StackPane fx:id="conversationArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" GridPane.columnIndex="2" />
    </children>
 </GridPane>

@@ -1,13 +1,10 @@
 package Client;
 
 
-import Client.network.RMIClientServices;
-import Client.ui.models.CurrentUserAccount;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.user.UserStatus;
 
 import java.io.IOException;
 
@@ -25,11 +22,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
 
-    }
-
-    @Override
-    public void stop() throws Exception {
-        RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.OFFLINE);
     }
 
     @Override

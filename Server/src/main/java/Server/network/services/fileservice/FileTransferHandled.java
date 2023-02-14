@@ -9,7 +9,7 @@ public class FileTransferHandled implements Runnable{
     Socket clientSocket;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
-    Map<Integer,Socket> clientsWithId = new HashMap<>();
+    static Map<Integer,Socket> clientsWithId = new HashMap<>();
     Socket userReceiverSocket;
     DataOutputStream receiverOutputStream;
     DataInputStream receiverInputStream;
@@ -72,7 +72,7 @@ public class FileTransferHandled implements Runnable{
         try {
             //TODO -> get the user receiver id here and then iterate through the map to get the socket of that user
             //TODO -> we can get user receiver id from stream of the fileToSend
-            int userReceiverId = 20;
+            int userReceiverId = 11;
             userReceiverSocket = clientsWithId.get(userReceiverId);
             receiverOutputStream = new DataOutputStream(userReceiverSocket.getOutputStream());
             receiverInputStream = new DataInputStream(userReceiverSocket.getInputStream());

@@ -2,6 +2,7 @@ package Server.persistance.dao;
 
 
 import Server.business.model.group.Group;
+import model.GroupMember;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
 import model.group.GroupEntity;
@@ -26,8 +27,8 @@ public class GroupDao implements CRUDOperation<Group> {
                     String name = resultSet.getString(2);
                     String description = resultSet.getString(3);
                     Time createdAt = resultSet.getTime(4);
-                    long owner_id = resultSet.getLong(5);
-                    Group group = new Group(name, description, owner_id);
+                    String owner_mobile = resultSet.getString(5);
+                    Group group = new Group(name, description, owner_mobile);
                     groupList.add(group);
                 }
             }
@@ -48,8 +49,8 @@ public class GroupDao implements CRUDOperation<Group> {
                     String name = resultSet.getString(2);
                     String description = resultSet.getString(3);
                     Time createdAt = resultSet.getTime(4);
-                    long owner_id = resultSet.getLong(5);
-                    Group group = new Group(name, description, owner_id);
+                    String owner_mobile = resultSet.getString(5);
+                    Group group = new Group(name, description, owner_mobile);
                     return Optional.of(group);
                 }
             }
@@ -78,12 +79,19 @@ public class GroupDao implements CRUDOperation<Group> {
 
     @Override
     public Group save(Group entity) {
-        final String SQL = "INSERT INTO jtalk.groups (name, description, owner_id) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+        final String SQL = "INSERT INTO jtalk.groups (name, description, owner_mobile) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getDescription());
-            preparedStatement.setLong(3, entity.getOwner_id());
+            preparedStatement.setString(3, entity.getOwner_mobile());
             preparedStatement.executeUpdate();
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                while (generatedKeys.next()) {
+                    int id = generatedKeys.getInt(1);
+                    GroupMemberDao groupMemberDao = new GroupMemberDao();
+                    groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -102,25 +110,22 @@ public class GroupDao implements CRUDOperation<Group> {
         return 0;
     }
 
-    public List<GroupEntity> getUserGroups(int id) {
-        List<GroupEntity> groupList = new ArrayList<>();
-        final String SQL = "select jtalk.groups.*\n" +
-                "from jtalk.users , jtalk.group_members , jtalk.groups\n" +
-                "where jtalk.users.id = jtalk.group_members.user_id and jtalk.groups.id = jtalk.group_members.group_id\n" +
-                "and jtalk.users.id = ? \n" +
-                "group by jtalk.group_members.group_id , jtalk.groups.id;";
+    public List<GroupMember> getUsersInGroup(int id) {
+        List<GroupMember> groupList = new ArrayList<>();
+//        final String SQL = "select jtalk.groups.*\n" +
+//                "from jtalk.users , jtalk.group_members , jtalk.groups\n" +
+//                "where jtalk.users.id = jtalk.group_members.user_id and jtalk.groups.id = jtalk.group_members.group_id\n" +
+//                "and jtalk.users.id = ? \n" +
+//                "group by jtalk.group_members.group_id , jtalk.groups.id;";
+        final String SQL = "select * FROM jtalk.group_members , jtalk.users " +
+                "WHERE user_mobile = mobile AND group_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    int gid = resultSet.getInt(1);
-                    String name = resultSet.getString(2);
-                    String description = resultSet.getString(3);
-                    Time createdAt = resultSet.getTime(4);
-                    long owner_id = resultSet.getLong(5);
-                    GroupEntity group = new GroupEntity(name, description, owner_id);
+                    String mobile = resultSet.getString("mobile");
+                    GroupMember group = new GroupMember(mobile, id);
                     groupList.add(group);
-
                 }
             }
         } catch (SQLException e) {
@@ -128,4 +133,31 @@ public class GroupDao implements CRUDOperation<Group> {
         }
         return groupList;
     }
+
+    public List<GroupEntity> getAllMyGroups(String mobile) {
+        System.out.println("Current mob:: " + mobile);
+        final String SQL = "SELECT * FROM jtalk.groups , jtalk.group_members where id = group_id AND user_mobile = ?" ;
+        List<GroupEntity> listGroups = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+            preparedStatement.setString(1, mobile);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int gid = resultSet.getInt(1);
+                    String name = resultSet.getString(2);
+                    String description = resultSet.getString(3);
+                    Time createdAt = resultSet.getTime(4);
+                    String owner_mobile = resultSet.getString(5);
+                    GroupEntity group = new GroupEntity(name, description, owner_mobile);
+                    listGroups.add(group);
+                }
+//            preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listGroups;
+    }
 }
+

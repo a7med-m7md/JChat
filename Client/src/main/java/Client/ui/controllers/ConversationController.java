@@ -28,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import model.FormattedMessageEntity;
 import model.MessageEntity;
 import model.user.UserStatus;
 
@@ -94,8 +95,16 @@ public class ConversationController implements Initializable {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             if (!messageTextField.getText().equals("")) {
                 if (currentSession.currentContactChatProperty().get() != null) {
-                    MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+                    //Setting up the message to send
+                    FormattedMessageEntity newMessage = new FormattedMessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+                    newMessage.setMessageFontFamily(fontFamilyComboBox.getValue());
+                    newMessage.setMessageBubbleFill(colorPicker.getValue().toString());
+                    newMessage.setUnderLineText(underLineToggle.isSelected());
+                    newMessage.setBoldText(boldToggle.isSelected());
+                    newMessage.setItalicText(italicToggle.isSelected());
+                    // Adding this message to the contact's message list
                     currentSession.chatsMapProperty().get(currentContactChat).add(newMessage);
+                    // Sending the message to the server
                     RMIClientServices.chatMessaging(newMessage);
                     messageTextField.clear();
                 }

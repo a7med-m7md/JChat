@@ -64,12 +64,12 @@ public class ServicesController implements Initializable {
     }
 
     public void loadCountries() {
-        XYChart.Series<String, Number> countriesStatistic = services.getCountriesStatistic(list);
+        List<XYChart.Series<String, Double>> countriesStatistic = services.getCountriesStatistic(list);
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
+        ObservableList<XYChart.Series<String, Double>> countryList = FXCollections.observableArrayList(countriesStatistic);
         BarChart barChart = new BarChart<>(xAxis, yAxis);
-        barChart.setTitle("Olympic gold medals in London");
-        barChart.getData().add(countriesStatistic);
+        barChart.setData(countryList);
         chart.getChildren().clear();
         chart.getChildren().add(barChart);
     }

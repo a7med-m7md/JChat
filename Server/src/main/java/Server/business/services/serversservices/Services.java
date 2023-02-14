@@ -11,17 +11,17 @@ import java.util.Map;
 
 public class Services {
 
-    public XYChart.Series<String, Number> getCountriesStatistic(List<UserEntity> users) {
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        List<PieChart.Data> list = new ArrayList<>();
+    public List<XYChart.Series<String, Double>> getCountriesStatistic(List<UserEntity> users) {
+        List<XYChart.Series<String, Double>> series1 = new ArrayList<>();
         Map<String, Integer> hm = new HashMap<String, Integer>();
         for (UserEntity user : users) {
             Integer j = hm.get(user.getCountry());
             hm.put(user.getCountry(), (j == null) ? 1 : j + 1);
         }
         for (Map.Entry<String, Integer> val : hm.entrySet()) {
-            list.add(new PieChart.Data(val.getKey(), val.getValue().doubleValue()));
-            series1.getData().add(new XYChart.Data<>(val.getKey() , val.getValue().doubleValue()));
+            XYChart.Series<String, Double> series = new XYChart.Series<>();
+            series.getData().add(new XYChart.Data<>(val.getKey() , val.getValue().doubleValue()));
+            series1.add(series);
         }
         return series1;
     }

@@ -1,5 +1,6 @@
 package Server.persistance.dao;
 
+import Server.business.services.ConnectedService;
 import model.GroupMember;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;

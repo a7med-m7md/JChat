@@ -3,7 +3,6 @@ package Client.network;
 
 
 import Client.network.services.ClientServicesImp;
-import Client.ui.models.CurrentUserAccount;
 import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
@@ -176,20 +175,25 @@ public class RMIClientServices {
         }
     }
 
-    public static Group createGroup(Group group) throws RemoteException, NotBoundException {
-        Registry registry;
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
-            return user.createGroup(group);
-
-    }
-
-    public static List<GroupMember> getUsersInGroup(int groupId) throws RemoteException {
+    public static Group createGroup(Group group) throws RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
             ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
-            return user.getUsersInGroup(groupId);
+            return user.createGroup(new Group(group.getName(), group.getDescription(), group.getOwner_mobile()));
+
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<GroupMember> getUsersInGroup(int userId) throws RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            return user.getUsersInGroup(userId);
 
         } catch (NotBoundException e) {
             e.printStackTrace();
@@ -252,7 +256,7 @@ public class RMIClientServices {
         }
     }
 
-    public static void groupMessaging(MessageGroupEntity msg) throws RemoteException {
+    public static void groupMessaging(GroupMessageEntity msg) throws RemoteException {
         Registry messagingRegistry;
         try {
             System.out.println("Message group send");

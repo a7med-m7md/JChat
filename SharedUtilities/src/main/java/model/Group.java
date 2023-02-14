@@ -1,4 +1,4 @@
-package model.group;
+package model;
 
 import model.FriendEntity;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class GroupEntity implements Serializable {
+public class Group implements Serializable {
     private long id;
     private String name;
     private String description;
@@ -14,7 +14,10 @@ public class GroupEntity implements Serializable {
     private String owner_mobile;
     private List<FriendEntity> listMembers;
 
-    public GroupEntity(String name, String description, String owner_mobile) {
+    public Group() {
+    }
+
+    public Group(String name, String description, String owner_mobile) {
         this.name = name;
         this.description = description;
         this.owner_mobile = owner_mobile;

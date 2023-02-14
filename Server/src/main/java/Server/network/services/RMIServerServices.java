@@ -14,7 +14,6 @@ import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
 import Server.persistance.dao.UserDao;
-import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
 import model.user.UserStatus;
@@ -125,6 +124,11 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         entity.getListMembers().forEach(member->{
             System.out.println("HEE");
             groupMember.save(new GroupMember(member.getMobile(), saveEntity.getId()));
+            try {
+                ConnectedService.clients.get(member.getMobile()).receiveGroupAddNotification(group);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         });
         return entity;
     }

@@ -4,8 +4,6 @@ package Client.ui.controllers;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
-import model.GroupMember;
-import model.MessageGroupEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.UserNotFoundException;
@@ -66,8 +64,7 @@ public class LoginController implements Initializable {
                 currentUserAccount.populateCurrentUserData(loggedInUser);
                 System.out.println("Connnected");
                 RMIClientServices.registerInServer();
-                currentUserAccount.setStatus(UserStatus.AVAILABLE);
-                RMIClientServices.tellMyStatus(currentUserAccount.getMobile(), UserStatus.AVAILABLE);
+
                 MainController mainController = MainController.getInstance();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));

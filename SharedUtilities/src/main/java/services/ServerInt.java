@@ -6,7 +6,6 @@ import javafx.scene.Group;
 import model.FriendEntity;
 import model.GroupMember;
 import model.LoginEntity;
-import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
 import model.user.UserStatus;

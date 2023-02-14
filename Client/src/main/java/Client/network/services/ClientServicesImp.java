@@ -1,16 +1,11 @@
 package Client.network.services;
 
-import Client.model.group.Group;
-import Client.ui.components.StyledChatMessage;
-import Client.ui.controllers.ConversationController;
-import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import model.*;
 import model.user.UserStatus;
 import services.ClientServices;
@@ -83,7 +78,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     }
 
     @Override
-    public void receiveMessageFromGroup(MessageGroupEntity msg) throws RemoteException {
+    public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
         System.out.println("Group:: " + msg.getGroupId() + "MSG :: " + msg.getMessage() + "Sent from:: " + msg.getSender());
     }
 

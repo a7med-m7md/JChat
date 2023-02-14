@@ -1,20 +1,15 @@
-package model;
+package Server.business.model.group;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class GroupEntity implements Serializable {
+public class Group {
     private long id;
     private String name;
     private String description;
     private LocalDateTime createdAt;
     private String owner_mobile;
 
-<<<<<<<< HEAD:Server/src/main/java/Server/business/model/group/Group.java
     public Group(String name, String description, String owner_mobile) {
-========
-    public GroupEntity(String name, String description, String owner_mobile) {
->>>>>>>> 0fe14eef34c8c12180234f5fe17557c486d960e1:SharedUtilities/src/main/java/model/GroupEntity.java
         this.name = name;
         this.description = description;
         this.owner_mobile = owner_mobile;

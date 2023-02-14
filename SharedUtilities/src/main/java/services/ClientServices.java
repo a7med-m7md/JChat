@@ -13,6 +13,6 @@ public interface ClientServices extends Remote {
     void receiveMessage(MessageEntity msg) throws RemoteException;
     void receiveAnnouncement(String msg) throws RemoteException;
     void receiveFriendStatus(String mobile, UserStatus status) throws RemoteException;
-    void receiveMessageFromGroup(MessageGroupEntity msg) throws RemoteException;
+    void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException;
     void receiveGroupAddNotification(Group group) throws RemoteException;
 }

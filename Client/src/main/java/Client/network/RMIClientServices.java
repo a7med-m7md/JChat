@@ -1,9 +1,8 @@
 package Client.network;
 
 
-import Client.model.group.Group;
+import Client.ui.models.Group;
 import Client.network.services.ClientServicesImp;
-import Client.ui.models.CurrentUserAccount;
 import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
@@ -258,7 +257,7 @@ public class RMIClientServices {
         }
     }
 
-    public static void groupMessaging(MessageGroupEntity msg) throws RemoteException {
+    public static void groupMessaging(GroupMessageEntity msg) throws RemoteException {
         Registry messagingRegistry;
         try {
             System.out.println("Message group send");

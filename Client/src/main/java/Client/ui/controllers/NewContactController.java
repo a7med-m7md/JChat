@@ -35,11 +35,11 @@ public class NewContactController implements Initializable {
 
 
     List<String> contactsToAdd;
-    ObservableList addedContacts;
 
 
     @FXML
     void addContact(MouseEvent event) {
+        errorContainer.getChildren().removeAll();
         try {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             RMIClientServices.sendFriendRequest(currentUserAccount.getMobile(), contactsToAdd);
@@ -81,6 +81,5 @@ public class NewContactController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         contactsToAdd = new ArrayList<>();
-        addedContacts = FXCollections.emptyObservableList();
     }
 }

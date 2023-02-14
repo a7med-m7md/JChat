@@ -1,4 +1,4 @@
-package Client.model.group;
+package Client.ui.models;
 
 import java.time.LocalDateTime;
 

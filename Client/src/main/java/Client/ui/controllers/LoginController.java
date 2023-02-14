@@ -4,8 +4,6 @@ package Client.ui.controllers;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
-import model.GroupMember;
-import model.MessageGroupEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.UserNotFoundException;
@@ -26,13 +24,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.user.UserStatus;
 
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -59,13 +54,7 @@ public class LoginController implements Initializable {
     void handleSignIn(MouseEvent event) {
 //        if (validateFields()) {
             try {
-                // Here you get a user object that contains all data
-                // of loggedin user
-                UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
-                CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
-                currentUserAccount.populateCurrentUserData(loggedInUser);
-                System.out.println("Connnected");
-                RMIClientServices.registerInServer();
+                populateLoggedInUserData();
 
                 MainController mainController = MainController.getInstance();
 
@@ -77,14 +66,6 @@ public class LoginController implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 Stage homeStage = new Stage();
                 homeStage.setScene(scene);
-
-
-
-//                Scene home = new Scene(FXMLLoader.load(getClass().getResource()));
-//                Node node = (Node) event.getSource();
-//                Stage stage = (Stage) node.getScene().getWindow();
-//                Stage homeStage = new Stage();
-//                homeStage.setScene(home);
 
                 homeStage.setResizable(true);
                 homeStage.show();
@@ -100,7 +81,16 @@ public class LoginController implements Initializable {
             catch (IOException e) {
                 throw new RuntimeException(e);
             }
-//        } else System.out.println("not valid fields");
+    }
+
+    private void populateLoggedInUserData() throws UserNotFoundException, RemoteException {
+        // Here you get a user object that contains all data
+        // of loggedin user
+        UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+        currentUserAccount.populateCurrentUserData(loggedInUser);
+        System.out.println("Connnected");
+        RMIClientServices.registerInServer();
     }
 
     @FXML

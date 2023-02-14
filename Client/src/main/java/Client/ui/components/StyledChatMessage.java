@@ -5,14 +5,18 @@ import Client.ui.controllerutils.MessageSource;
 import Client.ui.models.*;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import model.MessageEntity;
 
 import java.text.DateFormat;
@@ -59,83 +63,110 @@ public class StyledChatMessage extends GridPane {
 
         if (source == MessageSource.SENT) {
             setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            messageBubble.setStyle("-fx-background-color:  #dddfe8;");
-            messageBody.setTextFill(javafx.scene.paint.Color.valueOf("#333333"));
+            messageBubble.setStyle("-fx-background-color:" + message.getMessageBubbleFill() + ";");
+//            messageBody.setTextFill(Color.valueOf("#333333"));
 
         } else if (source == MessageSource.RECIEVED) {
             setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-            messageBubble.setStyle("-fx-background-color:  rgba(181,219,248,0.5);");
-            messageBody.setTextFill(javafx.scene.paint.Color.valueOf("#FFFF"));
-
+            if (message.getMessageBubbleFill().equals("#dddfe8"))
+                messageBubble.setStyle("-fx-background-color:  rgba(181,219,248,0.5);");
+            else
+                messageBubble.setStyle("-fx-background-color:" + message.getMessageBubbleFill() + ";");
+//            messageBody.setTextFill(Color.valueOf("#FFFF"));
         }
 
         setStyle("-fx-background-color: transparent;");
 
         columnConstraints.setFillWidth(false);
-        columnConstraints.setHgrow(javafx.scene.layout.Priority.NEVER);
+        columnConstraints.setHgrow(Priority.NEVER);
         columnConstraints.setMinWidth(0.0);
         columnConstraints.setPercentWidth(0.0);
 
         columnConstraints0.setFillWidth(false);
-        columnConstraints0.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        columnConstraints0.setHgrow(Priority.SOMETIMES);
         columnConstraints0.setMaxWidth(440.0);
         columnConstraints0.setMinWidth(10.0);
 
-        columnConstraints1.setHgrow(javafx.scene.layout.Priority.ALWAYS);
+        columnConstraints1.setHgrow(Priority.ALWAYS);
         columnConstraints1.setMaxWidth(Double.MAX_VALUE);
         columnConstraints1.setMinWidth(60.0);
 
-        rowConstraints.setVgrow(javafx.scene.layout.Priority.ALWAYS);
+        rowConstraints.setVgrow(Priority.ALWAYS);
 
         rowConstraints0.setMaxHeight(Double.MAX_VALUE);
         rowConstraints0.setMinHeight(10.0);
-        rowConstraints0.setVgrow(javafx.scene.layout.Priority.ALWAYS);
+        rowConstraints0.setVgrow(Priority.ALWAYS);
         setPadding(new Insets(10.0, 10.0, 2.0, 10.0));
 
         GridPane.setColumnIndex(messageSenderName, 1);
         messageSenderName.setText(message.getSender());
-        messageSenderName.setTextFill(javafx.scene.paint.Color.valueOf("#34434c"));
+        messageSenderName.setTextFill(Color.valueOf("#34434c"));
         messageSenderName.setFont(new Font("Segoe UI Light", 12.0));
         GridPane.setMargin(messageSenderName, new Insets(0.0, 10.0, 0.0, 10.0));
 
         GridPane.setRowIndex(senderAvatar, 1);
-        GridPane.setValignment(senderAvatar, javafx.geometry.VPos.TOP);
+        GridPane.setValignment(senderAvatar, VPos.TOP);
         senderAvatar.setFill(new ImagePattern(contact.getImage()));
         senderAvatar.setRadius(14.0);
-        senderAvatar.setStroke(javafx.scene.paint.Color.BLACK);
-        senderAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
+        senderAvatar.setStroke(Color.BLACK);
+        senderAvatar.setStrokeType(StrokeType.INSIDE);
         senderAvatar.setStrokeWidth(0.0);
 
         GridPane.setColumnIndex(hBox, 1);
         GridPane.setRowIndex(hBox, 1);
-        hBox.setAlignment(javafx.geometry.Pos.CENTER);
+        hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(10.0);
 
         messageBubble.getStyleClass().add("message-bubble");
         messageBubble.getStylesheets().add((this.getClass().getResource(messageStyleSheet).toExternalForm()));
         columnConstraints2.setFillWidth(false);
-        columnConstraints2.setHgrow(javafx.scene.layout.Priority.ALWAYS);
+        columnConstraints2.setHgrow(Priority.ALWAYS);
         columnConstraints2.setMaxWidth(Double.MAX_VALUE);
 
         rowConstraints1.setMaxHeight(Double.MAX_VALUE);
         rowConstraints1.setMinHeight(10.0);
-        rowConstraints1.setVgrow(javafx.scene.layout.Priority.ALWAYS);
+        rowConstraints1.setVgrow(Priority.ALWAYS);
         messageBubble.setPadding(new Insets(10.0, 15.0, 10.0, 15.0));
 
-        messageBody.setAlignment(javafx.geometry.Pos.BOTTOM_LEFT);
+        messageBody.setAlignment(Pos.BOTTOM_LEFT);
         messageBody.setMaxHeight(Double.MAX_VALUE);
         messageBody.setMaxWidth(Double.MAX_VALUE);
         messageBody.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         messageBody.setText(message.getMSGBody());
-        messageBody.setTextFill(javafx.scene.paint.Color.valueOf("#333333"));
+        messageBody.setTextFill(Color.valueOf("#333333"));
         messageBody.setWrapText(true);
         messageBody.setFont(new Font("Segoe UI", 14.0));
+        messageBody.setUnderline(message.isUnderLineText());
+        if (message.isItalicText()) {
+            messageBody.setFont(Font.font(messageBody.getFont().getFamily(), FontPosture.ITALIC, messageBody.getFont().getSize()));
+        }
+        if (message.isBoldText()) {
+            messageBody.setFont(Font.font(messageBody.getFont().getFamily(), FontWeight.BOLD, messageBody.getFont().getSize()));
+        }
 
-        messageTimeStamp.setAlignment(javafx.geometry.Pos.BOTTOM_LEFT);
+        /*
+        Automatic textfill contrast setting
+        with respect to the background fill
+        */
+
+        // Get the background color of the node
+        Color bgColor = Color.valueOf(message.getMessageBubbleFill());
+
+        // Calculate the brightness of the background color
+        double brightness = (0.299 * bgColor.getRed() + 0.587 * bgColor.getGreen() + 0.114 * bgColor.getBlue()) * bgColor.getOpacity();
+
+        // Set the text fill based on the brightness of the background color
+        if (brightness > 0.5) {
+            messageBody.setTextFill(Color.valueOf("#333333"));
+        } else {
+            messageBody.setTextFill(Color.WHITE);
+        }
+
+        messageTimeStamp.setAlignment(Pos.BOTTOM_LEFT);
         messageTimeStamp.setMinWidth(70.0);
         messageTimeStamp.setNodeOrientation(NodeOrientation.INHERIT);
         messageTimeStamp.setText(getMessageTime());
-        messageTimeStamp.setTextFill(javafx.scene.paint.Color.valueOf("#697579"));
+        messageTimeStamp.setTextFill(Color.valueOf("#697579"));
         hBox.setPadding(new Insets(0.0, 10.0, 0.0, 10.0));
 
         getColumnConstraints().add(columnConstraints);

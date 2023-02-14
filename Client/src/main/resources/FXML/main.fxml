@@ -177,44 +177,36 @@
             <ColumnConstraints maxWidth="1.7976931348623157E308" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="60.0" minHeight="60.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints vgrow="NEVER" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
             <StackPane fx:id="tabContentArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bottom-left" stylesheets="@../styling/main.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="3.0" />
                </GridPane.margin>
             </StackPane>
-            <StackPane fx:id="currentUserPane" maxHeight="1.7976931348623157E308" styleClass="top-left" stylesheets="@../styling/main.css">
+            <StackPane fx:id="currentUserPane" styleClass="top-left" stylesheets="@../styling/main.css">
                <GridPane.margin>
-                  <Insets bottom="1.0" top="1.0" />
+                  <Insets bottom="1.0" />
                </GridPane.margin>
-               <children>
-                  <GridPane>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.4000244140625" minWidth="10.0" prefWidth="54.39999771118164" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.5999984741211" minWidth="10.0" prefWidth="154.40000228881837" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.79996337890623" minWidth="10.0" prefWidth="113.39999999999998" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-               </children>
             </StackPane>
          </children>
          <GridPane.margin>
             <Insets right="4.0" />
          </GridPane.margin>
       </GridPane>
-      <StackPane fx:id="conversationArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #FFFF;" styleClass="right-top" stylesheets="@../styling/main.css" GridPane.columnIndex="2">
+      <StackPane fx:id="conversationArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="right-top" stylesheets="@../styling/main.css" GridPane.columnIndex="2">
          <children>
-            <ImageView fitHeight="240.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/chats-placeholder.png" />
-               </image>
-            </ImageView>
+            <StackPane style="-fx-background-color: white;" styleClass="right-top">
+               <children>
+                  <ImageView fitHeight="240.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/chats-placeholder.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
          </children></StackPane>
    </children>
 </GridPane>

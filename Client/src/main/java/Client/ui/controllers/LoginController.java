@@ -66,25 +66,6 @@ public class LoginController implements Initializable {
                 currentUserAccount.populateCurrentUserData(loggedInUser);
                 System.out.println("Connnected");
                 RMIClientServices.registerInServer();
-                //todo populate current user model with phone number
-
-
-                new java.util.Timer().schedule(
-                        new java.util.TimerTask() {
-                            @Override
-                            public void run() {
-                                // your code here
-                                try {
-                                    List<GroupMember> members = RMIClientServices.getUsersInGroup(11);
-                                    RMIClientServices.groupMessaging(new MessageGroupEntity(11, "Hello", members, CurrentUserAccount.getMyAccount().getMobile()));
-                                    RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        },
-                        5000
-                );
 
                 MainController mainController = MainController.getInstance();
 

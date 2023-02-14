@@ -26,6 +26,7 @@ import model.GroupMessageEntity;
 import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -56,7 +57,7 @@ public class NewGroupController implements Initializable {
 
     CurrentSession currentSession = CurrentSession.getInstance();
 
-    List<FriendEntity> groupFriendList = FXCollections.observableArrayList();
+    List<FriendEntity> groupFriendList;
 
 
     @FXML
@@ -72,7 +73,7 @@ public class NewGroupController implements Initializable {
         //closing the newGroupPane
         GroupsController.getInstance().rootPane.getChildren().remove(GroupsController.getInstance().newGroupPane);
         } catch (RemoteException e) {
-            throw new RuntimeException();
+            e.printStackTrace();
         }
     }
 
@@ -122,5 +123,6 @@ public class NewGroupController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         groupImage = new Image(getClass().getResourceAsStream("/images/group-image-placeholder.png"));
         contactsToAdd = FXCollections.observableArrayList();
+        groupFriendList = new ArrayList<>();
     }
 }

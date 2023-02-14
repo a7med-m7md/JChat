@@ -147,7 +147,7 @@ public class CurrentSession {
         return groupChatsMap.get();
     }
 
-    public MapProperty<model.Group, ObservableList<GroupMessageEntity>> groupChatsMapProperty() {
+    public MapProperty<Group, ObservableList<GroupMessageEntity>> groupChatsMapProperty() {
         return groupChatsMap;
     }
 

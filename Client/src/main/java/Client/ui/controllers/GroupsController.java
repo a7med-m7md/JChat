@@ -1,12 +1,17 @@
 package Client.ui.controllers;
 
+import Client.ui.components.ConversationCard;
 import Client.ui.components.GroupConversationCard;
+import Client.ui.components.StyledChatMessage;
+import Client.ui.controllerutils.ChatType;
+import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +22,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import model.Group;
+import model.GroupMessageEntity;
+import model.MessageEntity;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +32,7 @@ import java.util.ResourceBundle;
 public class GroupsController implements Initializable {
 
     private static GroupsController instance = null;
+    private Group currentGroupChat;
 
     public static GroupsController getInstance() {
         if (instance == null) {
@@ -66,17 +74,19 @@ public class GroupsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        conversationsList.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(CurrentSession.getInstance().groupChatsMapProperty().keySet()), CurrentSession.getInstance().getGroupChatsMap()));
+        currentSession = CurrentSession.getInstance();
 
+
+        conversationsList.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(CurrentSession.getInstance().groupChatsMapProperty().keySet()), CurrentSession.getInstance().groupChatsMapProperty()));
         currentSession.currentGroupChatProperty().bind(conversationsList.getSelectionModel().selectedItemProperty());
-
+        //load conversation Pane when an item is selected
         conversationsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Group>() {
             @Override
             public void changed(ObservableValue<? extends Group> observable, Group oldValue, Group newValue) {
                 // Your action here
                 Parent conversationPane = null;
                 try {
-                    conversationPane = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
+                    conversationPane = FXMLLoader.load(getClass().getResource("/FXML/group-conversation.fxml"));
                     MainController mainController = MainController.getInstance();
                     mainController.conversationArea.getChildren().removeAll();
                     mainController.conversationArea.getChildren().setAll(conversationPane);
@@ -85,6 +95,7 @@ public class GroupsController implements Initializable {
                 }
             }
         });
+
 
         currentSession.currentGroupChatProperty().addListener((observable, oldValue, newValue) -> {
             conversationsList.getSelectionModel().select(newValue);
@@ -97,17 +108,19 @@ public class GroupsController implements Initializable {
                 if (empty || group == null) {
                     setGraphic(null);
                 } else {
-                    GroupConversationCard groupConversationCard = new GroupConversationCard(group, currentSession.groupChatsMapProperty().get(group));
+                    GroupConversationCard conversationCard = new GroupConversationCard(group, currentSession.groupChatsMapProperty().get(group));
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            setGraphic(groupConversationCard);
+                            setGraphic(conversationCard);
+                            //Scrolls Down Automatically when new messages added
                         }
                     });
                 }
             }
         });
 
+        emptyPlaceholder.visibleProperty().bind(currentSession.chatsMapProperty().emptyProperty());
 
 
 

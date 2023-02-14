@@ -34,6 +34,10 @@ public class MessageEntity implements Serializable {
         this.messageBubbleFill = "#dddfe8";
     }
 
+    public MessageEntity() {
+
+    }
+
     public String getReceiver() {
         return receiver;
     }

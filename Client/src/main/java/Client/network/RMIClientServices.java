@@ -180,7 +180,7 @@ public class RMIClientServices {
         try {
             registry = LocateRegistry.getRegistry(2233);
             ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
-            return user.createGroup(new Group(group.getName(), group.getDescription(), group.getOwner_mobile()));
+            return user.createGroup(group);
 
         } catch (NotBoundException e) {
             e.printStackTrace();

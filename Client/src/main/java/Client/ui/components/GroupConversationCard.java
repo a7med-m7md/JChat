@@ -13,6 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
 import model.Group;
 import model.GroupMessageEntity;
 import model.MessageEntity;
@@ -131,16 +132,16 @@ public class GroupConversationCard extends GridPane {
         vBox.getChildren().add(contactName);
         vBox.getChildren().add(latestMessage);
         getChildren().add(vBox);
-
+//
         ObservableList<GroupMessageEntity> chatlist = CurrentSession.getInstance().groupChatsMapProperty().get(group);
-        latestMessage.textProperty().bind(Bindings.createObjectBinding(() -> {
-            try {
-                String lastMessage = chatlist.get(chatlist.size() - 1).getMessage();
-                return lastMessage;
-            } catch (IndexOutOfBoundsException e) {
-                return "no messages yet";
-            }
-        }, CurrentSession.getInstance().chatsMapProperty().get(group)));
+//        latestMessage.textProperty().bind(Bindings.createObjectBinding(() -> {
+//            try {
+//                String lastMessage = chatlist.get(chatlist.size() - 1).getMessage();
+//                return lastMessage;
+//            } catch (IndexOutOfBoundsException e) {
+//                return "no messages yet";
+//            }
+//        }, CurrentSession.getInstance().chatsMapProperty().get(group)));
 
 //        messageTimeStamp.textProperty().bind(Bindings.createObjectBinding(() -> {
 //            try {

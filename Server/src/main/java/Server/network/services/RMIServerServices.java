@@ -2,7 +2,6 @@ package Server.network.services;
 
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
-import model.Group;
 import Server.business.services.ConnectedService;
 import Server.business.services.login.LoginService;
 import Server.business.services.login.LoginServiceImp;
@@ -123,7 +122,9 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         entity.getListMembers().forEach(member -> {
             groupMember.save(new GroupMember(member.getMobile(), saveEntity.getId()));
             try {
-                ConnectedService.clients.get(member.getMobile()).receiveGroupAddNotification(group);
+                if (ConnectedService.clients.containsKey(member.getMobile())) {
+                    ConnectedService.clients.get(member.getMobile()).receiveGroupAddNotification(group);
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

@@ -30,4 +30,5 @@ public interface ServerInt extends Remote {
     List<GroupMember> getUsersInGroup(int userId) throws RemoteException;
     void addGroupMembers(List<GroupMember> members) throws RemoteException;
     List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException;
+    boolean updateProfile(UserDto user) throws RemoteException;
 }

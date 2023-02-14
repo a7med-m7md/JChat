@@ -4,8 +4,6 @@ package Client.ui.controllers;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
-import model.GroupMember;
-import model.MessageGroupEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.UserNotFoundException;

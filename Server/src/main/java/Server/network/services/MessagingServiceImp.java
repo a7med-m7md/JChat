@@ -2,7 +2,7 @@ package Server.network.services;
 
 import Server.business.services.ConnectedService;
 import model.MessageEntity;
-import model.MessageGroupEntity;
+import model.GroupMessageEntity;
 import services.ClientServices;
 import services.MessagingService;
 
@@ -20,7 +20,7 @@ public class MessagingServiceImp extends UnicastRemoteObject implements Messagin
     }
 
     @Override
-    public void sendGroupMessage(MessageGroupEntity msg) throws RemoteException {
+    public void sendGroupMessage(GroupMessageEntity msg) throws RemoteException {
         System.out.println("From server processing:: " );
         msg.getList().stream().forEach(member->{
            if(member.getUserMobile() != msg.getSender() && ConnectedService.clients.containsKey(member.getUserMobile())){

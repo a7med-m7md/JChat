@@ -51,6 +51,26 @@ public class ConversationController implements Initializable {
     @FXML
     private TextField messageTextField;
 
+
+    @FXML
+    private ToggleButton italicToggle;
+
+    @FXML
+    private ToggleButton boldToggle;
+
+    @FXML
+    private ToggleButton underLineToggle;
+
+    @FXML
+    private ColorPicker colorPicker;
+
+    @FXML
+    private ComboBox<?> fontSizeComboBox;
+
+    @FXML
+    private ComboBox<?> fontFamilyComboBox;
+
+
     CurrentSession currentSession;
     Contact currentContactChat;
 

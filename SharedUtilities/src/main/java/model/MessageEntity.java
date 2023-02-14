@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class MessageEntity implements Serializable {
+
+
     private String receiver;
     private String sender;
     private String MSGBody;

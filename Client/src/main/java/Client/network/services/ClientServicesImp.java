@@ -10,9 +10,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import model.FriendEntity;
-import model.MessageEntity;
-import model.MessageGroupEntity;
+import model.*;
 import model.user.UserStatus;
 import services.ClientServices;
 
@@ -86,6 +84,11 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveMessageFromGroup(MessageGroupEntity msg) throws RemoteException {
         System.out.println("Group:: " + msg.getGroupId() + "MSG :: " + msg.getMessage() + "Sent from:: " + msg.getSender());
+    }
+
+    @Override
+    public void receiveGroupAddNotification(Group group) throws RemoteException {
+        System.out.println("Group :: " + group.getName() + " add send you invitation");
     }
 
 

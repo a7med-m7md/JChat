@@ -7,7 +7,6 @@ import model.Group;
 import model.GroupMember;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
-import model.group.GroupEntity;
 import model.user.UserEntity;
 
 import java.rmi.RemoteException;

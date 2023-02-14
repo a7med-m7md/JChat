@@ -3,16 +3,16 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 
-public class MessageGroupEntity implements Serializable {
+public class GroupMessageEntity implements Serializable {
     private int groupId;
     private String sender;
     private String message;
     private List<GroupMember> list;
 
-    public MessageGroupEntity() {
+    public GroupMessageEntity() {
     }
 
-    public MessageGroupEntity(int groupId, String message, List<GroupMember> list, String sender) {
+    public GroupMessageEntity(int groupId, String message, List<GroupMember> list, String sender) {
         this.groupId = groupId;
         this.message = message;
         this.list = list;

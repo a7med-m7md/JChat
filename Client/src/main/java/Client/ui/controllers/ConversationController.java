@@ -1,39 +1,30 @@
 package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
-import Client.ui.components.ContactCard;
-import Client.ui.components.ConversationCard;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
-import Client.ui.models.Message;
 import javafx.application.Platform;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import model.MessageEntity;
 import model.user.UserStatus;
 
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class ConversationController implements Initializable {
 
@@ -50,6 +41,26 @@ public class ConversationController implements Initializable {
 
     @FXML
     private TextField messageTextField;
+
+
+    @FXML
+    private ToggleButton italicToggle;
+
+    @FXML
+    private ToggleButton boldToggle;
+
+    @FXML
+    private ToggleButton underLineToggle;
+
+    @FXML
+    private ColorPicker colorPicker;
+
+    @FXML
+    private ComboBox<String> fontSizeComboBox;
+
+    @FXML
+    private ComboBox<String> fontFamilyComboBox;
+
 
     CurrentSession currentSession;
     Contact currentContactChat;
@@ -73,12 +84,21 @@ public class ConversationController implements Initializable {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             if (!messageTextField.getText().equals("")) {
                 if (currentSession.currentContactChatProperty().get() != null) {
+                    //Setting up the message to send
                     MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+                    newMessage.setMessageFontFamily(fontFamilyComboBox.getValue());
+                    newMessage.setMessageFontSize(Double.valueOf(fontSizeComboBox.getValue()));
+                    newMessage.setMessageBubbleFill(colorPicker.getValue().toString());
+                    newMessage.setUnderLineText(underLineToggle.isSelected());
+                    newMessage.setBoldText(boldToggle.isSelected());
+                    newMessage.setItalicText(italicToggle.isSelected());
+                    // Adding this message to the contact's message list
                     currentSession.chatsMapProperty().get(currentContactChat).add(newMessage);
+                    // Sending the message to the server
                     RMIClientServices.chatMessaging(newMessage);
+                    messageTextField.clear();
                 }
             }
-            messageTextField.clear();
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -157,7 +177,10 @@ public class ConversationController implements Initializable {
 
         messageTextField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                sendNewMessage();}
+                sendNewMessage();
+            }
+            //TODO new Line in Message
+
 //             else if (event.isShiftDown() && event.getCode() == KeyCode.ENTER)
 //                int caretPosition = textArea.getCaretPosition();
 //            textArea.setText(textArea.getText().substring(0, caretPosition) +
@@ -167,6 +190,17 @@ public class ConversationController implements Initializable {
 
         });
 
+        //Populating The font-families combo-box
+        ObservableList<String> fontList = FXCollections.observableList(Font.getFamilies());
+        fontFamilyComboBox.setItems(fontList);
+        fontFamilyComboBox.setValue("Segoe UI");
+
+        //populating font size combo-box
+        for (int i = 8; i <= 72; i++) {
+            fontSizeComboBox.getItems().add(Integer.toString(i));
+        }
+        fontSizeComboBox.setValue("12");
+        colorPicker.setValue(Color.rgb(221, 223, 232));
     }
 
 }

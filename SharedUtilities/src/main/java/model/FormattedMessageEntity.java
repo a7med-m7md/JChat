@@ -3,11 +3,11 @@ package model;
 import javafx.beans.property.*;
 
 public class FormattedMessageEntity extends MessageEntity{
-    private transient BooleanProperty underLine = new SimpleBooleanProperty(false);
-    private transient DoubleProperty fontSize = new SimpleDoubleProperty(14.0);
-    private transient StringProperty fontFamily = new SimpleStringProperty("Segoe UI");
-    private transient StringProperty textFill = new SimpleStringProperty("#333333");
-    private transient StringProperty bubbleFill = new SimpleStringProperty();
+//    private transient BooleanProperty underLine = new SimpleBooleanProperty(false);
+//    private transient DoubleProperty fontSize = new SimpleDoubleProperty(14.0);
+//    private transient StringProperty fontFamily = new SimpleStringProperty("Segoe UI");
+//    private transient StringProperty textFill = new SimpleStringProperty("#333333");
+//    private transient StringProperty bubbleFill = new SimpleStringProperty();
 
     private boolean underLineText;
     private double messageFontSize;
@@ -17,70 +17,50 @@ public class FormattedMessageEntity extends MessageEntity{
 
     public FormattedMessageEntity(String receiver, String sender, String MSGBody) {
         super(receiver, sender, MSGBody);
-        this.underLineText = underLine.get();
-        this.messageFontSize = fontSize.get();
-        this.messageFontFamily = fontFamily.get();
-        this.messageTextFill = textFill.get();
-        this.messageBubbleFill = bubbleFill.get();
+        this.underLineText = false;
+        this.messageFontSize = 14.0;
+        this.messageFontFamily = ("Segoe UI");
+        this.messageTextFill = "#3333333";
+        this.messageBubbleFill = "#dddfe8";
     }
 
-    public boolean isUnderLine() {
-        return underLine.get();
+    public boolean isUnderLineText() {
+        return underLineText;
     }
 
-    public BooleanProperty underLineProperty() {
-        return underLine;
+    public void setUnderLineText(boolean underLineText) {
+        this.underLineText = underLineText;
     }
 
-    public void setUnderLine(boolean underLine) {
-        this.underLine.set(underLine);
+    public double getMessageFontSize() {
+        return messageFontSize;
     }
 
-    public double getFontSize() {
-        return fontSize.get();
+    public void setMessageFontSize(double messageFontSize) {
+        this.messageFontSize = messageFontSize;
     }
 
-    public DoubleProperty fontSizeProperty() {
-        return fontSize;
+    public String getMessageFontFamily() {
+        return messageFontFamily;
     }
 
-    public void setFontSize(double fontSize) {
-        this.fontSize.set(fontSize);
+    public void setMessageFontFamily(String messageFontFamily) {
+        this.messageFontFamily = messageFontFamily;
     }
 
-    public String getFontFamily() {
-        return fontFamily.get();
+    public String getMessageTextFill() {
+        return messageTextFill;
     }
 
-    public StringProperty fontFamilyProperty() {
-        return fontFamily;
+    public void setMessageTextFill(String messageTextFill) {
+        this.messageTextFill = messageTextFill;
     }
 
-    public void setFontFamily(String fontFamily) {
-        this.fontFamily.set(fontFamily);
+    public String getMessageBubbleFill() {
+        return messageBubbleFill;
     }
 
-    public String getTextFill() {
-        return textFill.get();
-    }
-
-    public StringProperty textFillProperty() {
-        return textFill;
-    }
-
-    public void setTextFill(String textFill) {
-        this.textFill.set(textFill);
-    }
-
-    public String getBubbleFill() {
-        return bubbleFill.get();
-    }
-
-    public StringProperty bubbleFillProperty() {
-        return bubbleFill;
-    }
-
-    public void setBubbleFill(String bubbleFill) {
-        this.bubbleFill.set(bubbleFill);
+    public void setMessageBubbleFill(String messageBubbleFill) {
+        this.messageBubbleFill = messageBubbleFill;
     }
 }

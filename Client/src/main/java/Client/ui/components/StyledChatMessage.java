@@ -21,7 +21,6 @@ import java.util.Date;
 
 public class StyledChatMessage extends GridPane {
 
-
     protected final ColumnConstraints columnConstraints;
     protected final ColumnConstraints columnConstraints0;
     protected final ColumnConstraints columnConstraints1;

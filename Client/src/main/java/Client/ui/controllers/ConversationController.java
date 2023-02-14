@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import model.MessageEntity;
 import model.user.UserStatus;
 
@@ -65,10 +66,10 @@ public class ConversationController implements Initializable {
     private ColorPicker colorPicker;
 
     @FXML
-    private ComboBox<?> fontSizeComboBox;
+    private ComboBox<String> fontSizeComboBox;
 
     @FXML
-    private ComboBox<?> fontFamilyComboBox;
+    private ComboBox<String> fontFamilyComboBox;
 
 
     CurrentSession currentSession;
@@ -179,6 +180,8 @@ public class ConversationController implements Initializable {
             if (event.getCode() == KeyCode.ENTER) {
                 sendNewMessage();
             }
+            //TODO new Line in Message
+
 //             else if (event.isShiftDown() && event.getCode() == KeyCode.ENTER)
 //                int caretPosition = textArea.getCaretPosition();
 //            textArea.setText(textArea.getText().substring(0, caretPosition) +
@@ -188,6 +191,16 @@ public class ConversationController implements Initializable {
 
         });
 
+        //Populating The font-families combo-box
+        ObservableList<String> fontList = FXCollections.observableList(Font.getFamilies());
+        fontFamilyComboBox.setItems(fontList);
+        fontFamilyComboBox.setValue("Segoe UI");
+
+        //populating font size combo-box
+        for (int i = 8; i <= 72; i++) {
+            fontSizeComboBox.getItems().add(Integer.toString(i));
+        }
+        fontSizeComboBox.setValue("12");
     }
 
 }

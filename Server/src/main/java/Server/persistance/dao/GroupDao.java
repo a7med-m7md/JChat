@@ -87,11 +87,12 @@ public class GroupDao implements CRUDOperation<Group> {
 
     @Override
     public Group save(Group entity) {
-        final String SQL = "INSERT INTO jtalk.groups (name, description, owner_mobile) VALUES (?, ?, ?)";
+        final String SQL = "INSERT INTO jtalk.groups (name, description, owner_mobile, picture_g) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getDescription());
             preparedStatement.setString(3, entity.getOwner_mobile());
+            preparedStatement.setBytes(4, entity.getPicture());
             preparedStatement.executeUpdate();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 while (generatedKeys.next()) {
@@ -159,7 +160,9 @@ public class GroupDao implements CRUDOperation<Group> {
                     String description = resultSet.getString(3);
                     Time createdAt = resultSet.getTime(4);
                     String owner_mobile = resultSet.getString(5);
+                    byte[] picture = resultSet.getBytes("picture_g");
                     Group group = new Group(name, description, owner_mobile);
+                    group.setPicture(picture);
 
                     // For each group I want to add his members
                     List<GroupMember> members = getUsersInGroup(gid);

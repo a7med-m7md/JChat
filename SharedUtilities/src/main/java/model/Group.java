@@ -12,6 +12,7 @@ public class Group implements Serializable {
     private String description;
     private LocalDateTime createdAt;
     private String owner_mobile;
+    private byte[] picture;
     private List<FriendEntity> listMembers;
 
     public Group() {
@@ -21,6 +22,14 @@ public class Group implements Serializable {
         this.name = name;
         this.description = description;
         this.owner_mobile = owner_mobile;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public long getId() {

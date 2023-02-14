@@ -1,5 +1,6 @@
 package Client.network.services;
 
+import Client.model.group.Group;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllers.ConversationController;
 import Client.ui.controllerutils.ChatType;

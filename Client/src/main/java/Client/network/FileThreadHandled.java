@@ -32,10 +32,9 @@ public class FileThreadHandled implements Runnable {
         }
 
     }
-
     @Override
     public void run() {
-        while (clientSocket.isConnected()) {
+        while (clientSocket.isConnected()){
             //TODO -> read file from server as a receiver client.
             try {
                 //TODO -> read flag string or int to stop client working here
@@ -107,7 +106,6 @@ public class FileThreadHandled implements Runnable {
             return "No extension found.";
         }
     }
-
     public void sendFile(File fileToSend) {
         try {
             FileInputStream fileInputStream = new FileInputStream(fileToSend);

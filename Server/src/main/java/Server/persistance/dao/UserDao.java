@@ -100,32 +100,20 @@ public class UserDao implements CRUDOperation<UserEntity> {
 
 
     @Override
-    public Optional<UserEntity> update(UserEntity entity, int id) {
-        final String SQL = "UPDATE jtalk.users SET" +
-                "mobile = ?," +
-                "name = ?," +
-                "email=?," +
-                "picture=?," +
-                "password=?," +
-                "gender=?," +
-                "country=?," +
-                "dateOfBirth=?," +
-                "bio=?," +
-                "status=?," +
-                " WHERE id = ?";
+    public Optional<UserEntity> update(UserEntity entity, String mobile) {
+        final String SQL = "UPDATE users SET name=? , email=? , picture=? , password=? ,gender=? , country=? , dateOfBirth=? , bio=? , status=? WHERE mobile = ?";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL)){
-            preparedStatement.setString(1,entity.getMobile());
-            preparedStatement.setString(2,entity.getName());
-            preparedStatement.setString(3,entity.getEmail());
-            preparedStatement.setBytes(4,entity.getPicture());
-            preparedStatement.setString(5,entity.getPassword());
-            preparedStatement.setString(6,entity.getGender().name());
-            preparedStatement.setString(7,entity.getCountry());
-            preparedStatement.setString(8,entity.getDateOfBirth());
-            preparedStatement.setString(9,entity.getBio());
-            preparedStatement.setString(10,entity.getStatus().name());
-            preparedStatement.setInt(11,id);
+            preparedStatement.setString(1,entity.getName());
+            preparedStatement.setString(2,entity.getEmail());
+            preparedStatement.setBytes(3,entity.getPicture());
+            preparedStatement.setString(4,entity.getPassword());
+            preparedStatement.setString(5,entity.getGender().getGenderName());
+            preparedStatement.setString(6,entity.getCountry());
+            preparedStatement.setString(7,entity.getDateOfBirth());
+            preparedStatement.setString(8,entity.getBio());
+            preparedStatement.setString(9,entity.getStatus().getStatusName());
+            preparedStatement.setString(10,mobile);
             int n = preparedStatement.executeUpdate();
             if(n > 0){
                 return Optional.of(entity);
@@ -133,6 +121,11 @@ public class UserDao implements CRUDOperation<UserEntity> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UserEntity> update(UserEntity entity, int id) {
         return Optional.empty();
     }
 

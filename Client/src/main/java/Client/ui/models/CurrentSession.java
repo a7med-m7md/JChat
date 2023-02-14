@@ -25,7 +25,7 @@ public class CurrentSession {
     private MapProperty<Contact, ObservableList<StyledChatMessage>> styledChatMapProperty =
             new SimpleMapProperty<>(FXCollections.observableHashMap());
 
-    private ObservableList<Contact> onlineContactsList;
+    private ListProperty<Contact> onlineContactsList = new SimpleListProperty<>(FXCollections.observableArrayList());
     private final ObjectProperty<Contact> currentContactChat = new SimpleObjectProperty<>();
 
     private CurrentSession() {
@@ -54,6 +54,7 @@ public class CurrentSession {
     public ListProperty<Contact> requestsListProperty() {
         return requestsList;
     }
+
     public Contact getMyAccount(CurrentUserAccount currentUserAccount) {
         Contact myAccount = new Contact();
         myAccount.setName(currentUserAccount.getName());
@@ -79,19 +80,11 @@ public class CurrentSession {
         this.contactsList.set(contactsList);
     }
 
-    public ObservableList<Contact> getOnlineContactsList() {
-        return onlineContactsList;
-    }
-
-
-    public void setOnlineContactsList(ObservableList<Contact> onlineContactsList) {
-        this.onlineContactsList = onlineContactsList;
-    }
 
     public void addChat(Contact contact) {
         if (chatsMapProperty.keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(contact.getMobile())))
             ChatsController.getInstance().conversationsList.getSelectionModel().select(contact);
-            else {
+        else {
             ObservableList messages = FXCollections.observableArrayList();
             chatsMapProperty.put(contact, messages);
         }
@@ -109,9 +102,9 @@ public class CurrentSession {
 
     public Contact getContactByPhone(String phoneNumber) {
 
-        Optional<Contact> foundContact = contactsList.stream().filter((contact)->contact.getMobile().equals(phoneNumber)).findFirst();
+        Optional<Contact> foundContact = contactsList.stream().filter((contact) -> contact.getMobile().equals(phoneNumber)).findFirst();
         try {
-        return foundContact.get();
+            return foundContact.get();
         } catch (NoSuchElementException e) {
             return getMyAccount(CurrentUserAccount.getInstance());
         }

@@ -1,7 +1,10 @@
 package model.group;
 
+import model.FriendEntity;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class GroupEntity implements Serializable {
     private long id;
@@ -9,6 +12,7 @@ public class GroupEntity implements Serializable {
     private String description;
     private LocalDateTime createdAt;
     private String owner_mobile;
+    private List<FriendEntity> listMembers;
 
     public GroupEntity(String name, String description, String owner_mobile) {
         this.name = name;
@@ -54,5 +58,13 @@ public class GroupEntity implements Serializable {
 
     public void setOwner_mobile(String owner_mobile) {
         this.owner_mobile = owner_mobile;
+    }
+
+    public List<FriendEntity> getListMembers() {
+        return listMembers;
+    }
+
+    public void setListMembers(List<FriendEntity> listMembers) {
+        this.listMembers = listMembers;
     }
 }

@@ -1,5 +1,6 @@
 package Client.ui.controllers;
 
+import Client.network.RMIClientServices;
 import Client.ui.models.CurrentUserAccount;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Circle;
 import model.user.UserStatus;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -65,6 +67,14 @@ public class CurrentUserCardController implements Initializable {
             }
             return userStatus.getColor();
         }, userStatus.valueProperty()));
+
+        userStatus.valueProperty().addListener((observableValue, oldVal, newVal) -> {
+            try {
+                RMIClientServices.tellMyStatus(currentUserAccount.getMobile(),UserStatus.getStatus(userStatus.getValue()));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 
     }

@@ -41,22 +41,22 @@ public class FileTransferHandled implements Runnable{
                         break;
                     }
                     int fileNameLength = dataInputStream.readInt();
-                    System.out.println("receive operation in server with file name length ->"+fileNameLength);
+                    System.out.println("aedl ->"+fileNameLength);
                     if (fileNameLength > 0) {
                         // Byte array to hold name of file.
                         byte[] fileNameBytes = new byte[fileNameLength];
                         // Read from the input stream into the byte array.
-                        dataInputStream.read(fileNameBytes, 0, fileNameBytes.length);
+                        dataInputStream.readFully(fileNameBytes, 0, fileNameBytes.length);
                         // Create the file name from the byte array.
                         String fileName = new String(fileNameBytes);
                         // Read how much data to expect for the actual content of the file.
-                        long fileContentLength = dataInputStream.readLong();
+                        int fileContentLength = dataInputStream.readInt();
                         // If the file exists.
                         if (fileContentLength > 0) {
                             // Array to hold the file data.
-                            //byte[] fileContentBytes = new byte[fileContentLength];
+                            byte[] fileContentBytes = new byte[fileContentLength];
                             // Read from the input stream into the fileContentBytes array.
-                            //dataInputStream.readFully(fileContentBytes, 0, fileContentBytes.length);
+                            dataInputStream.readFully(fileContentBytes, 0, fileContentBytes.length);
                             //TODO -> then we need to create logic here which is used to store file in server or db then send it to the receiver client
                             /*File fileToDownload = new File(fileName);
                             fileToDownload.createNewFile();
@@ -82,7 +82,7 @@ public class FileTransferHandled implements Runnable{
                         }
                     }
                 } catch (IOException e) {
-                    //e.printStackTrace();
+                    e.printStackTrace();
                     closeResources(clientSocket,dataOutputStream,dataInputStream);
                     break;
                 }
@@ -128,7 +128,7 @@ public class FileTransferHandled implements Runnable{
         }
     }
 
-    /*public static String getFileExtension(String fileName) {
+    public static String getFileExtension(String fileName) {
         // Get the file type by using the last occurence of . (for example aboutMe.txt returns txt).
         // Will have issues with files like myFile.tar.gz.
         int i = fileName.lastIndexOf('.');
@@ -139,10 +139,11 @@ public class FileTransferHandled implements Runnable{
         } else {
             return "No extension found.";
         }
-    }*/
+    }
     private void unRegister(int userId){
         clientsWithId.remove(userId);
     }
+
     public void closeResources(Socket socket,DataOutputStream doutStream, DataInputStream dinStream){
         try {
             //TODO -> unregister client
@@ -154,10 +155,10 @@ public class FileTransferHandled implements Runnable{
                 doutStream.close();
             if (dinStream != null)
                 dinStream.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 }

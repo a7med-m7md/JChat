@@ -147,26 +147,32 @@ public class ConversationController implements Initializable {
             return currentContact == null ? "" : currentContact.getStatus().getStatusName();
         }, currentSession.currentContactChatProperty()));
 
+        currConvStatus.textProperty().bind(Bindings.createObjectBinding(() -> {
+            String selectedStatus = currentContactChat.getStatus().getStatusName();
+            if (selectedStatus == null) {
+            return "";
+            }
+                return selectedStatus;
+        }, currentContactChat.statusProperty()));
+
         currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
             Contact currentContact = currentSession.currentContactChatProperty().get();
             return currentContact == null ? null : new ImagePattern(currentContact.getImage());
         }, currentSession.currentContactChatProperty()));
 
         currConvAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
-            String selectedStatus = null;
-            Contact currentContact = currentSession.currentContactChatProperty().get();
-            if (currentContact != null)
-                selectedStatus = currentContact.getStatus().getStatusName();
+            String selectedStatus = currentContactChat.getStatus().getStatusName();
             UserStatus userStatus = UserStatus.getStatus(selectedStatus);
             if (userStatus == null) {
-                return Color.WHITE;
+                return Color.BLACK;
             }
             return userStatus.getColor();
-        }, currConvStatus.textProperty()));
+        }, currentContactChat.statusProperty()));
+
 
 
         //TODO SCROLL BUG
-        messagesListView.scrollTo(messagesListView.getItems().size() - 1);
+//        messagesListView.scrollTo(messagesListView.getItems().size() - 1);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

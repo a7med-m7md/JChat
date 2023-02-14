@@ -41,13 +41,12 @@ public class Main extends Application {
 //        ConnectionManager.getInstance().getConnection();
 
         //SocketConnection socketConnection = new SocketConnection();
-        //SocketConnection.getInstance().startConnection();
     }
 
     @Override
     public void stop() throws Exception {
         rmiConnection.disconnect();
         ConnectionManager.getInstance().close();
-        //SocketConnection.getInstance().closeResources();
+        //TODO -> close socket connection
     }
 }

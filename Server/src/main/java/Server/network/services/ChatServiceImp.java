@@ -1,6 +1,7 @@
 package Server.network.services;
 
 import Server.business.services.ConnectedService;
+import Server.persistance.dao.UserDao;
 import Server.persistance.dao.UserFriendDao;
 import exceptions.UserNotFoundException;
 import model.FriendEntity;
@@ -74,7 +75,9 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
 
     @Override
     public void tellMyStatusToFriends(String myNumber, UserStatus status) throws RemoteException {
+        UserDao userDao = new UserDao();
         //1. Update my Status in DB
+        userDao.updateUserStatus(myNumber, status);
         // todo make a method to update user status
         //2. Tell my status to friends
         List<FriendEntity> friends = friendDao.getFriendList(myNumber);

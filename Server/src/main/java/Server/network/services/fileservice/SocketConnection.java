@@ -2,7 +2,6 @@ package Server.network.services.fileservice;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,16 +9,12 @@ import java.net.Socket;
 import static utils.Constants.SOCKET_SERVER_PORT;
 
 public class SocketConnection {
+    private DataOutputStream dataOutputStream = null;
+    private  DataInputStream dataInputStream = null;
     Socket clientSocket;
     ServerSocket serverSocket;
     FileTransferHandled fileTransferHandled;
 
-/*
-    public SocketConnection() {
-        startConnection();
-
-    }
-*/
 
     private static SocketConnection socketConnection;
 
@@ -38,10 +33,9 @@ public class SocketConnection {
                     = new ServerSocket(SOCKET_SERVER_PORT);
             System.out.println(
                     "Server is Starting in Port 1200");
-
-            new Thread(
-                    () -> {
-                        while (!serverSocket.isClosed()) {
+            while (!serverSocket.isClosed()){
+                new Thread(
+                        () -> {
                             try {
                                 clientSocket = serverSocket.accept();
                                 fileTransferHandled = new FileTransferHandled(clientSocket);
@@ -49,17 +43,38 @@ public class SocketConnection {
                                 th.start();
                             } catch (IOException e) {
                                 e.printStackTrace();
-                                closeResources();
-                                break;
                             }
                         }
-                    }
-            ).start();
-
+                ).start();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             //closeResources();
         }
+        /* new Thread(() -> {
+                while (true){
+                    try {
+                        serverSocket
+                                = new ServerSocket(SOCKET_SERVER_PORT);
+                        System.out.println(
+                                "Server is Starting in Port 1200");
+                        clientSocket = serverSocket.accept();
+                        receiveFile(clientSocket);
+                        System.out.println("Connected");
+                        dataInputStream = new DataInputStream(
+                                clientSocket.getInputStream());
+                        dataOutputStream = new DataOutputStream(
+                                clientSocket.getOutputStream());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        //closeResources();
+                    }
+                }
+            }).start();*/
+    }
+    public void receiveFile(Socket clientSocket){
+        Thread th = new Thread(new FileTransferHandled(clientSocket));
+        th.start();
     }
 
 
@@ -73,6 +88,4 @@ public class SocketConnection {
             e.printStackTrace();
         }
     }
-
-
 }

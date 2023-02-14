@@ -63,6 +63,7 @@ public class ChatsController implements Initializable {
                 try {
                     conversationPane = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
                     MainController mainController = MainController.getInstance();
+                    mainController.conversationArea.getChildren().removeAll();
                     mainController.conversationArea.getChildren().setAll(conversationPane);
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -117,6 +117,7 @@ public class ConversationCard extends GridPane {
         }
         latestMessage.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         latestMessage.setTextFill(javafx.scene.paint.Color.valueOf("#9aa1aa"));
+        latestMessage.setMaxWidth(100.0);
         vBox.setPadding(new Insets(4.0, 10.0, 4.0, 10.0));
         setPadding(new Insets(10.0));
         setCursor(Cursor.HAND);
@@ -147,6 +148,16 @@ public class ConversationCard extends GridPane {
                 return lastMessage;
             } catch (IndexOutOfBoundsException e) {
                 return "no messages yet";
+            }
+        }, CurrentSession.getInstance().chatsMapProperty().get(contact)));
+
+        messageTimeStamp.textProperty().bind(Bindings.createObjectBinding(() -> {
+            try {
+
+                String lastMessageTime = chatlist.get(chatlist.size() - 1).getTime().format(formatter);
+                return lastMessageTime;
+            } catch (IndexOutOfBoundsException e) {
+                return "";
             }
         }, CurrentSession.getInstance().chatsMapProperty().get(contact)));
 

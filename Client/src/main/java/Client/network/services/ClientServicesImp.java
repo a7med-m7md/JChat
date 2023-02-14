@@ -68,7 +68,19 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveFriendStatus(String mobile, UserStatus status) throws RemoteException {
-        System.out.println("Your friend : " + mobile + " change his status to " + status);
+        CurrentSession currentSession = CurrentSession.getInstance();
+        Contact changedStatusContact =
+                currentSession.getContactsList()
+                        .stream()
+                        .filter(contact -> contact.getMobile().equals(mobile))
+                        .findFirst()
+                        .get();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                changedStatusContact.setStatus(status);
+            }
+        });
     }
 
     @Override

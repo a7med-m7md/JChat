@@ -9,77 +9,83 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxWidth="1.7976931348623157E308" prefWidth="259.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <columnConstraints>
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="110.0" vgrow="NEVER" />
-      <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
-      <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP" vgrow="ALWAYS" />
-   </rowConstraints>
+
+<StackPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" pannable="true" vbarPolicy="NEVER">
-         <content>
-            <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="75.0" spacing="10.0" styleClass="online-contact-card" stylesheets="@../styling/main.css">
-                     <children>
-                        <Circle fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Mahmoud Elsaqqa" textAlignment="CENTER" wrapText="true" />
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </HBox>
-         </content>
-         <effect>
-            <DropShadow radius="4.75" width="0.0">
-               <color>
-                  <Color red="0.8657943606376648" green="0.8815813660621643" blue="0.8973684310913086" />
-               </color>
-            </DropShadow>
-         </effect>
-      </ScrollPane>
-      <GridPane GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets bottom="4.0" left="4.0" top="7.0" />
-         </GridPane.margin>
+      <GridPane maxWidth="1.7976931348623157E308" prefWidth="259.0" style="-fx-background-color: white;">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="110.0" vgrow="NEVER" />
+            <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
+            <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <Label text="Chats" textFill="#5a6571">
-               <font>
-                  <Font name="Segoe UI Semibold" size="14.0" />
-               </font>
-               <padding>
-                  <Insets left="2.0" />
-               </padding>
-            </Label>
+            <ScrollPane fitToHeight="true" hbarPolicy="NEVER" pannable="true" vbarPolicy="NEVER">
+               <content>
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="75.0" spacing="10.0" styleClass="online-contact-card" stylesheets="@../styling/main.css">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="20.0" stroke="#62ff32" strokeType="INSIDE" strokeWidth="2.0" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Mahmoud Elsaqqa" textAlignment="CENTER" wrapText="true" />
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+               <effect>
+                  <DropShadow radius="4.75" width="0.0">
+                     <color>
+                        <Color red="0.8657943606376648" green="0.8815813660621643" blue="0.8973684310913086" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ScrollPane>
+            <GridPane GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="4.0" left="4.0" top="7.0" />
+               </GridPane.margin>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Chats" textFill="#5a6571">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </GridPane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" GridPane.vgrow="SOMETIMES">
+               <content>
+                  <ListView fx:id="conversationsList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+               </content>
+            </ScrollPane>
          </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
       </GridPane>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" GridPane.vgrow="SOMETIMES">
-         <content>
-            <ListView fx:id="conversationsList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-         </content>
-      </ScrollPane>
    </children>
-   <padding>
-      <Insets left="5.0" right="5.0" />
-   </padding>
-</GridPane>
+</StackPane>

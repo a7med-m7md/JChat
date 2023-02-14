@@ -42,10 +42,10 @@ public class ContactCard extends GridPane {
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(Double.MAX_VALUE);
-        setPrefHeight(69.0);
+        setPrefHeight(55.0);
         setStyle("-fx-background-color: transparent;");
         getStyleClass().add("chat-card");
-        getStylesheets().add("/fxml/../styling/main.css");
+        getStylesheets().add("../styling/main.css");
 
         columnConstraints.setFillWidth(false);
         columnConstraints.setHgrow(javafx.scene.layout.Priority.NEVER);
@@ -97,7 +97,7 @@ public class ContactCard extends GridPane {
         bio.setTextFill(javafx.scene.paint.Color.valueOf("#9aa1aa"));
         vBox.setPadding(new Insets(4.0, 10.0, 4.0, 5.0));
         bio.setFont(new Font("Segoe UI", 10.0));
-        setPadding(new Insets(5.0));
+        setPadding(new Insets(2.0));
         setCursor(Cursor.HAND);
 
         getColumnConstraints().add(columnConstraints);

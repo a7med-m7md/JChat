@@ -10,12 +10,13 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class FileThreadHandled implements Runnable{
+public class FileThreadHandled implements Runnable {
     Socket clientSocket;
     int userId;
     DataOutputStream dataOutputStream = null;
     DataInputStream dataInputStream = null;
-    public FileThreadHandled(Socket clientSocket,int userId){
+
+    public FileThreadHandled(Socket clientSocket, int userId) {
         this.clientSocket = clientSocket;
         this.userId = userId;
         try {
@@ -31,44 +32,44 @@ public class FileThreadHandled implements Runnable{
         }
 
     }
+
     @Override
     public void run() {
-        while (clientSocket.isConnected()){
+        while (clientSocket.isConnected()) {
             //TODO -> read file from server as a receiver client.
             try {
                 int fileNameLength = dataInputStream.readInt();
-                System.out.println("aedl ->"+fileNameLength);
+                System.out.println("aedl ->" + fileNameLength);
                 if (fileNameLength > 0) {
-                    // Byte array to hold name of file.
                     byte[] fileNameBytes = new byte[fileNameLength];
-                    // Read from the input stream into the byte array.
                     dataInputStream.readFully(fileNameBytes, 0, fileNameBytes.length);
-                    // Create the file name from the byte array.
                     String fileName = new String(fileNameBytes);
-                    // Read how much data to expect for the actual content of the file.
-                    int fileContentLength = dataInputStream.readInt();
-                    // If the file exists.
+                    long fileContentLength = dataInputStream.readLong();
                     if (fileContentLength > 0) {
-                        // Array to hold the file data.
-                        byte[] fileContentBytes = new byte[fileContentLength];
-                        // Read from the input stream into the fileContentBytes array.
-                        dataInputStream.readFully(fileContentBytes, 0, fileContentBytes.length);
                         int fileId = 10;
                         //TODO -> create path for the received file in client
-                        String path = "F:\\test"+"\\"+fileName+"."+getFileExtension(fileName);
-
+                        String path = "F:\\testt"+"\\"+fileName+"."+getFileExtension(fileName);
                         File receivedLocalFile = new File(path);
                         receivedLocalFile.createNewFile();
                         FileOutputStream fileOutputStream = new FileOutputStream(receivedLocalFile);
-//                        ByteBuffer byteBuffer = ByteBuffer.allocate(800000);
-                        fileOutputStream.write(fileContentBytes);
-                        fileOutputStream.flush();
+                        //TODO -> with unlimited size
+                        int readBytes = 0;
+                        byte[] buffer = new byte[4 * 1024];
+                        while (fileContentLength > 0
+                                && (readBytes = dataInputStream.read(
+                                buffer, 0,
+                                (int) Math.min(buffer.length, fileContentLength)))
+                                != -1) {
+                            // Here we write the file using write method
+                            fileOutputStream.write(buffer, 0, readBytes);
+                            fileContentLength -= readBytes;
+                            //fileOutputStream.flush();
+                        }
                         fileOutputStream.close();
-//                        Files.write(Path.of(path),fileContentBytes, StandardOpenOption.APPEND);
                         System.out.println("success save local file");
-
-                        FileEntity fileEntity = new FileEntity(fileId,fileName,fileContentBytes,getFileExtension(fileName));
-                        System.out.println("the received file name -> "+fileEntity.getName());
+/*
+                        FileEntity fileEntity = new FileEntity(fileId, fileName, fileContentBytes, getFileExtension(fileName));
+                        System.out.println("the received file name -> " + fileEntity.getName());*/
                     }
 
                 }
@@ -79,6 +80,7 @@ public class FileThreadHandled implements Runnable{
             }
         }
     }
+
     public static String getFileExtension(String fileName) {
         // Get the file type by using the last occurence of . (for example aboutMe.txt returns txt).
         // Will have issues with files like myFile.tar.gz.
@@ -91,6 +93,7 @@ public class FileThreadHandled implements Runnable{
             return "No extension found.";
         }
     }
+
     public void sendFile(File fileToSend) {
         try {
             FileInputStream fileInputStream = new FileInputStream(fileToSend);
@@ -99,18 +102,27 @@ public class FileThreadHandled implements Runnable{
             // Convert the name of the file into an array of bytes to be sent to the server.
             byte[] fileNameBytes = fileName.getBytes();
             // Create a byte array the size of the file so don't send too little or too much data to the server.
-            byte[] fileBytes = new byte[(int) fileToSend.length()];
+            //byte[] fileBytes = new byte[(int) fileToSend.length()];
             // Put the contents of the file into the array of bytes to be sent so these bytes can be sent to the server.
-            fileInputStream.read(fileBytes);
+            //fileInputStream.read(fileBytes);
             // Send the length of the name of the file so server knows when to stop reading.
             dataOutputStream.writeInt(fileNameBytes.length);
             // Send the file name.
             dataOutputStream.write(fileNameBytes);
             // Send the length of the byte array so the server knows when to stop reading.
-            dataOutputStream.writeInt(fileBytes.length);
+            dataOutputStream.writeLong(fileToSend.length());
+            System.out.println("send operation in client side with file size -> "+fileToSend.length());
             // Send the actual file.
-            dataOutputStream.write(fileBytes);
-            dataOutputStream.flush();
+            int readBytes = 0;
+            byte[] buffer = new byte[4 * 1024];
+            while ((readBytes = fileInputStream.read(buffer))
+                    != -1) {
+                // Send the file to Server Socket//
+                dataOutputStream.write(buffer, 0, readBytes);
+                dataOutputStream.flush();
+            }
+            //dataOutputStream.flush();
+            //fileInputStream.close();
             //closeResources();
         } catch (IOException e) {
             e.printStackTrace();

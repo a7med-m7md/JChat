@@ -10,13 +10,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable
         ;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.*;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -70,8 +66,9 @@ public class ServicesController implements Initializable {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Occurrence");
         ObservableList<XYChart.Series<String, Double>> countryList = FXCollections.observableArrayList(countriesStatistic);
-        BarChart barChart = new BarChart<>(xAxis, yAxis);
+        StackedBarChart barChart = new StackedBarChart(xAxis, yAxis);
         barChart.setTitle("Country Statistics");
+        xAxis.getChildrenUnmodifiable();
         barChart.setData(countryList);
         chart.getChildren().clear();
         chart.getChildren().add(barChart);

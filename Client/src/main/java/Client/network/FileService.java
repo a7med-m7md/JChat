@@ -39,6 +39,10 @@ public class FileService {
         }
     }
 
+    public void stopClient(){
+        fileThreadHandled.stopClient();
+    }
+
     public void sendFile(File fileToSend){
         fileThreadHandled.sendFile(fileToSend);
     }

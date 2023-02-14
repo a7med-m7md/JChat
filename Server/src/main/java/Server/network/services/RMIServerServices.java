@@ -117,9 +117,9 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
     }
 
     @Override
-    public List<GroupEntity> getUsersInGroup(int userId) throws RemoteException {
+    public List<GroupMember> getUsersInGroup(int userId) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        List<GroupEntity> groupList = groupDao.getUsersInGroup(userId);
+        List<GroupMember> groupList = groupDao.getUsersInGroup(userId);
         return groupList;
     }
 

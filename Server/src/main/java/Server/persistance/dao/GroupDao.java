@@ -110,25 +110,21 @@ public class GroupDao implements CRUDOperation<Group> {
         return 0;
     }
 
-    public List<GroupEntity> getUsersInGroup(int id) {
-        List<GroupEntity> groupList = new ArrayList<>();
+    public List<GroupMember> getUsersInGroup(int id) {
+        List<GroupMember> groupList = new ArrayList<>();
 //        final String SQL = "select jtalk.groups.*\n" +
 //                "from jtalk.users , jtalk.group_members , jtalk.groups\n" +
 //                "where jtalk.users.id = jtalk.group_members.user_id and jtalk.groups.id = jtalk.group_members.group_id\n" +
 //                "and jtalk.users.id = ? \n" +
 //                "group by jtalk.group_members.group_id , jtalk.groups.id;";
-        final String SQL = "select jtalk.group_members g, jtalk.users u" +
-                "WHERE g.user_mobile = u.mobile AND g.group_id = ?";
+        final String SQL = "select * FROM jtalk.group_members , jtalk.users " +
+                "WHERE user_mobile = mobile AND group_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    int gid = resultSet.getInt(1);
-                    String name = resultSet.getString(2);
-                    String description = resultSet.getString(3);
-                    Time createdAt = resultSet.getTime(4);
-                    String owner_mobile = resultSet.getString(5);
-                    GroupEntity group = new GroupEntity(name, description, owner_mobile);
+                    String mobile = resultSet.getString("mobile");
+                    GroupMember group = new GroupMember(mobile, id);
                     groupList.add(group);
                 }
             }

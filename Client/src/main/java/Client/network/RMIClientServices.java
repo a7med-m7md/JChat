@@ -1,12 +1,13 @@
 package Client.network;
 
 
-
+import Client.model.group.Group;
 import Client.network.services.ClientServicesImp;
 import Client.ui.models.CurrentUserAccount;
 import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
+import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
 import model.user.UserStatus;
@@ -176,20 +177,25 @@ public class RMIClientServices {
         }
     }
 
-    public static Group createGroup(Group group) throws RemoteException, NotBoundException {
-        Registry registry;
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
-            return user.createGroup(group);
-
-    }
-
-    public static List<GroupMember> getUsersInGroup(int groupId) throws RemoteException {
+    public static GroupEntity createGroup(Group group) throws RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
             ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
-            return user.getUsersInGroup(groupId);
+            return user.createGroup(new GroupEntity(group.getName(), group.getDescription(), group.getOwner_mobile()));
+
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<GroupMember> getUsersInGroup(int userId) throws RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            return user.getUsersInGroup(userId);
 
         } catch (NotBoundException e) {
             e.printStackTrace();
@@ -198,7 +204,7 @@ public class RMIClientServices {
     }
 
 
-    public static List<Group> getAllMyGroups(String mobile) throws RemoteException {
+    public static List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);

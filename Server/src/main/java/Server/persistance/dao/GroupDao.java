@@ -1,16 +1,12 @@
 package Server.persistance.dao;
 
 
-import Server.business.services.ConnectedService;
-import model.FriendEntity;
-import model.Group;
+import Server.business.model.group.Group;
 import model.GroupMember;
 import Server.persistance.ConnectionManager;
 import Server.persistance.CRUDOperation;
 import model.group.GroupEntity;
-import model.user.UserEntity;
 
-import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,11 +92,8 @@ public class GroupDao implements CRUDOperation<Group> {
             preparedStatement.executeUpdate();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 while (generatedKeys.next()) {
-                    // add the auto-generated ID to the class.
                     int id = generatedKeys.getInt(1);
-                    entity.setId(id);
                     GroupMemberDao groupMemberDao = new GroupMemberDao();
-                    // Save Me as group member in DB.
                     groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
                 }
             }
@@ -146,11 +139,10 @@ public class GroupDao implements CRUDOperation<Group> {
         return groupList;
     }
 
-    public List<Group> getAllMyGroups(String mobile) {
-        UserDao userDao = new UserDao();
+    public List<GroupEntity> getAllMyGroups(String mobile) {
         System.out.println("Current mob:: " + mobile);
         final String SQL = "SELECT * FROM jtalk.groups , jtalk.group_members where id = group_id AND user_mobile = ?" ;
-        List<Group> listGroups = new ArrayList<>();
+        List<GroupEntity> listGroups = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setString(1, mobile);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -160,23 +152,7 @@ public class GroupDao implements CRUDOperation<Group> {
                     String description = resultSet.getString(3);
                     Time createdAt = resultSet.getTime(4);
                     String owner_mobile = resultSet.getString(5);
-                    Group group = new Group(name, description, owner_mobile);
-
-                    // For each group I want to add his members
-                    List<GroupMember> members = getUsersInGroup(gid);
-                    List<FriendEntity> currentGroupMembers = new ArrayList<>();
-                    members.forEach(member-> {
-                        Optional<UserEntity> currentMember = userDao.findByMobile(member.getUserMobile());
-                        currentGroupMembers.add(new FriendEntity(currentMember.get().getMobile(), currentMember.get().getName(), currentMember.get().getBio(), currentMember.get().getStatus(), currentMember.get().getPicture()));
-                        if(ConnectedService.clients.containsKey(currentMember.get().getMobile())){
-                            try {
-                                ConnectedService.clients.get(currentMember.get().getMobile()).receiveGroupAddNotification(group);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    group.setListMembers(currentGroupMembers);
+                    GroupEntity group = new GroupEntity(name, description, owner_mobile);
                     listGroups.add(group);
                 }
 //            preparedStatement.executeUpdate();

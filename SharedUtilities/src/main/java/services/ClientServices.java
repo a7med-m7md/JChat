@@ -1,6 +1,8 @@
 package services;
 
-import model.*;
+import model.FriendEntity;
+import model.MessageEntity;
+import model.MessageGroupEntity;
 import model.user.UserStatus;
 
 import java.rmi.Remote;
@@ -14,5 +16,4 @@ public interface ClientServices extends Remote {
     void receiveAnnouncement(String msg) throws RemoteException;
     void receiveFriendStatus(String mobile, UserStatus status) throws RemoteException;
     void receiveMessageFromGroup(MessageGroupEntity msg) throws RemoteException;
-    void receiveGroupAddNotification(Group group) throws RemoteException;
 }

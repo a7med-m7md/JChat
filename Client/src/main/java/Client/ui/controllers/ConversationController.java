@@ -76,9 +76,9 @@ public class ConversationController implements Initializable {
                     MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
                     currentSession.chatsMapProperty().get(currentContactChat).add(newMessage);
                     RMIClientServices.chatMessaging(newMessage);
+                    messageTextField.clear();
                 }
             }
-            messageTextField.clear();
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -157,7 +157,8 @@ public class ConversationController implements Initializable {
 
         messageTextField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                sendNewMessage();}
+                sendNewMessage();
+            }
 //             else if (event.isShiftDown() && event.getCode() == KeyCode.ENTER)
 //                int caretPosition = textArea.getCaretPosition();
 //            textArea.setText(textArea.getText().substring(0, caretPosition) +

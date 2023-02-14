@@ -6,9 +6,7 @@ import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.FriendEntity;
-import model.MessageEntity;
-import model.GroupMessageEntity;
+import model.*;
 import model.user.UserStatus;
 import services.ClientServices;
 
@@ -36,7 +34,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     }
 
     @Override
-    public void  receiveMessage(MessageEntity msg) throws RemoteException {
+    public void receiveMessage(MessageEntity msg) throws RemoteException {
 
         CurrentSession currentSession = CurrentSession.getInstance();
         Contact senderContact = currentSession.getContactByPhone(msg.getSender());
@@ -82,6 +80,11 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
         System.out.println("Group:: " + msg.getGroupId() + "MSG :: " + msg.getMessage() + "Sent from:: " + msg.getSender());
+    }
+
+    @Override
+    public void receiveGroupAddNotification(Group group) throws RemoteException {
+        System.out.println("Group :: " + group.getName() + " add send you invitation");
     }
 
 

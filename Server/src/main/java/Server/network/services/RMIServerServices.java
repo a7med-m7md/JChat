@@ -2,7 +2,7 @@ package Server.network.services;
 
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
-import model.Group;
+import Server.business.model.group.Group;
 import Server.business.services.ConnectedService;
 import Server.business.services.login.LoginService;
 import Server.business.services.login.LoginServiceImp;
@@ -108,24 +108,11 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         return userFriendDao.getFriendRequests(mobile);
     }
 
-
-    // create group with a members list
     @Override
-    public Group createGroup(Group entity) throws RemoteException {
-        System.out.println("==============================");
-        System.out.println("Start ADD");
+    public GroupEntity createGroup(GroupEntity entity) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        GroupMemberDao groupMember = new GroupMemberDao();
-        // Create Group
         Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_mobile());
-        Group saveEntity = groupDao.save(group);
-//        // Add members to it
-        System.out.println("TEST");
-        System.out.println(entity.getListMembers());
-        entity.getListMembers().forEach(member->{
-            System.out.println("HEE");
-            groupMember.save(new GroupMember(member.getMobile(), saveEntity.getId()));
-        });
+        groupDao.save(group);
         return entity;
     }
 
@@ -144,11 +131,9 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         });
     }
 
-    // Get all groups I subscribed in.
     @Override
-    public List<Group> getAllMyGroups(String mobile) throws RemoteException {
+    public List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        // I want to return with all members
         return groupDao.getAllMyGroups(mobile);
     }
 

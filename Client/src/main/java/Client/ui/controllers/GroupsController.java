@@ -27,6 +27,18 @@ import java.util.ResourceBundle;
 
 public class GroupsController implements Initializable {
 
+    private static GroupsController instance = null;
+
+    public static GroupsController getInstance() {
+        if (instance == null) {
+            instance = new GroupsController();
+        }
+        return instance;
+    }
+
+    private GroupsController() {
+    }
+
     @FXML
     private StackPane serverAnnouncementsPane;
 
@@ -39,20 +51,16 @@ public class GroupsController implements Initializable {
     @FXML
     private ImageView emptyPlaceholder;
 
-    CurrentSession currentSession = CurrentSession.getInstance();
+    @FXML
+    StackPane rootPane;
 
+    CurrentSession currentSession = CurrentSession.getInstance();
+    Parent newGroupPane;
     @FXML
     void newGroup(MouseEvent event) {
         try {
-            Parent newGroupScene = FXMLLoader.load(getClass().getResource("/FXML/create-group.fxml"));
-            Scene scene = new Scene(newGroupScene);
-            Stage newGroupStage = new Stage(StageStyle.UNDECORATED);
-            newGroupStage.setHeight(390);
-            newGroupStage.setWidth(570);
-            newGroupStage.setScene(scene);
-            newGroupStage.setResizable(false);
-            newGroupStage.show();
-
+            newGroupPane = FXMLLoader.load(getClass().getResource("/FXML/new-group.fxml"));
+            rootPane.getChildren().add(newGroupPane);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

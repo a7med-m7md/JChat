@@ -52,6 +52,7 @@ public class NewGroupController implements Initializable {
     @FXML
     private VBox contactsToAddListView;
 
+
     List<String> contactsToAdd;
 
     Image groupImage;
@@ -65,10 +66,9 @@ public class NewGroupController implements Initializable {
 //            GroupEntity newGroup = RMIClientServices.createGroup(groupName.getText(),groupDescription.getText(),currentSession.getMyAccount(CurrentUserAccount.getMyAccount()).getMobile());
             ObservableList<GroupMessageEntity> newGroupMessages = FXCollections.observableArrayList();
 //            currentSession.groupChatsMapProperty().put(newGroup, newGroupMessages);
-            Node node = (Node) event.getSource();
-            Scene scene = node.getScene();
-            Stage stage = (Stage) scene.getWindow();
-            stage.close();
+
+        //closing the newGroupPane
+        GroupsController.getInstance().rootPane.getChildren().remove(GroupsController.getInstance().newGroupPane);
 //        } catch (RemoteException e) {
 //            throw new RuntimeException();
 //        }
@@ -118,5 +118,6 @@ public class NewGroupController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         groupImage = new Image(getClass().getResourceAsStream("/images/group-image-placeholder.png"));
+        contactsToAdd = FXCollections.observableArrayList();
     }
 }

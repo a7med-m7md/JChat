@@ -3,6 +3,7 @@ package services;
 import exceptions.DuplicateUserException;
 import exceptions.UserNotFoundException;
 import model.FriendEntity;
+import model.Group;
 import model.GroupMember;
 import model.LoginEntity;
 import model.user.UserDto;
@@ -25,9 +26,9 @@ public interface ServerInt extends Remote {
     String disconnect(ClientInt client) throws RemoteException;
     List<FriendEntity> getAllFriends(String mobile) throws RemoteException;
     List<FriendEntity> getAllFriendsRequest(String mobile) throws RemoteException;
-    GroupEntity createGroup(GroupEntity entity) throws RemoteException;
+    Group createGroup(Group entity) throws RemoteException;
     List<GroupMember> getUsersInGroup(int userId) throws RemoteException;
     void addGroupMembers(List<GroupMember> members) throws RemoteException;
-    List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException;
+    List<Group> getAllMyGroups(String mobile) throws RemoteException;
     boolean updateProfile(UserDto user) throws RemoteException;
 }

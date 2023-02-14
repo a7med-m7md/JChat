@@ -190,7 +190,7 @@ public class RMIClientServices {
         return null;
     }
 
-    public static List<GroupEntity> getUsersInGroup(int userId) throws RemoteException {
+    public static List<GroupMember> getUsersInGroup(int userId) throws RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
@@ -253,6 +253,18 @@ public class RMIClientServices {
             chatRegistry = LocateRegistry.getRegistry(2233);
             MessagingService user = (MessagingService) chatRegistry.lookup("rmi://localhost:2233/chatMessaging");
             user.sendMessage(msg);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void groupMessaging(MessageGroupEntity msg) throws RemoteException {
+        Registry messagingRegistry;
+        try {
+            System.out.println("Message group send");
+            chatRegistry = LocateRegistry.getRegistry(2233);
+            MessagingService user = (MessagingService) chatRegistry.lookup("rmi://localhost:2233/chatMessaging");
+            user.sendGroupMessage(msg);
         } catch (NotBoundException e) {
             e.printStackTrace();
         }

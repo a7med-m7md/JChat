@@ -4,6 +4,8 @@ package Client.ui.controllers;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
+import model.GroupMember;
+import model.MessageGroupEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.UserNotFoundException;
@@ -29,6 +31,8 @@ import model.user.UserStatus;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -71,8 +75,8 @@ public class LoginController implements Initializable {
                             public void run() {
                                 // your code here
                                 try {
-                                    System.out.println(RMIClientServices.getAllMyGroups(CurrentUserAccount.getMyAccount().getMobile()));
-
+                                    List<GroupMember> members = RMIClientServices.getUsersInGroup(11);
+                                    RMIClientServices.groupMessaging(new MessageGroupEntity(11, "Hello", members, CurrentUserAccount.getMyAccount().getMobile()));
                                     RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
                                 } catch (RemoteException e) {
                                     e.printStackTrace();

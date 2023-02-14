@@ -66,9 +66,12 @@ public class ServicesController implements Initializable {
     public void loadCountries() {
         List<XYChart.Series<String, Double>> countriesStatistic = services.getCountriesStatistic(list);
         CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Country");
         NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Occurrence");
         ObservableList<XYChart.Series<String, Double>> countryList = FXCollections.observableArrayList(countriesStatistic);
         BarChart barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle("Country Statistics");
         barChart.setData(countryList);
         chart.getChildren().clear();
         chart.getChildren().add(barChart);

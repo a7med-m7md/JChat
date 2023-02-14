@@ -136,4 +136,13 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         GroupDao groupDao = new GroupDao();
         return groupDao.getAllMyGroups(mobile);
     }
+
+    @Override
+    public boolean updateProfile(UserDto user) throws RemoteException {
+        UserDao userDao = new UserDao();
+        UserMapper mapper = new UseMapperImpl();
+        UserEntity userEntity = mapper.domainToEntity(user);
+        Optional<UserEntity> updatedUser = userDao.update(userEntity, userEntity.getMobile());
+        return updatedUser.isPresent();
+    }
 }

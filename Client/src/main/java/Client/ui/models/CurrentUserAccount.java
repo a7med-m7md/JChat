@@ -5,6 +5,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelFormat;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritablePixelFormat;
 import model.user.Gender;
 import model.user.UserEntity;
 import model.user.UserStatus;
@@ -14,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.awt.image.*;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import javafx.embed.swing.SwingFXUtils;
 
@@ -211,5 +215,20 @@ public class CurrentUserAccount implements UserModel {
     public void setStatus(UserStatus status) {
         this.status.set(status);
     }
+
+    public byte[] getPictureAsBytesII(){
+        BufferedImage bImage = SwingFXUtils.fromFXImage(CurrentUserAccount.getMyAccount().getImage(), null);
+
+        // Convert the BufferedImage to a byte array
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bImage, "jpg", baos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] imageBytes = baos.toByteArray();
+        return imageBytes;
+    }
+
 }
 

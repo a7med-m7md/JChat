@@ -5,6 +5,7 @@ import Client.ui.models.CurrentSession;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -12,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import model.MessageEntity;
 import model.user.UserStatus;
 
@@ -117,6 +119,9 @@ public class ConversationCard extends GridPane {
         }
         latestMessage.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         latestMessage.setTextFill(javafx.scene.paint.Color.valueOf("#9aa1aa"));
+        latestMessage.setMaxWidth(100.0);
+        latestMessage.setAlignment(Pos.BASELINE_LEFT);
+        latestMessage.setTextAlignment(TextAlignment.LEFT);
         vBox.setPadding(new Insets(4.0, 10.0, 4.0, 10.0));
         setPadding(new Insets(10.0));
         setCursor(Cursor.HAND);
@@ -147,6 +152,16 @@ public class ConversationCard extends GridPane {
                 return lastMessage;
             } catch (IndexOutOfBoundsException e) {
                 return "no messages yet";
+            }
+        }, CurrentSession.getInstance().chatsMapProperty().get(contact)));
+
+        messageTimeStamp.textProperty().bind(Bindings.createObjectBinding(() -> {
+            try {
+
+                String lastMessageTime = chatlist.get(chatlist.size() - 1).getTime().format(formatter);
+                return lastMessageTime;
+            } catch (IndexOutOfBoundsException e) {
+                return "";
             }
         }, CurrentSession.getInstance().chatsMapProperty().get(contact)));
 

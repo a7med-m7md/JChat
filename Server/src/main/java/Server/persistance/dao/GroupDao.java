@@ -61,6 +61,11 @@ public class GroupDao implements CRUDOperation<Group> {
     }
 
     @Override
+    public Optional<Group> update(Group entity, String id) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Group> update(Group entity, int id) {
         final String SQL = "UPDATE jtalk.groups SET name = ? , descrition = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {

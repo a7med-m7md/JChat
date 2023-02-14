@@ -29,11 +29,12 @@ import javafx.util.Duration;
 import model.user.UserStatus;
 
 import java.io.*;
-
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -195,7 +196,6 @@ public class LoginController implements Initializable {
 
     public LoginEntity deserialize() {
         LoginEntity object2 = null;
-        // Path path = Files.createTempFile("testFile", ".txt");
         boolean exists = Files.exists(Path.of("cashedFile"));
         if (exists) {
             try (ObjectInputStream objIStrm = new ObjectInputStream(new

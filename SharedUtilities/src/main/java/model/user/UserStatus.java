@@ -2,10 +2,10 @@ package model.user;
 import javafx.scene.paint.Color;
 
 public enum UserStatus {
-    AVAILABLE("Available", Color.GREEN),
-    BUSY("Busy", Color.RED),
-    AWAY("Away", Color.YELLOW),
-    OFFLINE("Offline", Color.GRAY);
+    AVAILABLE("Available", Color.valueOf("#14E88F")),
+    BUSY("Busy", Color.valueOf("#FF7C5F")),
+    AWAY("Away", Color.valueOf("#E4E900")),
+    OFFLINE("Offline", Color.valueOf("#D2D2D2"));
     private String status;
     private Color color;
     UserStatus(String status, Color color) {

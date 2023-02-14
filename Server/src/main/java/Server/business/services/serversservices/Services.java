@@ -20,7 +20,7 @@ public class Services {
         }
         for (Map.Entry<String, Integer> val : hm.entrySet()) {
             XYChart.Series<String, Double> series = new XYChart.Series<>();
-            series.getData().add(new XYChart.Data<>(val.getKey() , val.getValue().doubleValue()));
+            series.getData().add(new XYChart.Data<>(val.getKey().toString() , val.getValue().doubleValue()));
             series1.add(series);
         }
         return series1;

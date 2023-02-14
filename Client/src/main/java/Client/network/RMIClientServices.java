@@ -270,6 +270,17 @@ public class RMIClientServices {
         }
     }
 
+    public static void updateInfo(UserDto userDto) throws RemoteException{
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            user.updateProfile(userDto);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void logOut(String mobile) throws RemoteException{
         Registry registry;
         try {

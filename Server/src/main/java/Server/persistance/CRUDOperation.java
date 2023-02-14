@@ -8,6 +8,7 @@ public interface CRUDOperation <T>{
 
     Optional<T> findById(int id);
 
+    Optional<T> update(T entity, String id);
     Optional<T> update(T entity, int id);
 
     T save(T entity);

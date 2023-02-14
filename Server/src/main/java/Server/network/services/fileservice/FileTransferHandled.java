@@ -13,13 +13,14 @@ public class FileTransferHandled implements Runnable{
     Socket userReceiverSocket;
     DataOutputStream receiverOutputStream;
     DataInputStream receiverInputStream;
+    int userId ;
     public FileTransferHandled(Socket clientSocket){
         this.clientSocket = clientSocket;
         try{
             dataInputStream = new DataInputStream(clientSocket.getInputStream());
             dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
             //get the user id and then store it in the map with the socket object
-            int userId = dataInputStream.readInt();
+            this.userId = dataInputStream.readInt();
             clientsWithId.put(userId,clientSocket);
         }catch (IOException exc){
             exc.printStackTrace();
@@ -32,6 +33,13 @@ public class FileTransferHandled implements Runnable{
     public void run() {
             while (clientSocket.isConnected()){
                 try {
+                    boolean isStop = dataInputStream.readBoolean();
+                    if (isStop)
+                    {
+                        unRegister(userId);
+                        closeResources(clientSocket,dataOutputStream,dataInputStream);
+                        break;
+                    }
                     int fileNameLength = dataInputStream.readInt();
                     System.out.println("receive operation in server with file name length ->"+fileNameLength);
                     if (fileNameLength > 0) {
@@ -70,11 +78,11 @@ public class FileTransferHandled implements Runnable{
                                 size -= bytes; // read upto file size
                             }*/
                             System.out.println("received file in server successfully...");
-                            sendDownloadedFileToReceiver(fileNameLength,fileNameBytes,fileContentLength,dataInputStream);
+                            sendDownloadedFileToReceiver(fileName,fileNameLength,fileNameBytes,fileContentLength,dataInputStream);
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     closeResources(clientSocket,dataOutputStream,dataInputStream);
                     break;
                 }
@@ -82,11 +90,11 @@ public class FileTransferHandled implements Runnable{
 
     }
 
-    private void sendDownloadedFileToReceiver(int fileNameLength, byte[] fileNameBytes, long fileContentLength, DataInputStream senderDataInputStream) {
+    private void sendDownloadedFileToReceiver(String fileName,int fileNameLength, byte[] fileNameBytes, long fileContentLength, DataInputStream senderDataInputStream) {
         try {
             //TODO -> get the user receiver id here and then iterate through the map to get the socket of that user
             //TODO -> we can get user receiver id from stream of the fileToSend
-            System.out.println("start send file from server to client...");
+            System.out.println("start send file from server to client... filename ->"+fileName);
             int userReceiverId = 11;
             userReceiverSocket = clientsWithId.get(userReceiverId);
             receiverOutputStream = new DataOutputStream(userReceiverSocket.getOutputStream());
@@ -97,10 +105,13 @@ public class FileTransferHandled implements Runnable{
                 receiverOutputStream.writeLong(fileContentLength);
                 int readBytes = 0;
                 byte[] buffer = new byte[4 * 1024];
-                while ((readBytes = senderDataInputStream.read(buffer))
+                int cntr =0;
+                while (fileContentLength > 0 &&(readBytes = senderDataInputStream.read(buffer))
                         != -1) {
                     // Send the file to Server Socket
                     receiverOutputStream.write(buffer, 0, readBytes);
+                    System.out.println("wrong loop in sending back ->"+cntr++);
+                    fileContentLength -= readBytes;
                     //receiverOutputStream.flush();
                 }
                 //TODO -> not close
@@ -110,13 +121,14 @@ public class FileTransferHandled implements Runnable{
             }else{
                 System.out.println("the receiver user is not connected");
             }
+            System.out.println("in server -> succes send file back to the receiver fileName ->"+fileName);
         } catch (IOException e) {
             e.printStackTrace();
             closeResources(userReceiverSocket,receiverOutputStream,receiverInputStream);
         }
     }
 
-    public static String getFileExtension(String fileName) {
+    /*public static String getFileExtension(String fileName) {
         // Get the file type by using the last occurence of . (for example aboutMe.txt returns txt).
         // Will have issues with files like myFile.tar.gz.
         int i = fileName.lastIndexOf('.');
@@ -127,20 +139,25 @@ public class FileTransferHandled implements Runnable{
         } else {
             return "No extension found.";
         }
+    }*/
+    private void unRegister(int userId){
+        clientsWithId.remove(userId);
     }
-
     public void closeResources(Socket socket,DataOutputStream doutStream, DataInputStream dinStream){
         try {
+            //TODO -> unregister client
+            //TODO -> handle when close the SERVER
+            //unRegisterClient();
             if (socket != null)
                 socket.close();
             if (doutStream != null)
                 doutStream.close();
             if (dinStream != null)
                 dinStream.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 }

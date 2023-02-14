@@ -14,12 +14,24 @@ public class SocketConnection {
     ServerSocket serverSocket;
     FileTransferHandled fileTransferHandled;
 
+/*
     public SocketConnection() {
         startConnection();
 
     }
+*/
 
-    private void startConnection() {
+    private static SocketConnection socketConnection;
+
+    private SocketConnection(){ }
+
+    public static synchronized SocketConnection getInstance( ) {
+        if (socketConnection == null)
+            socketConnection=new SocketConnection();
+        return socketConnection;
+    }
+
+    public void startConnection() {
         //use thread with waiting operation here to avoid freezing the current thread
         try {
             serverSocket
@@ -51,7 +63,7 @@ public class SocketConnection {
     }
 
 
-    private void closeResources() {
+    public void closeResources() {
         try {
             if (serverSocket != null)
                 this.serverSocket.close();
@@ -61,4 +73,6 @@ public class SocketConnection {
             e.printStackTrace();
         }
     }
+
+
 }

@@ -2,7 +2,6 @@ package Client.ui.controllers;
 
 
 import Client.network.RMIClientServices;
-import Client.ui.components.ConversationCard;
 import Client.ui.components.FriendRequestCard;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
@@ -32,13 +31,13 @@ public class RequestsController implements Initializable {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
 
             ObservableList<Contact> requestsList =
-                    FXCollections.observableArrayList(RMIClientServices.loadFriendsRequest(currentUserAccount.getPhoneNumber())
+                    FXCollections.observableArrayList(RMIClientServices.loadFriendsRequest(currentUserAccount.getMobile())
                             .stream()
                             .map(Contact::new)
                             .collect(Collectors.toList()));
             currentSession.setRequestsList(requestsList);
 
-            RMIClientServices.loadFriendsRequest(currentUserAccount.getPhoneNumber());
+            RMIClientServices.loadFriendsRequest(currentUserAccount.getMobile());
             requestsListView.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(currentSession.requestsListProperty())));
             requestsListView.setCellFactory(listView -> new ListCell<Contact>() {
                 @Override

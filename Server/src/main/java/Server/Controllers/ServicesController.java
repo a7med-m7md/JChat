@@ -1,6 +1,7 @@
 package Server.Controllers;
 
 import Server.business.services.serversservices.Services;
+import Server.network.RMIConnectionManager;
 import Server.persistance.dao.UserDao;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -35,6 +36,10 @@ public class ServicesController implements Initializable {
     @FXML
     private Button gender;
     @FXML
+    private Button onButton;
+    @FXML
+    private Button offButton;
+    @FXML
     protected PieChart pieChart;
     @FXML
     private Button announcement;
@@ -53,6 +58,7 @@ public class ServicesController implements Initializable {
         pieChartDataList = services.getCountriesStatistic(list);
         ObservableList<PieChart.Data> countryList = FXCollections.observableArrayList(pieChartDataList);
         pieChart.setData(countryList);
+
         countryList.forEach(data ->
                 data.nameProperty().bind(
                         Bindings.concat(
@@ -116,6 +122,18 @@ public class ServicesController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        onButton.setOnAction((ev)-> {
+            offButton.setDisable(false);
+            onButton.setDisable(true);
+            RMIConnectionManager.getInstance().startServices();
+        });
+
+        offButton.setOnAction((ev)-> {
+            offButton.setDisable(true);
+            onButton.setDisable(false);
+            RMIConnectionManager.getInstance().disconnect();
+        });
+
 
     }
 

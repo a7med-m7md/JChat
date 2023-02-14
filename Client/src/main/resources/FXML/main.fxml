@@ -41,7 +41,7 @@
                <children>
                   <VBox GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
                      <children>
-                        <ToggleButton fx:id="chatsToggle" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onMouseClicked="#switchChats" prefHeight="70.0" prefWidth="70.0" selected="true" styleClass="tab-button" stylesheets="@../styling/main.css">
+                        <ToggleButton fx:id="chatsToggle" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onMouseClicked="#switchChats" prefHeight="70.0" prefWidth="70.0" styleClass="tab-button" stylesheets="@../styling/main.css">
                            <graphic>
                               <VBox alignment="CENTER" spacing="9.0">
                                  <children>
@@ -208,6 +208,13 @@
             <Insets right="4.0" />
          </GridPane.margin>
       </GridPane>
-      <StackPane fx:id="conversationArea" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" />
+      <StackPane fx:id="conversationArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #FFFF;" styleClass="right-top" stylesheets="@../styling/main.css" GridPane.columnIndex="2">
+         <children>
+            <ImageView fitHeight="240.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/chats-placeholder.png" />
+               </image>
+            </ImageView>
+         </children></StackPane>
    </children>
 </GridPane>

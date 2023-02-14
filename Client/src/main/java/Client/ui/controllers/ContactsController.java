@@ -2,15 +2,12 @@ package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
 import Client.ui.components.ContactCard;
-import Client.ui.components.ConversationCard;
-import Client.ui.components.FriendRequestCard;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,12 +18,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.FriendEntity;
 
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -59,7 +54,7 @@ public class ContactsController implements Initializable {
             //Retrieving User's contacts' list by RMI into an ObservableList
             ObservableList<Contact> contactsList =
                     FXCollections.observableArrayList(RMIClientServices.
-                            loadFriends(currentUserAccount.getPhoneNumber())
+                            loadFriends(currentUserAccount.getMobile())
                             .stream()
                             .map(Contact::new)
                             .collect(Collectors.toList()));
@@ -67,12 +62,16 @@ public class ContactsController implements Initializable {
 
 //          construction of contact card to display in the list
             contactsListView.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(currentSession.contactsListProperty())));
-            currentSession.currentContactChatProperty().bind(contactsListView.getSelectionModel().selectedItemProperty());
-
+            ChatsController chatsController = ChatsController.getInstance();
             contactsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+            //binding the selected item in the contactlist to a new chat on the chats list and open conversation
             contactsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                System.out.println("Selected item: " + newValue.getName());
-                currentSession.addChat(newValue);
+                System.out.println("Selected item: " + contactsListView.getSelectionModel().getSelectedItem());
+                Contact currentContact = contactsList.stream()
+                        .filter((contact -> contact.getMobile().equals(contactsListView.getSelectionModel().getSelectedItem().getMobile()))).findFirst().get();
+                currentSession.addChat(currentContact);
+                chatsController.conversationsList.getSelectionModel().select(currentContact);
             });
 
             contactsListView.setCellFactory(listView -> new ListCell<Contact>() {
@@ -83,8 +82,14 @@ public class ContactsController implements Initializable {
                     if (empty || contact == null) {
                         setGraphic(null);
                     } else {
-                        ContactCard contactCard = new ContactCard(contact);
-                        setGraphic(contactCard);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                ContactCard contactCard = new ContactCard(contact);
+                                setGraphic(contactCard);
+                                //Scrolls Down Automatically when new messages added
+                            }
+                        });
                     }
                 }
             });

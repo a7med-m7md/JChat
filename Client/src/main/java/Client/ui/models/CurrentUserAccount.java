@@ -19,7 +19,7 @@ import javafx.embed.swing.SwingFXUtils;
 
 import javax.imageio.ImageIO;
 
-public class CurrentUserAccount {
+public class CurrentUserAccount implements UserModel {
     private StringProperty phoneNumber;
     private StringProperty name;
     private StringProperty email;
@@ -67,7 +67,7 @@ public class CurrentUserAccount {
         return picture;
     }
 
-    public Image getPicture() {
+    public Image getImage() {
         return picture.get();
     }
 
@@ -104,7 +104,7 @@ public class CurrentUserAccount {
         CurrentUserAccount.myAccount = myAccount;
     }
 
-    public String getPhoneNumber() {
+    public String getMobile() {
         return phoneNumber.get();
     }
 

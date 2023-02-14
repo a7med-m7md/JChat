@@ -54,14 +54,14 @@ public class CurrentUserCardController implements Initializable {
         currentUserBio.textProperty().bind(currentUserAccount.bioProperty());
 
         currentUserAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
-            return currentUserAccount == null ? null : new ImagePattern(currentUserAccount.getPicture());
+            return currentUserAccount == null ? null : new ImagePattern(currentUserAccount.getImage());
         }));
 
         currentUserAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
             String selectedStatus = userStatus.getValue();
             UserStatus userStatus = UserStatus.getStatus(selectedStatus);
             if (userStatus == null) {
-                return Color.BLACK;
+                return Color.WHITE;
             }
             return userStatus.getColor();
         }, userStatus.valueProperty()));

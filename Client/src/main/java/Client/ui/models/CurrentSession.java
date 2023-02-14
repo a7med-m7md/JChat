@@ -1,20 +1,28 @@
 package Client.ui.models;
 
+import Client.ui.components.StyledChatMessage;
+import Client.ui.controllers.ChatsController;
 import Client.ui.controllers.MainController;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.image.Image;
+import model.MessageEntity;
 import model.user.UserEntity;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class CurrentSession {
     private static final CurrentSession currentSession = new CurrentSession();
-    SimpleObjectProperty<CurrentUserAccount> myAccount;
     //    private ObservableList<Contact> contactsList = FXCollections.observableArrayList();
     private ListProperty<Contact> contactsList = new SimpleListProperty<>(FXCollections.observableArrayList());
     private ListProperty<Contact> requestsList = new SimpleListProperty<>(FXCollections.observableArrayList());
-    private MapProperty<Contact, ObservableList<Message>> chatsMapProperty =
+    private MapProperty<Contact, ObservableList<MessageEntity>> chatsMapProperty =
+            new SimpleMapProperty<>(FXCollections.observableHashMap());
+
+    private MapProperty<Contact, ObservableList<StyledChatMessage>> styledChatMapProperty =
             new SimpleMapProperty<>(FXCollections.observableHashMap());
 
     private ObservableList<Contact> onlineContactsList;
@@ -27,6 +35,17 @@ public class CurrentSession {
         return currentSession;
     }
 
+    public ObservableMap<Contact, ObservableList<StyledChatMessage>> getStyledChatMapProperty() {
+        return styledChatMapProperty.get();
+    }
+
+    public MapProperty<Contact, ObservableList<StyledChatMessage>> styledChatMapPropertyProperty() {
+        return styledChatMapProperty;
+    }
+
+    public void setStyledChatMapProperty(ObservableMap<Contact, ObservableList<StyledChatMessage>> styledChatMapProperty) {
+        this.styledChatMapProperty.set(styledChatMapProperty);
+    }
 
     public ObservableList<Contact> getRequestsList() {
         return requestsList.get();
@@ -34,6 +53,14 @@ public class CurrentSession {
 
     public ListProperty<Contact> requestsListProperty() {
         return requestsList;
+    }
+    public Contact getMyAccount(CurrentUserAccount currentUserAccount) {
+        Contact myAccount = new Contact();
+        myAccount.setName(currentUserAccount.getName());
+        myAccount.setBio(currentUserAccount.getBio());
+        myAccount.setStatus(currentUserAccount.getStatus());
+        myAccount.setPicture(currentUserAccount.getImage());
+        return myAccount;
     }
 
     public void setRequestsList(ObservableList<Contact> requestsList) {
@@ -62,10 +89,12 @@ public class CurrentSession {
     }
 
     public void addChat(Contact contact) {
-        ObservableList messages = FXCollections.observableArrayList();
-        if (!chatsMapProperty.containsKey(contact))
+        if (chatsMapProperty.keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(contact.getMobile())))
+            ChatsController.getInstance().conversationsList.getSelectionModel().select(contact);
+            else {
+            ObservableList messages = FXCollections.observableArrayList();
             chatsMapProperty.put(contact, messages);
-        else currentContactChat.set(contact);
+        }
         MainController mainController = MainController.getInstance();
         mainController.switchTab("chats", "/FXML/chats.fxml");
     }
@@ -74,8 +103,18 @@ public class CurrentSession {
         return currentContactChat;
     }
 
-    public MapProperty<Contact, ObservableList<Message>> chatsMapProperty() {
+    public MapProperty<Contact, ObservableList<MessageEntity>> chatsMapProperty() {
         return chatsMapProperty;
+    }
+
+    public Contact getContactByPhone(String phoneNumber) {
+
+        Optional<Contact> foundContact = contactsList.stream().filter((contact)->contact.getMobile().equals(phoneNumber)).findFirst();
+        try {
+        return foundContact.get();
+        } catch (NoSuchElementException e) {
+            return getMyAccount(CurrentUserAccount.getInstance());
+        }
     }
 
 }

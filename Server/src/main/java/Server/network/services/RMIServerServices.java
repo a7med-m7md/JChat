@@ -1,13 +1,14 @@
 package Server.network.services;
 
-import Server.business.mappers.GroupMapper;
-import Server.business.mappers.GroupMapperImp;
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
 import Server.business.model.group.Group;
 import Server.business.services.ConnectedService;
+import Server.business.services.login.LoginService;
+import Server.business.services.login.LoginServiceImp;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.persistance.dao.GroupDao;
+import Server.persistance.dao.GroupMemberDao;
 import Server.persistance.dao.UserFriendDao;
 import exceptions.DuplicateUserException;
 import model.*;
@@ -16,14 +17,17 @@ import Server.persistance.dao.UserDao;
 import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
+import model.user.UserStatus;
+import services.ClientInt;
+import services.ServerInt;
 
-import java.rmi.Remote;
+import javax.security.auth.login.CredentialException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Optional;
 
-public class RMIServerServices extends UnicastRemoteObject implements Remote, ServerInt {
+public class RMIServerServices extends UnicastRemoteObject implements ServerInt {
     ConnectedService connectedService = new ConnectedService();
 
     public RMIServerServices() throws RemoteException {
@@ -33,6 +37,7 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     public UserEntity login(LoginEntity userInfo) throws UserNotFoundException {
         UserDao user = new UserDao();
         Optional<UserEntity> userEntity = user.userLogin(userInfo);
+        user.updateUserStatus(userInfo.getMobile(), UserStatus.AVAILABLE);
         if (userEntity.isPresent()) {
             System.out.println("Logged in successfully");
 //            connectedService.connected();
@@ -74,8 +79,10 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
 
 
     @Override
-    public String logout(String name) throws RemoteException {
-        return null;
+    public String logout(String mobile) throws RemoteException, CredentialException {
+        LoginService loginService = new LoginServiceImp();
+        loginService.logOut(mobile);
+        return "LogOut Successfully";
     }
 
     @Override
@@ -104,17 +111,29 @@ public class RMIServerServices extends UnicastRemoteObject implements Remote, Se
     @Override
     public GroupEntity createGroup(GroupEntity entity) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        GroupMapper groupMapper = new GroupMapperImp();
-        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_id());
+        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_mobile());
         groupDao.save(group);
         return entity;
     }
 
     @Override
-    public List<GroupEntity> getUserGroups(int userId) throws RemoteException {
+    public List<GroupMember> getUsersInGroup(int userId) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        GroupMapper groupMapper = new GroupMapperImp();
-        List<GroupEntity> groupList = groupDao.getUserGroups(userId);
+        List<GroupMember> groupList = groupDao.getUsersInGroup(userId);
         return groupList;
+    }
+
+    @Override
+    public void addGroupMembers(List<GroupMember> members) throws RemoteException {
+        GroupMemberDao groupMemberDao = new GroupMemberDao();
+        members.forEach(member->{
+            groupMemberDao.save(member);
+        });
+    }
+
+    @Override
+    public List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        return groupDao.getAllMyGroups(mobile);
     }
 }

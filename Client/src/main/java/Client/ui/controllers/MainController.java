@@ -1,5 +1,6 @@
 package Client.ui.controllers;
 
+import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.components.NotificationUI;
 import Client.ui.models.CurrentSession;
@@ -8,6 +9,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
@@ -27,12 +29,14 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.converter.NumberStringConverter;
 import model.FriendEntity;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -76,7 +80,7 @@ public class MainController implements Initializable {
     private StackPane currentUserPane;
 
     @FXML
-    private StackPane conversationArea;
+    public StackPane conversationArea;
 
     @FXML
     private StackPane sideBar;
@@ -92,8 +96,10 @@ public class MainController implements Initializable {
     StringProperty notifcationLabel = new SimpleStringProperty();
 
     @FXML
-    void logOut(MouseEvent event) {
-
+    void logOut(MouseEvent event) throws RemoteException {
+        RMIClientServices.logOut(CurrentUserAccount.getInstance().getMobile());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+        // todo switch to login contoller
     }
 
     @FXML
@@ -166,25 +172,40 @@ public class MainController implements Initializable {
         sideBar.toFront();
         // opening chats tab on startup
         try {
-            //TODO Add Notification for friend reuests
-            CurrentSession currentSession = CurrentSession.getInstance();
-            requestCount.bind(Bindings.size(currentSession.requestsListProperty()));
-            System.out.println(requestCount.get());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    //Scrolls Down Automatically when new messages added/
+                    // /TODO Add Notification for friend reuests
+                    CurrentSession currentSession = CurrentSession.getInstance();
+                    requestCount.bind(Bindings.size(currentSession.requestsListProperty()));
+                    System.out.println(requestCount.get());
 
-            BooleanBinding newNotification = requestCount.greaterThan(0);
-            requestsNotification.visibleProperty().bind(newNotification);
-            requestsNotification.textProperty().bind(requestCount.asString());
+                    BooleanBinding newNotification = requestCount.greaterThan(0);
+                    requestsNotification.visibleProperty().bind(newNotification);
+                    requestsNotification.textProperty().bind(requestCount.asString());
+                }
+            });
 
 //            requestsNotification.textProperty().bind(Bindings.convert(currentSession.requestsListProperty().sizeProperty()));
 //            notifcationLabel.bind(Bindings.convert(requestCount));
 
 
             //TODO
-            Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
-            Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
+
+            ChatsController chatsController  = ChatsController.getInstance();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/chats.fxml"));
+            loader.setController(chatsController);
+            Parent chatsPane = loader.load();
+
+//            Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
+//            Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));
             Parent currentUser = FXMLLoader.load(getClass().getResource("/FXML/current-user-card.fxml"));
-            tabContentArea.getChildren().add(chatsPane);
-            conversationArea.getChildren().add(conversations);
+            tabPanes.put("chats", chatsPane);
+
+            Parent contactsPane = FXMLLoader.load(getClass().getResource("/FXML/contacts.fxml"));
+            tabContentArea.getChildren().add(contactsPane);
+//            conversationArea.getChildren().add(conversations);
             currentUserPane.getChildren().add(currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);

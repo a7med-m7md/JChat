@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -43,7 +42,7 @@ public class NewContactController implements Initializable {
     void addContact(MouseEvent event) {
         try {
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
-            RMIClientServices.sendFriendRequest(currentUserAccount.getPhoneNumber(), contactsToAdd);
+            RMIClientServices.sendFriendRequest(currentUserAccount.getMobile(), contactsToAdd);
             System.out.println("sending to" + contactsToAdd);
             errorContainer.getChildren().setAll(new ErrorMessageUi("Requestes sent succesfully" ,false));
             contactsToAddListView.getChildren().clear();

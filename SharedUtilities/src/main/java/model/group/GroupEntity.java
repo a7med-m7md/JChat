@@ -8,12 +8,12 @@ public class GroupEntity implements Serializable {
     private String name;
     private String description;
     private LocalDateTime createdAt;
-    private long owner_id;
+    private String owner_mobile;
 
-    public GroupEntity(String name, String description, long owner_id) {
+    public GroupEntity(String name, String description, String owner_mobile) {
         this.name = name;
         this.description = description;
-        this.owner_id = owner_id;
+        this.owner_mobile = owner_mobile;
     }
 
     public long getId() {
@@ -48,11 +48,11 @@ public class GroupEntity implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public long getOwner_id() {
-        return owner_id;
+    public String getOwner_mobile() {
+        return owner_mobile;
     }
 
-    public void setOwner_id(long owner_id) {
-        this.owner_id = owner_id;
+    public void setOwner_mobile(String owner_mobile) {
+        this.owner_mobile = owner_mobile;
     }
 }

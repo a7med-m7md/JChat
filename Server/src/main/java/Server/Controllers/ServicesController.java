@@ -8,10 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.fxml.Initializable
+        ;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,6 +34,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ServicesController implements Initializable {
+
+    @FXML
+    private VBox chart;
     @FXML
     private Button online_ofline;
     @FXML
@@ -39,7 +47,7 @@ public class ServicesController implements Initializable {
     private Button onButton;
     @FXML
     private Button offButton;
-    @FXML
+
     protected PieChart pieChart;
     @FXML
     private Button announcement;
@@ -52,26 +60,26 @@ public class ServicesController implements Initializable {
         UserDao userDao = new UserDao();
         list = userDao.findAll();
         services = new Services();
+        pieChart = new PieChart();
     }
 
     public void loadCountries() {
-        pieChartDataList = services.getCountriesStatistic(list);
-        ObservableList<PieChart.Data> countryList = FXCollections.observableArrayList(pieChartDataList);
-        pieChart.setData(countryList);
-
-        countryList.forEach(data ->
-                data.nameProperty().bind(
-                        Bindings.concat(
-                                data.getName(), " ", data.pieValueProperty(), String.format("%.2f", data.getPieValue())
-                        )
-                )
-        );
+        XYChart.Series<String, Number> countriesStatistic = services.getCountriesStatistic(list);
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        BarChart barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle("Olympic gold medals in London");
+        barChart.getData().add(countriesStatistic);
+        chart.getChildren().clear();
+        chart.getChildren().add(barChart);
     }
 
     public void loadGender() {
         pieChartDataList = services.getGenderStatistic(list);
         ObservableList<PieChart.Data> genderList = FXCollections.observableArrayList(pieChartDataList);
         pieChart.setData(genderList);
+        chart.getChildren().clear();
+        chart.getChildren().add(pieChart);
         genderList.forEach(data ->
                 data.nameProperty().bind(
                         Bindings.concat(
@@ -85,6 +93,8 @@ public class ServicesController implements Initializable {
         pieChartDataList = services.getUserStatusStatistic(list);
         ObservableList<PieChart.Data> statusList = FXCollections.observableArrayList(pieChartDataList);
         pieChart.setData(statusList);
+        chart.getChildren().clear();
+        chart.getChildren().add(pieChart);
         statusList.forEach(data ->
                 data.nameProperty().bind(
                         Bindings.concat(
@@ -122,13 +132,13 @@ public class ServicesController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-        onButton.setOnAction((ev)-> {
+        onButton.setOnAction((ev) -> {
             offButton.setDisable(false);
             onButton.setDisable(true);
             RMIConnectionManager.getInstance().startServices();
         });
 
-        offButton.setOnAction((ev)-> {
+        offButton.setOnAction((ev) -> {
             offButton.setDisable(true);
             onButton.setDisable(false);
             RMIConnectionManager.getInstance().disconnect();

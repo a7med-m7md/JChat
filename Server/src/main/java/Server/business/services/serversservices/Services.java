@@ -1,6 +1,7 @@
 package Server.business.services.serversservices;
 
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.Map;
 
 public class Services {
 
-    public List<PieChart.Data> getCountriesStatistic(List<UserEntity> users) {
+    public XYChart.Series<String, Number> getCountriesStatistic(List<UserEntity> users) {
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         List<PieChart.Data> list = new ArrayList<>();
         Map<String, Integer> hm = new HashMap<String, Integer>();
         for (UserEntity user : users) {
@@ -19,8 +21,9 @@ public class Services {
         }
         for (Map.Entry<String, Integer> val : hm.entrySet()) {
             list.add(new PieChart.Data(val.getKey(), val.getValue().doubleValue()));
+            series1.getData().add(new XYChart.Data<>(val.getKey() , val.getValue().doubleValue()));
         }
-        return list;
+        return series1;
     }
 
     public List<PieChart.Data> getGenderStatistic(List<UserEntity> users) {

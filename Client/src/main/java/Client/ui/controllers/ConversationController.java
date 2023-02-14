@@ -1,41 +1,30 @@
 package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
-import Client.ui.components.ContactCard;
-import Client.ui.components.ConversationCard;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
-import Client.ui.models.Message;
 import javafx.application.Platform;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import model.FormattedMessageEntity;
 import model.MessageEntity;
 import model.user.UserStatus;
 
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class ConversationController implements Initializable {
 
@@ -96,7 +85,7 @@ public class ConversationController implements Initializable {
             if (!messageTextField.getText().equals("")) {
                 if (currentSession.currentContactChatProperty().get() != null) {
                     //Setting up the message to send
-                    FormattedMessageEntity newMessage = new FormattedMessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
+                    MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
                     newMessage.setMessageFontFamily(fontFamilyComboBox.getValue());
                     newMessage.setMessageBubbleFill(colorPicker.getValue().toString());
                     newMessage.setUnderLineText(underLineToggle.isSelected());

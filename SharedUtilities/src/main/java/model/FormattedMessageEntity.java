@@ -10,6 +10,8 @@ public class FormattedMessageEntity extends MessageEntity{
 //    private transient StringProperty bubbleFill = new SimpleStringProperty();
 
     private boolean underLineText;
+    private boolean boldText;
+    private boolean italicText;
     private double messageFontSize;
     private String messageFontFamily;
     private String messageTextFill;
@@ -22,6 +24,8 @@ public class FormattedMessageEntity extends MessageEntity{
         this.messageFontFamily = ("Segoe UI");
         this.messageTextFill = "#3333333";
         this.messageBubbleFill = "#dddfe8";
+        this.boldText = false;
+        this.italicText = false;
     }
 
     public boolean isUnderLineText() {
@@ -62,5 +66,21 @@ public class FormattedMessageEntity extends MessageEntity{
 
     public void setMessageBubbleFill(String messageBubbleFill) {
         this.messageBubbleFill = messageBubbleFill;
+    }
+
+    public boolean isBoldText() {
+        return boldText;
+    }
+
+    public void setBoldText(boolean boldText) {
+        this.boldText = boldText;
+    }
+
+    public boolean isItalicText() {
+        return italicText;
+    }
+
+    public void setItalicText(boolean italicText) {
+        this.italicText = italicText;
     }
 }

@@ -6,14 +6,11 @@ import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
-import Client.ui.models.Group;
 import exceptions.UserNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -21,14 +18,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+
 import model.FriendEntity;
+import model.Group;
 import model.GroupMessageEntity;
 
 import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,19 +56,24 @@ public class NewGroupController implements Initializable {
 
     CurrentSession currentSession = CurrentSession.getInstance();
 
+    List<FriendEntity> groupFriendList = FXCollections.observableArrayList();
+
 
     @FXML
     void createGroup(MouseEvent event) {
-//        try {
-//            GroupEntity newGroup = RMIClientServices.createGroup(groupName.getText(),groupDescription.getText(),currentSession.getMyAccount(CurrentUserAccount.getMyAccount()).getMobile());
+        try {
+            Group newGroup = new Group(groupName.getText(),groupDescription.getText(),CurrentUserAccount.getInstance().getMobile());
+            newGroup.setListMembers(groupFriendList);
+             newGroup = RMIClientServices.createGroup(newGroup);
             ObservableList<GroupMessageEntity> newGroupMessages = FXCollections.observableArrayList();
-//            currentSession.groupChatsMapProperty().put(newGroup, newGroupMessages);
+            currentSession.groupChatsMapProperty().put(newGroup, newGroupMessages);
+
 
         //closing the newGroupPane
         GroupsController.getInstance().rootPane.getChildren().remove(GroupsController.getInstance().newGroupPane);
-//        } catch (RemoteException e) {
-//            throw new RuntimeException();
-//        }
+        } catch (RemoteException e) {
+            throw new RuntimeException();
+        }
     }
 
     @FXML
@@ -84,6 +86,7 @@ public class NewGroupController implements Initializable {
             errorContainer.getChildren().clear();
             contactsToAdd.add(newContactPhoneField.getText());
             FriendEntity newFriend = RMIClientServices.searchFriend(newContactPhoneField.getText());
+            groupFriendList.add(newFriend);
             Contact newContact = new Contact(newFriend);
             contactsToAddListView.getChildren().add(new ContactCard(newContact));
             newContactPhoneField.clear();

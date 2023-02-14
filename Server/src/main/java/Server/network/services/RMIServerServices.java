@@ -119,10 +119,8 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_mobile());
         Group saveEntity = groupDao.save(group);
 //        // Add members to it
-        System.out.println("TEST");
         System.out.println(entity.getListMembers());
-        entity.getListMembers().forEach(member->{
-            System.out.println("HEE");
+        entity.getListMembers().forEach(member -> {
             groupMember.save(new GroupMember(member.getMobile(), saveEntity.getId()));
             try {
                 ConnectedService.clients.get(member.getMobile()).receiveGroupAddNotification(group);
@@ -143,7 +141,7 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
     @Override
     public void addGroupMembers(List<GroupMember> members) throws RemoteException {
         GroupMemberDao groupMemberDao = new GroupMemberDao();
-        members.forEach(member->{
+        members.forEach(member -> {
             groupMemberDao.save(member);
         });
     }

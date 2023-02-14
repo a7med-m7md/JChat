@@ -1,8 +1,7 @@
 package Client.ui.controllers;
 
-import Client.ui.components.ConversationCard;
+import Client.ui.components.GroupConversationCard;
 import Client.ui.models.CurrentSession;
-import Client.ui.models.Group;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -12,14 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import model.Group;
 
 import java.io.IOException;
 import java.net.URL;
@@ -93,23 +90,23 @@ public class GroupsController implements Initializable {
             conversationsList.getSelectionModel().select(newValue);
         });
 
-//        conversationsList.setCellFactory(listView -> new ListCell<Group>() {
-//            @Override
-//            protected void updateItem(Group group, boolean empty) {
-//                super.updateItem(group, empty);
-//                if (empty || group == null) {
-//                    setGraphic(null);
-//                } else {
-//                    GroupConversationCard groupConversationCard = new GroupConversationCard(group, currentSession.groupChatsMapProperty().get(group));
-//                    Platform.runLater(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            setGraphic(groupConversationCard);
-//                        }
-//                    });
-//                }
-//            }
-//        });
+        conversationsList.setCellFactory(listView -> new ListCell<Group>() {
+            @Override
+            protected void updateItem(Group group, boolean empty) {
+                super.updateItem(group, empty);
+                if (empty || group == null) {
+                    setGraphic(null);
+                } else {
+                    GroupConversationCard groupConversationCard = new GroupConversationCard(group, currentSession.groupChatsMapProperty().get(group));
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setGraphic(groupConversationCard);
+                        }
+                    });
+                }
+            }
+        });
 
 
 

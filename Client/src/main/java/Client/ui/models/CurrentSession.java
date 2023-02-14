@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.image.Image;
+import model.Group;
 import model.GroupMessageEntity;
 import model.MessageEntity;
 import model.user.UserEntity;
@@ -146,7 +147,7 @@ public class CurrentSession {
         return groupChatsMap.get();
     }
 
-    public MapProperty<Group, ObservableList<GroupMessageEntity>> groupChatsMapProperty() {
+    public MapProperty<model.Group, ObservableList<GroupMessageEntity>> groupChatsMapProperty() {
         return groupChatsMap;
     }
 

@@ -3,6 +3,7 @@ package Client.network;
 
 import Client.model.group.Group;
 import Client.network.services.ClientServicesImp;
+import Client.ui.models.CurrentUserAccount;
 import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
@@ -189,18 +190,33 @@ public class RMIClientServices {
         return null;
     }
 
-    public static List<GroupEntity> getUsersGroup(int userId) throws RemoteException {
+    public static List<GroupEntity> getUsersInGroup(int userId) throws RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
             ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
-            return user.getUsersGroup(userId);
+            return user.getUsersInGroup(userId);
 
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
+    public static List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            return user.getAllMyGroups(mobile);
+
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
     public static void addGroupMembers(List<GroupMember> members) throws RemoteException {

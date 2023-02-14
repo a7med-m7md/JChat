@@ -27,6 +27,7 @@ public interface ServerInt extends Remote {
     List<FriendEntity> getAllFriends(String mobile) throws RemoteException;
     List<FriendEntity> getAllFriendsRequest(String mobile) throws RemoteException;
     GroupEntity createGroup(GroupEntity entity) throws RemoteException;
-    List<GroupEntity> getUsersGroup(int userId) throws RemoteException;
+    List<GroupEntity> getUsersInGroup(int userId) throws RemoteException;
     void addGroupMembers(List<GroupMember> members) throws RemoteException;
+    List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException;
 }

@@ -71,6 +71,8 @@ public class LoginController implements Initializable {
                             public void run() {
                                 // your code here
                                 try {
+                                    System.out.println(RMIClientServices.getAllMyGroups(CurrentUserAccount.getMyAccount().getMobile()));
+
                                     RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
                                 } catch (RemoteException e) {
                                     e.printStackTrace();

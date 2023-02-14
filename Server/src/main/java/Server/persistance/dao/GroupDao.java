@@ -110,7 +110,7 @@ public class GroupDao implements CRUDOperation<Group> {
         return 0;
     }
 
-    public List<GroupEntity> getUsersGroup(int id) {
+    public List<GroupEntity> getUsersInGroup(int id) {
         List<GroupEntity> groupList = new ArrayList<>();
 //        final String SQL = "select jtalk.groups.*\n" +
 //                "from jtalk.users , jtalk.group_members , jtalk.groups\n" +
@@ -137,4 +137,31 @@ public class GroupDao implements CRUDOperation<Group> {
         }
         return groupList;
     }
+
+    public List<GroupEntity> getAllMyGroups(String mobile) {
+        System.out.println("Current mob:: " + mobile);
+        final String SQL = "SELECT * FROM jtalk.groups , jtalk.group_members where id = group_id AND user_mobile = ?" ;
+        List<GroupEntity> listGroups = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+            preparedStatement.setString(1, mobile);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int gid = resultSet.getInt(1);
+                    String name = resultSet.getString(2);
+                    String description = resultSet.getString(3);
+                    Time createdAt = resultSet.getTime(4);
+                    String owner_mobile = resultSet.getString(5);
+                    GroupEntity group = new GroupEntity(name, description, owner_mobile);
+                    listGroups.add(group);
+                }
+//            preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listGroups;
+    }
 }
+

@@ -117,9 +117,9 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
     }
 
     @Override
-    public List<GroupEntity> getUsersGroup(int userId) throws RemoteException {
+    public List<GroupEntity> getUsersInGroup(int userId) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        List<GroupEntity> groupList = groupDao.getUsersGroup(userId);
+        List<GroupEntity> groupList = groupDao.getUsersInGroup(userId);
         return groupList;
     }
 
@@ -129,5 +129,11 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         members.forEach(member->{
             groupMemberDao.save(member);
         });
+    }
+
+    @Override
+    public List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        return groupDao.getAllMyGroups(mobile);
     }
 }

@@ -17,13 +17,21 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChatsController implements Initializable {
+
+    @FXML
+    private StackPane onlineContactsPane;
+    @FXML
+    private ImageView emptyPlaceholder;
+
 
     private static ChatsController instance = null;
 
@@ -80,7 +88,6 @@ public class ChatsController implements Initializable {
             @Override
             protected void updateItem(Contact contact, boolean empty) {
                 super.updateItem(contact, empty);
-
                 if (empty || contact == null) {
                     setGraphic(null);
                 } else {
@@ -95,6 +102,9 @@ public class ChatsController implements Initializable {
                 }
             }
         });
+
+        emptyPlaceholder.visibleProperty().bind(currentSession.chatsMapProperty().emptyProperty());
+
 
     }
 }

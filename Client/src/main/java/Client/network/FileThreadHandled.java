@@ -38,8 +38,14 @@ public class FileThreadHandled implements Runnable {
         while (clientSocket.isConnected()) {
             //TODO -> read file from server as a receiver client.
             try {
+                //TODO -> read flag string or int to stop client working here
+                //TODO -> handle in server that client is removed from hashmap
+                boolean isStop = false;
+                if (isStop){
+                    closeResources();
+                    break;
+                }
                 int fileNameLength = dataInputStream.readInt();
-                System.out.println("aedl ->" + fileNameLength);
                 if (fileNameLength > 0) {
                     byte[] fileNameBytes = new byte[fileNameLength];
                     dataInputStream.readFully(fileNameBytes, 0, fileNameBytes.length);
@@ -80,7 +86,15 @@ public class FileThreadHandled implements Runnable {
             }
         }
     }
-
+    public void stopClient(){
+        try {
+            dataOutputStream.writeBoolean(true);
+            dataOutputStream.flush();
+            //closeResources();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static String getFileExtension(String fileName) {
         // Get the file type by using the last occurence of . (for example aboutMe.txt returns txt).
         // Will have issues with files like myFile.tar.gz.
@@ -106,12 +120,13 @@ public class FileThreadHandled implements Runnable {
             // Put the contents of the file into the array of bytes to be sent so these bytes can be sent to the server.
             //fileInputStream.read(fileBytes);
             // Send the length of the name of the file so server knows when to stop reading.
+            dataOutputStream.writeBoolean(false);
             dataOutputStream.writeInt(fileNameBytes.length);
             // Send the file name.
             dataOutputStream.write(fileNameBytes);
             // Send the length of the byte array so the server knows when to stop reading.
             dataOutputStream.writeLong(fileToSend.length());
-            System.out.println("send operation in client side with file size -> "+fileToSend.length());
+            System.out.println("send operation in client side with fileName ->"+fileName);
             // Send the actual file.
             int readBytes = 0;
             byte[] buffer = new byte[4 * 1024];
@@ -121,6 +136,7 @@ public class FileThreadHandled implements Runnable {
                 dataOutputStream.write(buffer, 0, readBytes);
                 dataOutputStream.flush();
             }
+            System.out.println("in client -> finish send file to server fileName ->"+fileName);
             //dataOutputStream.flush();
             //fileInputStream.close();
             //closeResources();
@@ -131,7 +147,7 @@ public class FileThreadHandled implements Runnable {
 
     }
 
-    private void closeResources() {
+    public void closeResources() {
         try {
             //this.socket.close();
             if (clientSocket != null)

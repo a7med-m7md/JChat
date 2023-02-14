@@ -68,9 +68,7 @@ public class StyledChatMessage extends GridPane {
 
         } else if (source == MessageSource.RECIEVED) {
             setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-            if (message.getMessageBubbleFill().equals("#dddfe8"))
-                messageBubble.setStyle("-fx-background-color:  rgba(181,219,248,0.5);");
-            else
+
                 messageBubble.setStyle("-fx-background-color:" + message.getMessageBubbleFill() + ";");
 //            messageBody.setTextFill(Color.valueOf("#FFFF"));
         }
@@ -135,7 +133,7 @@ public class StyledChatMessage extends GridPane {
         messageBody.setText(message.getMSGBody());
         messageBody.setTextFill(Color.valueOf("#333333"));
         messageBody.setWrapText(true);
-        messageBody.setFont(new Font("Segoe UI", 14.0));
+        messageBody.setFont(new Font(message.getMessageFontFamily(), message.getMessageFontSize()));
         messageBody.setUnderline(message.isUnderLineText());
         if (message.isItalicText()) {
             messageBody.setFont(Font.font(messageBody.getFont().getFamily(), FontPosture.ITALIC, messageBody.getFont().getSize()));

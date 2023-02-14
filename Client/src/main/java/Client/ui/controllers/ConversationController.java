@@ -87,6 +87,7 @@ public class ConversationController implements Initializable {
                     //Setting up the message to send
                     MessageEntity newMessage = new MessageEntity(currentSession.currentContactChatProperty().get().getMobile(), currentUserAccount.getMobile(), messageTextField.getText());
                     newMessage.setMessageFontFamily(fontFamilyComboBox.getValue());
+                    newMessage.setMessageFontSize(Double.valueOf(fontSizeComboBox.getValue()));
                     newMessage.setMessageBubbleFill(colorPicker.getValue().toString());
                     newMessage.setUnderLineText(underLineToggle.isSelected());
                     newMessage.setBoldText(boldToggle.isSelected());
@@ -199,6 +200,7 @@ public class ConversationController implements Initializable {
             fontSizeComboBox.getItems().add(Integer.toString(i));
         }
         fontSizeComboBox.setValue("12");
+        colorPicker.setValue(Color.rgb(221, 223, 232));
     }
 
 }

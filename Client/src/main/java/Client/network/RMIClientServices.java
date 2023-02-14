@@ -12,24 +12,26 @@ import model.user.UserStatus;
 import services.*;
 
 import javax.security.auth.login.CredentialException;
+import java.net.MalformedURLException;
 import java.rmi.AccessException;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.List;
 
 public class RMIClientServices {
-    static Registry chatRegistry;
 
+    static String ip = "192.168.1.5";
+    static ServerInt user;
     public static UserEntity logIn(String phoneNumber, String password) throws UserNotFoundException, RemoteException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt)Naming.lookup("rmi://" + ip + ":2233/loginService");
             return user.login(new LoginEntity(phoneNumber, password));
-        } catch (NotBoundException e) {
+        } catch (NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
@@ -37,12 +39,12 @@ public class RMIClientServices {
 
 
     public static List<FriendEntity> loadFriends(String phoneNumber) throws RemoteException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             return user.getAllFriends(phoneNumber);
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
@@ -50,22 +52,20 @@ public class RMIClientServices {
 
 
     public static List<FriendEntity> loadFriendsRequest(String phoneNumber) throws RemoteException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             return user.getAllFriendsRequest(phoneNumber);
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public static void checkUserExists(String phoneNumber) throws UserNotFoundException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             user.checkUserExists(phoneNumber);
         } catch (NotBoundException e) {
             e.printStackTrace();
@@ -73,14 +73,14 @@ public class RMIClientServices {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 
     public static void checkDuplicateUser(String phoneNumber) throws DuplicateUserException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             user.checkDuplicateUser(phoneNumber);
         } catch (NotBoundException e) {
             e.printStackTrace();
@@ -88,18 +88,19 @@ public class RMIClientServices {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 
 
     public static FriendEntity searchFriend(String number) throws RemoteException {
         try {
-            if (chatRegistry == null) {
-                chatRegistry = LocateRegistry.getRegistry(2233);
-            }
-            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            ChatService user = (ChatService) Naming.lookup("rmi://" + ip + ":2233/friendRequest");
             return user.searchFriend(number);
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
@@ -109,50 +110,45 @@ public class RMIClientServices {
     public static void tellMyStatus(String number, UserStatus status) throws RemoteException {
         System.out.println("Telling ......");
         try {
-            if (chatRegistry == null) {
-                chatRegistry = LocateRegistry.getRegistry(2233);
-            }
-            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            ChatService user = (ChatService) Naming.lookup("rmi://" + ip + ":2233/friendRequest");
             user.tellMyStatusToFriends(number, status);
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
 
     public static void sendFriendRequest(String sender, List<String> receivers) throws UserNotFoundException, RemoteException, SQLException {
-
         try {
-            if (chatRegistry == null) {
-                chatRegistry = LocateRegistry.getRegistry(2233);
-            }
-            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            ChatService user = (ChatService) Naming.lookup("rmi://" + ip + ":2233/friendRequest");
             user.friendRequest(sender, receivers);
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
     public static void acceptFriendRequest(String myNumber, String requestNumber) throws RemoteException {
         try {
-            if (chatRegistry == null) {
-                chatRegistry = LocateRegistry.getRegistry(2233);
-            }
-            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            ChatService user = (ChatService) Naming.lookup("rmi://" + ip + ":2233/friendRequest");
             user.acceptFriendRequest(myNumber, requestNumber);
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
     public static void rejectFriendRequest(String myNumber, String requestNumber) throws RemoteException {
         try {
-            if (chatRegistry == null) {
-                chatRegistry = LocateRegistry.getRegistry(2233);
-            }
-            ChatService user = (ChatService) chatRegistry.lookup("rmi://localhost:2233/friendRequest");
+            ChatService user = (ChatService) Naming.lookup("rmi://" + ip + ":2233/friendRequest");
             user.rejectFriendRequest(myNumber, requestNumber);
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
@@ -160,10 +156,8 @@ public class RMIClientServices {
 
     public static void registerInServer() {
         System.out.println("Register");
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerConnection server = (ServerConnection) registry.lookup("rmi://localhost:2233/connectedService");
+            ServerConnection server = (ServerConnection) Naming.lookup("rmi://" + ip + ":2233/connectedService");
             ClientServices clientServices = new ClientServicesImp();
             server.connected(clientServices);
         } catch (NotBoundException e) {
@@ -172,30 +166,32 @@ public class RMIClientServices {
             e.printStackTrace();
         } catch (RemoteException e) {
             e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 
     public static Group createGroup(Group group) throws RemoteException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             return user.createGroup(new Group(group.getName(), group.getDescription(), group.getOwner_mobile()));
 
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public static List<GroupMember> getUsersInGroup(int userId) throws RemoteException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             return user.getUsersInGroup(userId);
 
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
@@ -203,13 +199,13 @@ public class RMIClientServices {
 
 
     public static List<Group> getAllMyGroups(String mobile) throws RemoteException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             return user.getAllMyGroups(mobile);
 
         } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
@@ -218,12 +214,10 @@ public class RMIClientServices {
 
 
     public static void addGroupMembers(List<GroupMember> members) throws RemoteException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt group = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt group = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             group.addGroupMembers(members);
-        } catch (NotBoundException e) {
+        } catch (NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
     }
@@ -232,62 +226,62 @@ public class RMIClientServices {
 
 
     public static UserEntity signUp(UserDto userObject) throws DuplicateUserException {
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            RegisterService user = (RegisterService) registry.lookup("rmi://localhost:2233/register");
+            RegisterService user = (RegisterService) Naming.lookup("rmi://" + ip + ":2233/register");
             return user.register(userObject);
         } catch (NotBoundException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public static void chatMessaging(MessageEntity msg) throws RemoteException {
-        Registry messagingRegistry;
         try {
-            chatRegistry = LocateRegistry.getRegistry(2233);
-            MessagingService user = (MessagingService) chatRegistry.lookup("rmi://localhost:2233/chatMessaging");
+            MessagingService user = (MessagingService) Naming.lookup("rmi://" + ip + ":2233/chatMessaging");
             user.sendMessage(msg);
-        } catch (NotBoundException e) {
+        } catch (NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
     public static void groupMessaging(GroupMessageEntity msg) throws RemoteException {
-        Registry messagingRegistry;
         try {
             System.out.println("Message group send");
-            chatRegistry = LocateRegistry.getRegistry(2233);
-            MessagingService user = (MessagingService) chatRegistry.lookup("rmi://localhost:2233/chatMessaging");
+            MessagingService user = (MessagingService) Naming.lookup("rmi://" + ip + ":2233/chatMessaging");
             user.sendGroupMessage(msg);
-        } catch (NotBoundException e) {
+        } catch (NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
     public static void updateInfo(UserDto userDto) throws RemoteException{
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             user.updateProfile(userDto);
-        } catch (NotBoundException e) {
+        } catch (NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
     public static void logOut(String mobile) throws RemoteException{
-        Registry registry;
         try {
-            registry = LocateRegistry.getRegistry(2233);
-            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
             user.logout(mobile);
-        } catch (NotBoundException | CredentialException e) {
+        } catch (NotBoundException | CredentialException | MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void disconnect() throws MalformedURLException, NotBoundException, RemoteException {
+        Naming.unbind("rmi://" + ip + ":2233/loginService");
+        Naming.unbind("rmi://" + ip + ":2233/chatMessaging");
+        Naming.unbind("rmi://" + ip + ":2233/register");
+        Naming.unbind("rmi://" + ip + ":2233/connectedService");
+        Naming.lookup("rmi://" + ip + ":2233/friendRequest");
     }
 
 }

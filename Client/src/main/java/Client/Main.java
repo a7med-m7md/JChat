@@ -1,6 +1,7 @@
 package Client;
 
 
+import Client.network.RMIClientServices;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -47,5 +48,10 @@ public class Main extends Application {
             fileService.startConnection();
         }*/
 
+    }
+
+    @Override
+    public void stop() throws Exception {
+        RMIClientServices.disconnect();
     }
 }

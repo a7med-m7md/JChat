@@ -51,11 +51,11 @@ public class RMIConnectionManager {
             chatService = new ChatServiceImp();
             System.out.println("Friend Request Started");
             registry.rebind("rmi://localhost:2233/friendRequest", chatService);
-//
+
             System.out.println("Chatting Service Started");
             messagingService = new MessagingServiceImp();
             registry.rebind("rmi://localhost:2233/chatMessaging", messagingService);
-//
+
             System.out.println("Register Service Started");
             registerService = new RegisterServiceImpl();
             registry.rebind("rmi://localhost:2233/register", registerService);
@@ -79,7 +79,7 @@ public class RMIConnectionManager {
                 System.out.println("Close Chat Messaging");
                 registry.unbind("rmi://localhost:2233/chatMessaging");
                 UnicastRemoteObject.unexportObject(messagingService, true);
-//
+
                 System.out.println("Close register");
                 registry.unbind("rmi://localhost:2233/register");
                 UnicastRemoteObject.unexportObject(registerService, true);

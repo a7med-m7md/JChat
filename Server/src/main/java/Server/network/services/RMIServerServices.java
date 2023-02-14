@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class RMIServerServices extends UnicastRemoteObject implements ServerInt {
-    ConnectedService connectedService = new ConnectedService();
 
     public RMIServerServices() throws RemoteException {
     }

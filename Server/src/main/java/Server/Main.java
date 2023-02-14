@@ -1,6 +1,7 @@
 package Server;
 
 
+import Server.network.services.RMIServerServices;
 import Server.network.services.fileservice.SocketConnection;
 import Server.persistance.ConnectionManager;
 import javafx.stage.FileChooser;
@@ -16,8 +17,6 @@ import java.io.IOException;
 import java.sql.Connection;
 
 public class Main extends Application {
-    Connection connection;
-    RMIConnectionManager rmiConnection;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -45,7 +44,7 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        rmiConnection.disconnect();
+        RMIConnectionManager.getInstance().disconnect();
         ConnectionManager.getInstance().close();
         //TODO -> close socket connection
     }

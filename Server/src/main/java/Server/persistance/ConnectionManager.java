@@ -48,6 +48,7 @@ public class ConnectionManager {
                 e.printStackTrace();
             }
         }
+        System.out.println("DB closed");
     }
 
     public static ConnectionManager getInstance(){

@@ -1,7 +1,5 @@
 package Server.network.services;
 
-import Server.business.mappers.GroupMapper;
-import Server.business.mappers.GroupMapperImp;
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
 import Server.business.model.group.Group;
@@ -20,9 +18,10 @@ import model.group.GroupEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
 import model.user.UserStatus;
+import services.ClientInt;
+import services.ServerInt;
 
 import javax.security.auth.login.CredentialException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -38,6 +37,7 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
     public UserEntity login(LoginEntity userInfo) throws UserNotFoundException {
         UserDao user = new UserDao();
         Optional<UserEntity> userEntity = user.userLogin(userInfo);
+        user.updateUserStatus(userInfo.getMobile(), UserStatus.AVAILABLE);
         if (userEntity.isPresent()) {
             System.out.println("Logged in successfully");
 //            connectedService.connected();
@@ -79,9 +79,9 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
 
 
     @Override
-    public String logout(String mobile, UserStatus status) throws RemoteException, CredentialException {
+    public String logout(String mobile) throws RemoteException, CredentialException {
         LoginService loginService = new LoginServiceImp();
-        loginService.logOut(mobile, UserStatus.AWAY);
+        loginService.logOut(mobile);
         return "LogOut Successfully";
     }
 
@@ -117,9 +117,9 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
     }
 
     @Override
-    public List<GroupEntity> getUsersGroup(int userId) throws RemoteException {
+    public List<GroupEntity> getUsersInGroup(int userId) throws RemoteException {
         GroupDao groupDao = new GroupDao();
-        List<GroupEntity> groupList = groupDao.getUsersGroup(userId);
+        List<GroupEntity> groupList = groupDao.getUsersInGroup(userId);
         return groupList;
     }
 
@@ -129,5 +129,11 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         members.forEach(member->{
             groupMemberDao.save(member);
         });
+    }
+
+    @Override
+    public List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException {
+        GroupDao groupDao = new GroupDao();
+        return groupDao.getAllMyGroups(mobile);
     }
 }

@@ -3,6 +3,7 @@ package Client.network;
 
 import Client.model.group.Group;
 import Client.network.services.ClientServicesImp;
+import Client.ui.models.CurrentUserAccount;
 import exceptions.DuplicateUserException;
 import model.*;
 import exceptions.UserNotFoundException;
@@ -12,6 +13,7 @@ import model.user.UserEntity;
 import model.user.UserStatus;
 import services.*;
 
+import javax.security.auth.login.CredentialException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -188,18 +190,33 @@ public class RMIClientServices {
         return null;
     }
 
-    public static List<GroupEntity> getUsersGroup(int userId) throws RemoteException {
+    public static List<GroupEntity> getUsersInGroup(int userId) throws RemoteException {
         Registry registry;
         try {
             registry = LocateRegistry.getRegistry(2233);
             ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
-            return user.getUsersGroup(userId);
+            return user.getUsersInGroup(userId);
 
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
+    public static List<GroupEntity> getAllMyGroups(String mobile) throws RemoteException {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            return user.getAllMyGroups(mobile);
+
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
     public static void addGroupMembers(List<GroupMember> members) throws RemoteException {
@@ -241,8 +258,15 @@ public class RMIClientServices {
         }
     }
 
-    public static void logOut(){
-
+    public static void logOut(String mobile) throws RemoteException{
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            ServerInt user = (ServerInt) registry.lookup("rmi://localhost:2233/loginService");
+            user.logout(mobile);
+        } catch (NotBoundException | CredentialException e) {
+            e.printStackTrace();
+        }
     }
 
 }

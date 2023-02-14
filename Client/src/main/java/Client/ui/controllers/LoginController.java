@@ -66,7 +66,8 @@ public class LoginController implements Initializable {
                 currentUserAccount.populateCurrentUserData(loggedInUser);
                 System.out.println("Connnected");
                 RMIClientServices.registerInServer();
-
+                currentUserAccount.setStatus(UserStatus.AVAILABLE);
+                RMIClientServices.tellMyStatus(currentUserAccount.getMobile(), UserStatus.AVAILABLE);
                 MainController mainController = MainController.getInstance();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));

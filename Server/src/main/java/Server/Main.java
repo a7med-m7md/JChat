@@ -1,9 +1,8 @@
 package Server;
 
 
-import Server.network.services.fileservice.SocketConnection;
+import Server.business.services.filesocket.SocketConnection;
 import Server.persistance.ConnectionManager;
-import javafx.stage.FileChooser;
 import model.UtilityClass;
 import Server.network.RMIConnectionManager;
 import javafx.application.Application;
@@ -11,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 

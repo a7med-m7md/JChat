@@ -1,9 +1,12 @@
 package model;
 
+import java.io.File;
+
 public class FileEntity {
     private int id;
     private String name;
     private byte[] content;
+    private File file;
     private String fileExtension;
 
     public FileEntity(int id, String name, byte[] content, String fileExtension) {

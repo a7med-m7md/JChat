@@ -1,4 +1,4 @@
-package Server.network.services.fileservice;
+package Server.business.services.filesocket;
 
 import java.io.*;
 import java.net.Socket;

@@ -4,6 +4,8 @@ import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.*;
@@ -83,13 +85,13 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
         CurrentSession currentSession = CurrentSession.getInstance();
                 Group messageGroup = msg.getGroup();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
                 Optional<Group> myGroup = currentSession.groupChatsMapProperty().keySet().stream()
                         .filter(group -> group.getId() == messageGroup.getId())
                         .findAny();
                 currentSession.groupChatsMapProperty().get(myGroup.get()).add(msg);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
             }
         });
 
@@ -97,8 +99,13 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveGroupAddNotification(Group group) throws RemoteException {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
         ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
         CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
+            }
+        });
     }
 
 

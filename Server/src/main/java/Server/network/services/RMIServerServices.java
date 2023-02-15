@@ -121,13 +121,6 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         System.out.println(entity.getListMembers());
         entity.getListMembers().forEach(member -> {
             groupMember.save(new GroupMember(member.getMobile(), saveEntity.getId()));
-            try {
-                if (ConnectedService.clients.containsKey(member.getMobile())) {
-                    ConnectedService.clients.get(member.getMobile()).receiveGroupAddNotification(group);
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
         });
         return entity;
     }

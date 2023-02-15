@@ -1,5 +1,6 @@
 package Client.ui.components;
 
+import Client.ui.controllerutils.ChatType;
 import Client.ui.models.CurrentSession;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -46,6 +47,7 @@ public class GroupConversationCard extends GridPane {
         vBox = new VBox();
         this.contactName = new Label();
         latestMessage = new Label();
+
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(Double.MAX_VALUE);

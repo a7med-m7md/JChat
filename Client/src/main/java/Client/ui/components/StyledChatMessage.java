@@ -56,7 +56,7 @@ public class StyledChatMessage extends GridPane {
         messageTimeStamp = new Label();
         MessageSource source = MessageSource.SENT;
 
-        if (contact.getMobile() == CurrentSession.getInstance().getMyAccount(CurrentUserAccount.getInstance()).getMobile())
+        if (message.getSender().equals(CurrentUserAccount.getInstance().getMobile()))
             source = MessageSource.SENT;
         else source = MessageSource.RECIEVED;
 

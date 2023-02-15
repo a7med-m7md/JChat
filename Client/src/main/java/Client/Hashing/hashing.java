@@ -43,7 +43,10 @@ public class hashing {
         String password = "monkey1234";
 
         String encrpt= encryptor.encryptString(password);
+        System.out.println(encrpt);
         String pass= encryptor.Decrypt(encrpt);
+
+       // System.out.println(pass);
 
     }
 }

@@ -12,6 +12,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.1</junit.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
     </properties>
 
     <dependencies>
@@ -61,6 +64,23 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+            <dependency>
+                <artifactId>com.google</artifactId>
+                <groupId>Ab</groupId>
+                <version>0.0.4.3</version>
+                <scope>system</scope>
+                <systemPath>${basedir}/lib/Ab.jar</systemPath>
+            </dependency><!--/src/main/resources-->
+
+        <dependency>
+            <groupId>com.java.iti</groupId>
+            <artifactId>Client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

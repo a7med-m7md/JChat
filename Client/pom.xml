@@ -69,11 +69,7 @@
             <version>11-ea+24</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.goldrenard</groupId>
-            <artifactId>ab</artifactId>
-            <version>1.0.7</version>
-        </dependency>
+
         <!--<dependency>
 			<artifactId>com.google</artifactId>
 			<groupId>Ab</groupId>

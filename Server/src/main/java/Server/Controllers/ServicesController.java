@@ -2,6 +2,7 @@ package Server.Controllers;
 
 import Server.business.services.serversservices.Services;
 import Server.network.RMIConnectionManager;
+import Server.network.services.fileservice.SocketConnection;
 import Server.persistance.dao.UserDao;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -142,6 +143,7 @@ public class ServicesController implements Initializable {
             offButton.setDisable(true);
             onButton.setDisable(false);
             RMIConnectionManager.getInstance().disconnect();
+            //SocketConnection.getInstance().disconnect();
         });
 
 

@@ -1,5 +1,6 @@
 package Client.ui.controllers;
 
+import Client.network.FileService;
 import Client.network.RMIClientServices;
 import Client.ui.components.ContactCard;
 import Client.ui.models.Contact;
@@ -18,7 +19,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -98,4 +101,5 @@ public class ContactsController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
 }

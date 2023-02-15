@@ -95,8 +95,8 @@ public class GroupConversationController implements Initializable {
                     newMessage.setBoldText(boldToggle.isSelected());
                     newMessage.setItalicText(italicToggle.isSelected());
                     // Adding this message to the contact's message list
-                    if(currentSession.currentGroupChatProperty()!=null)
-                    currentSession.groupChatsMapProperty().get(currentSession.currentGroupChatProperty().get()).add(newMessage);
+                    if (currentSession.currentGroupChatProperty() != null)
+                        currentSession.groupChatsMapProperty().get(currentSession.currentGroupChatProperty().get()).add(newMessage);
                     // Sending the message to the server
                     RMIClientServices.groupMessaging(newMessage);
                     messageTextField.clear();
@@ -147,14 +147,13 @@ public class GroupConversationController implements Initializable {
 
         currConvStatus.textProperty().bind(Bindings.createStringBinding(() -> {
             Group currentGroup = currentSession.currentGroupChatProperty().get();
-            return currentGroup == null ? "" : String.valueOf(currentGroup.getListMembers().size()) + "Members";
+            return currentGroup == null ? "" : String.valueOf(currentGroup.getListMembers().size()) + " Members";
         }, currentSession.currentContactChatProperty()));
 
 //        currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
 //            Contact currentContact = currentSession.currentContactChatProperty().get();
 //            return currentContact == null ? null : new ImagePattern(currentContact.getImage());
 //        }, currentSession.currentContactChatProperty()));
-
 
 
 //        //TODO SCROLL BUG

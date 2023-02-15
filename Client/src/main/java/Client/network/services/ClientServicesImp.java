@@ -13,6 +13,7 @@ import services.ClientServices;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Optional;
 
 public class ClientServicesImp extends UnicastRemoteObject implements ClientServices {
     public ClientServicesImp() throws RemoteException {
@@ -82,10 +83,14 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
         CurrentSession currentSession = CurrentSession.getInstance();
+                Group messageGroup = msg.getGroup();
+                Optional<Group> myGroup = currentSession.groupChatsMapProperty().keySet().stream()
+                        .filter(group -> group.getId() == messageGroup.getId())
+                        .findAny();
+                currentSession.groupChatsMapProperty().get(myGroup.get()).add(msg);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                currentSession.groupChatsMapProperty().get(msg.getGroup()).add(msg);
             }
         });
 

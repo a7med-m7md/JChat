@@ -21,10 +21,8 @@ public class MessagingServiceImp extends UnicastRemoteObject implements Messagin
 
     @Override
     public void sendGroupMessage(GroupMessageEntity msg) throws RemoteException {
-        System.out.println("From server processing:: ");
         msg.getList().stream().forEach(member -> {
-            if (member.getMobile() != msg.getSender() && ConnectedService.clients.containsKey(member.getMobile())) {
-                System.out.println("User Group online");
+            if (!member.getMobile().equals(msg.getSender()) && ConnectedService.clients.containsKey(member.getMobile())) {
                 try {
                     ConnectedService.clients.get(member.getMobile()).receiveMessageFromGroup(msg);
                 } catch (RemoteException e) {

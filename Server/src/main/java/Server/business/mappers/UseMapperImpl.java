@@ -1,7 +1,7 @@
 package Server.business.mappers;
 
-import model.user.UserEntity;
 import model.user.UserDto;
+import model.user.UserEntity;
 
 public class UseMapperImpl implements UserMapper{
     @Override

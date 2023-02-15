@@ -101,7 +101,7 @@ public class GroupDao implements CRUDOperation<Group> {
                     entity.setId(id);
                     GroupMemberDao groupMemberDao = new GroupMemberDao();
                     // Save Me as group member in DB.
-                    groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
+//                    groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
                 }
             }
         } catch (SQLException e) {
@@ -170,13 +170,6 @@ public class GroupDao implements CRUDOperation<Group> {
                     members.forEach(member-> {
                         Optional<UserEntity> currentMember = userDao.findByMobile(member.getUserMobile());
                         currentGroupMembers.add(new FriendEntity(currentMember.get().getMobile(), currentMember.get().getName(), currentMember.get().getBio(), currentMember.get().getStatus(), currentMember.get().getPicture()));
-                        if(ConnectedService.clients.containsKey(currentMember.get().getMobile())){
-                            try {
-                                ConnectedService.clients.get(currentMember.get().getMobile()).receiveGroupAddNotification(group);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        }
                     });
                     group.setListMembers(currentGroupMembers);
                     listGroups.add(group);

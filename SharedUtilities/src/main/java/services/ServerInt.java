@@ -8,9 +8,6 @@ import model.GroupMember;
 import model.LoginEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
-import model.user.UserStatus;
-import services.ClientInt;
-
 import javax.security.auth.login.CredentialException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;

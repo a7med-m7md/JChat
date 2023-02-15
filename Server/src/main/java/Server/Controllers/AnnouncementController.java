@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -33,7 +34,7 @@ public class AnnouncementController implements Initializable {
     @FXML
     private Button sendBtn;
     @FXML
-    private TextField msg;
+    private TextArea msg;
     public AnnouncementController() {
 
     }

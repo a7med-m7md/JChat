@@ -6,6 +6,7 @@ module Client {
     requires java.rmi;
     requires SharedUtilities;
     requires javafx.swing;
+    requires javafx.media;
 
 
     opens Client to javafx.fxml;

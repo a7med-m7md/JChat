@@ -31,8 +31,8 @@ public class RMIClientServices {
             return user.login(new LoginEntity(phoneNumber, password));
         } catch (NotBoundException | MalformedURLException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
 

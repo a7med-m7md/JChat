@@ -6,6 +6,7 @@ import Client.Hashing.Hashing;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
+import javafx.scene.input.MouseButton;
 import model.LoginEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
@@ -153,6 +154,7 @@ public class LoginController implements Initializable {
             System.out.println(loginEntity.getPassword());
             phoneNumberField.setText(loginEntity.getMobile());
             passwordField.setText(loginEntity.getPassword());
+
         } else cashPasswordAndUserName();
     }
 //        private boolean validateFields () {

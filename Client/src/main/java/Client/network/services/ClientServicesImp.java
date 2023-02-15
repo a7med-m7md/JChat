@@ -11,12 +11,17 @@ import model.*;
 import model.user.UserStatus;
 import services.ClientServices;
 
+import javax.swing.*;
+import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ClientServicesImp extends UnicastRemoteObject implements ClientServices {
+    javafx.scene.media.AudioClip clip;
+
     public ClientServicesImp() throws RemoteException {
     }
+
 
     @Override
     public String getMobile() throws RemoteException {
@@ -36,13 +41,15 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveMessage(MessageEntity msg) throws RemoteException {
-
         CurrentSession currentSession = CurrentSession.getInstance();
         Contact senderContact = currentSession.getContactByPhone(msg.getSender());
         ObservableList<MessageEntity> firstTimeChat = FXCollections.observableArrayList();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                String audioFilePath = getClass().getResource("/notification.wav").toExternalForm();
+                clip = new javafx.scene.media.AudioClip(audioFilePath);
+                clip.play();
                 if (currentSession.chatsMapProperty().keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(senderContact.getMobile()))) {
                     currentSession.chatsMapProperty().get(senderContact).add(msg);
                 } else {
@@ -59,6 +66,9 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveAnnouncement(String msg) throws RemoteException {
         System.out.println("Announcement from server: " + msg);
+        Platform.runLater(()->{
+            JOptionPane.showMessageDialog(null, msg, "Server Announcement" , JOptionPane.INFORMATION_MESSAGE);
+        });
     }
 
     @Override

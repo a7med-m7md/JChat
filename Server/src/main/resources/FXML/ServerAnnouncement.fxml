@@ -31,6 +31,6 @@
               <Image url="@../images/back.png" />
           </image>
       </ImageView>
-      <TextArea layoutX="519.0" layoutY="151.0" prefHeight="200.0" prefWidth="319.0" promptText="Enter Youe Announcement" />
+      <TextArea fx:id="msg" layoutX="519.0" layoutY="151.0" prefHeight="200.0" prefWidth="319.0" promptText="Enter Youe Announcement" />
     </children>
 </AnchorPane>

@@ -83,7 +83,7 @@ public class ServicesController implements Initializable {
         genderList.forEach(data ->
                 data.nameProperty().bind(
                         Bindings.concat(
-                                data.getName(), " ", data.pieValueProperty(), String.format("%.2f", data.getPieValue())
+                                data.getName(), " ", data.pieValueProperty()
                         )
                 )
         );
@@ -98,7 +98,7 @@ public class ServicesController implements Initializable {
         statusList.forEach(data ->
                 data.nameProperty().bind(
                         Bindings.concat(
-                                data.getName(), " ", data.pieValueProperty(), String.format("%.2f", data.getPieValue())
+                                data.getName(), " ", data.pieValueProperty()
                         )
                 )
         );

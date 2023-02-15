@@ -1,6 +1,7 @@
 package Client.ui.controllers;
 
 import Client.Main;
+import Client.network.FileService;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.components.NotificationUI;
@@ -251,6 +252,9 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        FileService fileService = FileService.getInstance();
+        fileService.startConnection(Long.parseLong(CurrentUserAccount.getInstance().getMobile()));
 
 
     }

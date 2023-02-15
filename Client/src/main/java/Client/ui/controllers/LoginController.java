@@ -124,6 +124,11 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(CurrentUserAccount.getInstance().getMobile() != null)
+            phoneNumberField.setText(CurrentUserAccount.getInstance().getMobile());
+        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+        currentUserAccount = null;
+
         LoginEntity loginEntity = deserialize();
         if (loginEntity != null) {
             System.out.println(loginEntity.getPassword());
@@ -131,30 +136,6 @@ public class LoginController implements Initializable {
             passwordField.setText(loginEntity.getPassword());
         } else cashPasswordAndUserName();
     }
-//        private boolean validateFields () {
-//            boolean validationFlag = true;
-//
-//            //Required Field Validation
-//            RequiredFieldValidator requiredPassword = new RequiredFieldValidator();
-//            requiredPassword.setMessage("Password can't be empty");
-//            passwordField.getValidators().add(requiredPassword);
-//
-//            //Phone Number Validation
-//            PhoneNumberValidator validNumber = new PhoneNumberValidator();
-//            validNumber.setMessage(("Enter a valid phone number"));
-//            phoneNumberField.getValidators().add(validNumber);
-//
-//            //Checking Fields
-//            if (!phoneNumberField.validate()) {
-//                validationFlag = false;
-////            validNumber.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-//            }
-//            if (!passwordField.validate()) {
-////            requiredPassword.setIcon(new ImageView(new Image(getClass().getResourceAsStream("/images/error.png"))));
-//                validationFlag = false;
-//            }
-//            return validationFlag;
-//        }
 
     public LoginEntity cashPasswordAndUserName() {
         LoginEntity object1 = null;

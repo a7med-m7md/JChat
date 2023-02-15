@@ -74,20 +74,20 @@ public class LoginController implements Initializable {
             System.out.println("Connnected");
             RMIClientServices.registerInServer();
             //todo populate current user model with phone number
-            new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            // your code here
-                            try {
-                                RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },
-                    5000
-            );
+//            new java.util.Timer().schedule(
+//                    new java.util.TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            // your code here
+//                            try {
+//                                RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
+//                            } catch (RemoteException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    },
+//                    5000
+//            );
 
             MainController mainController = MainController.getInstance();
 
@@ -100,7 +100,7 @@ public class LoginController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             Stage homeStage = new Stage();
             homeStage.setScene(scene);
-
+            RMIClientServices.tellMyStatus(loggedInUser.getMobile(), UserStatus.AVAILABLE);
 
 //                Scene home = new Scene(FXMLLoader.load(getClass().getResource()));
 //                Node node = (Node) event.getSource();

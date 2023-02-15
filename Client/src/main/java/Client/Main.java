@@ -2,10 +2,12 @@ package Client;
 
 
 import Client.network.RMIClientServices;
+import Client.ui.models.CurrentUserAccount;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.user.UserStatus;
 
 import java.io.IOException;
 
@@ -52,6 +54,8 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
+        RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.OFFLINE);
         RMIClientServices.disconnect();
+        System.out.println(CurrentUserAccount.getMyAccount().getMobile() + " Closed");
     }
 }

@@ -1,6 +1,5 @@
 package Client.ui.components;
 
-import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -14,12 +13,15 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+
+import model.Group;
+import model.GroupMessageEntity;
 import model.MessageEntity;
 import model.user.UserStatus;
 
 import java.time.format.DateTimeFormatter;
 
-public class ConversationCard extends GridPane {
+public class GroupConversationCard extends GridPane {
 
     protected final ColumnConstraints columnConstraints;
     protected final ColumnConstraints columnConstraints0;
@@ -32,7 +34,7 @@ public class ConversationCard extends GridPane {
     protected final Label latestMessage;
     private final String stylesheet_1 = "/styling/main.css";
 
-    public ConversationCard(Contact contact, ObservableList<MessageEntity> messages) {
+    public GroupConversationCard(Group group, ObservableList<GroupMessageEntity> messages) {
 
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
@@ -52,7 +54,7 @@ public class ConversationCard extends GridPane {
         getStylesheets().add("/fxml/../styling/main.css");
 
         columnConstraints.setFillWidth(false);
-        columnConstraints.setHgrow(javafx.scene.layout.Priority.NEVER);
+        columnConstraints.setHgrow(Priority.NEVER);
         columnConstraints.setMinWidth(USE_PREF_SIZE);
 
         columnConstraints0.setHalignment(javafx.geometry.HPos.LEFT);
@@ -61,53 +63,50 @@ public class ConversationCard extends GridPane {
 
         columnConstraints1.setFillWidth(false);
         columnConstraints1.setHalignment(javafx.geometry.HPos.RIGHT);
-        columnConstraints1.setHgrow(javafx.scene.layout.Priority.NEVER);
+        columnConstraints1.setHgrow(Priority.NEVER);
         columnConstraints1.setMinWidth(USE_PREF_SIZE);
 
         rowConstraints.setMaxHeight(USE_PREF_SIZE);
         rowConstraints.setMinHeight(50.0);
         rowConstraints.setPrefHeight(50.0);
         rowConstraints.setValignment(javafx.geometry.VPos.CENTER);
-        rowConstraints.setVgrow(javafx.scene.layout.Priority.NEVER);
+        rowConstraints.setVgrow(Priority.NEVER);
 
 
-        contactAvatar.setFill(new ImagePattern(contact.getImage()));
+//        contactAvatar.setFill(new ImagePattern(group.getImage()));
         contactAvatar.setRadius(23.0);
-        contactAvatar.setStroke(javafx.scene.paint.Color.valueOf("#62ff32"));
-        contactAvatar.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
-        contactAvatar.setStrokeWidth(2.0);
         GridPane.setMargin(contactAvatar, new Insets(3.0));
 
         GridPane.setColumnIndex(messageTimeStamp, 2);
-        messageTimeStamp.setAlignment(javafx.geometry.Pos.CENTER);
+        messageTimeStamp.setAlignment(Pos.CENTER);
         messageTimeStamp.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         //-------------------------------
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
         if (messages.size() > 0)
-            messageTimeStamp.setText(messages.get(messages.size() - 1).getTime().format(formatter));
+//            messageTimeStamp.setText(messages.get(messages.size() - 1).getTime().format(formatter));
 //            messageTimeStamp.setText(messages.get(messages.size() - 1).getTime().format());
-        messageTimeStamp.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        messageTimeStamp.setTextFill(javafx.scene.paint.Color.valueOf("#697579"));
+        messageTimeStamp.setTextAlignment(TextAlignment.CENTER);
+        messageTimeStamp.setTextFill(Color.valueOf("#697579"));
         messageTimeStamp.setWrapText(false);
 
         GridPane.setColumnIndex(vBox, 1);
         GridPane.setHalignment(vBox, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(vBox, javafx.geometry.VPos.CENTER);
-        GridPane.setVgrow(vBox, javafx.scene.layout.Priority.NEVER);
-        vBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        GridPane.setVgrow(vBox, Priority.NEVER);
+        vBox.setAlignment(Pos.CENTER_LEFT);
         vBox.setMaxWidth(Double.MAX_VALUE);
         vBox.setSpacing(3.0);
 
-        VBox.setVgrow(contactName, javafx.scene.layout.Priority.NEVER);
-        contactName.setAlignment(javafx.geometry.Pos.CENTER);
-        contactName.setText(contact.getName());
-        contactName.setTextAlignment(javafx.scene.text.TextAlignment.LEFT);
-        contactName.setTextFill(javafx.scene.paint.Color.valueOf("#5a6777"));
+        VBox.setVgrow(contactName, Priority.NEVER);
+        contactName.setAlignment(Pos.CENTER);
+        contactName.setText(group.getName());
+        contactName.setTextAlignment(TextAlignment.LEFT);
+        contactName.setTextFill(Color.valueOf("#5a6777"));
         contactName.setWrapText(false);
         contactName.setFont(new Font("Segoe UI", 15.0));
 
-        VBox.setVgrow(latestMessage, javafx.scene.layout.Priority.NEVER);
-        latestMessage.setAlignment(javafx.geometry.Pos.CENTER);
+        VBox.setVgrow(latestMessage, Priority.NEVER);
+        latestMessage.setAlignment(Pos.CENTER);
         latestMessage.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         //-------------------------------
         if (messages.size() > 0)
@@ -115,8 +114,8 @@ public class ConversationCard extends GridPane {
         else {
             latestMessage.setText("no messages yet!");
         }
-        latestMessage.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        latestMessage.setTextFill(javafx.scene.paint.Color.valueOf("#9aa1aa"));
+        latestMessage.setTextAlignment(TextAlignment.CENTER);
+        latestMessage.setTextFill(Color.valueOf("#9aa1aa"));
         latestMessage.setMaxWidth(100.0);
         latestMessage.setAlignment(Pos.BASELINE_LEFT);
         latestMessage.setTextAlignment(TextAlignment.LEFT);
@@ -133,35 +132,26 @@ public class ConversationCard extends GridPane {
         vBox.getChildren().add(contactName);
         vBox.getChildren().add(latestMessage);
         getChildren().add(vBox);
+//
+        ObservableList<GroupMessageEntity> chatlist = CurrentSession.getInstance().groupChatsMapProperty().get(group);
+//        latestMessage.textProperty().bind(Bindings.createObjectBinding(() -> {
+//            try {
+//                String lastMessage = chatlist.get(chatlist.size() - 1).getMessage();
+//                return lastMessage;
+//            } catch (IndexOutOfBoundsException e) {
+//                return "no messages yet";
+//            }
+//        }, CurrentSession.getInstance().chatsMapProperty().get(group)));
 
-        contactAvatar.strokeProperty().bind(Bindings.createObjectBinding(() -> {
-            String selectedStatus = contact.getStatus().getStatusName();
-            UserStatus userStatus = UserStatus.getStatus(selectedStatus);
-            if (userStatus == null) {
-                return Color.BLACK;
-            }
-            return userStatus.getColor();
-        }, contact.statusProperty()));
-
-        ObservableList<MessageEntity> chatlist = CurrentSession.getInstance().chatsMapProperty().get(contact);
-        latestMessage.textProperty().bind(Bindings.createObjectBinding(() -> {
-            try {
-                String lastMessage = chatlist.get(chatlist.size() - 1).getMessage();
-                return lastMessage;
-            } catch (IndexOutOfBoundsException e) {
-                return "no messages yet";
-            }
-        }, CurrentSession.getInstance().chatsMapProperty().get(contact)));
-
-        messageTimeStamp.textProperty().bind(Bindings.createObjectBinding(() -> {
-            try {
-
-                String lastMessageTime = chatlist.get(chatlist.size() - 1).getTime().format(formatter);
-                return lastMessageTime;
-            } catch (IndexOutOfBoundsException e) {
-                return "";
-            }
-        }, CurrentSession.getInstance().chatsMapProperty().get(contact)));
+//        messageTimeStamp.textProperty().bind(Bindings.createObjectBinding(() -> {
+//            try {
+//
+//                String lastMessageTime = chatlist.get(chatlist.size() - 1).getTime().format(formatter);
+//                return lastMessageTime;
+//            } catch (IndexOutOfBoundsException e) {
+//                return "";
+//            }
+//        }, CurrentSession.getInstance().chatsMapProperty().get(group)));
 
 
     }

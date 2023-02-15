@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class MessageEntity implements Serializable {
+public class MessageEntity implements MessageEntityInterface {
 
 
     protected boolean underLineText;
@@ -34,6 +34,10 @@ public class MessageEntity implements Serializable {
         this.messageBubbleFill = "#dddfe8";
     }
 
+    public MessageEntity() {
+
+    }
+
     public String getReceiver() {
         return receiver;
     }
@@ -42,62 +46,77 @@ public class MessageEntity implements Serializable {
         this.receiver = receiver;
     }
 
+    @Override
     public String getSender() {
         return sender;
     }
 
+    @Override
     public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public String getMSGBody() {
+    @Override
+    public String getMessage() {
         return MSGBody;
     }
 
-    public void setMSGBody(String MSGBody) {
+    @Override
+    public void setMessage(String MSGBody) {
         this.MSGBody = MSGBody;
     }
 
+    @Override
     public LocalDateTime getTime() {
         return time;
     }
 
+    @Override
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
+    @Override
     public boolean isUnderLineText() {
         return underLineText;
     }
 
+    @Override
     public void setUnderLineText(boolean underLineText) {
         this.underLineText = underLineText;
     }
 
+    @Override
     public double getMessageFontSize() {
         return messageFontSize;
     }
 
+    @Override
     public void setMessageFontSize(double messageFontSize) {
         this.messageFontSize = messageFontSize;
     }
 
+    @Override
     public String getMessageFontFamily() {
         return messageFontFamily;
     }
 
+    @Override
     public void setMessageFontFamily(String messageFontFamily) {
         this.messageFontFamily = messageFontFamily;
     }
 
+    @Override
     public String getMessageTextFill() {
         return messageTextFill;
     }
 
+    @Override
     public void setMessageTextFill(String messageTextFill) {
         this.messageTextFill = messageTextFill;
     }
 
+    @Override
     public String getMessageBubbleFill() {
         Color color = Color.valueOf(messageBubbleFill);
 
@@ -110,22 +129,27 @@ public class MessageEntity implements Serializable {
         return hex;
     }
 
+    @Override
     public void setMessageBubbleFill(String messageBubbleFill) {
         this.messageBubbleFill = messageBubbleFill;
     }
 
+    @Override
     public boolean isBoldText() {
         return boldText;
     }
 
+    @Override
     public void setBoldText(boolean boldText) {
         this.boldText = boldText;
     }
 
+    @Override
     public boolean isItalicText() {
         return italicText;
     }
 
+    @Override
     public void setItalicText(boolean italicText) {
         this.italicText = italicText;
     }

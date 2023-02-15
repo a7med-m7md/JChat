@@ -193,10 +193,16 @@ public class MainController implements Initializable {
 
             //TODO
 
-            ChatsController chatsController  = ChatsController.getInstance();
+            ChatsController chatsController = ChatsController.getInstance();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/chats.fxml"));
             loader.setController(chatsController);
             Parent chatsPane = loader.load();
+
+            GroupsController groupsController = GroupsController.getInstance();
+            FXMLLoader groupsLoader = new FXMLLoader(getClass().getResource("/FXML/groups.fxml"));
+            groupsLoader.setController(groupsController);
+            Parent groupsPane = groupsLoader.load();
+            tabPanes.put("groups", groupsPane);
 
 //            Parent chatsPane = FXMLLoader.load(getClass().getResource("/FXML/chats.fxml"));
 //            Parent conversations = FXMLLoader.load(getClass().getResource("/FXML/conversation.fxml"));

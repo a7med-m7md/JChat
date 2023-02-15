@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Optional;
 
 public class ClientServicesImp extends UnicastRemoteObject implements ClientServices {
     javafx.scene.media.AudioClip clip;
@@ -57,7 +58,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                     currentSession.chatsMapProperty().get(senderContact).add(msg);
                 }
                 System.out.println(currentSession.chatsMapProperty().get(senderContact));
-                System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
+                System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMessage());
                 //Scrolls Down Automatically when new messages added
             }
         });
@@ -80,6 +81,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                         .filter(contact -> contact.getMobile().equals(mobile))
                         .findFirst()
                         .get();
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -90,12 +92,24 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
-        System.out.println("Group:: " + msg.getGroupId() + "MSG :: " + msg.getMessage() + "Sent from:: " + msg.getSender());
+        CurrentSession currentSession = CurrentSession.getInstance();
+                Group messageGroup = msg.getGroup();
+                Optional<Group> myGroup = currentSession.groupChatsMapProperty().keySet().stream()
+                        .filter(group -> group.getId() == messageGroup.getId())
+                        .findAny();
+                currentSession.groupChatsMapProperty().get(myGroup.get()).add(msg);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            }
+        });
+
     }
 
     @Override
     public void receiveGroupAddNotification(Group group) throws RemoteException {
-        System.out.println("Group :: " + group.getName() + " add send you invitation");
+        ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
+        CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
     }
 
 

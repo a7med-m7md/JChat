@@ -10,6 +10,5 @@ module SharedUtilities {
     exports exceptions;
     exports model.user;
 
-
     exports utils;
 }

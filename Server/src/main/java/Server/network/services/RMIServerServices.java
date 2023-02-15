@@ -2,7 +2,6 @@ package Server.network.services;
 
 import Server.business.mappers.UseMapperImpl;
 import Server.business.mappers.UserMapper;
-import model.Group;
 import Server.business.services.ConnectedService;
 import Server.business.services.login.LoginService;
 import Server.business.services.login.LoginServiceImp;
@@ -115,21 +114,21 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         GroupDao groupDao = new GroupDao();
         GroupMemberDao groupMember = new GroupMemberDao();
         // Create Group
-        Group group = new Group(entity.getName(), entity.getDescription(), entity.getOwner_mobile());
-        Group saveEntity = groupDao.save(group);
+        Group saveEntity = groupDao.save(entity);
+        saveEntity.setListMembers(entity.getListMembers());
 //        // Add members to it
-        System.out.println("TEST");
         System.out.println(entity.getListMembers());
-        entity.getListMembers().forEach(member->{
-            System.out.println("HEE");
+        saveEntity.getListMembers().forEach(member -> {
             groupMember.save(new GroupMember(member.getMobile(), saveEntity.getId()));
             try {
-                ConnectedService.clients.get(member.getMobile()).receiveGroupAddNotification(group);
+                if (!(member.getMobile().equals(saveEntity.getOwner_mobile()) && ConnectedService.clients.containsKey(member.getMobile()))) {
+                    ConnectedService.clients.get(member.getMobile()).receiveGroupAddNotification(saveEntity);
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         });
-        return entity;
+        return saveEntity;
     }
 
     @Override
@@ -142,7 +141,7 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
     @Override
     public void addGroupMembers(List<GroupMember> members) throws RemoteException {
         GroupMemberDao groupMemberDao = new GroupMemberDao();
-        members.forEach(member->{
+        members.forEach(member -> {
             groupMemberDao.save(member);
         });
     }

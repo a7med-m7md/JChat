@@ -61,68 +61,46 @@ public class LoginController implements Initializable {
     private Button signInBtn;
 
     @FXML
-    void handleSignIn(MouseEvent event) throws NoSuchAlgorithmException {
+    void handleSignIn(MouseEvent event) {
+//        if (validateFields()) {
+            try {
+                populateLoggedInUserData();
 
+                MainController mainController = MainController.getInstance();
 
-        //        if (validateFields()) {
-        try {
-            // Here you get a user object that contains all data
-            // of loggedin user
-            UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), Hashing.hashPass(passwordField.getText()));
-            CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
-            currentUserAccount.populateCurrentUserData(loggedInUser);
-            System.out.println("Connnected");
-            RMIClientServices.registerInServer();
-            //todo populate current user model with phone number
-//            new java.util.Timer().schedule(
-//                    new java.util.TimerTask() {
-//                        @Override
-//                        public void run() {
-//                            // your code here
-//                            try {
-//                                RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
-//                            } catch (RemoteException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    },
-//                    5000
-//            );
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));
+                loader.setController(mainController);
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                Stage homeStage = new Stage();
+                homeStage.setScene(scene);
 
-            MainController mainController = MainController.getInstance();
+                homeStage.setResizable(true);
+                homeStage.show();
+                stage.close();
 
+            } catch (UserNotFoundException e) {
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password",true));
+                System.out.println("user not found");
+            } catch (RemoteException e) {
+                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down",true));
+                System.out.println("server down");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+    }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));
-            loader.setController(mainController);
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Node node = (Node) event.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            Stage homeStage = new Stage();
-            homeStage.setScene(scene);
-            RMIClientServices.tellMyStatus(loggedInUser.getMobile(), UserStatus.AVAILABLE);
-
-//                Scene home = new Scene(FXMLLoader.load(getClass().getResource()));
-//                Node node = (Node) event.getSource();
-//                Stage stage = (Stage) node.getScene().getWindow();
-//                Stage homeStage = new Stage();
-//                homeStage.setScene(home);
-
-            homeStage.setResizable(true);
-            homeStage.show();
-            stage.close();
-
-        } catch (UserNotFoundException e) {
-            errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password", true));
-            System.out.println("user not found");
-        } catch (RemoteException e) {
-            errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down", true));
-            System.out.println("server down");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        } else System.out.println("not valid fields");
-        cashPasswordAndUserName();
+    private void populateLoggedInUserData() throws UserNotFoundException, RemoteException {
+        // Here you get a user object that contains all data
+        // of loggedin user
+        UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+        currentUserAccount.populateCurrentUserData(loggedInUser);
+        System.out.println("Connnected");
+        RMIClientServices.registerInServer();
     }
 
     @FXML
@@ -154,7 +132,6 @@ public class LoginController implements Initializable {
             System.out.println(loginEntity.getPassword());
             phoneNumberField.setText(loginEntity.getMobile());
             passwordField.setText(loginEntity.getPassword());
-
         } else cashPasswordAndUserName();
     }
 //        private boolean validateFields () {

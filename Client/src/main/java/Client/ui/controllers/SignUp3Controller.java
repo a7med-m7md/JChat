@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -74,7 +75,12 @@ public class SignUp3Controller implements Initializable {
             //Switch to Main Screen
             Scene home = null;
             try {
-                home = new Scene(FXMLLoader.load(getClass().getResource("/FXML/main.fxml")));
+                MainController mainController = MainController.getInstance();
+                FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));
+                mainLoader.setController(mainController);
+                Parent mainPane = mainLoader.load();
+                home = new Scene(mainPane);
+
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 Stage homeStage = new Stage();

@@ -34,7 +34,7 @@ public class Services {
             hm.put(user.getGender().getGenderName(), (j == null) ? 1 : j + 1);
         }
         for (Map.Entry<String, Integer> val : hm.entrySet()) {
-            list.add(new PieChart.Data(val.getKey(), val.getValue().doubleValue()));
+            list.add(new PieChart.Data(val.getKey(), val.getValue().intValue()));
         }
         return list;
     }
@@ -48,7 +48,7 @@ public class Services {
         }
 
         for (Map.Entry<String, Integer> val : hm.entrySet()) {
-            list.add(new PieChart.Data(val.getKey(), val.getValue().doubleValue()));
+            list.add(new PieChart.Data(val.getKey(), val.getValue().intValue()));
         }
         return list;
     }

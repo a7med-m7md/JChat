@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -151,9 +152,11 @@ public class GroupConversationController implements Initializable {
         }, currentSession.currentContactChatProperty()));
 
 //        currConvAvatar.fillProperty().bind(Bindings.createObjectBinding(() -> {
-//            Contact currentContact = currentSession.currentContactChatProperty().get();
-//            return currentContact == null ? null : new ImagePattern(currentContact.getImage());
+//            Group currentGroup = currentSession.currentGroupChatProperty().get();
+//            return currentGroup == null ? null : new ImagePattern(currentGroup.getImage());
 //        }, currentSession.currentContactChatProperty()));
+
+        currConvAvatar.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/images/group-image-placeholder.png"))));
 
 
 //        //TODO SCROLL BUG

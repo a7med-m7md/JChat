@@ -53,7 +53,7 @@ public class ClientThreadHandled implements Runnable {
                     if (fileContentLength > 0) {
                         int fileId = 10;
                         //TODO -> create path for the received file in client
-                        String path = "F:\\testt" + "\\" + fileName + "." + getFileExtension(fileName);
+                        String path = "D:\\test" + "\\" + fileName + "." + getFileExtension(fileName);
                         File receivedLocalFile = new File(path);
                         receivedLocalFile.createNewFile();
                         FileOutputStream fileOutputStream = new FileOutputStream(receivedLocalFile);

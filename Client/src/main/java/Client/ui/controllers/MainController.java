@@ -1,5 +1,7 @@
 package Client.ui.controllers;
 
+import Client.Main;
+import Client.network.FileService;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.components.NotificationUI;
@@ -30,6 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import javafx.util.converter.NumberStringConverter;
 import model.FriendEntity;
@@ -98,13 +101,46 @@ public class MainController implements Initializable {
     @FXML
     void logOut(MouseEvent event) throws RemoteException {
         RMIClientServices.logOut(CurrentUserAccount.getInstance().getMobile());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
-        // todo switch to login contoller
+        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+        currentUserAccount.statusProperty().unbind();
+        currentUserAccount.pictureProperty().unbind();
+        currentUserAccount.bioProperty().unbind();
+        currentUserAccount.nameProperty().unbind();
+        currentUserAccount.emailProperty().unbind();
+        currentUserAccount.phoneNumberProperty().unbind();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Stage loginStage = new Stage();
+            loginStage.setScene(scene);
+
+            loginStage.setResizable(false);
+            loginStage.show();
+            stage.close();
+
+
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @FXML
     void switchAccountSettings(MouseEvent event) {
-        switchTab("account", "/FXML/account-info.fxml");
+        try {
+            Parent updateProfile = FXMLLoader.load(getClass().getResource("/FXML/update-account-1.fxml"));
+            Scene scene = new Scene(updateProfile);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML
@@ -216,6 +252,9 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        FileService fileService = FileService.getInstance();
+        fileService.startConnection(Long.parseLong(CurrentUserAccount.getInstance().getMobile()));
 
 
     }

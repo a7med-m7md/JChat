@@ -17,8 +17,6 @@ import javafx.scene.text.TextAlignment;
 import model.MessageEntity;
 import model.user.UserStatus;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 
 public class ConversationCard extends GridPane {
@@ -113,7 +111,7 @@ public class ConversationCard extends GridPane {
         latestMessage.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         //-------------------------------
         if (messages.size() > 0)
-            latestMessage.setText(messages.get(messages.size() - 1).getMSGBody());
+            latestMessage.setText(messages.get(messages.size() - 1).getMessage());
         else {
             latestMessage.setText("no messages yet!");
         }
@@ -148,7 +146,7 @@ public class ConversationCard extends GridPane {
         ObservableList<MessageEntity> chatlist = CurrentSession.getInstance().chatsMapProperty().get(contact);
         latestMessage.textProperty().bind(Bindings.createObjectBinding(() -> {
             try {
-                String lastMessage = chatlist.get(chatlist.size() - 1).getMSGBody();
+                String lastMessage = chatlist.get(chatlist.size() - 1).getMessage();
                 return lastMessage;
             } catch (IndexOutOfBoundsException e) {
                 return "no messages yet";

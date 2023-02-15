@@ -1,6 +1,5 @@
 package Client.network.services;
 
-import Client.network.RMIClientServices;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
@@ -51,7 +50,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                     currentSession.chatsMapProperty().get(senderContact).add(msg);
                 }
                 System.out.println(currentSession.chatsMapProperty().get(senderContact));
-                System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMSGBody());
+                System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMessage());
                 //Scrolls Down Automatically when new messages added
             }
         });

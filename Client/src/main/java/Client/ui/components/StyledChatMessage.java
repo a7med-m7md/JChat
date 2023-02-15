@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -17,7 +16,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import model.MessageEntity;
+import model.MessageEntityInterface;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,7 +39,7 @@ public class StyledChatMessage extends GridPane {
     protected final Label messageTimeStamp;
     private final String messageStyleSheet = "/styling/styling.css";
 
-    public StyledChatMessage(UserModel contact, MessageEntity message, ChatType type) {
+    public StyledChatMessage(UserModel contact, MessageEntityInterface message, ChatType type) {
 
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
@@ -130,7 +129,7 @@ public class StyledChatMessage extends GridPane {
         messageBody.setMaxHeight(Double.MAX_VALUE);
         messageBody.setMaxWidth(Double.MAX_VALUE);
         messageBody.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        messageBody.setText(message.getMSGBody());
+        messageBody.setText(message.getMessage());
         messageBody.setTextFill(Color.valueOf("#333333"));
         messageBody.setWrapText(true);
         messageBody.setFont(new Font(message.getMessageFontFamily(), message.getMessageFontSize()));

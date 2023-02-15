@@ -1,11 +1,13 @@
 package model;
 
+import javafx.scene.paint.Color;
+
 import java.io.Serializable;
 import java.rmi.server.RMIClassLoader;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class GroupMessageEntity extends MessageEntity implements Serializable {
+public class GroupMessageEntity implements MessageEntityInterface {
     protected boolean underLineText;
     protected boolean boldText;
     protected boolean italicText;
@@ -118,8 +120,17 @@ public class GroupMessageEntity extends MessageEntity implements Serializable {
     }
 
     public String getMessageBubbleFill() {
-        return messageBubbleFill;
+        Color color = Color.valueOf(messageBubbleFill);
+
+        // Convert the color to a hexadecimal string
+        String hex = String.format("#%02X%02X%02X",
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255));
+
+        return hex;
     }
+
 
     public void setMessageBubbleFill(String messageBubbleFill) {
         this.messageBubbleFill = messageBubbleFill;

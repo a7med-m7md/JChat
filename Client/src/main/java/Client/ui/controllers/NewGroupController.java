@@ -64,6 +64,8 @@ public class NewGroupController implements Initializable {
     void createGroup(MouseEvent event) {
         try {
             Group newGroup = new Group(groupName.getText(),groupDescription.getText(),CurrentUserAccount.getInstance().getMobile());
+            //Adding Myself as a member
+            groupFriendList.add(RMIClientServices.searchFriend(CurrentUserAccount.getInstance().getMobile()));
             newGroup.setListMembers(groupFriendList);
              newGroup = RMIClientServices.createGroup(newGroup);
             ObservableList<GroupMessageEntity> newGroupMessages = FXCollections.observableArrayList();

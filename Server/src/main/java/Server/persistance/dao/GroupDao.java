@@ -101,7 +101,7 @@ public class GroupDao implements CRUDOperation<Group> {
                     entity.setId(id);
                     GroupMemberDao groupMemberDao = new GroupMemberDao();
                     // Save Me as group member in DB.
-                    groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
+//                    groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
                 }
             }
         } catch (SQLException e) {

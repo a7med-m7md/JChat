@@ -24,6 +24,7 @@ import model.Group;
 import model.GroupMessageEntity;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -63,19 +64,22 @@ public class NewGroupController implements Initializable {
     @FXML
     void createGroup(MouseEvent event) {
         try {
-            Group newGroup = new Group(groupName.getText(),groupDescription.getText(),CurrentUserAccount.getInstance().getMobile());
+            Group newGroup = new Group(groupName.getText(), groupDescription.getText(), CurrentUserAccount.getInstance().getMobile());
             //Adding Myself as a member
             groupFriendList.add(RMIClientServices.searchFriend(CurrentUserAccount.getInstance().getMobile()));
             newGroup.setListMembers(groupFriendList);
-             newGroup = RMIClientServices.createGroup(newGroup);
+            newGroup.setImage(groupImage);
+            newGroup = RMIClientServices.createGroup(newGroup);
             ObservableList<GroupMessageEntity> newGroupMessages = FXCollections.observableArrayList();
             currentSession.groupChatsMapProperty().put(newGroup, newGroupMessages);
 
 
-        //closing the newGroupPane
-        GroupsController.getInstance().rootPane.getChildren().remove(GroupsController.getInstance().newGroupPane);
+            //closing the newGroupPane
+            GroupsController.getInstance().rootPane.getChildren().remove(GroupsController.getInstance().newGroupPane);
         } catch (RemoteException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -96,7 +100,7 @@ public class NewGroupController implements Initializable {
 
         } catch (UserNotFoundException e) {
             //if phone number doesn't exist
-            errorContainer.getChildren().setAll(new ErrorMessageUi("No such user!",true));
+            errorContainer.getChildren().setAll(new ErrorMessageUi("No such user!", true));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -123,7 +127,8 @@ public class NewGroupController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        groupImage = new Image(getClass().getResourceAsStream("/images/group-image-placeholder.png"));
+        groupImage = new Image(getClass().getResourceAsStream("/images/image-placeholder.png"));
+        groupPicture.setFill(new ImagePattern(groupImage));
         contactsToAdd = FXCollections.observableArrayList();
         groupFriendList = new ArrayList<>();
     }

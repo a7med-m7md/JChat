@@ -69,7 +69,7 @@ public class ConversationController implements Initializable {
     Contact currentContactChat;
 
     @FXML
-    void attachFile(MouseEvent event) {
+    void attachFile(MouseEvent event) throws RemoteException {
         FileService fileService = FileService.getInstance();
 
         FileChooser fileChooser = new FileChooser();
@@ -79,8 +79,9 @@ public class ConversationController implements Initializable {
 
         if (file != null) {
             fileService.sendFile(file, Long.parseLong(currentSession.getCurrentContactChat().getMobile()));
-            MessageEntity fileMessage = new MessageEntity(currentContactChat.getMobile(), CurrentUserAccount.getInstance().getMobile(), "sending file ...");
+            MessageEntity fileMessage = new MessageEntity(currentContactChat.getMobile(), CurrentUserAccount.getInstance().getMobile(), CurrentUserAccount.getInstance().getName() + " Sent a File: "+ file.getName());
             currentSession.chatsMapProperty().get(currentContactChat).add(fileMessage);
+            RMIClientServices.chatMessaging(fileMessage);
         }
 
 

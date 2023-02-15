@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+
+<GridPane minHeight="-Infinity" prefHeight="390.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.NewGroupController">
+   <columnConstraints>
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="97.60002899169922" prefWidth="261.3999755859375" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="97.60002899169922" prefWidth="238.2000244140625" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <StackPane prefWidth="232.0" style="-fx-background-radius: 12px; -fx-background-color: white;">
+         <children>
+            <GridPane style="-fx-background-color: #dce5ed; -fx-background-radius: 12px;">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="185.19998779296876" minHeight="10.0" prefHeight="149.19998779296876" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="203.9999755859375" minHeight="10.0" prefHeight="161.20001220703122" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <VBox alignment="CENTER" spacing="11.0">
+                     <children>
+                        <Circle fx:id="groupPicture" fill="DODGERBLUE" onMouseClicked="#openFileChooser" radius="61.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label text="Choose a picture for your group" textFill="#71829a" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="14.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <children>
+                        <VBox spacing="2.0">
+                           <children>
+                              <Label text="Group Name" textFill="#71829a" />
+                              <TextField fx:id="groupName" maxWidth="1.7976931348623157E308" prefHeight="42.0" promptText="Enter a name for your group" stylesheets="@../styling/styling.css">
+                                 <effect>
+                                    <DropShadow>
+                                       <color>
+                                          <Color red="0.8924999833106995" green="0.917552649974823" blue="0.9394736886024475" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox spacing="2.0">
+                           <children>
+                              <Label text="Group Description" textFill="#71829a" />
+                              <TextField fx:id="groupDescription" maxWidth="1.7976931348623157E308" prefHeight="42.0" promptText="A brief description of you group" stylesheets="@../styling/styling.css">
+                                 <effect>
+                                    <DropShadow>
+                                       <color>
+                                          <Color red="0.8924999833106995" green="0.917552649974823" blue="0.9394736886024475" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                     <GridPane.margin>
+                        <Insets top="20.0" />
+                     </GridPane.margin>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </GridPane>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </StackPane>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 12px;" GridPane.columnIndex="1">
+         <children>
+            <Label text="Add JChat Members" textFill="#71829a" />
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="6.0">
+               <children>
+                  <TextField fx:id="newContactPhoneField" maxWidth="1.7976931348623157E308" prefHeight="42.0" promptText="Enter a new Member Number" stylesheets="@../styling/styling.css" HBox.hgrow="ALWAYS">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.8924999833106995" green="0.917552649974823" blue="0.9394736886024475" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <Button mnemonicParsing="false" onMouseClicked="#addNumber" prefHeight="42.0" styleClass="utility-Button" stylesheets="@../styling/styling.css">
+                     <graphic>
+                        <SVGPath content="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 12.75H12.75V16C12.75 16.41 12.41 16.75 12 16.75C11.59 16.75 11.25 16.41 11.25 16V12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H11.25V8C11.25 7.59 11.59 7.25 12 7.25C12.41 7.25 12.75 7.59 12.75 8V11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z" fill="#555657" />
+                     </graphic>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.8724415302276611" green="0.8898903727531433" blue="0.8973684310913086" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <VBox fx:id="errorContainer" prefHeight="88.0" prefWidth="234.0" VBox.vgrow="ALWAYS" />
+            <ScrollPane stylesheets="@../styling/main.css" VBox.vgrow="SOMETIMES">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <content>
+                  <VBox fx:id="contactsToAddListView" />
+               </content>
+            </ScrollPane>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#createGroup" prefHeight="42.0" styleClass="Primary-Button" stylesheets="@../styling/styling.css" text="Create Group" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+   <effect>
+      <DropShadow spread="0.08">
+         <color>
+            <Color red="0.3290107250213623" green="0.4026632606983185" blue="0.47631579637527466" />
+         </color>
+      </DropShadow>
+   </effect>
+</GridPane>

@@ -87,11 +87,12 @@ public class GroupDao implements CRUDOperation<Group> {
 
     @Override
     public Group save(Group entity) {
-        final String SQL = "INSERT INTO jtalk.groups (name, description, owner_mobile) VALUES (?, ?, ?)";
+        final String SQL = "INSERT INTO jtalk.groups (name, description, owner_mobile, picture_g) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getDescription());
             preparedStatement.setString(3, entity.getOwner_mobile());
+            preparedStatement.setBytes(4, entity.getPicture());
             preparedStatement.executeUpdate();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 while (generatedKeys.next()) {
@@ -100,7 +101,7 @@ public class GroupDao implements CRUDOperation<Group> {
                     entity.setId(id);
                     GroupMemberDao groupMemberDao = new GroupMemberDao();
                     // Save Me as group member in DB.
-                    groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
+//                    groupMemberDao.save(new GroupMember(entity.getOwner_mobile(), id));
                 }
             }
         } catch (SQLException e) {
@@ -159,7 +160,9 @@ public class GroupDao implements CRUDOperation<Group> {
                     String description = resultSet.getString(3);
                     Time createdAt = resultSet.getTime(4);
                     String owner_mobile = resultSet.getString(5);
+                    byte[] picture = resultSet.getBytes("picture_g");
                     Group group = new Group(name, description, owner_mobile);
+                    group.setPicture(picture);
 
                     // For each group I want to add his members
                     List<GroupMember> members = getUsersInGroup(gid);
@@ -167,13 +170,6 @@ public class GroupDao implements CRUDOperation<Group> {
                     members.forEach(member-> {
                         Optional<UserEntity> currentMember = userDao.findByMobile(member.getUserMobile());
                         currentGroupMembers.add(new FriendEntity(currentMember.get().getMobile(), currentMember.get().getName(), currentMember.get().getBio(), currentMember.get().getStatus(), currentMember.get().getPicture()));
-                        if(ConnectedService.clients.containsKey(currentMember.get().getMobile())){
-                            try {
-                                ConnectedService.clients.get(currentMember.get().getMobile()).receiveGroupAddNotification(group);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        }
                     });
                     group.setListMembers(currentGroupMembers);
                     listGroups.add(group);

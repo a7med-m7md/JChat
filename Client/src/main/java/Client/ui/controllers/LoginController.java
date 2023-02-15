@@ -4,6 +4,7 @@ package Client.ui.controllers;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
+import model.LoginEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.UserNotFoundException;
@@ -26,8 +27,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.user.UserStatus;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,26 +58,44 @@ public class LoginController implements Initializable {
 
     @FXML
     void handleSignIn(MouseEvent event) {
-//        if (validateFields()) {
-            try {
-                // Here you get a user object that contains all data
-                // of loggedin user
-                UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
-                CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
-                currentUserAccount.populateCurrentUserData(loggedInUser);
-                System.out.println("Connnected");
-                RMIClientServices.registerInServer();
 
-                MainController mainController = MainController.getInstance();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));
-                loader.setController(mainController);
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Node node = (Node) event.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                Stage homeStage = new Stage();
-                homeStage.setScene(scene);
+        //        if (validateFields()) {
+        try {
+            // Here you get a user object that contains all data
+            // of loggedin user
+            UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+            CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+            currentUserAccount.populateCurrentUserData(loggedInUser);
+            System.out.println("Connnected");
+            RMIClientServices.registerInServer();
+            //todo populate current user model with phone number
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            // your code here
+                            try {
+                                RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.BUSY);
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    5000
+            );
+
+            MainController mainController = MainController.getInstance();
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/main.fxml"));
+            loader.setController(mainController);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Stage homeStage = new Stage();
+            homeStage.setScene(scene);
 
 
 
@@ -84,21 +105,21 @@ public class LoginController implements Initializable {
 //                Stage homeStage = new Stage();
 //                homeStage.setScene(home);
 
-                homeStage.setResizable(true);
-                homeStage.show();
-                stage.close();
+            homeStage.setResizable(true);
+            homeStage.show();
+            stage.close();
 
-            } catch (UserNotFoundException e) {
-                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password",true));
-                System.out.println("user not found");
-            } catch (RemoteException e) {
-                errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down",true));
-                System.out.println("server down");
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (UserNotFoundException e) {
+            errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Wrong phone number or password", true));
+            System.out.println("user not found");
+        } catch (RemoteException e) {
+            errorMessageContainer.getChildren().setAll(new ErrorMessageUi("Server Down", true));
+            System.out.println("server down");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 //        } else System.out.println("not valid fields");
+        cashPasswordAndUserName();
     }
 
     @FXML
@@ -125,7 +146,13 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        LoginEntity loginEntity = deserialize();
+        if (loginEntity != null) {
+            System.out.println(loginEntity.getPassword());
+            phoneNumberField.setText(loginEntity.getMobile());
+            passwordField.setText(loginEntity.getPassword());
+        }
+        else  cashPasswordAndUserName();
     }
 //        private boolean validateFields () {
 //            boolean validationFlag = true;
@@ -152,4 +179,35 @@ public class LoginController implements Initializable {
 //            return validationFlag;
 //        }
 
+    public LoginEntity cashPasswordAndUserName() {
+        LoginEntity object1 = null;
+        try (ObjectOutputStream objOStrm = new ObjectOutputStream(new
+                FileOutputStream("cashedFile"))) {
+            System.out.println("ddddddddddddd");
+            object1 = new LoginEntity(phoneNumberField.getText(), passwordField.getText().toString());
+            System.out.println("object1: " + object1);
+            objOStrm.writeObject(object1);
+        } catch (IOException e) {
+            System.out.println("Exception during serialization: " + e);
+        }
+        return object1;
     }
+
+    public LoginEntity deserialize() {
+        LoginEntity object2 = null;
+        boolean exists = Files.exists(Path.of("cashedFile"));
+        if (exists) {
+            try (ObjectInputStream objIStrm = new ObjectInputStream(new
+                    FileInputStream("cashedFile"))) {
+                object2 = (LoginEntity) objIStrm.readObject();
+                System.out.println("OBJ:: " + object2.getMobile());
+                return object2;
+                // System.out.println("object2: " + object2.getMobile() + " " + object2.getPassword());
+            } catch (Exception e) {
+                System.out.println("Exception during deserialization: " + e);
+            }
+        }
+        return object2;
+    }
+
+}

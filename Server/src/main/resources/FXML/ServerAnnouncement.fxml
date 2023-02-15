@@ -2,15 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #e4e9ee;"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server.Controllers.AnnouncementController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #e4e9ee;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server.Controllers.AnnouncementController">
     <children>
         <VBox layoutX="4.0" layoutY="-3.0" prefHeight="600.0" prefWidth="450.0">
             <children>
@@ -26,12 +25,12 @@
                 <Font name="Segoe UI Black" size="25.0" />
             </font>
         </Label>
-      <TextField fx:id="msg" layoutX="482.0" layoutY="173.0" prefHeight="36.0" prefWidth="327.0" />
-      <Button fx:id="sendBtn" layoutX="775.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-background-color: #39CEFF;" text="Send Message" textFill="#fafafa" />
+      <Button fx:id="sendBtn" layoutX="624.0" layoutY="396.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" style="-fx-background-color: #39CEFF;" text="Send Message" textFill="#fafafa" />
       <ImageView fx:id="back" fitHeight="70.0" fitWidth="100.0" layoutX="830.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #e4e9ee;">
           <image>
               <Image url="@../images/back.png" />
           </image>
       </ImageView>
+      <TextArea layoutX="519.0" layoutY="151.0" prefHeight="200.0" prefWidth="319.0" promptText="Enter Youe Announcement" />
     </children>
 </AnchorPane>

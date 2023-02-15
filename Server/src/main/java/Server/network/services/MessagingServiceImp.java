@@ -22,7 +22,7 @@ public class MessagingServiceImp extends UnicastRemoteObject implements Messagin
     @Override
     public void sendGroupMessage(GroupMessageEntity msg) throws RemoteException {
         msg.getList().stream().forEach(member -> {
-            if (!member.getMobile().equals(msg.getSender()) && ConnectedService.clients.containsKey(member.getMobile())) {
+            if (!(member.getMobile().equals(msg.getSender())) && ConnectedService.clients.containsKey(member.getMobile())) {
                 try {
                     ConnectedService.clients.get(member.getMobile()).receiveMessageFromGroup(msg);
                 } catch (RemoteException e) {

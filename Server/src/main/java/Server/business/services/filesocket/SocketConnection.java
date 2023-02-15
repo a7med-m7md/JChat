@@ -1,4 +1,4 @@
-package Server.network.services.fileservice;
+package Server.business.services.filesocket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -68,7 +68,6 @@ public class SocketConnection {
     }
 
     public void disconnect() {
-        ServerThreadHandled.closeServer();
-        //closeResources();
+        //ServerThreadHandled.closeServer();
     }
 }

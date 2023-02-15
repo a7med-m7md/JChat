@@ -71,9 +71,6 @@ public class RMIConnectionManager {
 
     public void disconnect(){
             try {
-                System.out.println("Close login service");
-                Naming.unbind("rmi://localhost:2233/loginService");
-                UnicastRemoteObject.unexportObject(rmiServerServices, true);
 
                 System.out.println("Close Friend Request");
                 Naming.unbind("rmi://localhost:2233/friendRequest");
@@ -91,11 +88,15 @@ public class RMIConnectionManager {
                 Naming.unbind("rmi://localhost:2233/connectedService");
                 UnicastRemoteObject.unexportObject(connectedService, true);
 
+                System.out.println("Close login service");
+                Naming.unbind("rmi://localhost:2233/loginService");
+                UnicastRemoteObject.unexportObject(rmiServerServices, true);
+
 
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {
-                e.printStackTrace();
+                System.out.println("Already closed!");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

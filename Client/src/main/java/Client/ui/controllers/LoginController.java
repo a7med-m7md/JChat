@@ -2,6 +2,7 @@ package Client.ui.controllers;
 
 
 import Client.Hashing.EncryptionUtil;
+import Client.Hashing.Hashing;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.rmi.RemoteException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -58,14 +60,14 @@ public class LoginController implements Initializable {
     private Button signInBtn;
 
     @FXML
-    void handleSignIn(MouseEvent event) {
+    void handleSignIn(MouseEvent event) throws NoSuchAlgorithmException {
 
 
         //        if (validateFields()) {
         try {
             // Here you get a user object that contains all data
             // of loggedin user
-            UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), passwordField.getText());
+            UserEntity loggedInUser = RMIClientServices.logIn(phoneNumberField.getText(), Hashing.hashPass(passwordField.getText()));
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             currentUserAccount.populateCurrentUserData(loggedInUser);
             System.out.println("Connnected");

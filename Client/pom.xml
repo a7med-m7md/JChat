@@ -50,7 +50,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>ca.pjer</groupId>
+            <artifactId>chatter-bot-api</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>

@@ -224,45 +224,45 @@ public class RMIClientServices {
 
 
     public static UserEntity signUp(UserDto userObject) throws DuplicateUserException {
-//        try {
-//            RegisterService user = (RegisterService) Naming.lookup("rmi://" + ip + ":2233/register");
-//            return user.register(userObject);
-//        } catch (NotBoundException e) {
-//            e.printStackTrace();
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            RegisterService user = (RegisterService) Naming.lookup("rmi://" + ip + ":2233/register");
+            return user.register(userObject);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     public static void chatMessaging(MessageEntity msg) throws RemoteException {
-//        try {
-//            MessagingService user = (MessagingService) Naming.lookup("rmi://" + ip + ":2233/chatMessaging");
-//            user.sendMessage(msg);
-//        } catch (NotBoundException | MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            MessagingService user = (MessagingService) Naming.lookup("rmi://" + ip + ":2233/chatMessaging");
+            user.sendMessage(msg);
+        } catch (NotBoundException | MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void groupMessaging(GroupMessageEntity msg) throws RemoteException {
-//        try {
-//            System.out.println("Message group send");
-//            MessagingService user = (MessagingService) Naming.lookup("rmi://" + ip + ":2233/chatMessaging");
-//            user.sendGroupMessage(msg);
-//        } catch (NotBoundException | MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            System.out.println("Message group send");
+            MessagingService user = (MessagingService) Naming.lookup("rmi://" + ip + ":2233/chatMessaging");
+            user.sendGroupMessage(msg);
+        } catch (NotBoundException | MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void updateInfo(UserDto userDto) throws RemoteException{
-//        try {
-//            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
-//            user.updateProfile(userDto);
-//        } catch (NotBoundException | MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            ServerInt user = (ServerInt) Naming.lookup("rmi://" + ip + ":2233/loginService");
+            user.updateProfile(userDto);
+        } catch (NotBoundException | MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void logOut(String mobile) throws RemoteException{

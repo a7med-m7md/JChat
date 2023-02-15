@@ -40,13 +40,14 @@ public class Main extends Application {
 //        rmiConnection.connected();
 //        ConnectionManager.getInstance().getConnection();
 
-        //SocketConnection socketConnection = new SocketConnection();
+        //SocketConnection.getInstance().startConnection();
     }
 
     @Override
     public void stop() throws Exception {
         rmiConnection.disconnect();
         ConnectionManager.getInstance().close();
-        //TODO -> close socket connection
+        //TODO -> handle close server here
+        //SocketConnection.getInstance().disconnect();
     }
 }

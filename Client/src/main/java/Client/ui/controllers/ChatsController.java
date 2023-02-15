@@ -1,5 +1,6 @@
 package Client.ui.controllers;
 
+import Client.network.FileService;
 import Client.ui.components.ConversationCard;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
@@ -107,4 +108,6 @@ public class ChatsController implements Initializable {
 
 
     }
+
+
 }

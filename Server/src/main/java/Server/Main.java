@@ -20,7 +20,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        System.out.println(UtilityClass.isNull());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/ServerServices.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("JChat Server!");

@@ -7,18 +7,20 @@ import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.media.AudioClip;
 import model.*;
 import model.user.UserStatus;
 import services.ClientServices;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Optional;
 
 public class ClientServicesImp extends UnicastRemoteObject implements ClientServices {
-    javafx.scene.media.AudioClip clip;
+    AudioClip clip;
 
     public ClientServicesImp() throws RemoteException {
     }
@@ -51,6 +53,11 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                 String audioFilePath = getClass().getResource("/notification.wav").toExternalForm();
                 clip = new javafx.scene.media.AudioClip(audioFilePath);
                 clip.play();
+                try {
+                    displayTray();
+                } catch (AWTException e) {
+                    e.printStackTrace();
+                }
                 if (currentSession.chatsMapProperty().keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(senderContact.getMobile()))) {
                     currentSession.chatsMapProperty().get(senderContact).add(msg);
                 } else {
@@ -112,5 +119,24 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
         CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
     }
 
+
+    public void displayTray() throws AWTException {
+        //Obtain only one instance of the SystemTray object
+        SystemTray tray = SystemTray.getSystemTray();
+
+        //If the icon is a file
+        Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+        //Alternative (if the icon is on the classpath):
+        //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
+
+        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
+        //Let the system resize the image if needed
+        trayIcon.setImageAutoSize(true);
+        //Set tooltip text for the tray icon
+        trayIcon.setToolTip("System tray icon demo");
+        tray.add(trayIcon);
+
+        trayIcon.displayMessage("Hello, World", "notification demo", TrayIcon.MessageType.INFO);
+    }
 
 }

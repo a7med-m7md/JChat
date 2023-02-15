@@ -41,6 +41,7 @@ public class ConnectionManager {
     public Connection getConnection(){
         return connection;
     }
+
     public void close(){
         if(this.connection != null){
             try {

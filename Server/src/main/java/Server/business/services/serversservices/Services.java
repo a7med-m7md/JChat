@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Services {
 
-    public List<XYChart.Series<String, Double>> getCountriesStatistic(List<UserEntity> users) {
+    public static List<XYChart.Series<String, Double>> getCountriesStatistic(List<UserEntity> users) {
         List<XYChart.Series<String, Double>> series1 = new ArrayList<>();
         Map<String, Integer> hm = new HashMap<String, Integer>();
         for (UserEntity user : users) {
@@ -26,7 +26,7 @@ public class Services {
         return series1;
     }
 
-    public List<PieChart.Data> getGenderStatistic(List<UserEntity> users) {
+    public static List<PieChart.Data> getGenderStatistic(List<UserEntity> users) {
         List<PieChart.Data> list = new ArrayList<>();
         Map<String, Integer> hm = new HashMap<String, Integer>();
         for (UserEntity user : users) {
@@ -39,7 +39,7 @@ public class Services {
         return list;
     }
 
-    public List<PieChart.Data> getUserStatusStatistic(List<UserEntity> users) {
+    public static List<PieChart.Data> getUserStatusStatistic(List<UserEntity> users) {
         List<PieChart.Data> list = new ArrayList<>();
         Map<String, Integer> hm = new HashMap<String, Integer>();
         for (UserEntity user : users) {

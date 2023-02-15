@@ -18,6 +18,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class RMIConnectionManager {
     private static RMIConnectionManager instance = new RMIConnectionManager();
     Registry registry;
+
     ServerInt rmiServerServices;
     ChatService chatService;
     MessagingService messagingService;
@@ -44,7 +45,7 @@ public class RMIConnectionManager {
     public void startServices(){
         try {
             rmiServerServices = new RMIServerServices();
-            Naming.rebind("rmi://localhost:2233/loginService", rmiServerServices);
+            Naming.rebind("rmi://localhost:2233/services", rmiServerServices);
 
             connectedService = new ConnectedService();
             Naming.rebind("rmi://localhost:2233/connectedService", connectedService);

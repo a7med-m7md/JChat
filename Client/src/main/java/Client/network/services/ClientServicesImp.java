@@ -65,16 +65,16 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveFriendStatus(String mobile, UserStatus status) throws RemoteException {
         CurrentSession currentSession = CurrentSession.getInstance();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
         Contact changedStatusContact =
                 currentSession.getContactsList()
                         .stream()
                         .filter(contact -> contact.getMobile().equals(mobile))
                         .findFirst()
                         .get();
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
                 changedStatusContact.setStatus(status);
             }
         });
@@ -83,14 +83,14 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
         CurrentSession currentSession = CurrentSession.getInstance();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
                 Group messageGroup = msg.getGroup();
                 Optional<Group> myGroup = currentSession.groupChatsMapProperty().keySet().stream()
                         .filter(group -> group.getId() == messageGroup.getId())
                         .findAny();
                 currentSession.groupChatsMapProperty().get(myGroup.get()).add(msg);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
             }
         });
 
@@ -98,9 +98,16 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveGroupAddNotification(Group group) throws RemoteException {
-        ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
-        CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
+                CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
+            }
+        });
+
     }
+
 
 
 }

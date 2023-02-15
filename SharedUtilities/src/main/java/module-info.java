@@ -3,6 +3,8 @@ module SharedUtilities {
     requires java.rmi;
     requires javafx.base;
     requires javafx.graphics;
+    requires java.desktop;
+    requires javafx.swing;
 
 //    exports com.java.iti;
     exports model;

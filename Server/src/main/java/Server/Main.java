@@ -19,6 +19,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        SocketConnection socketConnection = SocketConnection.getInstance();
+        socketConnection.startConnection();
         System.out.println(UtilityClass.isNull());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/ServerServices.fxml"));
         Scene scene = new Scene(fxmlLoader.load());

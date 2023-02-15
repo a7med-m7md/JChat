@@ -1,5 +1,6 @@
 package Client.ui.components;
 
+import Client.ui.controllerutils.ChatType;
 import Client.ui.models.CurrentSession;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -7,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -46,6 +48,7 @@ public class GroupConversationCard extends GridPane {
         this.contactName = new Label();
         latestMessage = new Label();
 
+
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(Double.MAX_VALUE);
         setPrefHeight(69.0);
@@ -73,7 +76,7 @@ public class GroupConversationCard extends GridPane {
         rowConstraints.setVgrow(Priority.NEVER);
 
 
-//        contactAvatar.setFill(new ImagePattern(group.getImage()));
+        contactAvatar.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/images/group-image-placeholder.png"))));
         contactAvatar.setRadius(23.0);
         GridPane.setMargin(contactAvatar, new Insets(3.0));
 

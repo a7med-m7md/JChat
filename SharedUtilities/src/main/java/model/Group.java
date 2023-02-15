@@ -1,19 +1,35 @@
-package model.group;
+package model;
+
+import model.FriendEntity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class GroupEntity implements Serializable {
+public class Group implements Serializable {
     private long id;
     private String name;
     private String description;
     private LocalDateTime createdAt;
     private String owner_mobile;
+    private byte[] picture;
+    private List<FriendEntity> listMembers;
 
-    public GroupEntity(String name, String description, String owner_mobile) {
+    public Group() {
+    }
+
+    public Group(String name, String description, String owner_mobile) {
         this.name = name;
         this.description = description;
         this.owner_mobile = owner_mobile;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public long getId() {
@@ -54,5 +70,13 @@ public class GroupEntity implements Serializable {
 
     public void setOwner_mobile(String owner_mobile) {
         this.owner_mobile = owner_mobile;
+    }
+
+    public List<FriendEntity> getListMembers() {
+        return listMembers;
+    }
+
+    public void setListMembers(List<FriendEntity> listMembers) {
+        this.listMembers = listMembers;
     }
 }

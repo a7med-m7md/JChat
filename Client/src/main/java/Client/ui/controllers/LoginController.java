@@ -5,7 +5,6 @@ import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
 import model.LoginEntity;
-
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.UserNotFoundException;

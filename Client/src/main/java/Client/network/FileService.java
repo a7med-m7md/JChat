@@ -4,46 +4,63 @@ import utils.Constants;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class FileService {
-    String filePath;
-
-    Socket clientSocket;
-    int userId;
-    File file;
-    FileThreadHandled fileThreadHandled;
-    public FileService(File file, int userId) {
-        //startConnection();
-        this.userId = userId;
-        this.file = file;
+    static FileService fileService;
+    static List<ClientThreadHandled> listHandlers = new ArrayList<>();
+    private static long userId;
+    //FileThreadHandled fileThreadHandled;
+    ExecutorService executor;
+    private FileService(){
+        //executor = Executors.newFixedThreadPool(10);
     }
-
-    public FileService(int userId){
-        this.userId = userId;
+    //TODO -> Use this factory method.
+    public static synchronized FileService getInstance() {
+        if (fileService == null)
+            fileService = new FileService();
+        return fileService;
     }
-    public void startConnection() {
+    //TODO -> used when user sign in
+    public void startConnection(long userId) {
         try {
-            clientSocket = new Socket("localhost", Constants.SOCKET_SERVER_PORT);
-            //TODO -> get user id from the controller to send it to the server.
-            //int currentUserId = 10;
-            fileThreadHandled = new FileThreadHandled(clientSocket,userId);
-            Thread th = new Thread(fileThreadHandled);
+            Socket clientSocket = new Socket("localhost", Constants.SOCKET_SERVER_PORT);
+            ClientThreadHandled clientThreadHandled = new ClientThreadHandled(clientSocket,userId);
+            listHandlers.add(clientThreadHandled);
+//            Future<ClientThreadHandled> future = (Future<ClientThreadHandled>) executor.submit(clientThreadHandled);
+            this.userId = userId;
+            Thread th = new Thread(clientThreadHandled);
             th.start();
-            System.out.println(
-                    "Sending the File to the Server");
-            //TODO -> set up file chooser to select the specific file, file chooser returns file object that can be used to retreive the absolute path of that file.
-            //File file = new File("F:\\Adel\\ITI 9 Months\\Projects\\JChat\\Client\\src\\main\\resources\\files\\clienttest.txt");
         } catch (Exception e) {
             e.printStackTrace();
             //closeResources();
         }
     }
 
-    public void stopClient(){
-        fileThreadHandled.stopClient();
+    public void stopClient() {
+        System.out.println("start close the client from stop client innnnn file service");
+        //this.fileThreadHandled.stopClient();
+        ClientThreadHandled targerHandler = null;
+        for (ClientThreadHandled temp :
+                listHandlers) {
+            if (temp.userId == this.userId)
+                targerHandler = temp;
+        }
+        listHandlers.remove(targerHandler);
+        targerHandler.stopClient();
     }
-
-    public void sendFile(File fileToSend){
-        fileThreadHandled.sendFile(fileToSend);
+    //TODO -> used in chat when user click on file choose
+    public void sendFile(File fileToSend, long receiverId) {
+        ClientThreadHandled targerHandler = null;
+        for (ClientThreadHandled temp :
+                listHandlers) {
+            if (temp.userId == this.userId)
+                targerHandler = temp;
+        }
+        targerHandler.sendFile(fileToSend,receiverId);
     }
 }

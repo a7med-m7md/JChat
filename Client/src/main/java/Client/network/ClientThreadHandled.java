@@ -1,22 +1,20 @@
 package Client.network;
 
-import model.FileEntity;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
-public class FileThreadHandled implements Runnable {
+public class ClientThreadHandled implements Runnable {
     Socket clientSocket;
-    int userId;
+    long userId;
     DataOutputStream dataOutputStream = null;
     DataInputStream dataInputStream = null;
 
-    public FileThreadHandled(Socket clientSocket, int userId) {
+    public ClientThreadHandled(Socket clientSocket, long userId) {
         this.clientSocket = clientSocket;
         this.userId = userId;
         try {
@@ -24,7 +22,7 @@ public class FileThreadHandled implements Runnable {
                     clientSocket.getInputStream());
             dataOutputStream = new DataOutputStream(
                     clientSocket.getOutputStream());
-            dataOutputStream.writeInt(userId);
+            dataOutputStream.writeLong(userId);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,15 +30,17 @@ public class FileThreadHandled implements Runnable {
         }
 
     }
+
+
     @Override
     public void run() {
-        while (clientSocket.isConnected()){
-            //TODO -> read file from server as a receiver client.
+        while (clientSocket.isConnected()) {
             try {
-                //TODO -> read flag string or int to stop client working here
-                //TODO -> handle in server that client is removed from hashmap
-                boolean isStop = false;
-                if (isStop){
+                if (dataInputStream == null)
+                    System.out.println("data inout stream is null in client");
+                boolean isStop = dataInputStream.readBoolean();
+                System.out.println("is Stop in client is -> "+isStop);
+                if (isStop) {
                     closeResources();
                     break;
                 }
@@ -53,7 +53,7 @@ public class FileThreadHandled implements Runnable {
                     if (fileContentLength > 0) {
                         int fileId = 10;
                         //TODO -> create path for the received file in client
-                        String path = "F:\\testt"+"\\"+fileName+"."+getFileExtension(fileName);
+                        String path = "F:\\testt" + "\\" + fileName + "." + getFileExtension(fileName);
                         File receivedLocalFile = new File(path);
                         receivedLocalFile.createNewFile();
                         FileOutputStream fileOutputStream = new FileOutputStream(receivedLocalFile);
@@ -72,7 +72,20 @@ public class FileThreadHandled implements Runnable {
                         }
                         fileOutputStream.close();
                         System.out.println("success save local file");
-/*
+                        Platform.runLater(
+                                () -> {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.initStyle(StageStyle.UTILITY);
+                                    alert.setTitle("Message");
+                                    alert.setHeaderText("Success");
+                                    alert.setContentText(
+                                            "You received a file in your downloads folder...");
+                                    ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
+                                    alert.show();
+                                }
+                        );
+                        System.out.println("after panel");
+                        /*
                         FileEntity fileEntity = new FileEntity(fileId, fileName, fileContentBytes, getFileExtension(fileName));
                         System.out.println("the received file name -> " + fileEntity.getName());*/
                     }
@@ -85,59 +98,48 @@ public class FileThreadHandled implements Runnable {
             }
         }
     }
-    public void stopClient(){
+
+    public void stopClient() {
         try {
-            dataOutputStream.writeBoolean(true);
-            dataOutputStream.flush();
-            //closeResources();
+            System.out.println("start close the client from stop client innnnn thread");
+            this.dataOutputStream.writeBoolean(true);
+            this.dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
+            //closeResources();
         }
+        //closeResources();
     }
+
     public static String getFileExtension(String fileName) {
-        // Get the file type by using the last occurence of . (for example aboutMe.txt returns txt).
-        // Will have issues with files like myFile.tar.gz.
         int i = fileName.lastIndexOf('.');
-        // If there is an extension.
         if (i > 0) {
-            // Set the extension to the extension of the filename.
             return fileName.substring(i + 1);
         } else {
             return "No extension found.";
         }
     }
-    public void sendFile(File fileToSend) {
+
+    public void sendFile(File fileToSend, long receiverId) {
         try {
             FileInputStream fileInputStream = new FileInputStream(fileToSend);
-            // Get the name of the file you want to send and store it in filename.
             String fileName = fileToSend.getName();
-            // Convert the name of the file into an array of bytes to be sent to the server.
             byte[] fileNameBytes = fileName.getBytes();
-            // Create a byte array the size of the file so don't send too little or too much data to the server.
-            //byte[] fileBytes = new byte[(int) fileToSend.length()];
-            // Put the contents of the file into the array of bytes to be sent so these bytes can be sent to the server.
-            //fileInputStream.read(fileBytes);
-            // Send the length of the name of the file so server knows when to stop reading.
             dataOutputStream.writeBoolean(false);
+            dataOutputStream.writeLong(receiverId);
             dataOutputStream.writeInt(fileNameBytes.length);
-            // Send the file name.
             dataOutputStream.write(fileNameBytes);
-            // Send the length of the byte array so the server knows when to stop reading.
             dataOutputStream.writeLong(fileToSend.length());
-            System.out.println("send operation in client side with fileName ->"+fileName);
-            // Send the actual file.
+            System.out.println("send operation in client side with fileName ->" + fileName);
             int readBytes = 0;
             byte[] buffer = new byte[4 * 1024];
             while ((readBytes = fileInputStream.read(buffer))
                     != -1) {
-                // Send the file to Server Socket//
                 dataOutputStream.write(buffer, 0, readBytes);
-                dataOutputStream.flush();
+                //dataOutputStream.flush();
             }
-            System.out.println("in client -> finish send file to server fileName ->"+fileName);
-            //dataOutputStream.flush();
-            //fileInputStream.close();
-            //closeResources();
+            dataOutputStream.flush();
+            System.out.println("in client -> finish send file to server fileName ->" + fileName);
         } catch (IOException e) {
             e.printStackTrace();
             closeResources();

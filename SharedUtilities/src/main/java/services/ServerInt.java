@@ -2,8 +2,8 @@ package services;
 
 import exceptions.DuplicateUserException;
 import exceptions.UserNotFoundException;
-import javafx.scene.Group;
 import model.FriendEntity;
+import model.Group;
 import model.GroupMember;
 import model.LoginEntity;
 import model.user.UserDto;

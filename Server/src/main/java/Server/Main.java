@@ -40,7 +40,6 @@ public class Main extends Application {
 //        rmiConnection.connected();
 //        ConnectionManager.getInstance().getConnection();
 
-        //SocketConnection socketConnection = new SocketConnection();
         //SocketConnection.getInstance().startConnection();
     }
 
@@ -48,6 +47,7 @@ public class Main extends Application {
     public void stop() throws Exception {
         rmiConnection.disconnect();
         ConnectionManager.getInstance().close();
-        //SocketConnection.getInstance().closeResources();
+        //TODO -> handle close server here
+        //SocketConnection.getInstance().disconnect();
     }
 }

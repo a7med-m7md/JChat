@@ -1,11 +1,13 @@
 package Client.ui.controllers;
 
+import Client.network.RMIClientServices;
 import Client.ui.components.ConversationCard;
 import Client.ui.components.GroupConversationCard;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
+import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -27,6 +29,7 @@ import model.MessageEntity;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class GroupsController implements Initializable {
@@ -75,10 +78,15 @@ public class GroupsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentSession = CurrentSession.getInstance();
-
+        try {
+            RMIClientServices.getAllMyGroups(CurrentUserAccount.getInstance().getMobile()).stream().forEach((group -> currentSession.groupChatsMapProperty().put(group,FXCollections.observableArrayList())));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         conversationsList.itemsProperty().bind(Bindings.createObjectBinding(() -> FXCollections.observableArrayList(CurrentSession.getInstance().groupChatsMapProperty().keySet()), CurrentSession.getInstance().groupChatsMapProperty()));
         currentSession.currentGroupChatProperty().bind(conversationsList.getSelectionModel().selectedItemProperty());
+
         //load conversation Pane when an item is selected
         conversationsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Group>() {
             @Override
@@ -120,7 +128,7 @@ public class GroupsController implements Initializable {
             }
         });
 
-        emptyPlaceholder.visibleProperty().bind(currentSession.chatsMapProperty().emptyProperty());
+        emptyPlaceholder.visibleProperty().bind(currentSession.groupChatsMapProperty().emptyProperty());
 
 
 

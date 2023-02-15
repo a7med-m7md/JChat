@@ -1,5 +1,6 @@
 package Client.network.services;
 
+import Client.network.RMIClientServices;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
@@ -69,6 +70,7 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                         .filter(contact -> contact.getMobile().equals(mobile))
                         .findFirst()
                         .get();
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -79,12 +81,20 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
-        System.out.println("Group:: " + msg.getGroupId() + "MSG :: " + msg.getMessage() + "Sent from:: " + msg.getSender());
+        CurrentSession currentSession = CurrentSession.getInstance();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                currentSession.groupChatsMapProperty().get(msg.getGroup()).add(msg);
+            }
+        });
+
     }
 
     @Override
     public void receiveGroupAddNotification(Group group) throws RemoteException {
-        System.out.println("Group :: " + group.getName() + " add send you invitation");
+        ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
+        CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
     }
 
 

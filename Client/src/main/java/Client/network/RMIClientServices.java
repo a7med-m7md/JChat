@@ -259,7 +259,6 @@ public class RMIClientServices {
     public static void groupMessaging(GroupMessageEntity msg) throws RemoteException {
         Registry messagingRegistry;
         try {
-            System.out.println("Message group send");
             chatRegistry = LocateRegistry.getRegistry(2233);
             MessagingService user = (MessagingService) chatRegistry.lookup("rmi://localhost:2233/chatMessaging");
             user.sendGroupMessage(msg);

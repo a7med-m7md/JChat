@@ -85,7 +85,7 @@ public class GroupConversationController implements Initializable {
             CurrentSession currentSession = CurrentSession.getInstance();
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             if (!messageTextField.getText().equals("")) {
-                if (currentSession.currentContactChatProperty().get() != null) {
+                if (currentSession.currentGroupChatProperty().get() != null) {
                     //Setting up the message to send
                     GroupMessageEntity newMessage = new GroupMessageEntity(CurrentSession.getInstance().getCurrentGroupChat(), currentUserAccount.getMobile(), messageTextField.getText());
                     newMessage.setMessageFontFamily(fontFamilyComboBox.getValue());
@@ -95,7 +95,8 @@ public class GroupConversationController implements Initializable {
                     newMessage.setBoldText(boldToggle.isSelected());
                     newMessage.setItalicText(italicToggle.isSelected());
                     // Adding this message to the contact's message list
-                    currentSession.groupChatsMapProperty().get(currentSession.currentGroupChatProperty()).add(newMessage);
+                    if(currentSession.currentGroupChatProperty()!=null)
+                    currentSession.groupChatsMapProperty().get(currentSession.currentGroupChatProperty().get()).add(newMessage);
                     // Sending the message to the server
                     RMIClientServices.groupMessaging(newMessage);
                     messageTextField.clear();

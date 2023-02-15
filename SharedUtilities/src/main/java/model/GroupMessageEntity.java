@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.rmi.server.RMIClassLoader;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class GroupMessageEntity extends MessageEntity implements Serializable {
     protected String messageTextFill;
     protected String messageBubbleFill;
 
-    private long groupId;
+    private Group group;
     private String sender;
     private String message;
     private List<FriendEntity> list;
@@ -22,7 +23,7 @@ public class GroupMessageEntity extends MessageEntity implements Serializable {
 
     public GroupMessageEntity(Group group, String sender, String message) {
         super();
-        this.groupId = group.getId();
+        this.group = group;
         this.message = message;
         this.list = group.getListMembers();
         this.sender = sender;
@@ -36,12 +37,12 @@ public class GroupMessageEntity extends MessageEntity implements Serializable {
         this.messageBubbleFill = "#dddfe8";
     }
 
-    public long getGroupId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupId(long groupId) {
-        this.groupId = groupId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public String getSender() {

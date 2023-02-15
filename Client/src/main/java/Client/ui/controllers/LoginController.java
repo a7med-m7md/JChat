@@ -1,6 +1,7 @@
 package Client.ui.controllers;
 
 
+import Client.Hashing.EncryptionUtil;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
@@ -98,7 +99,6 @@ public class LoginController implements Initializable {
             homeStage.setScene(scene);
 
 
-
 //                Scene home = new Scene(FXMLLoader.load(getClass().getResource()));
 //                Node node = (Node) event.getSource();
 //                Stage stage = (Stage) node.getScene().getWindow();
@@ -151,8 +151,7 @@ public class LoginController implements Initializable {
             System.out.println(loginEntity.getPassword());
             phoneNumberField.setText(loginEntity.getMobile());
             passwordField.setText(loginEntity.getPassword());
-        }
-        else  cashPasswordAndUserName();
+        } else cashPasswordAndUserName();
     }
 //        private boolean validateFields () {
 //            boolean validationFlag = true;
@@ -184,7 +183,8 @@ public class LoginController implements Initializable {
         try (ObjectOutputStream objOStrm = new ObjectOutputStream(new
                 FileOutputStream("cashedFile"))) {
             System.out.println("ddddddddddddd");
-            object1 = new LoginEntity(phoneNumberField.getText(), passwordField.getText().toString());
+            String hashPassword = EncryptionUtil.encrypt(passwordField.getText().toString());
+            object1 = new LoginEntity(phoneNumberField.getText(), hashPassword);
             System.out.println("object1: " + object1);
             objOStrm.writeObject(object1);
         } catch (IOException e) {
@@ -200,8 +200,9 @@ public class LoginController implements Initializable {
             try (ObjectInputStream objIStrm = new ObjectInputStream(new
                     FileInputStream("cashedFile"))) {
                 object2 = (LoginEntity) objIStrm.readObject();
-                System.out.println("OBJ:: " + object2.getMobile());
-                return object2;
+                String decPassword = EncryptionUtil.decrypt(object2.getPassword());
+                LoginEntity loginEntity = new LoginEntity(object2.getMobile(), decPassword);
+                return loginEntity;
                 // System.out.println("object2: " + object2.getMobile() + " " + object2.getPassword());
             } catch (Exception e) {
                 System.out.println("Exception during deserialization: " + e);

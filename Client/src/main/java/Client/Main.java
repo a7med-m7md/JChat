@@ -45,9 +45,14 @@ public class Main extends Application {
         super.stop();
         System.out.println("start close the client from stop method");
         //TODO -> when close the window or logout client
-        RMIClientServices.unRegisterClientOnFileServer(clientInt);
         //TODO -> send client id here
-        FileService.getInstance().stopClient(userId);
+        if (RMIClientServices.getServerState()) {
+            RMIClientServices.unRegisterClientOnFileServer(clientInt);
+            FileService.getInstance().stopClient(userId);
+        }else{
+            System.out.println("Server is down");
+
+        }
     }
 
     @Override
@@ -59,23 +64,28 @@ public class Main extends Application {
         Scanner scanner = new Scanner(System.in);
         userId = scanner.nextInt();
         clientInt = new FileClientImpl(userId);
-        RMIClientServices.registerClientOnFileServer(clientInt);
-        //senderUserId -> 10, receiverUserId -> 11
-        if (userId == 10) {
-            FileService.getInstance().startConnection(userId);
-            Platform.runLater(() -> {
-                FileChooser fileChooser = new FileChooser();
-                File file = fileChooser.showOpenDialog(null);
-                if (file != null) {
-                    System.out.println("choosed path file ->" + file.getAbsolutePath());
-                    List<Long> groupList = new ArrayList<>();
-                    groupList.add(Long.valueOf(11));
-                    groupList.add(Long.valueOf(12));
-                    FileService.getInstance().sendFileToGroup(file,10 , groupList);
-                }
-            });
-        } else {
-            FileService.getInstance().startConnection(userId);
+        if (RMIClientServices.getServerState()){
+            RMIClientServices.registerClientOnFileServer(clientInt);
+            //senderUserId -> 10, receiverUserId -> 11
+            if (userId == 10) {
+                FileService.getInstance().startConnection(userId);
+                Platform.runLater(() -> {
+                    FileChooser fileChooser = new FileChooser();
+                    File file = fileChooser.showOpenDialog(null);
+                    if (file != null) {
+                        System.out.println("choosed path file ->" + file.getAbsolutePath());
+                        List<Long> groupList = new ArrayList<>();
+                        groupList.add(Long.valueOf(11));
+                        groupList.add(Long.valueOf(12));
+                        FileService.getInstance().sendFileToGroup(file, 10, groupList);
+                    }
+                });
+            } else {
+                FileService.getInstance().startConnection(userId);
+            }
+        }else{
+            System.out.println("Server is down");
         }
+
     }
 }

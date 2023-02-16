@@ -92,7 +92,7 @@ public class ClientThreadHandled implements Runnable {
 
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 closeResources();
                 break;
             }
@@ -148,6 +148,7 @@ public class ClientThreadHandled implements Runnable {
     }
 
     public void closeResources() {
+        System.out.println("Close resources of current client");
         try {
             //this.socket.close();
             if (clientSocket != null)

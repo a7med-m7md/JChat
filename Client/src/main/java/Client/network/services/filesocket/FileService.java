@@ -28,6 +28,7 @@ public class FileService {
     //TODO -> used when user sign in
     public void startConnection(long userId) {
         try {
+            System.out.println("Client starts on file socket server");
             Socket clientSocket = new Socket("localhost", Constants.SOCKET_SERVER_PORT);
             ClientThreadHandled clientThreadHandled = new ClientThreadHandled(clientSocket,userId);
             listHandlers.put(userId,clientThreadHandled);

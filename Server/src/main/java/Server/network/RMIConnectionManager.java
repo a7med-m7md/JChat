@@ -95,7 +95,7 @@ public class RMIConnectionManager {
 
                 System.out.println("Close file service");
                 registry.unbind("rmi://localhost:2233/filetransfer");
-                UnicastRemoteObject.unexportObject(connectedService, true);
+                //UnicastRemoteObject.unexportObject(connectedService, true);
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {

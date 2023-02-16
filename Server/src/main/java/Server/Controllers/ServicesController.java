@@ -138,9 +138,9 @@ public class ServicesController implements Initializable {
         onButton.setOnAction((ev) -> {
             offButton.setDisable(false);
             onButton.setDisable(true);
-            FileServerImpl.setServerState(true);
             RMIConnectionManager.getInstance().startServices();
             SocketConnection.getInstance().startConnection();
+            FileServerImpl.setServerState(true);
             try {
                 fileServerInt.broadcastServerState(true);
             } catch (RemoteException e) {
@@ -151,7 +151,9 @@ public class ServicesController implements Initializable {
         offButton.setOnAction((ev) -> {
             offButton.setDisable(true);
             onButton.setDisable(false);
-            FileServerImpl.setServerState(true);
+            FileServerImpl.setServerState(false);
+            //TODO -> stop server here
+            SocketConnection.getInstance().closeResources();
             RMIConnectionManager.getInstance().disconnect();
             try {
                 fileServerInt.broadcastServerState(false);

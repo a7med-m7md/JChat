@@ -18,7 +18,7 @@ public class FileClientImpl extends UnicastRemoteObject implements FileClientInt
     public void receiveServerState(boolean serverState) {
         if (serverState)
             FileService.getInstance().startConnection(this.userId);
-        else
-            FileService.getInstance().stopClient(this.userId);
+        /*else
+            FileService.getInstance().stopClient(this.userId);*/
     }
 }

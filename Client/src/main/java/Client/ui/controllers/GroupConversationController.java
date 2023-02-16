@@ -1,6 +1,7 @@
 package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
+import Client.network.services.filesocket.FileService;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
@@ -20,14 +21,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import model.Group;
 import model.GroupMessageEntity;
 import model.MessageEntity;
 import model.user.UserStatus;
 
+import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class GroupConversationController implements Initializable {
 
@@ -69,7 +74,25 @@ public class GroupConversationController implements Initializable {
     private Group currentGroupChat;
 
     @FXML
-    void attachFile(MouseEvent event) {
+    void attachFile(MouseEvent event) throws RemoteException {
+        FileService fileService = FileService.getInstance();
+
+        FileChooser fileChooser = new FileChooser();
+        //Set extension filter
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            List<Long> members =
+            CurrentSession.getInstance().currentGroupChatProperty().get().getListMembers().stream()
+                    .map(friendEntity -> Long.parseLong(friendEntity.getMobile()))
+                    .collect(Collectors.toList());
+            fileService.sendFileToGroup(file, Long.parseLong(CurrentUserAccount.getInstance().getMobile()),members);
+            GroupMessageEntity fileMessage = new GroupMessageEntity(currentGroupChat, CurrentUserAccount.getInstance().getMobile(), CurrentUserAccount.getInstance().getName() + " Sent a File: "+ file.getName());
+            currentSession.groupChatsMapProperty().get(currentSession.currentGroupChatProperty().get()).add(fileMessage);
+            RMIClientServices.groupMessaging(fileMessage);
+            ;
+        }
 
     }
 

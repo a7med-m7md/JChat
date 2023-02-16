@@ -1,5 +1,7 @@
 package Server.Controllers;
 
+import Server.business.services.filermi.FileServerImpl;
+import Server.business.services.filesocket.SocketConnection;
 import Server.business.services.serversservices.Services;
 import Server.network.RMIConnectionManager;
 import Server.persistance.dao.UserDao;
@@ -27,9 +29,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.user.UserDto;
 import model.user.UserEntity;
+import services.FileServerInt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -60,6 +64,7 @@ public class ServicesController implements Initializable {
     ObservableList<XYChart.Series<String, Double>> countryList;
     ObservableList<PieChart.Data> genderList;
     ObservableList<PieChart.Data> statusList;
+    FileServerInt fileServerInt;
 
     public ServicesController() {
         list = new ArrayList<>();
@@ -166,12 +171,32 @@ public class ServicesController implements Initializable {
             offButton.setDisable(false);
             onButton.setDisable(true);
             RMIConnectionManager.getInstance().startServices();
+            SocketConnection.getInstance().startConnection();
+            FileServerImpl.setServerState(true);
+            try {
+                fileServerInt.broadcastServerState(true);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         });
-
+        try {
+            fileServerInt = new FileServerImpl();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         offButton.setOnAction((ev) -> {
             offButton.setDisable(true);
             onButton.setDisable(false);
+            FileServerImpl.setServerState(false);
+            //TODO -> stop server here
+            SocketConnection.getInstance().closeResources();
             RMIConnectionManager.getInstance().disconnect();
+            try {
+                fileServerInt.broadcastServerState(false);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            //SocketConnection.getInstance().disconnect();
         });
 
 

@@ -36,6 +36,7 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 import javafx.util.converter.NumberStringConverter;
 import model.FriendEntity;
+import model.user.UserStatus;
 
 import java.io.IOException;
 import java.net.URL;
@@ -101,6 +102,7 @@ public class MainController implements Initializable {
     @FXML
     void logOut(MouseEvent event) throws RemoteException {
         RMIClientServices.logOut(CurrentUserAccount.getInstance().getMobile());
+        RMIClientServices.tellMyStatus(CurrentUserAccount.getInstance().getMobile(), UserStatus.OFFLINE);
         CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
         currentUserAccount.statusProperty().unbind();
         currentUserAccount.pictureProperty().unbind();
@@ -206,6 +208,12 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sideBar.toFront();
+        try {
+            RMIClientServices.tellMyStatus(CurrentUserAccount.getInstance().getMobile(), UserStatus.AVAILABLE);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
         // opening chats tab on startup
         try {
             Platform.runLater(new Runnable() {

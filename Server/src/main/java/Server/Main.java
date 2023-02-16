@@ -1,6 +1,5 @@
 package Server;
 
-
 import Server.business.services.filesocket.SocketConnection;
 import Server.persistance.ConnectionManager;
 import model.UtilityClass;
@@ -9,7 +8,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -43,8 +41,9 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        rmiConnection.disconnect();
+        RMIConnectionManager.getInstance().disconnect();
         ConnectionManager.getInstance().close();
+        SocketConnection.getInstance().closeResources();
         //TODO -> handle close server here
         //SocketConnection.getInstance().disconnect();
     }

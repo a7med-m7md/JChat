@@ -1,8 +1,8 @@
 package Client.ui.controllers;
 
 import Client.Main;
-import Client.network.FileService;
 import Client.network.RMIClientServices;
+import Client.network.services.filesocket.FileService;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.components.NotificationUI;
 import Client.ui.models.CurrentSession;

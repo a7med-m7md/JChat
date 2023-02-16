@@ -130,12 +130,10 @@ public class ClientThreadHandled implements Runnable {
             while ((readBytes = fileInputStream.read(buffer))
                     != -1) {
                 dataOutputStream.write(buffer, 0, readBytes);
-                //dataOutputStream.flush();
             }
             dataOutputStream.flush();
             System.out.println("in client -> finish send file to server fileName ->" + fileName);
         } catch (IOException e) {
-            e.printStackTrace();
             closeResources();
         }
 

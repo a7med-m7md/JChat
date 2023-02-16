@@ -14,11 +14,9 @@ public class FileService {
     static FileService fileService;
     static Map<Long, ClientThreadHandled> listHandlers = new HashMap<>();
     private static long userId;
-    //FileThreadHandled fileThreadHandled;
     ExecutorService executor;
 
     private FileService() {
-        //executor = Executors.newFixedThreadPool(10);
     }
 
     //TODO -> Use this factory method.
@@ -34,13 +32,11 @@ public class FileService {
             Socket clientSocket = new Socket("localhost", Constants.SOCKET_SERVER_PORT);
             ClientThreadHandled clientThreadHandled = new ClientThreadHandled(clientSocket, userId);
             listHandlers.put(userId, clientThreadHandled);
-//            Future<ClientThreadHandled> future = (Future<ClientThreadHandled>) executor.submit(clientThreadHandled);
             this.userId = userId;
             Thread th = new Thread(clientThreadHandled);
             th.start();
         } catch (Exception e) {
             e.printStackTrace();
-            //closeResources();
         }
     }
 

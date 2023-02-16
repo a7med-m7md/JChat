@@ -61,7 +61,6 @@ public class ServerThreadHandled implements Runnable {
                 }
             }
             catch (IOException e) {
-                e.printStackTrace();
                 closeResources(clientSocket, dataOutputStream, dataInputStream);
                 break;
             }
@@ -115,8 +114,6 @@ public class ServerThreadHandled implements Runnable {
     }
 
     public static String getFileExtension(String fileName) {
-        // Get the file type by using the last occurence of . (for example aboutMe.txt returns txt).
-        // Will have issues with files like myFile.tar.gz.
         int i = fileName.lastIndexOf('.');
         // If there is an extension.
         if (i > 0) {

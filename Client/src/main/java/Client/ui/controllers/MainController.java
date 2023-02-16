@@ -80,7 +80,7 @@ public class MainController implements Initializable {
     private StackPane tabContentArea;
 
     @FXML
-    private StackPane currentUserPane;
+    public StackPane currentUserPane;
 
     @FXML
     public StackPane conversationArea;

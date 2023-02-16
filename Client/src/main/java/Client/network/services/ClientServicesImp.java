@@ -1,12 +1,16 @@
 package Client.network.services;
 
 
+import Client.ui.components.ErrorMessageUi;
+import Client.ui.controllers.MainController;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Duration;
 import model.*;
 import model.user.UserStatus;
 import services.ClientServices;
@@ -32,6 +36,18 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
         CurrentSession currentSession = CurrentSession.getInstance();
         currentSession.requestsListProperty().add(new Contact(friend));
         System.out.println("request from " + friend.getMobile());
+        MainController mainController = MainController.getInstance();
+        ErrorMessageUi message = new ErrorMessageUi("New Friend Request!", false);
+        mainController.currentUserPane.getChildren().add(message);
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+        KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            mainController.currentUserPane.getChildren().remove(message);
+        });
+        timeline.play();
+
 
     }
 
@@ -52,6 +68,19 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                 }
                 System.out.println(currentSession.chatsMapProperty().get(senderContact));
                 System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMessage());
+                MainController mainController = MainController.getInstance();
+                ErrorMessageUi message = new ErrorMessageUi("New Message From: " + senderContact.getName(), false);
+                mainController.currentUserPane.getChildren().add(message);
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.setOnFinished(t -> {
+                    mainController.currentUserPane.getChildren().remove(message);
+                });
+                timeline.play();
+
+
                 //Scrolls Down Automatically when new messages added
             }
         });
@@ -59,7 +88,23 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveAnnouncement(String msg) throws RemoteException {
-        System.out.println("Announcement from server: " + msg);
+        Platform.runLater(new Runnable() {
+                              @Override
+                              public void run() {
+                                  MainController mainController = MainController.getInstance();
+                                  ErrorMessageUi message = new ErrorMessageUi(msg, false);
+                                  mainController.currentUserPane.getChildren().add(message);
+                                  Timeline timeline = new Timeline();
+                                  KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                                  KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                                  timeline.getKeyFrames().add(kf);
+                                  timeline.setOnFinished(t -> {
+                                      mainController.currentUserPane.getChildren().remove(message);
+                                  });
+                                  timeline.play();
+                              }
+                          }
+        );
     }
 
     @Override
@@ -69,12 +114,12 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-        Contact changedStatusContact =
-                currentSession.getContactsList()
-                        .stream()
-                        .filter(contact -> contact.getMobile().equals(mobile))
-                        .findFirst()
-                        .get();
+                Contact changedStatusContact =
+                        currentSession.getContactsList()
+                                .stream()
+                                .filter(contact -> contact.getMobile().equals(mobile))
+                                .findFirst()
+                                .get();
                 changedStatusContact.setStatus(status);
             }
         });
@@ -91,6 +136,19 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                         .filter(group -> group.getId() == messageGroup.getId())
                         .findAny();
                 currentSession.groupChatsMapProperty().get(myGroup.get()).add(msg);
+
+                MainController mainController = MainController.getInstance();
+                ErrorMessageUi message = new ErrorMessageUi("New message from " + myGroup.get().getName(), true);
+                mainController.currentUserPane.getChildren().add(message);
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.setOnFinished(t -> {
+                    mainController.currentUserPane.getChildren().remove(message);
+                });
+                timeline.play();
+
             }
         });
 
@@ -103,11 +161,23 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
             public void run() {
                 ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
                 CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
+
+                MainController mainController = MainController.getInstance();
+                ErrorMessageUi message = new ErrorMessageUi("Added to Group: " + group.getName(), false);
+                mainController.currentUserPane.getChildren().add(message);
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.setOnFinished(t -> {
+                    mainController.currentUserPane.getChildren().remove(message);
+                });
+                timeline.play();
+
             }
         });
 
     }
-
 
 
 }

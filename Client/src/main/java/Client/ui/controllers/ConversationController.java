@@ -64,6 +64,10 @@ public class ConversationController implements Initializable {
     @FXML
     private ComboBox<String> fontFamilyComboBox;
 
+    @FXML
+    private ToggleButton botToggle;
+
+
 
     CurrentSession currentSession;
     Contact currentContactChat;

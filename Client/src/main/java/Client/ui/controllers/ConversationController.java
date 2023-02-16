@@ -100,7 +100,6 @@ public class ConversationController implements Initializable {
 
     private void sendNewMessage() {
         try {
-            //TODO RMI Invocation Here
             CurrentSession currentSession = CurrentSession.getInstance();
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             if (!messageTextField.getText().equals("")) {
@@ -118,6 +117,7 @@ public class ConversationController implements Initializable {
                     // Sending the message to the server
                     RMIClientServices.chatMessaging(newMessage);
                     messageTextField.clear();
+                    messagesListView.scrollTo(currentSession.chatsMapProperty().get(currentContactChat).size()-1);
                 }
             }
 

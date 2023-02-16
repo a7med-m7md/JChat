@@ -67,7 +67,7 @@
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="signUpPasswordField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="280.0" promptText="8 chars, at least 1 uppercase , 1 lowercase, 1 number" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                        <JFXTextField fx:id="signUpPasswordField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="280.0" promptText="8 chars, at least 1 uppercase , 1 lowercase, 1 number" styleClass="password-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>
@@ -91,7 +91,7 @@
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="signUpConfirmPasswordField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="280.0" promptText="Re-enter chosen password" styleClass="credentials-text-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                        <JFXTextField fx:id="signUpConfirmPasswordField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="280.0" promptText="Re-enter chosen password" styleClass="password-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>

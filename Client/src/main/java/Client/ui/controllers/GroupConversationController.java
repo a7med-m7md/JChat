@@ -101,6 +101,8 @@ public class GroupConversationController implements Initializable {
                     // Sending the message to the server
                     RMIClientServices.groupMessaging(newMessage);
                     messageTextField.clear();
+                    messagesListView.scrollTo(currentSession.groupChatsMapProperty().get(currentGroupChat).size()-1);
+
                 }
             }
 
@@ -158,16 +160,6 @@ public class GroupConversationController implements Initializable {
 
         currConvAvatar.setFill(new ImagePattern(new Image(getClass().getResourceAsStream("/images/group-image-placeholder.png"))));
 
-
-//        //TODO SCROLL BUG
-////        messagesListView.scrollTo(messagesListView.getItems().size() - 1);
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                messagesListView.scrollTo(currentGroupMessageList.size() - 1);
-//                //Scrolls Down Automatically when new messages added
-//            }
-//        });
 
         messageTextField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {

@@ -53,12 +53,13 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         super.init();
-        clientInt = new FileClientImpl();
-        RMIClientServices.registerClientOnFileServer(clientInt);
+
         //FileService.getInstance().startConnection(userId);
         //TODO -> set user Id here;
         Scanner scanner = new Scanner(System.in);
         userId = scanner.nextInt();
+        clientInt = new FileClientImpl(userId);
+        RMIClientServices.registerClientOnFileServer(clientInt);
         //senderUserId -> 10, receiverUserId -> 11
         if (userId == 10) {
             FileService.getInstance().startConnection(userId);
@@ -76,6 +77,5 @@ public class Main extends Application {
         } else {
             FileService.getInstance().startConnection(userId);
         }
-
     }
 }

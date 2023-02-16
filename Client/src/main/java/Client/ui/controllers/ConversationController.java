@@ -1,7 +1,7 @@
 package Client.ui.controllers;
 
-import Client.network.FileService;
 import Client.network.RMIClientServices;
+import Client.network.services.filesocket.FileService;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
@@ -78,7 +78,7 @@ public class ConversationController implements Initializable {
         File file = fileChooser.showOpenDialog(null);
 
         if (file != null) {
-            fileService.sendFile(file, Long.parseLong(currentSession.getCurrentContactChat().getMobile()));
+            //fileService.sendFile(file, Long.parseLong(currentSession.getCurrentContactChat().getMobile()));
             MessageEntity fileMessage = new MessageEntity(currentContactChat.getMobile(), CurrentUserAccount.getInstance().getMobile(), CurrentUserAccount.getInstance().getName() + " Sent a File: "+ file.getName());
             currentSession.chatsMapProperty().get(currentContactChat).add(fileMessage);
             RMIClientServices.chatMessaging(fileMessage);

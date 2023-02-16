@@ -1,13 +1,9 @@
 package Client.ui.controllers;
 
-import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.controllerutils.PasswordAndConfirmPasswordValidator;
-import Client.ui.controllerutils.PasswordFieldSkin;
-import Client.ui.controllerutils.PhoneNumberValidator;
 import Client.ui.models.CurrentUserAccount;
 import com.jfoenix.controls.JFXTextField;
-import exceptions.DuplicateUserException;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

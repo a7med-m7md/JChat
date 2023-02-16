@@ -1,4 +1,4 @@
-package Client.network;
+package Client.network.services.filesocket;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -7,6 +7,7 @@ import javafx.stage.StageStyle;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class ClientThreadHandled implements Runnable {
     Socket clientSocket;
@@ -51,9 +52,8 @@ public class ClientThreadHandled implements Runnable {
                     String fileName = new String(fileNameBytes);
                     long fileContentLength = dataInputStream.readLong();
                     if (fileContentLength > 0) {
-                        int fileId = 10;
                         //TODO -> create path for the received file in client
-                        String path = "D:\\test" + "\\" + fileName + "." + getFileExtension(fileName);
+                        String path = ".\\" + fileName + "." + getFileExtension(fileName);
                         File receivedLocalFile = new File(path);
                         receivedLocalFile.createNewFile();
                         FileOutputStream fileOutputStream = new FileOutputStream(receivedLocalFile);
@@ -79,7 +79,7 @@ public class ClientThreadHandled implements Runnable {
                                     alert.setTitle("Message");
                                     alert.setHeaderText("Success");
                                     alert.setContentText(
-                                            "You received a file in your downloads folder...");
+                                            "You received a file in your project folder...");
                                     ((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
                                     alert.show();
                                 }
@@ -92,7 +92,7 @@ public class ClientThreadHandled implements Runnable {
 
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 closeResources();
                 break;
             }
@@ -148,6 +148,7 @@ public class ClientThreadHandled implements Runnable {
     }
 
     public void closeResources() {
+        System.out.println("Close resources of current client");
         try {
             //this.socket.close();
             if (clientSocket != null)
@@ -158,6 +159,13 @@ public class ClientThreadHandled implements Runnable {
                 this.dataOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendFileToGroup(File fileToSend, List<Long> groupIds) {
+        for (Long currentUserId :
+                groupIds) {
+            sendFile(fileToSend,currentUserId);
         }
     }
 }

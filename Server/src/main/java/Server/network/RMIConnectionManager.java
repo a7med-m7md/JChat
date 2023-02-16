@@ -1,13 +1,11 @@
 package Server.network;
 import Server.business.services.ConnectedService;
+import Server.business.services.filermi.FileServerImpl;
 import Server.business.services.register.RegisterServiceImpl;
 import Server.network.services.ChatServiceImp;
 import Server.network.services.MessagingServiceImp;
 import Server.network.services.RMIServerServices;
-import services.ServerInt;
-import services.ChatService;
-import services.MessagingService;
-import services.RegisterService;
+import services.*;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -22,6 +20,7 @@ public class RMIConnectionManager {
     MessagingService messagingService;
     RegisterService registerService;
     ConnectedService connectedService;
+    FileServerInt fileServerInt;
 
     private RMIConnectionManager(){
         try {
@@ -59,6 +58,12 @@ public class RMIConnectionManager {
             System.out.println("Register Service Started");
             registerService = new RegisterServiceImpl();
             registry.rebind("rmi://localhost:2233/register", registerService);
+
+            //bind file server interface
+            System.out.println("File Service Started");
+            fileServerInt = new FileServerImpl();
+            registry.rebind("rmi://localhost:2233/filetransfer",fileServerInt);
+
         } catch (AccessException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
@@ -88,7 +93,9 @@ public class RMIConnectionManager {
                 registry.unbind("rmi://localhost:2233/connectedService");
                 UnicastRemoteObject.unexportObject(connectedService, true);
 
-
+                System.out.println("Close file service");
+                registry.unbind("rmi://localhost:2233/filetransfer");
+                //UnicastRemoteObject.unexportObject(connectedService, true);
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {

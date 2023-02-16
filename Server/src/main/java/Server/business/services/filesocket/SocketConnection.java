@@ -1,4 +1,4 @@
-package Server.network.services.fileservice;
+package Server.business.services.filesocket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -38,7 +38,8 @@ public class SocketConnection {
                                 Thread th = new Thread(serverThreadHandled);
                                 th.start();
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                //e.printStackTrace();
+                                closeResources();
                             }
                         }
                     }
@@ -69,6 +70,5 @@ public class SocketConnection {
 
     public void disconnect() {
         ServerThreadHandled.closeServer();
-        //closeResources();
     }
 }

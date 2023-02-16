@@ -12,8 +12,10 @@ import model.user.UserStatus;
 import services.*;
 
 import javax.security.auth.login.CredentialException;
+import java.io.File;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -34,6 +36,57 @@ public class RMIClientServices {
         }
         return null;
     }
+
+
+    public static boolean getServerState(){
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            FileServerInt fileServerInt = (FileServerInt) registry.lookup("rmi://localhost:2233/filetransfer");
+            return fileServerInt.getServerState();
+        }catch (RemoteException | NotBoundException ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public static void registerClientOnFileServer(FileClientInt fileClientInt){
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            FileServerInt fileServerInt = (FileServerInt) registry.lookup("rmi://localhost:2233/filetransfer");
+            //fromFileToByte(file);
+            //fileServerInt.uploadFileToServer(file,receiverId);
+            fileServerInt.register(fileClientInt);
+        }catch (RemoteException | NotBoundException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public static void unRegisterClientOnFileServer(FileClientInt fileClientInt){
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry(2233);
+            FileServerInt fileServerInt = (FileServerInt) registry.lookup("rmi://localhost:2233/filetransfer");
+            //fromFileToByte(file);
+            //fileServerInt.uploadFileToServer(file,receiverId);
+            fileServerInt.unRegister(fileClientInt);
+        }catch (RemoteException | NotBoundException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    /*private static byte[] fromFileToByte(File file) {
+        byte[] res= null;
+        try{
+            res = new byte[(int) file.length ()];
+            Bufferedinputstream is = new Bufferedinputstream (new FileInputStream (file));
+            Is.read (res);
+        }catch (NotBoundException exc){
+            exc.printStackTrace();
+        }
+    }*/
 
 
     public static List<FriendEntity> loadFriends(String phoneNumber) throws RemoteException {

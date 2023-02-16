@@ -51,7 +51,6 @@ public class Main extends Application {
             FileService.getInstance().stopClient(userId);
         }else{
             System.out.println("Server is down");
-
         }
     }
 

@@ -6,7 +6,6 @@ import com.google.code.chatterbotapi.ChatterBotSession;
 import com.google.code.chatterbotapi.ChatterBotType;
 
 import java.util.Locale;
-import java.util.Scanner;
 
 public class ChatBotService {
     ChatterBotFactory factory;

@@ -65,10 +65,8 @@ public class ClientThreadHandled implements Runnable {
                                 buffer, 0,
                                 (int) Math.min(buffer.length, fileContentLength)))
                                 != -1) {
-                            // Here we write the file using write method
                             fileOutputStream.write(buffer, 0, readBytes);
                             fileContentLength -= readBytes;
-                            //fileOutputStream.flush();
                         }
                         fileOutputStream.close();
                         System.out.println("success save local file");
@@ -85,14 +83,10 @@ public class ClientThreadHandled implements Runnable {
                                 }
                         );
                         System.out.println("after panel");
-                        /*
-                        FileEntity fileEntity = new FileEntity(fileId, fileName, fileContentBytes, getFileExtension(fileName));
-                        System.out.println("the received file name -> " + fileEntity.getName());*/
                     }
 
                 }
             } catch (IOException e) {
-                //e.printStackTrace();
                 closeResources();
                 break;
             }
@@ -105,8 +99,7 @@ public class ClientThreadHandled implements Runnable {
             this.dataOutputStream.writeBoolean(true);
             this.dataOutputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
-            //closeResources();
+            closeResources();
         }
         //closeResources();
     }
@@ -122,6 +115,7 @@ public class ClientThreadHandled implements Runnable {
 
     public void sendFile(File fileToSend, long receiverId) {
         try {
+
             FileInputStream fileInputStream = new FileInputStream(fileToSend);
             String fileName = fileToSend.getName();
             byte[] fileNameBytes = fileName.getBytes();

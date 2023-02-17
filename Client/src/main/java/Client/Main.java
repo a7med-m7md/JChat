@@ -55,7 +55,7 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         RMIClientServices.tellMyStatus(CurrentUserAccount.getMyAccount().getMobile(), UserStatus.OFFLINE);
-        RMIClientServices.disconnect();
+//        RMIClientServices.disconnect();
         System.out.println(CurrentUserAccount.getMyAccount().getMobile() + " Closed");
     }
 }

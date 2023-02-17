@@ -2,6 +2,11 @@
 
 Chatting Application for sending and receiving any time of messages and also support rich text.
 
+
+## Technologies
+We mainly used java with JDBC, RMI, Sockets and FXML to build our application.
+
+
 ## Features
 - Registration
 - Sign in
@@ -17,9 +22,6 @@ Chatting Application for sending and receiving any time of messages and also sup
 - Server Statistics about users
 
 
-## Technologies
-We mainly used java with JDBC, RMI, Sockets and FXML to build our application.
-
 ## Team members
 - [Adel Ahmed](https://github.com/aadelaahmed)
 - [Mahmoud El-Saqqa](https://github.com/Mahmoud-Elsaqqa)
@@ -28,11 +30,11 @@ We mainly used java with JDBC, RMI, Sockets and FXML to build our application.
 - [Ahmed Mohamed](https://github.com/a7med-m7md)
 
 
-## Screenshot
+## Screenshots
 - ![alt image](Images/Signin.png)
 - ![alt image](Images/landding%20page.png)
 - ![alt image](Images/Friend%20Request.png)
-- ![alt image](Images/Friend%20Request.png)
+- ![alt image](Images/send%20Request.png)
 
 
 ## Watch Jchat demo

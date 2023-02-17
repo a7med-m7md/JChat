@@ -1,6 +1,6 @@
 # JChat
 
-Chatting Application for sending and receiving any time of messages and also support rich text.
+Chatting Application for sending and receiving any type of messages and also support rich text.
 
 
 ## Technologies

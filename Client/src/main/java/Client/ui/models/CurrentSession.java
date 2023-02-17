@@ -1,17 +1,14 @@
 package Client.ui.models;
 
-import Client.ui.components.StyledChatMessage;
 import Client.ui.controllers.ChatsController;
 import Client.ui.controllers.MainController;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.scene.image.Image;
 import model.Group;
 import model.GroupMessageEntity;
 import model.MessageEntity;
-import model.user.UserEntity;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;

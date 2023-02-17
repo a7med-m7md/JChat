@@ -3,12 +3,7 @@ package Client.ui.components;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.shape.FillRule;
-import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 
 public class NotificationUI extends HBox {

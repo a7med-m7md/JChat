@@ -1,11 +1,7 @@
 package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
-import Client.ui.components.ConversationCard;
 import Client.ui.components.GroupConversationCard;
-import Client.ui.components.StyledChatMessage;
-import Client.ui.controllerutils.ChatType;
-import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
@@ -13,7 +9,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,8 +19,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import model.Group;
-import model.GroupMessageEntity;
-import model.MessageEntity;
 
 import java.io.IOException;
 import java.net.URL;

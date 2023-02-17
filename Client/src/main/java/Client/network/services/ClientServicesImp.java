@@ -14,7 +14,6 @@ import services.ClientServices;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Optional;
@@ -44,6 +43,9 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveMessage(MessageEntity msg) throws RemoteException {
+
+        clip = new AudioClip("notification.wav");
+        clip.play();
         CurrentSession currentSession = CurrentSession.getInstance();
         Contact senderContact = currentSession.getContactByPhone(msg.getSender());
         ObservableList<MessageEntity> firstTimeChat = FXCollections.observableArrayList();

@@ -1,14 +1,7 @@
 package Client.network;
 
-import model.FileEntity;
-
 import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 public class FileThreadHandled implements Runnable {
     Socket clientSocket;

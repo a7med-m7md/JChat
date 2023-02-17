@@ -2,11 +2,9 @@ package Client.ui.controllers;
 
 
 import Client.Hashing.EncryptionUtil;
-import Client.Hashing.Hashing;
 import Client.network.RMIClientServices;
 import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.CurrentUserAccount;
-import javafx.scene.input.MouseButton;
 import model.LoginEntity;
 import model.user.UserEntity;
 import com.jfoenix.controls.JFXTextField;
@@ -28,16 +26,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.user.UserStatus;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.rmi.RemoteException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {

@@ -2,7 +2,6 @@ package Client.ui.controllers;
 
 import Client.ui.controllerutils.Country;
 import Client.ui.models.CurrentUserAccount;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import model.user.Gender;
 
 import java.net.URL;

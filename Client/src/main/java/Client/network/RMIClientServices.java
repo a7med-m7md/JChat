@@ -2,7 +2,6 @@ package Client.network;
 
 
 
-import Client.network.services.ClientServiceFactory;
 import Client.network.services.ClientServicesImp;
 import exceptions.DuplicateUserException;
 import model.*;
@@ -15,9 +14,6 @@ import services.*;
 import javax.security.auth.login.CredentialException;
 import java.net.MalformedURLException;
 import java.rmi.*;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.List;
 

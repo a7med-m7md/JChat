@@ -1,8 +1,6 @@
 package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
-import Client.ui.components.ErrorMessageUi;
-import Client.ui.components.NotificationUI;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.animation.Interpolator;
@@ -13,26 +11,17 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.converter.NumberStringConverter;
-import model.FriendEntity;
 
 import java.io.IOException;
 import java.net.URL;

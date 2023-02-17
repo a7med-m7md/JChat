@@ -3,7 +3,6 @@ package Client.ui.controllers;
 import Client.network.RMIClientServices;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
-import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
@@ -22,8 +21,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import model.Group;
 import model.GroupMessageEntity;
-import model.MessageEntity;
-import model.user.UserStatus;
 
 import java.net.URL;
 import java.rmi.RemoteException;

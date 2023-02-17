@@ -6,8 +6,6 @@ import Client.ui.components.ErrorMessageUi;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentUserAccount;
 import exceptions.UserNotFoundException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;

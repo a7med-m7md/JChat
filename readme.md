@@ -30,7 +30,7 @@ We mainly used java with JDBC, RMI, Sockets and FXML to build our application.
 
 ## Screenshot
 - ![alt image](Images/Signin.png)
-- ![alt image](Images/landding page.png)
+- ![alt image](Images/landding%20page.png)
 - ![alt image](Images/send request.png)
 - ![alt image](Images/Friend%20Request.png)
 

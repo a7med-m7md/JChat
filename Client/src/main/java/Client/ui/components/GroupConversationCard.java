@@ -2,7 +2,6 @@ package Client.ui.components;
 
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.CurrentSession;
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,8 +17,6 @@ import javafx.scene.text.TextAlignment;
 
 import model.Group;
 import model.GroupMessageEntity;
-import model.MessageEntity;
-import model.user.UserStatus;
 
 import java.time.format.DateTimeFormatter;
 

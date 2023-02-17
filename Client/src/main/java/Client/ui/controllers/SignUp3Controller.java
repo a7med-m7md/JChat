@@ -1,5 +1,6 @@
 package Client.ui.controllers;
 
+import Client.Hashing.Hashing;
 import Client.network.RMIClientServices;
 import Client.ui.models.CurrentUserAccount;
 import com.jfoenix.controls.JFXTextField;
@@ -25,6 +26,7 @@ import model.user.UserStatus;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class SignUp3Controller implements Initializable {
@@ -47,7 +49,7 @@ public class SignUp3Controller implements Initializable {
     private Image userImage;
 
     @FXML
-    void handleConfirmCreateAccount(MouseEvent event) throws DuplicateUserException, IOException {
+    void handleConfirmCreateAccount(MouseEvent event) throws DuplicateUserException, IOException, NoSuchAlgorithmException {
         if (displayNameField.validate()) {
             CurrentUserAccount populatedUserData = CurrentUserAccount.getInstance();
             populatedUserData.setName(displayNameField.getText());
@@ -58,7 +60,7 @@ public class SignUp3Controller implements Initializable {
             //Create A DTO and Send to Server
             UserDto newCreatedUser = new UserDto();
             newCreatedUser.setMobile(populatedUserData.getMobile());
-            newCreatedUser.setPassword(populatedUserData.getPassword());
+            newCreatedUser.setPassword(Hashing.hashPass(populatedUserData.getPassword()));
             newCreatedUser.setEmail(populatedUserData.getEmail());
             newCreatedUser.setGender(populatedUserData.getGender());
             newCreatedUser.setCountry(populatedUserData.getCountry());

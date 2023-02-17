@@ -4,7 +4,6 @@ import Client.network.RMIClientServices;
 import Client.network.services.filesocket.FileService;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
-import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.application.Platform;
@@ -24,8 +23,6 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import model.Group;
 import model.GroupMessageEntity;
-import model.MessageEntity;
-import model.user.UserStatus;
 
 import java.io.File;
 import java.net.URL;

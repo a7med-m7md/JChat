@@ -8,6 +8,9 @@ import model.GroupMember;
 import model.LoginEntity;
 import model.user.UserDto;
 import model.user.UserEntity;
+//import model.user.UserStatus;
+import services.ClientInt;
+
 import javax.security.auth.login.CredentialException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -19,8 +22,6 @@ public interface ServerInt extends Remote {
     void checkDuplicateUser(String phoneNumber) throws RemoteException, DuplicateUserException;
     UserEntity signUp(UserDto userEntity) throws RemoteException , DuplicateUserException;
     String logout(String mobile) throws RemoteException, CredentialException;
-    String connect(ClientInt client) throws RemoteException;
-    String disconnect(ClientInt client) throws RemoteException;
     List<FriendEntity> getAllFriends(String mobile) throws RemoteException;
     List<FriendEntity> getAllFriendsRequest(String mobile) throws RemoteException;
     Group createGroup(Group entity) throws RemoteException;

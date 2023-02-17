@@ -55,7 +55,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>ca.pjer</groupId>
+            <artifactId>chatter-bot-api</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>
@@ -73,17 +77,22 @@
             <artifactId>javafx-swing</artifactId>
             <version>11-ea+24</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>20-ea+11</version>
+        </dependency>
 
-<!--
+        <!--
 
-        &lt;!&ndash;&ndash;&gt;<dependency>
-			<artifactId>com.google</artifactId>
-			<groupId>Ab</groupId>
-			<version>0.0.4.3</version>
-			<scope>runtime</scope>
-			<systemPath>${basedir}/lib/Ab.jar</systemPath>
-		</dependency>
--->
+                &lt;!&ndash;&ndash;&gt;<dependency>
+                    <artifactId>com.google</artifactId>
+                    <groupId>Ab</groupId>
+                    <version>0.0.4.3</version>
+                    <scope>runtime</scope>
+                    <systemPath>${basedir}/lib/Ab.jar</systemPath>
+                </dependency>
+        -->
 
     </dependencies>
 

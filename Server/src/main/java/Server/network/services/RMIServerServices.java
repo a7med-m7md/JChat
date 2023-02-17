@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class RMIServerServices extends UnicastRemoteObject implements ServerInt {
-    ConnectedService connectedService = new ConnectedService();
 
     public RMIServerServices() throws RemoteException {
     }
@@ -61,7 +60,6 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
 
     @Override
     public void checkDuplicateUser(String phoneNumber) throws RemoteException, DuplicateUserException {
-        UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();
         if (!registerService.isNewUser(phoneNumber)) {
             throw new DuplicateUserException();
@@ -70,7 +68,6 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
 
     @Override
     public UserEntity signUp(UserDto userDto) throws RemoteException {
-//        UserMapper userMapper = new UseMapperImpl();
         RegisterServiceImpl registerService = new RegisterServiceImpl();
         return registerService.register(userDto);
     }
@@ -83,16 +80,6 @@ public class RMIServerServices extends UnicastRemoteObject implements ServerInt 
         return "LogOut Successfully";
     }
 
-    @Override
-    public String connect(ClientInt client) throws RemoteException {
-        return null;
-    }
-
-
-    @Override
-    public String disconnect(ClientInt client) throws RemoteException {
-        return null;
-    }
 
     @Override
     public List<FriendEntity> getAllFriends(String mobile) throws RemoteException {

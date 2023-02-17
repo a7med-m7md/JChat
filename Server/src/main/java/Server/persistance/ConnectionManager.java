@@ -2,6 +2,7 @@ package Server.persistance;
 
 // import java.sql.Connection;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,9 +19,9 @@ public class ConnectionManager {
     private ConnectionManager() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("Server/src/main/resources/configuration/db.properties"));
-            //inputStream = getClass().getClassLoader().getResourceAsStream("configuration/db.properties");
-            //properties.load(inputStream);
+            InputStream inputStream2 = getClass().getResourceAsStream("/configuration/db.properties");
+            System.out.println(inputStream2);
+            properties.load(inputStream2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,6 +41,7 @@ public class ConnectionManager {
     public Connection getConnection(){
         return connection;
     }
+
     public void close(){
         if(this.connection != null){
             try {
@@ -48,6 +50,7 @@ public class ConnectionManager {
                 e.printStackTrace();
             }
         }
+        System.out.println("DB closed");
     }
 
     public static ConnectionManager getInstance(){

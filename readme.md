@@ -33,8 +33,8 @@ We mainly used java with JDBC, RMI, Sockets and FXML to build our application.
 ## Screenshots
 - ![alt image](Images/Signin.png)
 - ![alt image](Images/landding%20page.png)
+- ![alt image](Images/send%20request.png)
 - ![alt image](Images/Friend%20Request.png)
-- ![alt image](Images/send%20Request.png)
 
 
 ## Watch Jchat demo

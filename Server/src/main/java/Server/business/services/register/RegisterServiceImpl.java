@@ -13,8 +13,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Optional;
 
 public class RegisterServiceImpl extends UnicastRemoteObject implements RegisterService {
-    //TODO -> should connect with server using RMI to access the register service there to connect to db
-    //TODO -> BUT Now we will check with local db.
     UserDao userDao = new UserDao();
     UserMapper userMapper = new UseMapperImpl();
 

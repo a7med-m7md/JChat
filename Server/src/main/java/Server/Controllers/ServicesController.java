@@ -1,10 +1,15 @@
 package Server.Controllers;
 
+import Server.business.services.filermi.FileServerImpl;
+import Server.business.services.filesocket.SocketConnection;
 import Server.business.services.serversservices.Services;
 import Server.network.RMIConnectionManager;
 import Server.persistance.dao.UserDao;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,16 +26,22 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.user.UserDto;
 import model.user.UserEntity;
+import services.FileServerInt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
 
 public class ServicesController implements Initializable {
 
+    int index = -1;
     @FXML
     private VBox chart;
     @FXML
@@ -50,6 +61,10 @@ public class ServicesController implements Initializable {
     List<UserEntity> list;
     Services services;
     List<PieChart.Data> pieChartDataList;
+    ObservableList<XYChart.Series<String, Double>> countryList;
+    ObservableList<PieChart.Data> genderList;
+    ObservableList<PieChart.Data> statusList;
+    FileServerInt fileServerInt;
 
     public ServicesController() {
         list = new ArrayList<>();
@@ -60,23 +75,24 @@ public class ServicesController implements Initializable {
     }
 
     public void loadCountries() {
-        List<XYChart.Series<String, Double>> countriesStatistic = services.getCountriesStatistic(list);
+        List<XYChart.Series<String, Double>> countriesStatistic = services.getCountriesStatistic();
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Country");
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Occurrence");
-        ObservableList<XYChart.Series<String, Double>> countryList = FXCollections.observableArrayList(countriesStatistic);
+        countryList = FXCollections.observableArrayList(countriesStatistic);
         StackedBarChart barChart = new StackedBarChart(xAxis, yAxis);
         barChart.setTitle("Country Statistics");
         xAxis.getChildrenUnmodifiable();
         barChart.setData(countryList);
         chart.getChildren().clear();
         chart.getChildren().add(barChart);
+
     }
 
     public void loadGender() {
-        pieChartDataList = services.getGenderStatistic(list);
-        ObservableList<PieChart.Data> genderList = FXCollections.observableArrayList(pieChartDataList);
+        pieChartDataList = services.getGenderStatistic();
+        genderList = FXCollections.observableArrayList(pieChartDataList);
         pieChart.setData(genderList);
         chart.getChildren().clear();
         chart.getChildren().add(pieChart);
@@ -90,8 +106,8 @@ public class ServicesController implements Initializable {
     }
 
     public void loadOnlineOfline() {
-        pieChartDataList = services.getUserStatusStatistic(list);
-        ObservableList<PieChart.Data> statusList = FXCollections.observableArrayList(pieChartDataList);
+        pieChartDataList = services.getUserStatusStatistic();
+        statusList = FXCollections.observableArrayList(pieChartDataList);
         pieChart.setData(statusList);
         chart.getChildren().clear();
         chart.getChildren().add(pieChart);
@@ -106,15 +122,34 @@ public class ServicesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            list = new ArrayList<>();
+            UserDao userDao = new UserDao();
+            list = userDao.findAll();
+            services = new Services();
+            pieChart = new PieChart();
+            if(index==0)
+                loadCountries();
+            else if (index == 1)
+                loadGender();
+            else if (index==2)
+                loadOnlineOfline();
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+
 
         country.setOnAction((ev) -> {
             loadCountries();
+            index = 0;
         });
         gender.setOnAction((ev) -> {
             loadGender();
+            index = 1;
         });
         online_ofline.setOnAction((ev) -> {
             loadOnlineOfline();
+            index = 2;
         });
 
         announcement.setOnAction((ev) -> {
@@ -136,12 +171,32 @@ public class ServicesController implements Initializable {
             offButton.setDisable(false);
             onButton.setDisable(true);
             RMIConnectionManager.getInstance().startServices();
+            SocketConnection.getInstance().startConnection();
+            FileServerImpl.setServerState(true);
+            try {
+                fileServerInt.broadcastServerState(true);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         });
-
+        try {
+            fileServerInt = new FileServerImpl();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         offButton.setOnAction((ev) -> {
             offButton.setDisable(true);
             onButton.setDisable(false);
+            FileServerImpl.setServerState(false);
+            //TODO -> stop server here
+            SocketConnection.getInstance().closeResources();
             RMIConnectionManager.getInstance().disconnect();
+            try {
+                fileServerInt.broadcastServerState(false);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            //SocketConnection.getInstance().disconnect();
         });
 
 

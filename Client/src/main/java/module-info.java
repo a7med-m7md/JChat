@@ -6,7 +6,7 @@ module Client {
     requires java.rmi;
     requires SharedUtilities;
     requires javafx.swing;
-    requires javafx.media;
+    requires chatter.bot.api;
 
 
     opens Client to javafx.fxml;

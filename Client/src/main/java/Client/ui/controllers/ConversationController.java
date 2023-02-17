@@ -1,6 +1,7 @@
 package Client.ui.controllers;
 
 import Client.network.RMIClientServices;
+import Client.network.services.filesocket.FileService;
 import Client.ui.components.StyledChatMessage;
 import Client.ui.controllerutils.ChatType;
 import Client.ui.models.Contact;
@@ -19,9 +20,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import model.MessageEntity;
 import model.user.UserStatus;
 
+import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
@@ -61,12 +64,30 @@ public class ConversationController implements Initializable {
     @FXML
     private ComboBox<String> fontFamilyComboBox;
 
+    @FXML
+    private ToggleButton botToggle;
+
+
 
     CurrentSession currentSession;
     Contact currentContactChat;
 
     @FXML
-    void attachFile(MouseEvent event) {
+    void attachFile(MouseEvent event) throws RemoteException {
+        FileService fileService = FileService.getInstance();
+
+        FileChooser fileChooser = new FileChooser();
+        //Set extension filter
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            fileService.sendFile(file, Long.parseLong(CurrentUserAccount.getMyAccount().getMobile()), Long.parseLong(currentSession.getCurrentContactChat().getMobile()));
+            MessageEntity fileMessage = new MessageEntity(currentContactChat.getMobile(), CurrentUserAccount.getInstance().getMobile(), CurrentUserAccount.getInstance().getName() + " Sent a File: "+ file.getName());
+            currentSession.chatsMapProperty().get(currentContactChat).add(fileMessage);
+            RMIClientServices.chatMessaging(fileMessage);
+        }
+
 
     }
 
@@ -79,7 +100,6 @@ public class ConversationController implements Initializable {
 
     private void sendNewMessage() {
         try {
-            //TODO RMI Invocation Here
             CurrentSession currentSession = CurrentSession.getInstance();
             CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
             if (!messageTextField.getText().equals("")) {
@@ -97,6 +117,7 @@ public class ConversationController implements Initializable {
                     // Sending the message to the server
                     RMIClientServices.chatMessaging(newMessage);
                     messageTextField.clear();
+                    messagesListView.scrollTo(currentSession.chatsMapProperty().get(currentContactChat).size()-1);
                 }
             }
 

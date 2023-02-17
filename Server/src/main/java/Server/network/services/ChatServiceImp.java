@@ -18,6 +18,7 @@ import java.util.List;
 
 public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
     UserFriendDao friendDao = new UserFriendDao();
+
     public ChatServiceImp() throws RemoteException {
     }
 
@@ -26,32 +27,34 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
         List<FriendEntity> requestLST = new ArrayList<>();
         FriendEntity senderFriend = friendDao.searchByMobileNum(sender);
         receivers.stream().forEach(
-                    (receiver)->{
-                        System.out.println("Sender FRom : " + sender);
-                        System.out.println("Request send to: " + receiver);
-                        try {
-                            // Search to
-                            FriendEntity friendEntity = friendDao.searchByMobileNum(receiver);
-                            requestLST.add(friendEntity);
-                            friendDao.addToFriendList(receiver, sender);
+                (receiver) -> {
+                    System.out.println("Sender FRom : " + sender);
+                    System.out.println("Request send to: " + receiver);
+                    try {
+                        // Search to
+                        FriendEntity friendEntity = friendDao.searchByMobileNum(receiver);
+                        requestLST.add(friendEntity);
+                        friendDao.addToFriendList(receiver, sender);
+                        if (ConnectedService.clients.containsKey(receiver)) {
                             ClientServices clientServices = ConnectedService.clients.get(receiver);
                             clientServices.friendRequestNotification(senderFriend);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
                         }
-
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
                     }
-            );
+
+                }
+        );
 
         System.out.println("Users of friend List:  ");
-            requestLST.forEach(u->{
-                System.out.println(u);
-            });
+        requestLST.forEach(u -> {
+            System.out.println(u);
+        });
 
-            return requestLST;
-        }
+        return requestLST;
+    }
 
     @Override
     public void acceptFriendRequest(String myNumber, String requestNumber) throws RemoteException {
@@ -82,8 +85,8 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
         //2. Tell my status to friends
         List<FriendEntity> friends = friendDao.getFriendList(myNumber);
         System.out.println("List: " + friends);
-        friends.forEach(friend->{
-            if(ConnectedService.clients.containsKey(friend.getMobile())){
+        friends.forEach(friend -> {
+            if (ConnectedService.clients.containsKey(friend.getMobile())) {
                 try {
                     ConnectedService.clients.get(friend.getMobile()).receiveFriendStatus(myNumber, status);
                 } catch (RemoteException e) {
@@ -95,7 +98,7 @@ public class ChatServiceImp extends UnicastRemoteObject implements ChatService {
 
     @Override
     public void sendAnnouncementToUser(String msg) throws RemoteException {
-        ConnectedService.clients.values().forEach(client->{
+        ConnectedService.clients.values().forEach(client -> {
             try {
                 client.receiveAnnouncement(msg);
             } catch (RemoteException e) {

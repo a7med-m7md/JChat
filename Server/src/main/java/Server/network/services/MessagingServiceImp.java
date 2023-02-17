@@ -15,11 +15,9 @@ public class MessagingServiceImp extends UnicastRemoteObject implements Messagin
 
     @Override
     public void sendMessage(MessageEntity msg) throws RemoteException {
-        if(ConnectedService.clients.containsKey(msg.getReceiver())) {
+        if (ConnectedService.clients.containsKey(msg.getReceiver())) {
             ClientServices clientServices = ConnectedService.clients.get(msg.getReceiver());
             clientServices.receiveMessage(msg);
-        }else {
-            System.out.println("Offline user");
         }
     }
 

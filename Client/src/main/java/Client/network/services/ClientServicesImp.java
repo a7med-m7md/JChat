@@ -1,29 +1,27 @@
 package Client.network.services;
 
 
+import Client.ui.components.ErrorMessageUi;
+import Client.ui.controllers.MainController;
 import Client.ui.models.Contact;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.media.AudioClip;
+import javafx.util.Duration;
 import model.*;
 import model.user.UserStatus;
 import services.ClientServices;
 
-import javax.swing.*;
-import java.awt.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Optional;
 
 public class ClientServicesImp extends UnicastRemoteObject implements ClientServices {
-    AudioClip clip;
-
     public ClientServicesImp() throws RemoteException {
     }
-
 
     @Override
     public String getMobile() throws RemoteException {
@@ -38,28 +36,30 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
         CurrentSession currentSession = CurrentSession.getInstance();
         currentSession.requestsListProperty().add(new Contact(friend));
         System.out.println("request from " + friend.getMobile());
+        MainController mainController = MainController.getInstance();
+        ErrorMessageUi message = new ErrorMessageUi("New Friend Request!", false);
+        mainController.currentUserPane.getChildren().add(message);
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+        KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            mainController.currentUserPane.getChildren().remove(message);
+        });
+        timeline.play();
+
 
     }
 
     @Override
     public void receiveMessage(MessageEntity msg) throws RemoteException {
 
-        clip = new AudioClip("notification.wav");
-        clip.play();
         CurrentSession currentSession = CurrentSession.getInstance();
         Contact senderContact = currentSession.getContactByPhone(msg.getSender());
         ObservableList<MessageEntity> firstTimeChat = FXCollections.observableArrayList();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                String audioFilePath = getClass().getResource("/notification.wav").toExternalForm();
-                clip = new javafx.scene.media.AudioClip(audioFilePath);
-                clip.play();
-                try {
-                    displayTray();
-                } catch (AWTException e) {
-                    e.printStackTrace();
-                }
                 if (currentSession.chatsMapProperty().keySet().stream().anyMatch(contact1 -> contact1.getMobile().equals(senderContact.getMobile()))) {
                     currentSession.chatsMapProperty().get(senderContact).add(msg);
                 } else {
@@ -68,6 +68,19 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
                 }
                 System.out.println(currentSession.chatsMapProperty().get(senderContact));
                 System.out.println("Msg send from: " + msg.getSender() + " Msg body: " + msg.getMessage());
+                MainController mainController = MainController.getInstance();
+                ErrorMessageUi message = new ErrorMessageUi("New Message From: " + senderContact.getName(), false);
+                mainController.currentUserPane.getChildren().add(message);
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.setOnFinished(t -> {
+                    mainController.currentUserPane.getChildren().remove(message);
+                });
+                timeline.play();
+
+
                 //Scrolls Down Automatically when new messages added
             }
         });
@@ -75,25 +88,38 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveAnnouncement(String msg) throws RemoteException {
-        System.out.println("Announcement from server: " + msg);
-        Platform.runLater(()->{
-            JOptionPane.showMessageDialog(null, msg, "Server Announcement" , JOptionPane.INFORMATION_MESSAGE);
-        });
+        Platform.runLater(new Runnable() {
+                              @Override
+                              public void run() {
+                                  MainController mainController = MainController.getInstance();
+                                  ErrorMessageUi message = new ErrorMessageUi(msg, false);
+                                  mainController.currentUserPane.getChildren().add(message);
+                                  Timeline timeline = new Timeline();
+                                  KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                                  KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                                  timeline.getKeyFrames().add(kf);
+                                  timeline.setOnFinished(t -> {
+                                      mainController.currentUserPane.getChildren().remove(message);
+                                  });
+                                  timeline.play();
+                              }
+                          }
+        );
     }
 
     @Override
     public void receiveFriendStatus(String mobile, UserStatus status) throws RemoteException {
         CurrentSession currentSession = CurrentSession.getInstance();
-        Contact changedStatusContact =
-                currentSession.getContactsList()
-                        .stream()
-                        .filter(contact -> contact.getMobile().equals(mobile))
-                        .findFirst()
-                        .get();
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                Contact changedStatusContact =
+                        currentSession.getContactsList()
+                                .stream()
+                                .filter(contact -> contact.getMobile().equals(mobile))
+                                .findFirst()
+                                .get();
                 changedStatusContact.setStatus(status);
             }
         });
@@ -102,14 +128,27 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
     @Override
     public void receiveMessageFromGroup(GroupMessageEntity msg) throws RemoteException {
         CurrentSession currentSession = CurrentSession.getInstance();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
                 Group messageGroup = msg.getGroup();
                 Optional<Group> myGroup = currentSession.groupChatsMapProperty().keySet().stream()
                         .filter(group -> group.getId() == messageGroup.getId())
                         .findAny();
                 currentSession.groupChatsMapProperty().get(myGroup.get()).add(msg);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
+
+                MainController mainController = MainController.getInstance();
+                ErrorMessageUi message = new ErrorMessageUi("New message from " + myGroup.get().getName(), true);
+                mainController.currentUserPane.getChildren().add(message);
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.setOnFinished(t -> {
+                    mainController.currentUserPane.getChildren().remove(message);
+                });
+                timeline.play();
+
             }
         });
 
@@ -117,28 +156,28 @@ public class ClientServicesImp extends UnicastRemoteObject implements ClientServ
 
     @Override
     public void receiveGroupAddNotification(Group group) throws RemoteException {
-        ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
-        CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ObservableList<GroupMessageEntity> newGroupMessageList = FXCollections.observableArrayList();
+                CurrentSession.getInstance().groupChatsMapProperty().put(group, newGroupMessageList);
+
+                MainController mainController = MainController.getInstance();
+                ErrorMessageUi message = new ErrorMessageUi("Added to Group: " + group.getName(), false);
+                mainController.currentUserPane.getChildren().add(message);
+                Timeline timeline = new Timeline();
+                KeyValue kv = new KeyValue(mainController.currentUserPane.translateYProperty(), 0, Interpolator.EASE_BOTH);
+                KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+                timeline.getKeyFrames().add(kf);
+                timeline.setOnFinished(t -> {
+                    mainController.currentUserPane.getChildren().remove(message);
+                });
+                timeline.play();
+
+            }
+        });
+
     }
 
-
-    public void displayTray() throws AWTException {
-        //Obtain only one instance of the SystemTray object
-        SystemTray tray = SystemTray.getSystemTray();
-
-        //If the icon is a file
-        Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-        //Alternative (if the icon is on the classpath):
-        //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
-
-        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
-        //Let the system resize the image if needed
-        trayIcon.setImageAutoSize(true);
-        //Set tooltip text for the tray icon
-        trayIcon.setToolTip("System tray icon demo");
-        tray.add(trayIcon);
-
-        trayIcon.displayMessage("Hello, World", "notification demo", TrayIcon.MessageType.INFO);
-    }
 
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="signInPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="434.0" styleClass="background" stylesheets="@../styling/styling.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.SignUpController">
+<AnchorPane fx:id="signInPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" styleClass="background" stylesheets="@../styling/styling.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.ui.controllers.UpdateOneController">
    <children>
       <VBox layoutX="58.0" layoutY="58.0" prefWidth="320.0" spacing="30.0" stylesheets="@../styling/styling.css">
          <padding>
@@ -21,7 +21,7 @@
          <children>
             <VBox spacing="2.0">
                <children>
-                  <Label text="Create Account">
+                  <Label text="Update Account">
                      <font>
                         <Font name="Segoe UI Black" size="25.0" />
                      </font>
@@ -91,7 +91,7 @@
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="signUpConfirmPasswordField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="280.0" promptText="Re-enter chosen password" styleClass="password-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
+                        <JFXTextField fx:id="signUpConfirmPasswordField" focusColor="#39ceff" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="280.0" promptText="8 chars, at least 1 uppercase , 1 lowercase, 1 number" styleClass="password-field" stylesheets="@../styling/styling.css" unFocusColor="#c8d7ed">
                            <font>
                               <Font name="Segoe UI" size="12.0" />
                            </font>

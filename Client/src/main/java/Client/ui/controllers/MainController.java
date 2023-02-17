@@ -1,6 +1,10 @@
 package Client.ui.controllers;
 
+import Client.Main;
 import Client.network.RMIClientServices;
+import Client.network.services.filesocket.FileService;
+import Client.ui.components.ErrorMessageUi;
+import Client.ui.components.NotificationUI;
 import Client.ui.models.CurrentSession;
 import Client.ui.models.CurrentUserAccount;
 import javafx.animation.Interpolator;
@@ -11,17 +15,28 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
+import javafx.util.converter.NumberStringConverter;
+import model.FriendEntity;
+import model.user.UserStatus;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,7 +81,7 @@ public class MainController implements Initializable {
     private StackPane tabContentArea;
 
     @FXML
-    private StackPane currentUserPane;
+    public StackPane currentUserPane;
 
     @FXML
     public StackPane conversationArea;
@@ -87,13 +102,47 @@ public class MainController implements Initializable {
     @FXML
     void logOut(MouseEvent event) throws RemoteException {
         RMIClientServices.logOut(CurrentUserAccount.getInstance().getMobile());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
-        // todo switch to login contoller
+        RMIClientServices.tellMyStatus(CurrentUserAccount.getInstance().getMobile(), UserStatus.OFFLINE);
+        CurrentUserAccount currentUserAccount = CurrentUserAccount.getInstance();
+        currentUserAccount.statusProperty().unbind();
+        currentUserAccount.pictureProperty().unbind();
+        currentUserAccount.bioProperty().unbind();
+        currentUserAccount.nameProperty().unbind();
+        currentUserAccount.emailProperty().unbind();
+        currentUserAccount.phoneNumberProperty().unbind();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Stage loginStage = new Stage();
+            loginStage.setScene(scene);
+
+            loginStage.setResizable(false);
+            loginStage.show();
+            stage.close();
+
+
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @FXML
     void switchAccountSettings(MouseEvent event) {
-        switchTab("account", "/FXML/account-info.fxml");
+        try {
+            Parent updateProfile = FXMLLoader.load(getClass().getResource("/FXML/update-account-1.fxml"));
+            Scene scene = new Scene(updateProfile);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML
@@ -159,6 +208,12 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sideBar.toFront();
+        try {
+            RMIClientServices.tellMyStatus(CurrentUserAccount.getInstance().getMobile(), UserStatus.AVAILABLE);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
         // opening chats tab on startup
         try {
             Platform.runLater(new Runnable() {
@@ -205,6 +260,9 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        FileService fileService = FileService.getInstance();
+        fileService.startConnection(Long.parseLong(CurrentUserAccount.getInstance().getMobile()));
 
 
     }

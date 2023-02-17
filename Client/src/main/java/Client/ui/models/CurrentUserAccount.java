@@ -52,6 +52,7 @@ public class CurrentUserAccount implements UserModel {
 
     public void populateCurrentUserData(UserEntity userDataFromDB) {
         this.name.set(userDataFromDB.getName());
+        nameProperty().set(userDataFromDB.getName());
         this.phoneNumber.set(userDataFromDB.getMobile());
         this.email.set(userDataFromDB.getEmail());
         this.gender.set(userDataFromDB.getGender());
@@ -60,7 +61,9 @@ public class CurrentUserAccount implements UserModel {
         this.dateOfBirth.set(userDataFromDB.getDateOfBirth());
         this.bio.set(userDataFromDB.getBio());
         this.status.set(userDataFromDB.getStatus());
+        statusProperty().set(userDataFromDB.getStatus());
         this.picture.set(new Image(new ByteArrayInputStream(userDataFromDB.getPicture())));
+        pictureProperty().set(new Image(new ByteArrayInputStream(userDataFromDB.getPicture())));
     }
 
     public ObjectProperty<Image> pictureProperty() {

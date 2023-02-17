@@ -47,6 +47,7 @@ public class CurrentUserCardController implements Initializable {
 
         //Binding current user data from db to the Current User Card in GUI
 
+
         currentUserAccount.statusProperty().bind(Bindings.createObjectBinding(() -> {
             String selectedStatus = userStatus.getValue();
             return UserStatus.getStatus(selectedStatus);
